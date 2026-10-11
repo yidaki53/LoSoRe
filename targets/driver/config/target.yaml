@@ -1,0 +1,5 @@
+slug: driver
+kind: game
+platform: ps1
+compiler: gcc-2.7.2+maspsx
+oracle: none

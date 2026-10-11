@@ -1,0 +1,7 @@
+# MSVC 4.2 pattern (cf. isledecomp/isle docker/). User supplies media at build time.
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y wine32 wine64 make cmake python3 2>/dev/null || apt-get install -y wine make cmake python3
+WORKDIR /opt/msvc42
+# COPY --from=user-media ./msvc42 /opt/msvc42  # BYOD: mount, never commit
+ENV WINEDEBUG=-all
+CMD ["nmake", "/?"]

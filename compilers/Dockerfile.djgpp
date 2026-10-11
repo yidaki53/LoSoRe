@@ -1,0 +1,4 @@
+# DJGPP free DOS fallback (Slicks/Scorched).
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y make g++-djgpp dosbox python3 2>/dev/null || apt-get install -y make dosbox python3
+CMD ["make", "--version"]

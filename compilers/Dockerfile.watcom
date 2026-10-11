@@ -1,0 +1,8 @@
+# DOS Watcom path (Liero/OMF/Jazz hypothesis). Open Watcom as proxy until period Watcom 10.x strings confirm.
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y make nasm dosbox python3 curl \
+ && curl -L -o /tmp/ow.tar.gz https://github.com/open-watcom/open-watcom-v2/releases/download/2024-02-01-Build/ow-snapshot.tar.gz \
+ && mkdir -p /opt/watcom && tar xzf /tmp/ow.tar.gz -C /opt/watcom || echo "fetch at build time"
+ENV PATH=/opt/watcom/binl:$PATH
+ENV WATCOM=/opt/watcom
+CMD ["wcl", "-h"]

@@ -1,0 +1,6 @@
+slug: liero
+kind: game
+platform: dos
+compiler: turbo-pascal-7
+language: pascal
+oracle: none

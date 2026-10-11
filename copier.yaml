@@ -1,0 +1,14 @@
+_subdirectory: template
+slug:
+  type: str
+  help: target slug, e.g. liero
+kind:
+  type: str
+  default: game
+  choices: [game, app, firmware, driver, tool]
+platform:
+  type: str
+  default: dos
+compiler:
+  type: str
+  default: TODO

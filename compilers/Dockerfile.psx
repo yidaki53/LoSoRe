@@ -1,0 +1,7 @@
+# PS1 pattern (cf. open-spyro): gcc 2.7.2 + maspsx + splat. Pinned for Driver/Dino/Tekken3/Crash/MGS1/RE2.
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y make python3 git gcc-mipsel-linux-gnu 2>/dev/null || apt-get install -y make python3 git
+WORKDIR /opt/psx
+RUN git clone --depth 1 https://github.com/mkst/maspsx.git \
+ && pip install splat64 m2c 2>/dev/null || pip install pyyaml capstone
+CMD ["make", "-h"]

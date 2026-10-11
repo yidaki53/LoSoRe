@@ -1,0 +1,10 @@
+# extracted BYOD game data — never commit
+extracted/
+vendor/
+*.bin
+*.iso
+*.exe
+*.dll
+__pycache__/
+.venv/
+build/

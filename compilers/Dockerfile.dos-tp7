@@ -1,0 +1,14 @@
+# Turbo Pascal 7 / DOS real-mode path (Liero pilot).
+# TP7 is Borland commercial abandonware: Dockerfile documents the setup; user supplies media (BYOD), nothing committed.
+# Proxy today: Free Pascal in TP7-compat mode (fpc -Mtp) + DOSBox for behavioral parity; byte-exact needs real TP7 + identical RTL.
+FROM ubuntu:22.04 AS base
+RUN apt-get update && apt-get install -y make dosbox python3 fp-compiler 2>/dev/null \
+ || apt-get install -y make dosbox python3
+WORKDIR /opt/tp7
+# --- Real TP7 (BYOD, optional) ---
+# COPY --from=user-media ./TP7 /opt/tp7   # mount, never commit
+# RUN dosbox -c "mount c /opt/tp7" -c "c:" -c "tpc /h" -c "exit"
+# --- Free Pascal proxy (default, reproducible) ---
+RUN fpc -iV 2>/dev/null || echo "fpc missing at build time"
+ENV FPC_TP_MODE=-Mtp
+CMD ["fpc", "-h"]
