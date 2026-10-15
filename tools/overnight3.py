@@ -49,7 +49,7 @@ ALL_FNS = sorted(p.stem for p in (TARGET / "asm").glob("FUN_*.s")
                  if (TARGET / "decomp" / f"{p.stem}.c").exists())
 
 t_start = time.time()
-BUDGET_S = {"g1": 130 * 60, "g2": 160 * 60, "g3": 90 * 60, "g4": 160 * 60}
+BUDGET_S = {"g1": 210 * 60, "g2": 120 * 60, "g3": 90 * 60, "g4": 130 * 60}
 
 
 def log(msg: str) -> None:

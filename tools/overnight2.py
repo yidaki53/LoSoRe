@@ -115,7 +115,7 @@ def gen(model: str, prompt: str, temp: float = 0.0, npx: int = 1024,
             req = urllib.request.Request(
                 OLLAMA + "/api/generate", data=data,
                 headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req, timeout=900) as resp:
+            with urllib.request.urlopen(req, timeout=300) as resp:
                 return json.loads(resp.read()).get("response", "")
         except Exception as e:
             if i == tries - 1:
