@@ -127,12 +127,107 @@ def _c_ref_block(c_text: str, source: str = "Ghidra") -> str:
     return "\n".join(lines)
 
 
-def _pascal_fn_skeleton(fn: str) -> str:
-    """A compilable Pascal procedure stub (safe default; oracle enforces semantics)."""
-    return (f"procedure {_pas_ident(fn)};\n"
+def _pascal_fn_skeleton(fn: str, decl: str | None = None) -> str:
+    """A compilable Pascal routine stub (safe default; oracle enforces semantics).
+
+    `decl` is the canonical declaration (see `_decl_for`); the stub keeps it
+    verbatim so the forward-declaration header always matches the body.
+    """
+    decl = decl or f"procedure {_pas_ident(fn)};"
+    return (f"{decl}\n"
             f"begin\n"
             f"  {{ TODO: translate from asm/{fn}.s — UNMATCHED until an oracle passes }}\n"
             f"end;\n")
+
+
+# Ghidra C type -> Turbo Pascal type (16-bit real-mode target: int=16-bit).
+_C_TYPE_MAP = {
+    "void": None,
+    "byte": "Byte", "uint8_t": "Byte", "unsigned char": "Byte", "undefined1": "Byte",
+    "int8_t": "ShortInt", "signed char": "ShortInt",
+    "char": "Char",
+    "uint16_t": "Word", "ushort": "Word", "unsigned short": "Word", "undefined2": "Word",
+    "int16_t": "Integer", "short": "Integer", "signed short": "Integer",
+    "int": "Integer", "undefined4": "Longint",
+    "uint": "Word", "unsigned": "Word", "unsigned int": "Word",
+    "uint32_t": "Longint", "int32_t": "Longint", "long": "Longint",
+    "unsigned long": "Longint", "long long": "Int64", "unsigned long long": "Int64",
+    "bool": "Boolean", "boolean": "Boolean",
+    "float": "Real", "double": "Double",
+}
+
+
+def _parse_decl(seed_c: str, fn: str) -> str | None:
+    """Canonical TP declaration for `fn` parsed from its decompiled C, else None."""
+    m = re.search(r"(\w[\w\s]*?)\s*(\*?)\s*" + re.escape(fn) + r"\s*\(([^)]*)\)", seed_c)
+    if not m:
+        return None
+    ret_words = m.group(1).split()
+    ret = ret_words[-1].lower() if ret_words else "void"
+    ret_ptr = bool(m.group(2))
+    params: list[tuple[str, str]] = []
+    for i, raw in enumerate(m.group(3).split(",")):
+        raw = raw.strip()
+        if not raw or raw == "void":
+            continue
+        is_ptr = "*" in raw
+        toks = raw.replace("*", " ").replace("[", " ").replace("]", " ").split()
+        if not toks:
+            continue
+        pname, ptype = f"param_{i + 1}", " ".join(toks)
+        if len(toks) >= 2 and re.fullmatch(r"[A-Za-z_]\w*", toks[-1]) \
+                and toks[-1].lower() not in _C_TYPE_MAP:
+            pname, ptype = toks[-1], " ".join(toks[:-1])
+        pascal_t = "Pointer" if is_ptr else _C_TYPE_MAP.get(
+            ptype.lower(),
+            _C_TYPE_MAP.get(ptype.lower().removeprefix("unsigned "), "Word"))
+        params.append((pname, pascal_t))
+    if ret == "void" and not ret_ptr:
+        head, ret_part = f"procedure {_pas_ident(fn)}", ""
+    else:
+        rtype = "Pointer" if ret_ptr else (_C_TYPE_MAP.get(ret, "Word") or "Word")
+        head, ret_part = f"function {_pas_ident(fn)}", f": {rtype}"
+    grouped: list[str] = []
+    i = 0
+    while i < len(params):
+        j = i
+        while j + 1 < len(params) and params[j + 1][1] == params[i][1]:
+            j += 1
+        names = ", ".join(n for n, _ in params[i:j + 1])
+        grouped.append(f"{names}: {params[i][1]}")
+        i = j + 1
+    args = f"({'; '.join(grouped)})" if grouped else ""
+    return f"{head}{args}{ret_part};"
+
+
+def _decl_for(root: pathlib.Path, fn: str,
+              recon: pathlib.Path | None = None,
+              allowed: set[str] | None = None) -> str:
+    """ONE source of truth for `fn`'s TP declaration.
+
+    Forward header, skeleton bodies, the compile-gate revert, the LLM prompt's
+    forced signature and sibling call tables must agree EXACTLY — FPC rejects a
+    parameterless forward solved by a parameterized definition ("forward
+    declaration not solved"). Prefers the recon-corpus C the LLM actually sees,
+    then the Ghidra decomp, then a parameterless procedure.
+    """
+    seed = read_decomp_seed(root, fn)
+    if recon is not None:
+        rcode, _rwhy = read_recon_seed(recon, fn, allowed or set())
+        if rcode:
+            seed = rcode
+    decl = _parse_decl(seed, fn) if seed else None
+    return decl or f"procedure {_pas_ident(fn)};"
+
+
+def _force_decl(clean: str, decl: str) -> str:
+    """Overwrite the first declaration line of LLM output with canonical `decl`."""
+    lines = clean.splitlines()
+    for i, ln in enumerate(lines):
+        if re.match(r"\s*(procedure|function)\s+[A-Za-z_]\w*", ln, re.I):
+            lines[i] = decl
+            return "\n".join(lines)
+    return clean
 
 
 def _sanitize_pascal(text: str) -> str:
@@ -211,12 +306,36 @@ def run_m2c(asm_file: pathlib.Path, target_yaml: pathlib.Path) -> str | None:
 
 
 def run_llm(prompt: str, model: str | None, endpoint: str | None) -> str | None:
-    """Local-first: llama.cpp server (/completion) or `llm` CLI; hosted only if LSR_ALLOW_HOSTED=1."""
+    """Local-first: endpoint server via OpenAI chat API (falls back to llama.cpp
+    raw /completion), else `llm` CLI; hosted only if LSR_ALLOW_HOSTED=1.
+
+    Instruct models degenerate into repetition loops when their embedded chat
+    template is never applied, so the chat route (llama.cpp --jinja, vLLM) is
+    tried first; raw /completion stays for servers that only expose it.
+    """
     import json, os, urllib.request
     if endpoint:
+        base = endpoint.rstrip("/")
+        for suf in ("/v1/chat/completions", "/chat/completions"):
+            if base.endswith(suf):
+                base = base[: -len(suf)].rstrip("/")
+                break
+        try:
+            payload = {"model": model or "local",
+                       "messages": [{"role": "user", "content": prompt}],
+                       "temperature": 0.0, "max_tokens": 768}
+            req = urllib.request.Request(base + "/v1/chat/completions",
+                                         data=json.dumps(payload).encode(),
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=300) as resp:
+                out = json.loads(resp.read())["choices"][0]["message"]["content"]
+            if out and out.strip():
+                return out
+        except Exception as e:
+            print(f"[llm-chat] {e}")
         try:
             data = json.dumps({"prompt": prompt, "n_predict": 768}).encode()
-            req = urllib.request.Request(endpoint.rstrip("/") + "/completion", data=data,
+            req = urllib.request.Request(base + "/completion", data=data,
                                          headers={"Content-Type": "application/json"})
             with urllib.request.urlopen(req, timeout=300) as resp:
                 return json.loads(resp.read()).get("content")
@@ -236,7 +355,9 @@ def run_llm(prompt: str, model: str | None, endpoint: str | None) -> str | None:
     return None
 
 
-def _write_program(root: pathlib.Path, slug: str, fns: list[str]) -> None:
+def _write_program(root: pathlib.Path, slug: str, fns: list[str],
+                   recon: pathlib.Path | None = None,
+                   allowed: set[str] | None = None) -> None:
     """(Re)generate the Pascal program + a forward-declaration header.
 
     The header forward-declares every routine so cross-function calls in the
@@ -245,7 +366,24 @@ def _write_program(root: pathlib.Path, slug: str, fns: list[str]) -> None:
     (TP7 `asm...end;`) assemble under the FPC proxy.
     """
     prog = "".join(ch for ch in slug if ch.isalnum() or ch == "_") or "game"
-    fwd = "\n".join(f"procedure {_pas_ident(f)}; forward;" for f in fns)
+    # Forward-declare EVERY routine in asm/ — even ones without an .inc this
+    # run — with its canonical signature, so LLM bodies can call siblings (and
+    # --fn mode still builds). Also normalize existing .inc declaration lines
+    # to canonical first: FPC rejects a parameterless forward solved by a
+    # parameterized definition, and stale drafts with different param counts
+    # would desync the header.
+    all_fns = sorted(p.stem for p in (root / "asm").glob("*.s"))
+    for fn in all_fns:
+        ip = root / "src" / f"{fn}.inc"
+        if not ip.exists():
+            continue
+        d = _decl_for(root, fn, recon, allowed)
+        txt = ip.read_text()
+        txt2, nsub = re.subn(r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*.*$", d, txt,
+                            count=1)
+        if nsub and txt2 != txt:
+            ip.write_text(txt2)
+    fwd = "\n".join(f"{_decl_for(root, f, recon, allowed)} forward;" for f in all_fns)
     (root / "src" / "_forward.inc").write_text(
         "{ forward declarations for every routine (generated) }\n" + fwd + "\n")
     incs = "\n".join(f"{{$INCLUDE {f}.inc}}" for f in fns)
@@ -253,7 +391,9 @@ def _write_program(root: pathlib.Path, slug: str, fns: list[str]) -> None:
         PAS_PROGRAM.format(slug=slug, prog=prog, includes=incs))
 
 
-def _compile_gate(root: pathlib.Path, target: str) -> int:
+def _compile_gate(root: pathlib.Path, target: str,
+                  recon: pathlib.Path | None = None,
+                  allowed: set[str] | None = None) -> int:
     """Revert any .inc that breaks the FPC whole-program build to a skeleton.
 
     The LLM sometimes emits Pascal that passes the token gate but still fails
@@ -264,29 +404,41 @@ def _compile_gate(root: pathlib.Path, target: str) -> int:
     """
     src = root / "src"
 
-    def _errors() -> set[str]:
+    def _errors() -> tuple[set[str], list[str]]:
         r = subprocess.run(["make", "build"], cwd=root, capture_output=True,
                            text=True, timeout=300)
         out = r.stdout + r.stderr
-        return set(re.findall(r"([A-Za-z_]\w*)\.inc\(\d+,\d+\)\s+(?:Error|Fatal)", out))
+        lines = [ln.strip() for ln in out.splitlines()
+                 if re.search(r"\.(inc|pas)\(\d+,\d+\)\s+(?:Error|Fatal)", ln)]
+        stems = set(re.findall(r"([A-Za-z_]\w*)\.inc\(\d+,\d+\)\s+(?:Error|Fatal)", out))
+        return stems, lines
 
-    bad = _errors()
+    bad, why = _errors()
     if not bad:
         return 0
+    for ln in why[:8]:
+        print(f"[compile-gate] {ln}")
     reverted = 0
     for stem in sorted(bad):
         p = src / f"{stem}.inc"
-        if not p.exists():
+        if not p.exists() or stem.startswith("_"):
             continue
         seed = read_decomp_seed(root, stem)
-        ref = _c_ref_block(seed) if seed else "(* no decompiler seed yet *)"
+        ref_source = "Ghidra"
+        if recon is not None:
+            rcode, rwhy = read_recon_seed(recon, stem, allowed or set())
+            if rcode:
+                seed, ref_source = rcode, f"recon:{rwhy}"
+        ref = _c_ref_block(seed, ref_source) if seed else "(* no decompiler seed yet *)"
         p.write_text(PAS_TEMPLATE.format(
             slug=target, fn=stem,
             kind=_yaml_kv(root / "config" / "target.yaml", "kind", "game"),
             oracle="none", backend="skeleton(compile-gate)", ref=ref,
-            sig=_pascal_fn_skeleton(stem)))
+            sig=_pascal_fn_skeleton(stem, _decl_for(root, stem, recon, allowed))))
         reverted += 1
-    still = _errors()
+    still, why2 = _errors()
+    for ln in why2[:6]:
+        print(f"[compile-gate-still] {ln}")
     print(f"[draft:{target}] compile-gate reverted {reverted} fn(s) that broke the "
           f"build -> {'GREEN' if not still else 'STILL BROKEN: ' + ','.join(sorted(still))}")
     return reverted
@@ -321,11 +473,14 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
     platform = _yaml_kv(root / "config" / "target.yaml", "platform",
                         _yaml_kv(root / "config" / "toolchain.yaml", "platform", "unknown"))
     ext = LANG_EXT[language]
-    fns = [fn] if fn else [p.stem for p in sorted(asm.glob("*.s"))]
+    fns = [p.stem for p in sorted(asm.glob("*.s"))]
     # `batch` = the subset to actively LLM-translate this run (None = all).
     # Every function in `fns` still gets an .inc + forward-declaration so that
     # cross-routine calls resolve; non-batch functions get a skeleton body.
-    batch: set[str] | None = None
+    # `fn` (single-fn mode) restricts the LLM batch only — the other routines
+    # must still exist as .inc or their forward declarations never solve and
+    # the whole module fails to build.
+    batch: set[str] | None = {fn} if fn else None
     if limit and not fn:
         # validate on the smallest REAL functions first (skip degenerate
         # halt_baddata/bad-instruction stubs Ghidra couldn't decompile)
@@ -377,12 +532,23 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
                     ref_source = f"recon:{rwhy}"
                     n_recon += 1
             ref = _c_ref_block(seed_c, ref_source) if seed_c else "(* no decompiler seed yet *)"
-            sig = _pascal_fn_skeleton(f)
+            decl = _decl_for(root, f, recon, allowed)
+            sig = _pascal_fn_skeleton(f, decl)
             backend = "skeleton"
             if seed_c:
                 n_seeded += 1
                 if use_llm and (batch is None or f in batch):
                     asm_text = (asm / f"{f}.s").read_text(errors="replace")[:3000]
+                    sib_txt = ""
+                    if seed_c:
+                        refs = sorted({s for s in re.findall(r"\bFUN_[0-9A-Fa-f]{4}\w*\b",
+                                                             seed_c) if s != f})[:12]
+                        if refs:
+                            rows = "\n".join(f"  {s}: {_decl_for(root, s, recon, allowed)}"
+                                              for s in refs)
+                            sib_txt = ("Called routines are forward-declared with EXACTLY "
+                                       "these signatures — match arity and argument types "
+                                       "when calling:\n" + rows + "\n")
                     prompt = (
                         "You are reconstructing the ORIGINAL Turbo Pascal 7 (16-bit real-mode "
                         "DOS) source of a function. Given the disassembly and a C reference, "
@@ -401,19 +567,33 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
                         "that routine by name; every sibling routine is ALREADY "
                         "forward-declared, so DO NOT declare or define any "
                         "other procedure/function.\n"
-                        f"- The routine is named `{f}`; keep that exact name.\n\n"
-                        f"ASSEMBLY:\n{asm_text}\n\nREFERENCE C ({ref_source}, for meaning only):\n{seed_c}\n")
+                        "- Raw/absolute memory: declare typed pointer variables (`p: ^Byte;`) "
+                        "and use `p^`, `Inc(p, n)`; do not use `Seg()`/`Ofs()` and do not "
+                        "cast comparisons (`Byte(x = 0)` is invalid Pascal - write an `if`).\n"
+                        "- You may NOT dereference an expression: `(p + n)^` and `p^[i]` on a "
+                        "non-array are ILLEGAL. Do `q := p; Inc(q, n);` first, then `q^`.\n"
+                        "- Keep value types exact: never assign Word/Integer to Char or vice "
+                        "versa - convert with `Chr(n)`/`Ord(c)`/`Byte(x)`/`Word(x)`. The "
+                        "sibling signature table is authoritative for return types.\n"
+                        f"- The routine is named `{f}`. Its first line MUST be exactly:\n"
+                        f"    {decl}\n"
+                        "  Do not add, drop or rename parameters; read argument values\n"
+                        "  only through these parameter names.\n"
+                        f"{sib_txt}"
+                        f"ASSEMBLY:\n{asm_text}\n\nREFERENCE C ({ref_source}, "
+                        f"for meaning only):\n{seed_c}\n")
                     llm_out = run_llm(prompt, model, endpoint)
                     clean = _sanitize_pascal(llm_out) if llm_out else ""
                     if clean:
+                        clean = _force_decl(clean, decl)
                         sig, backend = clean, f"c->pascal+llm({model or endpoint},{ref_source})"
             out.write_text(PAS_TEMPLATE.format(slug=target, fn=f, kind=kind,
                                                oracle=oracle, backend=backend,
                                                ref=ref, sig=sig))
     if language == "pascal":
-        _write_program(root, target, fns)
+        _write_program(root, target, fns, recon, allowed)
         if use_llm:
-            _compile_gate(root, target)
+            _compile_gate(root, target, recon, allowed)
     if fs_prefix:
         print(f"[draft:{target}] few-shot {compiler}/{platform} context applied "
               f"(learned from prior targets)")

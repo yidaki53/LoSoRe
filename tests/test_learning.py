@@ -139,7 +139,7 @@ def test_draft_emits_same_language_pascal(tmp_path, monkeypatch):
         "no C files should be emitted for a pascal target"
     assert (tmp_path / "targets" / "tgt-b" / "src" / "tgt-b.pas").exists()
     body = incs[0].read_text()
-    assert "procedure" in body  # Pascal skeleton
+    assert "procedure" in body or "function" in body  # Pascal routine skeleton
     assert "// --- reference: Ghidra decompiler C" in body  # C kept as //-comment ref
 
 
