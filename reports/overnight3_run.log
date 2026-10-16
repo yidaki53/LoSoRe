@@ -1,0 +1,17 @@
+[n3 21:19:27] night-3 start: 294 fns, panel=60, deadline=7h40m
+[n3 21:19:27] === g1 ===
+[n2 22:19:48]   gen retry: timed out
+[n2 23:04:15]   gen retry: timed out
+[n3 23:33:05] G1 budget/deadline hit
+[n3 23:33:05] G1 budget/deadline hit
+[n3 23:33:05] === g2 ===
+[n3 23:33:05] G2: 6 compiling candidates to judge (dual)
+[n3 00:24:36] G2 done: real=5 (need >= 80 to distill)
+[n3 00:24:36] === g3 ===
+[n3 00:24:36] G3 SKIPPED: 5 real pairs < 80
+[n3 00:24:36] === g4 ===
+[n3 00:24:36] G4: corpus candidates for 6/294 fns
+[n3 00:24:36] === g5 ===
+[n3 00:24:36] G5 -> reports/overnight3/REPORT3.md
+[n3 00:24:36] G5 -> reports/overnight3/REPORT3.md
+[n3 00:24:36] night-3 finished

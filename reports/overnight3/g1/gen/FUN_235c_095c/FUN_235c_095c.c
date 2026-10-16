@@ -1,0 +1,57 @@
+#include <stdint.h>
+#include <stddef.h>
+typedef unsigned char undefined1, byte, uchar;
+typedef unsigned short undefined2, ushort, word;
+typedef unsigned int undefined4;
+typedef unsigned long undefined8;
+typedef long long longlong;
+typedef unsigned long long ulonglong;
+typedef unsigned int uint;
+typedef short int16;
+#define __cdecl16near
+#define __cdecl16far
+#define __stdcall16near
+#define __stdcall16far
+#define __cdecl
+#define __stdcall
+#define __fastcall
+#define __pascal
+#define __near
+#define __far
+#define __interrupt
+#define __declspec(x)
+/* BSD/kernel types some models assume (not Ghidra, but harmless to accept) */
+typedef unsigned char u_char;
+typedef unsigned short u_short, u_int16;
+typedef unsigned int u_int, u32, uint32;
+typedef unsigned short uint16, ushort_t;
+typedef unsigned char uint8;
+#ifndef true
+#define true 1
+#define false 0
+#endif
+
+#include <stdint.h>
+
+void __stdcall16far FUN_235c_095c(uint8_t param_1, uint8_t param_2, uint16_t param_3, uint16_t param_4) {
+    uint8_t local_4 = 0xff;
+    uint8_t local_3 = 0;
+
+    do {
+        if (*(uint8_t *)(0x235c * 16 + 0x67fc + local_3) == '\0') {
+            local_4 = local_3;
+        }
+        local_3++;
+    } while ((local_4 == 0xff) && (local_3 != 8));
+
+    if (local_4 != 0xff) {
+        *(uint8_t *)(0x235c * 16 + 0x67ce) += 1;
+        *(uint16_t *)(0x235c * 16 + 0x6804 + local_4 * 10) = param_3;
+        *(uint16_t *)(0x235c * 16 + 0x6806 + local_4 * 10) = param_4;
+        *(uint8_t *)(0x235c * 16 + 0x6808 + local_4 * 10) = param_2;
+        *(uint16_t *)(0x235c * 16 + 0x6809 + local_4 * 10) = 0;
+        *(uint16_t *)(0x235c * 16 + 0x680b + local_4 * 10) = 0;
+        *(uint8_t *)(0x235c * 16 + 0x680d + local_4 * 10) = param_1;
+        *(uint8_t *)(0x235c * 16 + 0x67fc + local_4) = 1;
+    }
+}

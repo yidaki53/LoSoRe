@@ -1,0 +1,5922 @@
+[
+  {
+    "fn": "FUN_1000_05a4",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_05a4",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0961",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_0961",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": null,
+      "flaws": "",
+      "confidence": "?"
+    },
+    "verdict": "judge-error"
+  },
+  {
+    "fn": "FUN_1000_0ac7",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_0ac7",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0be1",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_0be1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0c7f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_0c7f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0d70",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_0d70",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_a816",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_a816",
+    "qwen": {
+      "score": 4,
+      "flaws": "unaff_SS, unaff_DS",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_a8f7",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_a8f7",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_b28f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_b28f",
+    "qwen": {
+      "score": 3,
+      "flaws": "Missing far call, incorrect pointer arithmetic, incorrect array indexing.",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1000_b3fe",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1000_b3fe",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1e7d_0082",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1e7d_0082",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "trivial naming differences, missing segment register handling, assumed constant for unaff_SS",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1e7d_018a",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1e7d_018a",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far calls, incorrect handling of `unaff_SS`",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ea2_0000",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ea2_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_0104",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ea2_0104",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_01a8",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ea2_01a8",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0000",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0000",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "- Incorrect data types (uint16_t instead of undefined4);",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_0018",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0018",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far calls, incorrect handling of SS register",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_00a5",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_00a5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_00d0",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_00d0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_01df",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_01df",
+    "qwen": {
+      "score": 4,
+      "flaws": "Truncated code, missing closing brace",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0734",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0734",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0810",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0810",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_086b",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_086b",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_09bd",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_09bd",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0ae3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0ae3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0c11",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0c11",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0d5d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0d5d",
+    "qwen": {
+      "score": 3,
+      "flaws": "Different control flow, missing far call",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1ec2_0d88",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0d88",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "control"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0dc8",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0dc8",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0e06",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0e06",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0e4a",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0e4a",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_0e8f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0e8f",
+    "qwen": {
+      "score": 3,
+      "flaws": "Incorrect handling of `param_6`, missing far call, contested",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1ec2_0f44",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_0f44",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_1008",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_1008",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, missing `__stdcall16far` calling convention.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_10cf",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_10cf",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_10ea",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_10ea",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_11b5",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_11b5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_12ad",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_12ad",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_12e6",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_12e6",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13a4",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_13a4",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": null,
+      "flaws": "",
+      "confidence": "?"
+    },
+    "verdict": "judge-error"
+  },
+  {
+    "fn": "FUN_1ec2_13c5",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_13c5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13d3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_13d3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13e9",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_13e9",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_152f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_152f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_15bb",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_15bb",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_1619",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_1ec2_1619",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": null,
+      "flaws": "",
+      "confidence": "?"
+    },
+    "verdict": "judge-error"
+  },
+  {
+    "fn": "FUN_202c_032d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_032d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_04d5",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_04d5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0673",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_0673",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0706",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_0706",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_076d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_076d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0843",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_0843",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_08b2",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_08b2",
+    "qwen": {
+      "score": 4,
+      "flaws": "missing segment register handling, incorrect stack operations",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_093b",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_093b",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0a74",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_0a74",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0b0e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_0b0e",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_14b6",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_202c_14b6",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0000",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_001a",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_001a",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "different return type, missing segment register, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0036",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0036",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_032e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_032e",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0340",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0340",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0361",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0361",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0372",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0372",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_045d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_045d",
+    "qwen": {
+      "score": 4,
+      "flaws": "Dummy assignment instead of 'out' operation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "dummy assignment for 'out', uint16_t cast for 8-bit access, missing segment semantics",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0482",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0482",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing far pointer for FUN_2494_0027 call; unaff_DS not used; 0x768a cast to uint16_t",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_04a2",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_04a2",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "cast to char instead of undefined1, cast to uint16_t instead of undefined2, missing segment register in address",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_04bc",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_04bc",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_04f3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_04f3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "segment base assumption, type casting, pointer arithmetic",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_06d7",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_06d7",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_08e4",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_08e4",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_091d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_091d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "pointer arithmetic assumes flat memory model; minor type casting differences; missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_09eb",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_09eb",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0a1e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0a1e",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0a51",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0a51",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0aad",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0aad",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "pointer arithmetic style, missing segment register handling, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0ad3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0ad3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0aeb",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0aeb",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"unaff_DS initialization assumption\", \"missing near declaration\", \"missing __cdecl16near\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0aff",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0aff",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"trivial naming differences\", \"use of bitwise operations instead of CONCAT22\", \"implicit handling of carry\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0b33",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0b33",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_0b7c",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0b7c",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing segment register handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0f1d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_0f1d",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_1162",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_1162",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_11db",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_11db",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_11ef",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_11ef",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_131a",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_131a",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_1345",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_1345",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_135f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_135f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "base pointer assumption, segment register omission, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_1380",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_235c_1380",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "placeholder for swi function, missing segment handling, assumed function pointer**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2494_0010",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_2494_0010",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "function pointer type mismatch, missing unaff_DS assignment, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2494_001e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_2494_001e",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 1,
+      "flaws": "recursive call; missing external call; incorrect return value",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2494_0027",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_2494_0027",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "external function call parameter mismatch, missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2494_0050",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_2494_0050",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_249c_0000",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_249c_0000",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": null,
+      "flaws": "",
+      "confidence": "?"
+    },
+    "verdict": "judge-error"
+  },
+  {
+    "fn": "FUN_249c_0013",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_249c_0013",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_249c_0159",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_249c_0159",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), different control flow",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_249c_0180",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_249c_0180",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_249c_01c3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_249c_01c3",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24ba_0090",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24ba_0090",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Argument mismatch in FUN_24dd_4905 call; unaff_DS replaced with 0",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24ba_00d8",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24ba_00d8",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming difference (DAT_783b vs. 0x783b), missing segment register handling.",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"DAT_783b as base address assumption\", \"undefined1 to uint8_t type change\", \"undefined2 unaff_DS unused\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24cb_0000",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24cb_0000",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, lack of far call handling",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- System call simulation differs from reference;",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24cb_003e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24cb_003e",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24cb_007c",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24cb_007c",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "simulated system call, missing interrupt mechanism, placeholder values",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24cb_0094",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24cb_0094",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "hard-coded interrupt vector; missing stack operations; lacks segmented memory handling",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0116",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0116",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_01f0",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_01f0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_01fe",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_01fe",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_020a",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_020a",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "byte order in CONCAT11, missing parameter for in_CL, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0232",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0232",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "function pointer assignment incorrect; lacks actual interrupt handling; contested interrupt semantics",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_02b9",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_02b9",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_02cb",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_02cb",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0303",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0303",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_04ed",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_04ed",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0530",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0530",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (stack0x0000), incorrect handling of AX, missing far call",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"in_AX assumed at 0x0000\", \"stack0x0000 assumed at 0x0000\", \"type casting differences\"",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0548",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0548",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_05e8",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_05e8",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "candidate"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_05fd",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_05fd",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "type casting in CL, missing segment register",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_060f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_060f",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far call, junk tokens",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0628",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0628",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing segment register handling",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0642",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0642",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, unaff_SI initialization",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"unaff_SI initialization assumption\", \"segment register handling missing\", \"cosmetic differences\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0673",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0673",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "pointer arithmetic uses signed subtraction, external variable naming",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0e57",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_0e57",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_14c4",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_14c4",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_1eee",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_1eee",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "- Incorrect arithmetic operation on `*(int *)0xd8`;",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_1f27",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_1f27",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_23c0",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_23c0",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Inconsistent parameter list (missing `unaff_ES`),",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_24ba",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_24ba",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- CONCAT11 and CONCAT22 not directly translated; replaced with bit shifts and ORs;",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_2e94",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_2e94",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, missing PUSH/POP operations, and incorrect handling of segment registers.",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_2fcd",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_2fcd",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3117",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3117",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, missing operations",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_32a9",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_32a9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_350e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_350e",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory access calculation, missing INC SI and DEC SI instructions",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "segment calculation differs, unneeded segment shift, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_35d4",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_35d4",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3639",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3639",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, minor control flow discrepancy",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_36b7",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_36b7",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_36bc",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_36bc",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_36c4",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_36c4",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3711",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3711",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "function signature mismatch, missing far pointer handling, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_374d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_374d",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3899",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3899",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing segment register handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_38f0",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_38f0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3930",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3930",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Trivial naming difference in parameter type (undefined4 vs uint16_t);",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3951",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3951",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_39c3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_39c3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_39ef",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_39ef",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3a4b",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3a4b",
+    "qwen": {
+      "score": 3,
+      "flaws": "in_CX initialization, stack0xfffe address, missing far call",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "in_CX initialization missing, stack0xfffe address placeholder, segment semantics not addressed",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_3a7f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3a7f",
+    "qwen": {
+      "score": 3,
+      "flaws": "out() placeholder, missing far call, contested",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Placeholder for I/O operation;",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_3adf",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3adf",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3b22",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3b22",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, missing far call.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3b5d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3b5d",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Two's complement conversion for constants",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3cb0",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3cb0",
+    "qwen": {
+      "score": 3,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Trivial naming differences (e.g., `swi_0x21` vs `swi(0x21)`).",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_3ce0",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3ce0",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3d2f",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3d2f",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, junk tokens",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3d68",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3d68",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3d80",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3d80",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "parameter mismatch, trivial naming difference",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3e63",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3e63",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing far pointer semantics, cosmetic differences in variable types, missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3e7c",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3e7c",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing parameter type for in_AX, missing segment register handling, cosmetic differences in loop syntax",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3e95",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3e95",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "type size mismatch for uVar2, naming differences, missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3eaf",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3eaf",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- 16-bit far pointer semantics not preserved;",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3ed3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3ed3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3f14",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3f14",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3f86",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3f86",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3fb1",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3fb1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3fc3",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3fc3",
+    "qwen": {
+      "score": 4,
+      "flaws": "puVar3 != NULL check",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_3fde",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_3fde",
+    "qwen": {
+      "score": 4,
+      "flaws": "unaff_SS placeholder, trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_403d",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_403d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_40ac",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_40ac",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_40d6",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_40d6",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_40ec",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_40ec",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4141",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4141",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4161",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4161",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), different control flow",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_4181",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4181",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_455e",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_455e",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, missing return statement.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4654",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4654",
+    "qwen": {
+      "score": 3,
+      "flaws": "Different control flow, missing carry calculation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Use of uint32_t instead of long for lVar1;",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_46b1",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_46b1",
+    "qwen": {
+      "score": 3,
+      "flaws": "Different control flow, wrong core computation, contested",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_46e9",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_46e9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), far call missing",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "\"swi(0x21) replaced with direct assignment\", \"in_CX and extraout_DX not set\", \"contested register handling\"",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_46f6",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_46f6",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing segment register handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing parameter type for unaff_DI, missing segment register handling, cosmetic differences in variable names",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4712",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4712",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4732",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4732",
+    "qwen": {
+      "score": 3,
+      "flaws": "Different handling of hexadecimal digits, incorrect carry calculation, missing far call handling.",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_47d9",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_47d9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_4824",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4824",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_489c",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_489c",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), dropping a far call",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_48e1",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_48e1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4905",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_24dd_4905",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2971_65df",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_2971_65df",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2971_67f6",
+    "model": "phi4:14b",
+    "key": "phi4:14b|FUN_2971_67f6",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_05a4",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_05a4",
+    "qwen": {
+      "score": 4,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0961",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_0961",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": null,
+      "flaws": "",
+      "confidence": "?"
+    },
+    "verdict": "judge-error"
+  },
+  {
+    "fn": "FUN_1000_0be1",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_0be1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0c7f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_0c7f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_0d70",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_0d70",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_a816",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_a816",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far calls, incorrect stack operations",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "low"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1000_a8f7",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_a8f7",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_b28f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_b28f",
+    "qwen": {
+      "score": 3,
+      "flaws": "Missing far call, incorrect stack manipulation, incorrect local variable usage.",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1000_b3fe",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1000_b3fe",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1e7d_018a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1e7d_018a",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_0000",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ea2_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_0104",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ea2_0104",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_01a8",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ea2_01a8",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_01f0",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ea2_01f0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0000",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0018",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0018",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_00a5",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_00a5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_01df",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_01df",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0734",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0734",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0810",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0810",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_086b",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_086b",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_09bd",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_09bd",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0ae3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0ae3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0c11",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0c11",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0c3b",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0c3b",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0d5d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0d5d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0d88",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0d88",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0dc8",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0dc8",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "pointer type casting, segment register usage not represented, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0e06",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0e06",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0e4a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0e4a",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0e8f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0e8f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0f44",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_0f44",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_1008",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_1008",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_10cf",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_10cf",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_10ea",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_10ea",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_11b5",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_11b5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_12ad",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_12ad",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13a4",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_13a4",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"literal multiplication instead of swi\", \"missing stack manipulation\", \"no segment handling\"",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_13b0",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_13b0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "type mismatch in parameters, 16-bit context not explicitly handled",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13c5",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_13c5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13d3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_13d3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_13e9",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_13e9",
+    "qwen": {
+      "score": 3,
+      "flaws": "Incorrect loop initialization, missing far call, incorrect handling of `param_6`",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1ec2_152f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_152f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_155e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_155e",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_15bb",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_15bb",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_1619",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_1ec2_1619",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_032d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_202c_032d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_04d5",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_202c_04d5",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0673",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_202c_0673",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0706",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_202c_0706",
+    "qwen": {
+      "score": 4,
+      "flaws": "unaff_SS, unaff_DS not used; hardcoded 0 instead of unaff_SS",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0843",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_202c_0843",
+    "qwen": {
+      "score": 4,
+      "flaws": "unaff_SS, unaff_DS",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_0a74",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_202c_0a74",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0000",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_001a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_001a",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Return type mismatch (undefined1 vs uint8_t);",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0036",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0036",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_032e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_032e",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0340",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0340",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0361",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0361",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0372",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0372",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_03a1",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_03a1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": null,
+      "flaws": "",
+      "confidence": "?"
+    },
+    "verdict": "judge-error"
+  },
+  {
+    "fn": "FUN_235c_045d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_045d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0482",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0482",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing unaff_DS in FUN_2494_0027 call; uint8_t instead of undefined1; missing PUSH DS",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_04a2",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_04a2",
+    "qwen": {
+      "score": 4,
+      "flaws": "Different type casting in memory access",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing far pointer semantics; type casting differences; missing segment register",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_04bc",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_04bc",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, lack of segment register handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "parameter list mismatch, uint32_t instead of uint, missing segment registers",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_04f3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_04f3",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory addresses",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect memory addressing; dropped far call; junk tokens",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_06d7",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_06d7",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_08e4",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_08e4",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_091d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_091d",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory address calculation, missing far pointer handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_095c",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_095c",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory access calculation, missing far call, junk tokens",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_09eb",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_09eb",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0a1e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0a1e",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0a51",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0a51",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0aad",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0aad",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0ad3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0ad3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0aeb",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0aeb",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing unaff_DS parameter; trivial naming differences; no segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_0aff",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0aff",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"CARRY2 vs. > 0xffff\", \"CONCAT22 vs. bit manipulation\", \"semantic equivalence of carry\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0b33",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0b33",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, missing far call.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"unnecessary call with zero parameter\"; \"unnamed parameter in second call\"; \"unnamed parameter in assembly\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0b7c",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0b7c",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_0f1d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_0f1d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_10a3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_10a3",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), incorrect handling of far pointers, missing far call",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "low"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_1162",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_1162",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_118c",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_118c",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing near calling convention, missing segment register, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_11aa",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_11aa",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Unsigned integer type used instead of signed;",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_11db",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_11db",
+    "qwen": {
+      "score": 2,
+      "flaws": "far call missing",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "address calculation difference, segment register not used, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_11ef",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_11ef",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_131a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_131a",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_1345",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_1345",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_135f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_235c_135f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "type mismatch (undefined1 vs uint8_t), no segment register usage",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2494_0010",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2494_0010",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect handling of `swi(0x2f)`, missing far call, junk tokens",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "\"swi(0x2f) translation unclear; missing unaff_DS; missing in_BX assignment\"",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2494_001e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2494_001e",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "function return type mismatch, missing segment register handling, function pointer type mismatch",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2494_0027",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2494_0027",
+    "qwen": {
+      "score": 2,
+      "flaws": "far call missing",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect function pointer calculation; missing segment register handling; junk token multiplication",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2494_003d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2494_003d",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "pointer arithmetic, segment register omission, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2494_0050",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2494_0050",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "pointer arithmetic error; incorrect function call; missing segment handling",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2494_0060",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2494_0060",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_249c_0000",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_249c_0000",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"literal multiplication instead of swi\", \"missing segment handling\", \"cosmetic differences\"",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_249c_0013",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_249c_0013",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_249c_0037",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_249c_0037",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), missing far call, incorrect handling of segmented memory access.",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_249c_0159",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_249c_0159",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"swi replaced with direct calculation\", \"segmented semantics not addressed\", \"cosmetic differences\"",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_249c_01c3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_249c_01c3",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "replaced swi with direct address calculation; missing far call; junk tokens not present",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24ba_0090",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24ba_0090",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"unaff_DS replaced with 0\", \"segmented semantics not explicitly handled\", \"trivial naming differences\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24ba_00c4",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24ba_00c4",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24ba_00d8",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24ba_00d8",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory access calculation, missing far call, junk tokens",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "address calculation difference, missing far pointer semantics, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24cb_0000",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24cb_0000",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), dropping a far call",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24cb_003e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24cb_003e",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens, different control flow",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "replaced swi with multiplication; missing segment handling; junk token issue",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24cb_007c",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24cb_007c",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"volatile keyword usage\", \"no explicit segment register handling\", \"trivial naming differences\"",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24cb_0094",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24cb_0094",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect interrupt handling; missing stack operations; junk token usage",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_00b1",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_00b1",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "address calculation error; missing segment handling; junk token equivalent",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0116",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0116",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), incorrect handling of far pointers, missing far call.",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "low"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_01f0",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_01f0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_020a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_020a",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "control flow mismatch, arithmetic operation order, memory access representation",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_0218",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0218",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "\"swi replaced with direct pointer calculation\", \"segmented addressing not considered\", \"cosmetic differences in function calls\"",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_021f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_021f",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "segment register handling missing; swi replaced with multiplication; contested control flow",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_022a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_022a",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect address calculation; missing system call; junk token handling",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0232",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0232",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "incorrect address calculation; missing INT 0x21; contested",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_028a",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_028a",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "volatile assembly usage, CF register handling, naming differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_029f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_029f",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "volatile assembly usage, in_CF vs cf naming, volatile inline assembly",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_02b9",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_02b9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory access addresses",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect memory addresses; dropped far call; junk tokens",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_02cb",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_02cb",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "parameter type mismatch, missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0303",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0303",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_041e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_041e",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, missing segment register handling.",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_047d",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_047d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_04dc",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_04dc",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "control flow mismatch, arithmetic operations incorrect, missing CONCAT22 semantics",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_04ed",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_04ed",
+    "qwen": {
+      "score": 2,
+      "flaws": "far call dropped",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "address calculation error; segment register ignored; contested",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_04f4",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_04f4",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect memory access address, missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect memory access calculation; junk token (0x24dd * 16 + 0x04f4); dropped far pointer semantics",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0548",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0548",
+    "qwen": {
+      "score": 4,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "address calculation difference; segment register omission; cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0582",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0582",
+    "qwen": {
+      "score": 2,
+      "flaws": "incorrect pointer calculation, missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "- Address calculation error;",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_05e8",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_05e8",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect pointer calculation, missing far call, junk tokens",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "pointer arithmetic error; unaff_DI and unaff_ES not initialized; missing segment handling",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_05fd",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_05fd",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "variable naming differences, missing segment register usage, type casting difference",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_060f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_060f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "variable naming differences, missing segment register usage, missing segment register initialization",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0642",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0642",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect calculation of `puVar4`, missing far pointer handling",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "address calculation error; segment register handling missing; junk tokens not present",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0673",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_0673",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "naming differences, missing segment register handling, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_14c4",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_14c4",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_1519",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_1519",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing carry handling in some operations.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_1eee",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_1eee",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far call, incorrect memory access",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "segment register usage, unaff_DS not used, unaff_SI not used",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_2361",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_2361",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_23c0",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_23c0",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_24ba",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_24ba",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, minor arithmetic discrepancy",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "parameter list mismatch, missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_2e94",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_2e94",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_2fcd",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_2fcd",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3117",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3117",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_32a9",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_32a9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "incorrect address calculation; missing CLI; missing RETF",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_350e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_350e",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences (bp, si, ss), INC SI and DEC SI not reflected",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "segment calculation differs; variable naming; contested reference clarity",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_3639",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3639",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_36b7",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_36b7",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_36bc",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_36bc",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3711",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3711",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing far call, incorrect memory access calculation",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Segment register handling missing; uses direct addressing instead of far pointers.",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_37ec",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_37ec",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_38f0",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_38f0",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3930",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3930",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "- Incorrect handling of far pointer arithmetic;",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3951",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3951",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect memory access calculation; missing segmented memory semantics; junk tokens not present",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3988",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3988",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_39c3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_39c3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_39ef",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_39ef",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3a4b",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3a4b",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Variable naming difference (in_CX vs cx)",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3adf",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3adf",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing far pointer semantics, missing __stdcall16far, cosmetic differences",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3b22",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3b22",
+    "qwen": {
+      "score": 4,
+      "flaws": "Trivial naming differences, use of `uint16_t` instead of `byte`",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3c03",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3c03",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "indirect addressing mismatch, segment registers missing, contested**",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3d2f",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3d2f",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing XCHG operation; BX not initialized; 16-bit semantics assumed",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3d36",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3d36",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Unsigned integer type mismatch (uint32_t vs. uint)",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3d68",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3d68",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3d80",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3d80",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3e7c",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3e7c",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3e95",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3e95",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3eaf",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3eaf",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3ed3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3ed3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3f14",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3f14",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3f86",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3f86",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3fb1",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3fb1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_3fc3",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_3fc3",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing increment of puVar3 in loop initialization, cosmetic differences in loop decrement",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_40d6",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_40d6",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_40ec",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_40ec",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4141",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_4141",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4161",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_4161",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "missing far call, incorrect bit manipulation, contested control flow",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_24dd_462e",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_462e",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4654",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_4654",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing carry calculation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_46e9",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_46e9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x)",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "software interrupt handling missing; placeholder values used; direct memory access preserved",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_46f6",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_46f6",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Parameter mismatch (in_AX, in_DX, unaff_DI not passed as parameters in reference),",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_47d9",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_47d9",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (stack0xfffe), different control flow",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_48e1",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_48e1",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4905",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_4905",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_4919",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_4919",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_492c",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_24dd_492c",
+    "qwen": {
+      "score": 2,
+      "flaws": "Incorrect pointer calculation, missing far pointer handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect memory address calculation; missing segment register handling; junk token in address calculation",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_2971_65df",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2971_65df",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2971_67f6",
+    "model": "qwen2.5-coder:14b",
+    "key": "qwen2.5-coder:14b|FUN_2971_67f6",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  }
+]

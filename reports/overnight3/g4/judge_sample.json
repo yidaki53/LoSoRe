@@ -1,0 +1,562 @@
+[
+  {
+    "fn": "FUN_1000_05a4",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing far call in candidate.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1000_0d70",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1000_b3fe",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ea2_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0018",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_0810",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0c3b",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_1ec2_0e4a",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_10ea",
+    "qwen": {
+      "score": 3,
+      "flaws": "local_30e calculation wrong, missing far call, junk tokens",
+      "confidence": "medium"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_1ec2_13b0",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "missing memory copy operation; type mismatch (undefined4 vs uint16_t); 16-bit semantics not preserved",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_1ec2_155e",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_202c_0673",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_202c_093b",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "medium"
+    },
+    "verdict": "contested"
+  },
+  {
+    "fn": "FUN_235c_0000",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0361",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_04a2",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "- Casting to `char` instead of `undefined1` for the zero check and assignment;",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_091d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0aad",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_235c_0b7c",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_11aa",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_235c_135f",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "type casting from undefined2 to uint8_t, cosmetic differences in pointer syntax",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_2494_003d",
+    "qwen": {
+      "score": 2,
+      "flaws": "wrong core computation, dropping a far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_249c_0037",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens (swi/SBORROW/CONCAT/stack0x), missing far call, incorrect handling of segmented memory access.",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 3,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24ba_0090",
+    "qwen": {
+      "score": 2,
+      "flaws": "Missing `unaff_DS` parameter, incorrect function calling conventions, incorrect function calls.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24cb_0058",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_010f",
+    "qwen": {
+      "score": 2,
+      "flaws": "Junk tokens, dropping a far call",
+      "confidence": "low"
+    },
+    "phi": {
+      "score": 1,
+      "flaws": "unrelated function; no semantic match; missing control flow",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_0218",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 1,
+      "flaws": "unrelated function, missing calls, missing swi",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_029f",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming/cosmetic differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "volatile assembly usage, in_CF vs cf naming, volatile inline assembly",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_047d",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0548",
+    "qwen": {
+      "score": 5,
+      "flaws": "None",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_0628",
+    "qwen": {
+      "score": 2,
+      "flaws": "far call, wrong pointer arithmetic, missing segment register handling",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_1519",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing carry handling in some operations.",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_23c0",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "missing parameter unaff_ES, missing CONCAT22 operation, parameter in_DX not used",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_31a6",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "missing floating-point operations; incorrect control flow; missing memory write",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3639",
+    "qwen": {
+      "score": 4,
+      "flaws": "Naming differences, missing far call",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  },
+  {
+    "fn": "FUN_24dd_374d",
+    "qwen": {
+      "score": 2,
+      "flaws": "far call missing, incorrect function pointer usage, junk tokens",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "**",
+      "confidence": "medium"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3951",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 2,
+      "flaws": "incorrect condition check; wrong function call; missing segment register handling",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_39ef",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 5,
+      "flaws": "none",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3b5d",
+    "qwen": {
+      "score": 2,
+      "flaws": "Different control flow, wrong core computation",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 1,
+      "flaws": "unrelated function; no control flow match; missing parameters",
+      "confidence": "high"
+    },
+    "verdict": "junk"
+  },
+  {
+    "fn": "FUN_24dd_3ce0",
+    "qwen": {
+      "score": 4,
+      "flaws": "trivial naming differences",
+      "confidence": "high"
+    },
+    "phi": {
+      "score": 4,
+      "flaws": "**",
+      "confidence": "high"
+    },
+    "verdict": "real"
+  }
+]

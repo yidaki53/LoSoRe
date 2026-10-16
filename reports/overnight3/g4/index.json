@@ -1,0 +1,13 @@
+{
+  "generated": "2026-10-16",
+  "n": 235,
+  "of_total": 294,
+  "verdicts": {
+    "contested": 7,
+    "judge-error": 1,
+    "real": 64,
+    "not-judged": 138,
+    "junk": 25
+  },
+  "methods": "see REPORT3.md"
+}
