@@ -1,0 +1,13 @@
+; FUN_249c_0180  entry=249c:0180 size=29
+249c:0180  ENTER 0x2,0x0
+249c:0184  MOV AH,0xb
+249c:0186  INT 0x21
+249c:0188  MOV byte ptr [BP + 0xfffe],AL
+249c:018c  CMP byte ptr [BP + -0x2],0xff
+249c:0190  MOV AL,0x0
+249c:0192  JNZ 0x2000:4b55
+249c:0194  INC AX
+249c:0195  MOV byte ptr [BP + -0x1],AL
+249c:0198  MOV AL,byte ptr [BP + -0x1]
+249c:019b  LEAVE
+249c:019c  RETF

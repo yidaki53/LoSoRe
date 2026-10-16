@@ -1,0 +1,33 @@
+; FUN_24dd_489c  entry=24dd:489c size=69
+24dd:489c  MOV BX,SP
+24dd:489e  LES DI,SS:[BX + 0x6]
+24dd:48a2  CMP word ptr ES:[DI + 0x2],0xd7b3
+24dd:48a8  JNZ 0x2000:96a5
+24dd:48aa  XOR CX,CX
+24dd:48ac  XOR DX,DX
+24dd:48ae  MOV BX,word ptr ES:[DI]
+24dd:48b1  MOV AX,0x4201
+24dd:48b4  INT 0x21
+24dd:48b6  PUSH DX
+24dd:48b7  PUSH AX
+24dd:48b8  XOR CX,CX
+24dd:48ba  XOR DX,DX
+24dd:48bc  MOV BX,word ptr ES:[DI]
+24dd:48bf  MOV AX,0x4202
+24dd:48c2  INT 0x21
+24dd:48c4  POP BX
+24dd:48c5  POP CX
+24dd:48c6  PUSH DX
+24dd:48c7  PUSH AX
+24dd:48c8  MOV DX,BX
+24dd:48ca  MOV BX,word ptr ES:[DI]
+24dd:48cd  MOV AX,0x4200
+24dd:48d0  INT 0x21
+24dd:48d2  POP CX
+24dd:48d3  POP BX
+24dd:48d4  RET
+24dd:48d5  MOV word ptr [0x6410],0x67
+24dd:48db  XOR AX,AX
+24dd:48dd  XOR DX,DX
+24dd:48df  STC
+24dd:48e0  RET

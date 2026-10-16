@@ -1,0 +1,47 @@
+; FUN_24dd_3fde  entry=24dd:3fde size=95
+24dd:3fde  PUSH BP
+24dd:3fdf  MOV BP,SP
+24dd:3fe1  SUB SP,0x200
+24dd:3fe5  CMP word ptr [BP + 0x6],0x1
+24dd:3fe9  JGE 0x2000:8dc0
+24dd:3feb  MOV word ptr [BP + 0x6],0x1
+24dd:3ff0  LEA DI,[BP + 0xff00]
+24dd:3ff4  PUSH SS
+24dd:3ff5  PUSH DI
+24dd:3ff6  LES DI,[BP + 0xa]
+24dd:3ff9  PUSH ES
+24dd:3ffa  PUSH DI
+24dd:3ffb  MOV AX,0x1
+24dd:3ffe  PUSH AX
+24dd:3fff  MOV AX,word ptr [BP + 0x6]
+24dd:4002  DEC AX
+24dd:4003  PUSH AX
+24dd:4004  PUSH CS
+24dd:4005  CALL 0x2000:8ca3
+24dd:4008  LES DI,[BP + 0xe]
+24dd:400b  PUSH ES
+24dd:400c  PUSH DI
+24dd:400d  PUSH CS
+24dd:400e  CALL 0x2000:8ce4
+24dd:4011  LEA DI,[BP + 0xfe00]
+24dd:4015  PUSH SS
+24dd:4016  PUSH DI
+24dd:4017  LES DI,[BP + 0xa]
+24dd:401a  PUSH ES
+24dd:401b  PUSH DI
+24dd:401c  PUSH word ptr [BP + 0x6]
+24dd:401f  MOV AX,0xff
+24dd:4022  PUSH AX
+24dd:4023  PUSH CS
+24dd:4024  CALL 0x2000:8ca3
+24dd:4027  PUSH CS
+24dd:4028  CALL 0x2000:8ce4
+24dd:402b  LES DI,[BP + 0xa]
+24dd:402e  PUSH ES
+24dd:402f  PUSH DI
+24dd:4030  PUSH word ptr [BP + 0x8]
+24dd:4033  PUSH CS
+24dd:4034  CALL 0x2000:8c7f
+24dd:4037  MOV SP,BP
+24dd:4039  POP BP
+24dd:403a  RETF 0xc

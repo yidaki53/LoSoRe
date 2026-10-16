@@ -1,0 +1,14 @@
+; FUN_249c_0013  entry=249c:0013 size=36
+249c:0013  PUSH BP
+249c:0014  MOV BP,SP
+249c:0016  MOV DI,word ptr [BP + 0x4]
+249c:0019  MOV AL,byte ptr SS:[DI + 0xfefc]
+249c:001e  XOR AH,AH
+249c:0020  MOV DX,AX
+249c:0022  MOV AL,byte ptr SS:[DI + 0xfefb]
+249c:0027  XOR AH,AH
+249c:0029  SHL AX,0x4
+249c:002c  ADD AX,DX
+249c:002e  MOV byte ptr SS:[DI + 0xfefd],AL
+249c:0033  LEAVE
+249c:0034  RET 0x2

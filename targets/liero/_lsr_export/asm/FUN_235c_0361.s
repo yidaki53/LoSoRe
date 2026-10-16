@@ -1,0 +1,7 @@
+; FUN_235c_0361  entry=235c:0361 size=17
+235c:0361  ENTER 0x2,0x0
+235c:0365  CALLF 0x2000:495e
+235c:036a  MOV word ptr [BP + -0x2],AX
+235c:036d  MOV AX,word ptr [BP + -0x2]
+235c:0370  LEAVE
+235c:0371  RETF

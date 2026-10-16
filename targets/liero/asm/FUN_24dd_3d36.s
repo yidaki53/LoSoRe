@@ -1,0 +1,25 @@
+; FUN_24dd_3d36  entry=24dd:3d36 size=50
+24dd:3d36  MOV ES,word ptr [0x640c]
+24dd:3d3a  MOV DI,0x80
+24dd:3d3d  MOV CL,byte ptr ES:[DI]
+24dd:3d40  XOR CH,CH
+24dd:3d42  INC DI
+24dd:3d43  XOR BX,BX
+24dd:3d45  JCXZ 0x2000:8b20
+24dd:3d47  CMP byte ptr ES:[DI],0x20
+24dd:3d4b  JA 0x2000:8b20
+24dd:3d4d  INC DI
+24dd:3d4e  LOOP 0x2000:8b17
+24dd:3d50  MOV SI,DI
+24dd:3d52  JCXZ 0x2000:8b2d
+24dd:3d54  CMP byte ptr ES:[DI],0x20
+24dd:3d58  JBE 0x2000:8b2d
+24dd:3d5a  INC DI
+24dd:3d5b  LOOP 0x2000:8b24
+24dd:3d5d  MOV AX,DI
+24dd:3d5f  SUB AX,SI
+24dd:3d61  JZ 0x2000:8b37
+24dd:3d63  INC BX
+24dd:3d64  DEC DX
+24dd:3d65  JNZ 0x2000:8b15
+24dd:3d67  RET

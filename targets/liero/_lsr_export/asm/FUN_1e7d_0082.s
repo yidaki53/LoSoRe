@@ -1,0 +1,102 @@
+; FUN_1e7d_0082  entry=1e7d:0082 size=256
+1e7d:0082  ENTER 0x406,0x0
+1e7d:0086  MOV BX,SS
+1e7d:0088  MOV BX,ES
+1e7d:008a  MOV BX,DS
+1e7d:008c  CLD
+1e7d:008d  LEA DI,[BP + 0xfefe]
+1e7d:0091  LDS SI,[BP + 0x8]
+1e7d:0094  LODSB SI
+1e7d:0095  STOSB ES:DI
+1e7d:0096  XCHG AX,CX
+1e7d:0097  XOR CH,CH
+1e7d:0099  MOVSB.REP ES:DI,SI
+1e7d:009b  MOV BX,DS
+1e7d:009d  LEA DI,[BP + 0xfefe]
+1e7d:00a1  PUSH SS
+1e7d:00a2  PUSH DI
+1e7d:00a3  LEA DI,[BP + 0xfdfe]
+1e7d:00a7  PUSH SS
+1e7d:00a8  PUSH DI
+1e7d:00a9  PUSH 0xff
+1e7d:00ac  CALLF 0x2000:8c7f
+1e7d:00b1  LEA DI,[BP + 0xfcfa]
+1e7d:00b5  PUSH SS
+1e7d:00b6  PUSH DI
+1e7d:00b7  MOV AL,byte ptr [BP + 0x6]
+1e7d:00ba  PUSH AX
+1e7d:00bb  CALLF 0x2000:8d81
+1e7d:00c0  LEA DI,[BP + 0xfdfe]
+1e7d:00c4  PUSH SS
+1e7d:00c5  PUSH DI
+1e7d:00c6  CALLF 0x2000:8d10
+1e7d:00cb  OR AX,AX
+1e7d:00cd  JNZ 0x1000:e8a2
+1e7d:00cf  JMP 0x1000:e946
+1e7d:00d2  LEA DI,[BP + 0xfdfe]
+1e7d:00d6  PUSH SS
+1e7d:00d7  PUSH DI
+1e7d:00d8  PUSH 0x1
+1e7d:00da  LEA DI,[BP + 0xfbfa]
+1e7d:00de  PUSH SS
+1e7d:00df  PUSH DI
+1e7d:00e0  MOV AL,byte ptr [BP + 0x6]
+1e7d:00e3  PUSH AX
+1e7d:00e4  CALLF 0x2000:8d81
+1e7d:00e9  LEA DI,[BP + 0xfdfe]
+1e7d:00ed  PUSH SS
+1e7d:00ee  PUSH DI
+1e7d:00ef  CALLF 0x2000:8d10
+1e7d:00f4  PUSH AX
+1e7d:00f5  CALLF 0x2000:8e0d
+1e7d:00fa  LEA DI,[BP + 0xfdfe]
+1e7d:00fe  PUSH SS
+1e7d:00ff  PUSH DI
+1e7d:0100  LEA DI,[BP + 0xfcf8]
+1e7d:0104  PUSH SS
+1e7d:0105  PUSH DI
+1e7d:0106  MOV DI,0x7e
+1e7d:0109  PUSH CS
+1e7d:010a  PUSH DI
+1e7d:010b  CALLF 0x2000:8c65
+1e7d:0110  LEA DI,[BP + 0xfdfe]
+1e7d:0114  PUSH SS
+1e7d:0115  PUSH DI
+1e7d:0116  CALLF 0x2000:8d10
+1e7d:011b  PUSH AX
+1e7d:011c  PUSH 0xff
+1e7d:011f  CALLF 0x2000:8e0d
+1e7d:0124  CMP byte ptr [BP + 0x4],0x0
+1e7d:0128  JZ 0x1000:e91a
+1e7d:012a  LEA DI,[BP + 0xfcf8]
+1e7d:012e  PUSH SS
+1e7d:012f  PUSH DI
+1e7d:0130  MOV DI,0x80
+1e7d:0133  PUSH CS
+1e7d:0134  PUSH DI
+1e7d:0135  CALLF 0x2000:8c65
+1e7d:013a  LEA DI,[BP + 0xfdfe]
+1e7d:013e  PUSH SS
+1e7d:013f  PUSH DI
+1e7d:0140  PUSH 0xff
+1e7d:0143  PUSH 0x1
+1e7d:0145  CALLF 0x2000:8dae
+1e7d:014a  LEA DI,[BP + 0xfdfe]
+1e7d:014e  PUSH SS
+1e7d:014f  PUSH DI
+1e7d:0150  LEA DI,[BP + 0xfdfa]
+1e7d:0154  PUSH SS
+1e7d:0155  PUSH DI
+1e7d:0156  CALLF 0x2000:95f4
+1e7d:015b  MOV word ptr [BP + 0xfdfc],AX
+1e7d:015f  CMP word ptr [BP + 0xfdfa],0x0
+1e7d:0164  JNZ 0x1000:e93f
+1e7d:0166  MOV AX,word ptr [BP + 0xfdfc]
+1e7d:016a  MOV word ptr [BP + -0x2],AX
+1e7d:016d  JMP 0x1000:e944
+1e7d:016f  MOV word ptr [BP + -0x2],0xff
+1e7d:0174  JMP 0x1000:e94b
+1e7d:0176  MOV word ptr [BP + -0x2],0xff
+1e7d:017b  MOV AX,word ptr [BP + -0x2]
+1e7d:017e  LEAVE
+1e7d:017f  RET 0x8

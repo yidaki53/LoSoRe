@@ -1,0 +1,95 @@
+; FUN_1000_0ac7  entry=1000:0ac7 size=282
+1000:0ac7  PUSH BP
+1000:0ac8  MOV BP,SP
+1000:0aca  MOV AX,0x6
+1000:0acd  CALLF 0x2000:5300
+1000:0ad2  SUB SP,0x6
+1000:0ad5  MOV word ptr [BP + -0x2],0x1
+1000:0ada  IMUL AX,word ptr [BP + -0x2],0xe
+1000:0ade  LES DI,[0x6698]
+1000:0ae2  ADD DI,AX
+1000:0ae4  CMP byte ptr ES:[DI + -0x2],0x0
+1000:0ae9  JBE 0x1000:0afa
+1000:0aeb  MOV AL,[0x669c]
+1000:0aee  XOR AH,AH
+1000:0af0  CMP AX,word ptr [BP + -0x2]
+1000:0af3  JL 0x1000:0afa
+1000:0af5  INC word ptr [BP + -0x2]
+1000:0af8  JMP 0x1000:0ada
+1000:0afa  MOV AL,[0x669c]
+1000:0afd  XOR AH,AH
+1000:0aff  CMP AX,word ptr [BP + -0x2]
+1000:0b02  JGE 0x1000:0b07
+1000:0b04  JMP 0x1000:0bdf
+1000:0b07  IMUL AX,word ptr [BP + -0x2],0xe
+1000:0b0b  LES DI,[0x6698]
+1000:0b0f  ADD DI,AX
+1000:0b11  ADD DI,0xfff2
+1000:0b15  MOV word ptr [BP + -0x6],DI
+1000:0b18  MOV word ptr [BP + -0x4],ES
+1000:0b1b  PUSH 0x2
+1000:0b1d  CALLF 0x2000:9424
+1000:0b22  INC AX
+1000:0b23  LES DI,[BP + -0x6]
+1000:0b26  MOV byte ptr ES:[DI + 0xc],AL
+1000:0b2a  MOV AL,byte ptr ES:[DI + 0xc]
+1000:0b2e  XOR AH,AH
+1000:0b30  MOV DI,AX
+1000:0b32  SHL DI,0x1
+1000:0b34  PUSH word ptr [DI + 0x1364]
+1000:0b38  CALLF 0x2000:9424
+1000:0b3d  MOV DX,AX
+1000:0b3f  LES DI,[BP + -0x6]
+1000:0b42  MOV AL,byte ptr ES:[DI + 0xc]
+1000:0b46  XOR AH,AH
+1000:0b48  MOV DI,AX
+1000:0b4a  SHL DI,0x1
+1000:0b4c  MOV AX,word ptr [DI + 0x1360]
+1000:0b50  ADD AX,DX
+1000:0b52  LES DI,[BP + -0x6]
+1000:0b55  MOV word ptr ES:[DI + 0xa],AX
+1000:0b59  MOV AL,byte ptr ES:[DI + 0xc]
+1000:0b5d  CMP AL,0x1
+1000:0b5f  JNZ 0x1000:0b93
+1000:0b61  PUSH 0x28
+1000:0b63  CALLF 0x2000:9424
+1000:0b68  INC AX
+1000:0b69  LES DI,[BP + -0x6]
+1000:0b6c  MOV byte ptr ES:[DI + 0xd],AL
+1000:0b70  LES DI,[BP + -0x6]
+1000:0b73  MOV AL,byte ptr ES:[DI + 0xd]
+1000:0b77  XOR AH,AH
+1000:0b79  MOV DI,AX
+1000:0b7b  CMP byte ptr [DI + 0x66af],0x2
+1000:0b80  JNZ 0x1000:0b93
+1000:0b82  PUSH 0x28
+1000:0b84  CALLF 0x2000:9424
+1000:0b89  INC AX
+1000:0b8a  LES DI,[BP + -0x6]
+1000:0b8d  MOV byte ptr ES:[DI + 0xd],AL
+1000:0b91  JMP 0x1000:0b70
+1000:0b93  LES DI,[BP + -0x6]
+1000:0b96  XOR AX,AX
+1000:0b98  MOV word ptr ES:[DI + 0x6],AX
+1000:0b9c  MOV word ptr ES:[DI + 0x8],AX
+1000:0ba0  PUSH 0x1f8
+1000:0ba3  CALLF 0x2000:9424
+1000:0ba8  LES DI,[BP + -0x6]
+1000:0bab  MOV word ptr ES:[DI],AX
+1000:0bae  PUSH 0x15e
+1000:0bb1  CALLF 0x2000:9424
+1000:0bb6  LES DI,[BP + -0x6]
+1000:0bb9  MOV word ptr ES:[DI + 0x4],AX
+1000:0bbd  PUSH word ptr ES:[DI]
+1000:0bc0  PUSH word ptr ES:[DI + 0x4]
+1000:0bc4  PUSH word ptr [BP + -0x2]
+1000:0bc7  CALL 0x1000:0961
+1000:0bca  OR AL,AL
+1000:0bcc  JZ 0x1000:0ba0
+1000:0bce  PUSH 0x8
+1000:0bd0  LES DI,[BP + -0x6]
+1000:0bd3  PUSH word ptr ES:[DI]
+1000:0bd6  PUSH word ptr ES:[DI + 0x4]
+1000:0bda  CALLF 0x2000:1e44
+1000:0bdf  LEAVE
+1000:0be0  RET

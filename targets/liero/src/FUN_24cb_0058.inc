@@ -1,0 +1,54 @@
+{ liero::FUN_24cb_0058 — game Pascal draft (oracle: none).
+  Drafted from asm/FUN_24cb_0058.s via skeleton; UNMATCHED until verify passes.
+  Original assembly retained in asm/FUN_24cb_0058.s (INCLUDE_ASM residue).
+  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+}
+// --- reference: Ghidra decompiler C (unmatched) ---
+// 
+// void __cdecl16near FUN_24cb_0058(void)
+// 
+// {
+//   byte *pbVar1;
+//   undefined2 in_AX;
+//   int iVar2;
+//   int iVar3;
+//   byte *pbVar4;
+//   int unaff_DI;
+//   byte *pbVar5;
+//   byte *pbVar6;
+//   undefined2 unaff_ES;
+//   undefined2 unaff_DS;
+//   bool in_CF;
+//   
+//   if (!in_CF) {
+//     pbVar5 = (byte *)(unaff_DI + 0x1e);
+//     iVar2 = 0x100;
+//     do {
+//       if (iVar2 == 0) break;
+//       iVar2 = iVar2 + -1;
+//       pbVar1 = pbVar5;
+//       pbVar5 = pbVar5 + 1;
+//     } while (*pbVar1 != 0);
+//     iVar3 = CONCAT11((char)((uint)iVar2 >> 8),~(byte)iVar2);
+//     pbVar6 = pbVar5;
+//     while( true ) {
+//       pbVar6 = pbVar6 + -1;
+//       pbVar4 = pbVar5 + -2;
+//       if (iVar3 == 0) break;
+//       iVar3 = iVar3 + -1;
+//       pbVar5 = pbVar5 + -1;
+//       *pbVar6 = *pbVar4;
+//     }
+//     *pbVar6 = ~(byte)iVar2;
+//     in_AX = 0;
+//   }
+//   *(undefined2 *)0x78ee = in_AX;
+//   return;
+// }
+// 
+// --- end reference ---
+procedure FUN_24cb_0058;
+begin
+  { TODO: translate from asm/FUN_24cb_0058.s — UNMATCHED until an oracle passes }
+end;
+

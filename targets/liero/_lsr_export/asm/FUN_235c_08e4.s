@@ -1,0 +1,20 @@
+; FUN_235c_08e4  entry=235c:08e4 size=57
+235c:08e4  PUSH BP
+235c:08e5  MOV BP,SP
+235c:08e7  CMP byte ptr [0x7688],0x0
+235c:08ec  JNZ 0x2000:3ebc
+235c:08ee  LES DI,[BP + 0x6]
+235c:08f1  LES DI,ES:[DI]
+235c:08f4  PUSH word ptr ES:[DI]
+235c:08f7  CALLF 0x2000:4990
+235c:08fc  LES DI,[BP + 0x6]
+235c:08ff  PUSH word ptr ES:[DI + 0x2]
+235c:0903  PUSH word ptr ES:[DI]
+235c:0906  PUSH 0xa
+235c:0908  CALLF 0x2000:506f
+235c:090d  LES DI,[BP + 0x6]
+235c:0910  XOR AX,AX
+235c:0912  MOV word ptr ES:[DI],AX
+235c:0915  MOV word ptr ES:[DI + 0x2],AX
+235c:0919  LEAVE
+235c:091a  RETF 0x4

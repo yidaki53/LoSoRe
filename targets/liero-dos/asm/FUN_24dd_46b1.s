@@ -1,0 +1,23 @@
+; FUN_24dd_46b1  entry=24dd:46b1 size=54
+24dd:46b1  MOV AX,[0x6412]
+24dd:46b4  MOV BX,word ptr [0x6414]
+24dd:46b8  MOV CX,AX
+24dd:46ba  MUL word ptr CS:[0x46e7]
+24dd:46bf  SHL CX,0x1
+24dd:46c1  SHL CX,0x1
+24dd:46c3  SHL CX,0x1
+24dd:46c5  ADD CH,CL
+24dd:46c7  ADD DX,CX
+24dd:46c9  ADD DX,BX
+24dd:46cb  SHL BX,0x1
+24dd:46cd  SHL BX,0x1
+24dd:46cf  ADD DX,BX
+24dd:46d1  ADD DH,BL
+24dd:46d3  MOV CL,0x5
+24dd:46d5  SHL BX,CL
+24dd:46d7  ADD DH,BL
+24dd:46d9  ADD AX,0x1
+24dd:46dc  ADC DX,0x0
+24dd:46df  MOV [0x6412],AX
+24dd:46e2  MOV word ptr [0x6414],DX
+24dd:46e6  RET

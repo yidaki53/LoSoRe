@@ -1,0 +1,10 @@
+; FUN_1ec2_13d3  entry=1ec2:13d3 size=22
+1ec2:13d3  PUSH BP
+1ec2:13d4  MOV BP,SP
+1ec2:13d6  LES DI,[BP + 0x6]
+1ec2:13d9  XOR AX,AX
+1ec2:13db  SHL EAX,0x10
+1ec2:13df  MOV CX,0x3e80
+1ec2:13e2  STOSD.REP ES:DI
+1ec2:13e5  LEAVE
+1ec2:13e6  RETF 0x4

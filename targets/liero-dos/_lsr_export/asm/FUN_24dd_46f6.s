@@ -1,0 +1,14 @@
+; FUN_24dd_46f6  entry=24dd:46f6 size=28
+24dd:46f6  MOV CX,DI
+24dd:46f8  MOV SI,0xa
+24dd:46fb  MOV BX,DX
+24dd:46fd  OR BX,BX
+24dd:46ff  JNS 0x2000:94e2
+24dd:4701  NEG BX
+24dd:4703  NEG AX
+24dd:4705  SBB BX,0x0
+24dd:4708  CALL 0x2000:94e2
+24dd:470b  DEC DI
+24dd:470c  MOV byte ptr ES:[DI],0x2d
+24dd:4710  INC CX
+24dd:4711  RET

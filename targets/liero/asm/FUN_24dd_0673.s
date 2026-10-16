@@ -1,0 +1,16 @@
+; FUN_24dd_0673  entry=24dd:0673 size=26
+24dd:0673  PUSH SI
+24dd:0674  PUSH DI
+24dd:0675  MOV SI,word ptr [0xd8]
+24dd:0679  LEA DI,[SI + -0xc]
+24dd:067c  MOV word ptr [0xd8],DI
+24dd:0680  CLD
+24dd:0681  PUSH ES
+24dd:0682  PUSH DS
+24dd:0683  POP ES
+24dd:0684  MOV CX,0x6
+24dd:0687  MOVSW.REP ES:DI,SI
+24dd:0689  POP ES
+24dd:068a  POP DI
+24dd:068b  POP SI
+24dd:068c  RET

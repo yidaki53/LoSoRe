@@ -1,0 +1,26 @@
+; FUN_24dd_3d80  entry=24dd:3d80 size=61
+24dd:3d80  CMP byte ptr [0x6420],0x2
+24dd:3d85  JC 0x2000:8b72
+24dd:3d87  SHL EAX,0x10
+24dd:3d8b  SHRD EAX,EDX,0x10
+24dd:3d90  SHL ECX,0x10
+24dd:3d94  SHRD ECX,EBX,0x10
+24dd:3d99  IMUL ECX
+24dd:3d9c  SHLD EDX,EAX,0x10
+24dd:3da1  RETF
+24dd:3da2  MOV SI,AX
+24dd:3da4  MOV DI,DX
+24dd:3da6  MUL CX
+24dd:3da8  PUSH AX
+24dd:3da9  PUSH DX
+24dd:3daa  MOV AX,SI
+24dd:3dac  MUL BX
+24dd:3dae  MOV BX,AX
+24dd:3db0  MOV AX,DI
+24dd:3db2  MUL CX
+24dd:3db4  MOV CX,AX
+24dd:3db6  POP DX
+24dd:3db7  POP AX
+24dd:3db8  ADD DX,BX
+24dd:3dba  ADD DX,CX
+24dd:3dbc  RETF

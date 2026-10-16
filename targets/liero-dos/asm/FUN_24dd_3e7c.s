@@ -1,0 +1,12 @@
+; FUN_24dd_3e7c  entry=24dd:3e7c size=25
+24dd:3e7c  CMP byte ptr [0x6420],0x2
+24dd:3e81  JC 0x2000:8c59
+24dd:3e83  SHLD DX,AX,CL
+24dd:3e86  SHL AX,CL
+24dd:3e88  RETF
+24dd:3e89  AND CX,0x1f
+24dd:3e8c  JZ 0x2000:8c64
+24dd:3e8e  SHL AX,0x1
+24dd:3e90  RCL DX,0x1
+24dd:3e92  LOOP 0x2000:8c5e
+24dd:3e94  RETF

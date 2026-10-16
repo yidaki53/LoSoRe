@@ -1,0 +1,8 @@
+; FUN_235c_135f  entry=235c:135f size=20
+235c:135f  PUSH BP
+235c:1360  MOV BP,SP
+235c:1362  MOV byte ptr [0x67fa],0x0
+235c:1367  MOV byte ptr [0x7688],0x0
+235c:136c  MOV byte ptr [0x7690],0x0
+235c:1371  LEAVE
+235c:1372  RETF

@@ -1,0 +1,11 @@
+; FUN_24cb_0094  entry=24cb:0094 size=19
+24cb:0094  PUSH BP
+24cb:0095  MOV BP,SP
+24cb:0097  PUSH DS
+24cb:0098  LDS DX,[BP + 0x6]
+24cb:009b  MOV AL,byte ptr [BP + 0xa]
+24cb:009e  MOV AH,0x25
+24cb:00a0  INT 0x21
+24cb:00a2  POP DS
+24cb:00a3  POP BP
+24cb:00a4  RETF 0x6

@@ -1,0 +1,43 @@
+; FUN_24dd_3899  entry=24dd:3899 size=87
+24dd:3899  CMP word ptr [0x6410],0x0
+24dd:389e  JNZ 0x2000:86b8
+24dd:38a0  CMP word ptr ES:[BX + 0x2],0xd7b2
+24dd:38a6  JNZ 0x2000:86b9
+24dd:38a8  MOV CX,word ptr ES:[BX + 0x4]
+24dd:38ac  MOV DI,word ptr ES:[BX + 0x8]
+24dd:38b0  SUB CX,DI
+24dd:38b2  SUB AX,CX
+24dd:38b4  JNC 0x2000:868a
+24dd:38b6  ADD CX,AX
+24dd:38b8  XOR AX,AX
+24dd:38ba  PUSH DS
+24dd:38bb  PUSH ES
+24dd:38bc  PUSH BX
+24dd:38bd  MOV DX,DS
+24dd:38bf  LES BX,ES:[BX + 0xc]
+24dd:38c3  ADD DI,BX
+24dd:38c5  CLD
+24dd:38c6  MOVSB.REP ES:DI,SI
+24dd:38c8  SUB DI,BX
+24dd:38ca  POP BX
+24dd:38cb  POP ES
+24dd:38cc  POP DS
+24dd:38cd  MOV word ptr ES:[BX + 0x8],DI
+24dd:38d1  CMP DI,word ptr ES:[BX + 0x4]
+24dd:38d5  JNZ 0x2000:86b4
+24dd:38d7  PUSH AX
+24dd:38d8  PUSH DX
+24dd:38d9  PUSH SI
+24dd:38da  PUSH ES
+24dd:38db  PUSH BX
+24dd:38dc  CALL 0x2000:873c
+24dd:38df  POP BX
+24dd:38e0  POP ES
+24dd:38e1  POP SI
+24dd:38e2  POP DX
+24dd:38e3  POP AX
+24dd:38e4  OR AX,AX
+24dd:38e6  JNZ 0x2000:8678
+24dd:38e8  RET
+24dd:38e9  MOV word ptr [0x6410],0x69
+24dd:38ef  RET

@@ -1,0 +1,21 @@
+; FUN_1ec2_152f  entry=1ec2:152f size=47
+1ec2:152f  PUSH BP
+1ec2:1530  MOV BP,SP
+1ec2:1532  LES DI,[BP + 0x12]
+1ec2:1535  MOV AL,byte ptr ES:[DI]
+1ec2:1538  MOV DX,0x3c7
+1ec2:153b  OUT DX,AL
+1ec2:153c  MOV DX,0x3c9
+1ec2:153f  IN AL,DX
+1ec2:1540  LES DI,[BP + 0xe]
+1ec2:1543  MOV byte ptr ES:[DI],AL
+1ec2:1546  MOV DX,0x3c9
+1ec2:1549  IN AL,DX
+1ec2:154a  LES DI,[BP + 0xa]
+1ec2:154d  MOV byte ptr ES:[DI],AL
+1ec2:1550  MOV DX,0x3c9
+1ec2:1553  IN AL,DX
+1ec2:1554  LES DI,[BP + 0x6]
+1ec2:1557  MOV byte ptr ES:[DI],AL
+1ec2:155a  LEAVE
+1ec2:155b  RETF 0x10

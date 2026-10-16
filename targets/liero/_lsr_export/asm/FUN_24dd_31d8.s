@@ -1,0 +1,25 @@
+; FUN_24dd_31d8  entry=24dd:31d8 size=42
+24dd:31d8  OR AL,AL
+24dd:31da  JZ 0x2000:7fce
+24dd:31dc  XOR CL,CL
+24dd:31de  MOV CH,AH
+24dd:31e0  MOV AH,DH
+24dd:31e2  AND AH,0x80
+24dd:31e5  ADD AX,0x3f7e
+24dd:31e8  OR DH,0x80
+24dd:31eb  PUSH AX
+24dd:31ec  PUSH DX
+24dd:31ed  PUSH BX
+24dd:31ee  PUSH CX
+24dd:31ef  XOR CX,CX
+24dd:31f1  PUSH CX
+24dd:31f2  MOV BX,SP
+24dd:31f4  INT 0x3c
+24dd:31f6  POP BX
+24dd:31f7  DAS
+24dd:31f8  INT 0x3d
+24dd:31fa  ADD SP,0xa
+24dd:31fd  RETF
+24dd:31fe  INT 0x35
+24dd:3200  OUT DX,AL
+24dd:3201  RETF

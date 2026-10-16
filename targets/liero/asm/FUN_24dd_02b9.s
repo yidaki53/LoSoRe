@@ -1,0 +1,9 @@
+; FUN_24dd_02b9  entry=24dd:02b9 size=18
+24dd:02b9  MOV BX,SP
+24dd:02bb  LES DI,SS:[BX + 0x4]
+24dd:02bf  CLD
+24dd:02c0  MOV AX,[0x63ee]
+24dd:02c3  STOSW ES:DI
+24dd:02c4  MOV AX,[0x63f0]
+24dd:02c7  STOSW ES:DI
+24dd:02c8  RETF 0x4

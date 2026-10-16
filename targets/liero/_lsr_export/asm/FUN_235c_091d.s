@@ -1,0 +1,22 @@
+; FUN_235c_091d  entry=235c:091d size=63
+235c:091d  ENTER 0x4,0x0
+235c:0921  MOV AL,byte ptr [BP + 0x4]
+235c:0924  XOR AH,AH
+235c:0926  MOV DI,AX
+235c:0928  MOV byte ptr [DI + 0x67fc],0x0
+235c:092d  MOV AL,byte ptr [BP + 0x4]
+235c:0930  XOR AH,AH
+235c:0932  IMUL DI,AX,0xa
+235c:0935  ADD DI,0x6804
+235c:0939  PUSH DS
+235c:093a  POP ES
+235c:093b  XOR AX,AX
+235c:093d  MOV word ptr ES:[DI],AX
+235c:0940  MOV word ptr ES:[DI + 0x2],AX
+235c:0944  MOV byte ptr ES:[DI + 0x4],0x0
+235c:0949  XOR AX,AX
+235c:094b  MOV word ptr ES:[DI + 0x5],AX
+235c:094f  MOV word ptr ES:[DI + 0x7],AX
+235c:0953  MOV byte ptr ES:[DI + 0x9],0x0
+235c:0958  LEAVE
+235c:0959  RET 0x2

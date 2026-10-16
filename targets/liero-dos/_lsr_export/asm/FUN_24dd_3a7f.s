@@ -1,0 +1,27 @@
+; FUN_24dd_3a7f  entry=24dd:3a7f size=58
+24dd:3a7f  PUSH BP
+24dd:3a80  MOV BP,SP
+24dd:3a82  SUB SP,0x40
+24dd:3a85  LES BX,[BP + 0x6]
+24dd:3a88  MOV AX,0x3aba
+24dd:3a8b  MOV CX,0x40
+24dd:3a8e  LEA DI,[BP + -0x40]
+24dd:3a91  MOV DX,SS
+24dd:3a93  CALL 0x2000:85bc
+24dd:3a96  MOV CX,DI
+24dd:3a98  LEA DI,[BP + -0x40]
+24dd:3a9b  SUB CX,DI
+24dd:3a9d  JZ 0x2000:8881
+24dd:3a9f  PUSH SS
+24dd:3aa0  POP ES
+24dd:3aa1  CALL 0x2000:82ea
+24dd:3aa4  JC 0x2000:8878
+24dd:3aa6  JCXZ 0x2000:8886
+24dd:3aa8  MOV word ptr [0x6410],0x6a
+24dd:3aae  INT 0x39
+24dd:3ab1  INT 0x35
+24dd:3ab3  OUT DX,AL
+24dd:3ab4  INT 0x3d
+24dd:3ab6  MOV SP,BP
+24dd:3ab8  POP BP
+24dd:3ab9  RETF

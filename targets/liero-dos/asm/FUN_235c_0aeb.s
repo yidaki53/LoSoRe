@@ -1,0 +1,11 @@
+; FUN_235c_0aeb  entry=235c:0aeb size=20
+235c:0aeb  PUSH BP
+235c:0aec  MOV BP,SP
+235c:0aee  MOV DI,0x6a58
+235c:0af1  PUSH DS
+235c:0af2  PUSH DI
+235c:0af3  PUSH 0x400
+235c:0af6  PUSH 0x0
+235c:0af8  CALLF 0x2000:96d5
+235c:0afd  LEAVE
+235c:0afe  RET

@@ -1,0 +1,21 @@
+; FUN_24dd_0303  entry=24dd:0303 size=53
+24dd:0303  MOV BX,0x31c
+24dd:0306  JMP 0x2000:50f3
+24dd:0323  MOV AX,[0x63f2]
+24dd:0326  MOV DX,word ptr [0x63f4]
+24dd:032a  SUB AX,word ptr [0x63ee]
+24dd:032e  SBB DX,word ptr [0x63f0]
+24dd:0332  AND AX,0xf
+24dd:0335  PUSH DS
+24dd:0336  MOV DI,word ptr [0x63f0]
+24dd:033a  LDS SI,[0x63f6]
+24dd:033e  CALL BX
+24dd:0340  POP DS
+24dd:0341  MOV CL,0x4
+24dd:0343  ROL DX,CL
+24dd:0345  MOV CX,DX
+24dd:0347  AND CL,0xf0
+24dd:034a  AND DX,0xf
+24dd:034d  ADD AX,CX
+24dd:034f  ADC DX,0x0
+24dd:0352  RETF

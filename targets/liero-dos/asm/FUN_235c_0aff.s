@@ -1,0 +1,21 @@
+; FUN_235c_0aff  entry=235c:0aff size=52
+235c:0aff  ENTER 0x4,0x0
+235c:0b03  LES DI,[BP + 0x4]
+235c:0b06  MOV AX,ES
+235c:0b08  XOR DX,DX
+235c:0b0a  MOV CX,0x10
+235c:0b0d  XOR BX,BX
+235c:0b0f  CALLF 0x2000:8b50
+235c:0b14  MOV CX,AX
+235c:0b16  MOV BX,DX
+235c:0b18  LES DI,[BP + 0x4]
+235c:0b1b  MOV AX,DI
+235c:0b1d  XOR DX,DX
+235c:0b1f  ADD AX,CX
+235c:0b21  ADC DX,BX
+235c:0b23  MOV word ptr [BP + -0x4],AX
+235c:0b26  MOV word ptr [BP + -0x2],DX
+235c:0b29  MOV AX,word ptr [BP + -0x4]
+235c:0b2c  MOV DX,word ptr [BP + -0x2]
+235c:0b2f  LEAVE
+235c:0b30  RET 0x4

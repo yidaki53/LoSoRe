@@ -1,0 +1,35 @@
+; FUN_202c_0000  entry=202c:0000 size=90
+202c:0000  ENTER 0x8,0x0
+202c:0004  MOV AX,word ptr [BP + 0xe]
+202c:0007  MOV DX,word ptr [BP + 0x10]
+202c:000a  SUB AX,word ptr [BP + 0x6]
+202c:000d  SBB DX,word ptr [BP + 0x8]
+202c:0010  MOV CX,AX
+202c:0012  MOV BX,DX
+202c:0014  CALLF 0x2000:8b50
+202c:0019  PUSH DX
+202c:001a  PUSH AX
+202c:001b  MOV AX,word ptr [BP + 0x12]
+202c:001e  MOV DX,word ptr [BP + 0x14]
+202c:0021  SUB AX,word ptr [BP + 0xa]
+202c:0024  SBB DX,word ptr [BP + 0xc]
+202c:0027  MOV CX,AX
+202c:0029  MOV BX,DX
+202c:002b  CALLF 0x2000:8b50
+202c:0030  POP CX
+202c:0031  POP BX
+202c:0032  ADD AX,CX
+202c:0034  ADC DX,BX
+202c:0036  MOV word ptr [BP + -0x8],AX
+202c:0039  MOV word ptr [BP + -0x6],DX
+202c:003c  INT 0x37
+202c:003e  INC SI
+202c:003f  CLC
+202c:0040  CALLF 0x2000:8079
+202c:0045  CALLF 0x2000:8019
+202c:004a  MOV word ptr [BP + -0x4],AX
+202c:004d  MOV word ptr [BP + -0x2],DX
+202c:0050  MOV AX,word ptr [BP + -0x4]
+202c:0053  MOV DX,word ptr [BP + -0x2]
+202c:0056  LEAVE
+202c:0057  RETF 0x10

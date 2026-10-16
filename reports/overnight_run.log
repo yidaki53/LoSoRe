@@ -1,0 +1,378 @@
+[overnight 18:35:23] overnight start: phases=['e1', 'e5', 'e2', 'e3', 'e4', 'e6'] smoke=False n=12
+[overnight 18:35:23] === e1 ===
+[overnight 18:35:23] E1 arm A: 6 daytime failures, model=hf.co/mradermacher/llm4decompile-6.7b-GGUF:Q4_K_M
+[overnight 18:35:26]   E1 A/a_restate FUN_24dd_0548 turn1: fail
+[overnight 18:35:28]   E1 A/a_restate FUN_24dd_0548 turn2: fail
+[overnight 18:35:31]   E1 A/a_restate FUN_24dd_0548 turn3: fail
+[overnight 18:35:35]   E1 A/a_restate FUN_24dd_3ed3 turn1: fail
+[overnight 18:35:39]   E1 A/a_restate FUN_24dd_3ed3 turn2: fail
+[overnight 18:35:42]   E1 A/a_restate FUN_24dd_3ed3 turn3: fail
+[overnight 18:35:50]   E1 A/a_restate FUN_24dd_2e94 turn1: fail
+[overnight 18:35:57]   E1 A/a_restate FUN_24dd_2e94 turn2: fail
+[overnight 18:36:03]   E1 A/a_restate FUN_24dd_2e94 turn3: fail
+[overnight 18:36:12]   E1 A/a_restate FUN_1e7d_018a turn1: fail
+[overnight 18:36:20]   E1 A/a_restate FUN_1e7d_018a turn2: fail
+[overnight 18:36:28]   E1 A/a_restate FUN_1e7d_018a turn3: fail
+[overnight 18:36:32]   E1 A/a_restate FUN_24dd_3360 turn1: strict
+[overnight 18:36:39]   E1 A/a_restate FUN_1000_5e66 turn1: fail
+[overnight 18:36:45]   E1 A/a_restate FUN_1000_5e66 turn2: fail
+[overnight 18:36:50]   E1 A/a_restate FUN_1000_5e66 turn3: fail
+[overnight 18:36:53]   E1 A/b_bare FUN_24dd_0548 turn1: fail
+[overnight 18:36:56]   E1 A/b_bare FUN_24dd_0548 turn2: fail
+[overnight 18:36:58]   E1 A/b_bare FUN_24dd_0548 turn3: fail
+[overnight 18:37:02]   E1 A/b_bare FUN_24dd_3ed3 turn1: fail
+[overnight 18:37:06]   E1 A/b_bare FUN_24dd_3ed3 turn2: fail
+[overnight 18:37:10]   E1 A/b_bare FUN_24dd_3ed3 turn3: fail
+[overnight 18:37:17]   E1 A/b_bare FUN_24dd_2e94 turn1: fail
+[overnight 18:37:24]   E1 A/b_bare FUN_24dd_2e94 turn2: fail
+[overnight 18:37:31]   E1 A/b_bare FUN_24dd_2e94 turn3: fail
+[overnight 18:37:40]   E1 A/b_bare FUN_1e7d_018a turn1: fail
+[overnight 18:37:49]   E1 A/b_bare FUN_1e7d_018a turn2: fail
+[overnight 18:37:57]   E1 A/b_bare FUN_1e7d_018a turn3: fail
+[overnight 18:38:19]   E1 A/b_bare FUN_24dd_3360 turn1: fail
+[overnight 18:38:34]   E1 A/b_bare FUN_24dd_3360 turn2: fail
+[overnight 18:38:48]   E1 A/b_bare FUN_24dd_3360 turn3: fail
+[overnight 18:39:04]   E1 A/b_bare FUN_1000_5e66 turn1: fail
+[overnight 18:39:19]   E1 A/b_bare FUN_1000_5e66 turn2: fail
+[overnight 18:39:33]   E1 A/b_bare FUN_1000_5e66 turn3: fail
+[overnight 18:39:33] E1 arm B: 7 daytime failures, model=qwen2.5-coder:14b
+[overnight 18:40:14]   E1 B/a_restate FUN_1ec2_0d5d turn1: fail
+[overnight 18:40:51]   E1 B/a_restate FUN_1ec2_0d5d turn2: fail
+[overnight 18:41:29]   E1 B/a_restate FUN_1ec2_0d5d turn3: fail
+[overnight 18:41:40]   E1 B/a_restate FUN_24dd_3711 turn1: strict
+[overnight 18:42:19]   E1 B/a_restate FUN_24dd_2e94 turn1: fail
+[overnight 18:42:57]   E1 B/a_restate FUN_24dd_2e94 turn2: fail
+[overnight 18:43:34]   E1 B/a_restate FUN_24dd_2e94 turn3: fail
+[overnight 18:44:14]   E1 B/a_restate FUN_1e7d_018a turn1: fail
+[overnight 18:44:53]   E1 B/a_restate FUN_1e7d_018a turn2: fail
+[overnight 18:45:31]   E1 B/a_restate FUN_1e7d_018a turn3: fail
+[overnight 18:46:11]   E1 B/a_restate FUN_1ec2_00d0 turn1: fail
+[overnight 18:46:50]   E1 B/a_restate FUN_1ec2_00d0 turn2: fail
+[overnight 18:47:28]   E1 B/a_restate FUN_1ec2_00d0 turn3: fail
+[overnight 18:48:12]   E1 B/a_restate FUN_24dd_3360 turn1: fail
+[overnight 18:48:53]   E1 B/a_restate FUN_24dd_3360 turn2: fail
+[overnight 18:49:32]   E1 B/a_restate FUN_24dd_3360 turn3: fail
+[overnight 18:50:16]   E1 B/a_restate FUN_1000_5e66 turn1: fail
+[overnight 18:50:57]   E1 B/a_restate FUN_1000_5e66 turn2: fail
+[overnight 18:51:37]   E1 B/a_restate FUN_1000_5e66 turn3: fail
+[overnight 18:52:15]   E1 B/b_bare FUN_1ec2_0d5d turn1: fail
+[overnight 18:52:52]   E1 B/b_bare FUN_1ec2_0d5d turn2: fail
+[overnight 18:53:29]   E1 B/b_bare FUN_1ec2_0d5d turn3: fail
+[overnight 18:53:40]   E1 B/b_bare FUN_24dd_3711 turn1: strict
+[overnight 18:54:18]   E1 B/b_bare FUN_24dd_2e94 turn1: fail
+[overnight 18:54:56]   E1 B/b_bare FUN_24dd_2e94 turn2: fail
+[overnight 18:55:32]   E1 B/b_bare FUN_24dd_2e94 turn3: fail
+[overnight 18:56:11]   E1 B/b_bare FUN_1e7d_018a turn1: fail
+[overnight 18:56:49]   E1 B/b_bare FUN_1e7d_018a turn2: fail
+[overnight 18:57:27]   E1 B/b_bare FUN_1e7d_018a turn3: fail
+[overnight 18:58:05]   E1 B/b_bare FUN_1ec2_00d0 turn1: fail
+[overnight 18:58:43]   E1 B/b_bare FUN_1ec2_00d0 turn2: fail
+[overnight 18:59:21]   E1 B/b_bare FUN_1ec2_00d0 turn3: fail
+[overnight 19:00:02]   E1 B/b_bare FUN_24dd_3360 turn1: fail
+[overnight 19:00:42]   E1 B/b_bare FUN_24dd_3360 turn2: fail
+[overnight 19:01:22]   E1 B/b_bare FUN_24dd_3360 turn3: fail
+[overnight 19:02:03]   E1 B/b_bare FUN_1000_5e66 turn1: fail
+[overnight 19:02:44]   E1 B/b_bare FUN_1000_5e66 turn2: fail
+[overnight 19:03:23]   E1 B/b_bare FUN_1000_5e66 turn3: fail
+[overnight 19:03:23] E1 arm C: 3 daytime failures, model=qwen2.5-coder:14b
+[overnight 19:03:49]   E1 C/a_restate FUN_1ec2_00d0 turn1: fail
+[overnight 19:04:14]   E1 C/a_restate FUN_1ec2_00d0 turn2: fail
+[overnight 19:04:38]   E1 C/a_restate FUN_1ec2_00d0 turn3: fail
+[overnight 19:05:20]   E1 C/a_restate FUN_24dd_3360 turn1: fail
+[overnight 19:06:00]   E1 C/a_restate FUN_24dd_3360 turn2: fail
+[overnight 19:06:39]   E1 C/a_restate FUN_24dd_3360 turn3: fail
+[overnight 19:07:21]   E1 C/a_restate FUN_1000_5e66 turn1: fail
+[overnight 19:08:03]   E1 C/a_restate FUN_1000_5e66 turn2: fail
+[overnight 19:08:42]   E1 C/a_restate FUN_1000_5e66 turn3: fail
+[overnight 19:09:07]   E1 C/b_bare FUN_1ec2_00d0 turn1: fail
+[overnight 19:09:32]   E1 C/b_bare FUN_1ec2_00d0 turn2: fail
+[overnight 19:09:56]   E1 C/b_bare FUN_1ec2_00d0 turn3: fail
+[overnight 19:10:36]   E1 C/b_bare FUN_24dd_3360 turn1: fail
+[overnight 19:11:16]   E1 C/b_bare FUN_24dd_3360 turn2: fail
+[overnight 19:11:54]   E1 C/b_bare FUN_24dd_3360 turn3: fail
+[overnight 19:12:36]   E1 C/b_bare FUN_1000_5e66 turn1: fail
+[overnight 19:13:19]   E1 C/b_bare FUN_1000_5e66 turn2: fail
+[overnight 19:13:57]   E1 C/b_bare FUN_1000_5e66 turn3: fail
+[overnight 19:13:57] E1 arm D: 6 daytime failures, model=qwen2.5-coder:14b
+[overnight 19:14:05]   E1 D/a_restate FUN_24dd_3711 turn1: pass
+[overnight 19:14:19]   E1 D/a_restate FUN_24dd_2e94 turn1: fail
+[overnight 19:14:31]   E1 D/a_restate FUN_24dd_2e94 turn2: fail
+[overnight 19:14:43]   E1 D/a_restate FUN_24dd_2e94 turn3: fail
+[overnight 19:14:58]   E1 D/a_restate FUN_1e7d_018a turn1: fail
+[overnight 19:15:11]   E1 D/a_restate FUN_1e7d_018a turn2: fail
+[overnight 19:15:24]   E1 D/a_restate FUN_1e7d_018a turn3: fail
+[overnight 19:15:45]   E1 D/a_restate FUN_1ec2_00d0 turn1: fail
+[overnight 19:16:03]   E1 D/a_restate FUN_1ec2_00d0 turn2: fail
+[overnight 19:16:21]   E1 D/a_restate FUN_1ec2_00d0 turn3: fail
+[overnight 19:17:07]   E1 D/a_restate FUN_24dd_3360 turn1: fail
+[overnight 19:17:47]   E1 D/a_restate FUN_24dd_3360 turn2: fail
+[overnight 19:18:28]   E1 D/a_restate FUN_24dd_3360 turn3: fail
+[overnight 19:19:11]   E1 D/a_restate FUN_1000_5e66 turn1: fail
+[overnight 19:19:53]   E1 D/a_restate FUN_1000_5e66 turn2: fail
+[overnight 19:20:32]   E1 D/a_restate FUN_1000_5e66 turn3: fail
+[overnight 19:20:32] PHASE e1 CRASHED:
+Traceback (most recent call last):
+  File "/home/robin/OneDrive/University and such/LoSoRe/tools/overnight.py", line 685, in main
+    phases[p]()
+    ~~~~~~~~~^^
+  File "/home/robin/OneDrive/University and such/LoSoRe/tools/overnight.py", line 303, in phase_e1
+    (outdir / "summary.md").write_text(summary)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 808, in write_text
+    raise TypeError('data must be str, not %s' %
+                    data.__class__.__name__)
+TypeError: data must be str, not NoneType
+
+[overnight 19:20:32] === e5 ===
+[overnight 19:20:36]   E5 C2 FUN_2971_65df: strict junk=0 id=1.0
+[overnight 19:20:40]   E5 C2 FUN_24dd_4905: strict junk=0 id=1.0
+[overnight 19:20:45]   E5 C2 FUN_24dd_0548: strict junk=0 id=1.0
+[overnight 19:20:50]   E5 C2 FUN_249c_0180: fail junk=0 id=1.0
+[overnight 19:20:58]   E5 C2 FUN_1ec2_0d5d: strict junk=0 id=1.0
+[overnight 19:21:05]   E5 C2 FUN_24dd_3711: strict junk=0 id=1.0
+[overnight 19:21:15]   E5 C2 FUN_24dd_3ed3: strict junk=0 id=1.0
+[overnight 19:21:30]   E5 C2 FUN_24dd_2e94: strict junk=0 id=1.0
+[overnight 19:21:50]   E5 C2 FUN_1e7d_018a: strict junk=0 id=1.0
+[overnight 19:22:14]   E5 C2 FUN_1ec2_00d0: fail junk=0 id=1.0
+[overnight 19:22:55]   E5 C2 FUN_24dd_3360: fail junk=0 id=0.333
+[overnight 19:23:02]   E5 C2 FUN_1000_5e66: fail junk=0 id=0.0
+[overnight 19:23:02] === e2 ===
+[overnight 19:23:04]   E2 A FUN_2971_65df sample0: fail
+[overnight 19:23:06]   E2 A FUN_2971_65df sample1: strict
+[overnight 19:23:09]   E2 A FUN_2971_65df sample2: fail
+[overnight 19:23:10]   E2 A FUN_2971_65df sample3: strict
+[overnight 19:23:12]   E2 A FUN_24dd_4905 sample0: strict
+[overnight 19:23:13]   E2 A FUN_24dd_4905 sample1: strict
+[overnight 19:23:14]   E2 A FUN_24dd_4905 sample2: fail
+[overnight 19:23:15]   E2 A FUN_24dd_4905 sample3: fail
+[overnight 19:23:17]   E2 A FUN_24dd_0548 sample0: fail
+[overnight 19:23:19]   E2 A FUN_24dd_0548 sample1: fail
+[overnight 19:23:21]   E2 A FUN_24dd_0548 sample2: fail
+[overnight 19:23:24]   E2 A FUN_24dd_0548 sample3: fail
+[overnight 19:23:27]   E2 A FUN_249c_0180 sample0: fail
+[overnight 19:23:28]   E2 A FUN_249c_0180 sample1: strict
+[overnight 19:23:30]   E2 A FUN_249c_0180 sample2: strict
+[overnight 19:23:31]   E2 A FUN_249c_0180 sample3: strict
+[overnight 19:23:35]   E2 A FUN_1ec2_0d5d sample0: fail
+[overnight 19:23:37]   E2 A FUN_1ec2_0d5d sample1: strict
+[overnight 19:23:40]   E2 A FUN_1ec2_0d5d sample2: fail
+[overnight 19:23:45]   E2 A FUN_1ec2_0d5d sample3: fail
+[overnight 19:23:47]   E2 A FUN_24dd_3711 sample0: fail
+[overnight 19:23:51]   E2 A FUN_24dd_3711 sample1: fail
+[overnight 19:23:55]   E2 A FUN_24dd_3711 sample2: fail
+[overnight 19:23:58]   E2 A FUN_24dd_3711 sample3: fail
+[overnight 19:24:01]   E2 A FUN_24dd_3ed3 sample0: fail
+[overnight 19:24:04]   E2 A FUN_24dd_3ed3 sample1: strict
+[overnight 19:24:08]   E2 A FUN_24dd_3ed3 sample2: fail
+[overnight 19:24:10]   E2 A FUN_24dd_3ed3 sample3: fail
+[overnight 19:24:16]   E2 A FUN_24dd_2e94 sample0: fail
+[overnight 19:24:21]   E2 A FUN_24dd_2e94 sample1: fail
+[overnight 19:24:27]   E2 A FUN_24dd_2e94 sample2: strict
+[overnight 19:24:34]   E2 A FUN_24dd_2e94 sample3: fail
+[overnight 19:24:40]   E2 A FUN_1e7d_018a sample0: fail
+[overnight 19:24:45]   E2 A FUN_1e7d_018a sample1: fail
+[overnight 19:24:48]   E2 A FUN_1e7d_018a sample2: strict
+[overnight 19:24:53]   E2 A FUN_1e7d_018a sample3: fail
+[overnight 19:24:58]   E2 A FUN_1ec2_00d0 sample0: fail
+[overnight 19:25:05]   E2 A FUN_1ec2_00d0 sample1: strict
+[overnight 19:25:10]   E2 A FUN_1ec2_00d0 sample2: fail
+[overnight 19:25:15]   E2 A FUN_1ec2_00d0 sample3: fail
+[overnight 19:25:25]   E2 A FUN_24dd_3360 sample0: strict
+[overnight 19:25:32]   E2 A FUN_24dd_3360 sample1: fail
+[overnight 19:25:40]   E2 A FUN_24dd_3360 sample2: fail
+[overnight 19:25:45]   E2 A FUN_24dd_3360 sample3: fail
+[overnight 19:25:57]   E2 A FUN_1000_5e66 sample0: fail
+[overnight 19:26:09]   E2 A FUN_1000_5e66 sample1: fail
+[overnight 19:26:16]   E2 A FUN_1000_5e66 sample2: fail
+[overnight 19:26:39]   E2 A FUN_1000_5e66 sample3: fail
+[overnight 19:26:42]   E2 B FUN_2971_65df sample0: strict
+[overnight 19:26:43]   E2 B FUN_2971_65df sample1: strict
+[overnight 19:26:44]   E2 B FUN_2971_65df sample2: strict
+[overnight 19:26:45]   E2 B FUN_2971_65df sample3: strict
+[overnight 19:26:53]   E2 B FUN_24dd_4905 sample0: strict
+[overnight 19:26:59]   E2 B FUN_24dd_4905 sample1: strict
+[overnight 19:27:04]   E2 B FUN_24dd_4905 sample2: strict
+[overnight 19:27:08]   E2 B FUN_24dd_4905 sample3: fail
+[overnight 19:27:20]   E2 B FUN_24dd_0548 sample0: fail
+[overnight 19:27:32]   E2 B FUN_24dd_0548 sample1: fail
+[overnight 19:27:46]   E2 B FUN_24dd_0548 sample2: fail
+[overnight 19:27:54]   E2 B FUN_24dd_0548 sample3: strict
+[overnight 19:28:02]   E2 B FUN_249c_0180 sample0: strict
+[overnight 19:28:11]   E2 B FUN_249c_0180 sample1: fail
+[overnight 19:28:18]   E2 B FUN_249c_0180 sample2: strict
+[overnight 19:28:25]   E2 B FUN_249c_0180 sample3: strict
+[overnight 19:28:32]   E2 B FUN_1ec2_0d5d sample0: lenient
+[overnight 19:28:37]   E2 B FUN_1ec2_0d5d sample1: strict
+[overnight 19:28:46]   E2 B FUN_1ec2_0d5d sample2: strict
+[overnight 19:29:22]   E2 B FUN_1ec2_0d5d sample3: fail
+[overnight 19:29:39]   E2 B FUN_24dd_3711 sample0: strict
+[overnight 19:29:52]   E2 B FUN_24dd_3711 sample1: fail
+[overnight 19:30:02]   E2 B FUN_24dd_3711 sample2: fail
+[overnight 19:30:13]   E2 B FUN_24dd_3711 sample3: fail
+[overnight 19:30:23]   E2 B FUN_24dd_3ed3 sample0: fail
+[overnight 19:30:34]   E2 B FUN_24dd_3ed3 sample1: fail
+[overnight 19:30:44]   E2 B FUN_24dd_3ed3 sample2: fail
+[overnight 19:31:07]   E2 B FUN_24dd_3ed3 sample3: strict
+[overnight 19:31:29]   E2 B FUN_24dd_2e94 sample0: fail
+[overnight 19:32:05]   E2 B FUN_24dd_2e94 sample1: fail
+[overnight 19:32:28]   E2 B FUN_24dd_2e94 sample2: fail
+[overnight 19:32:48]   E2 B FUN_24dd_2e94 sample3: fail
+[overnight 19:33:22]   E2 B FUN_1e7d_018a sample0: fail
+[overnight 19:33:49]   E2 B FUN_1e7d_018a sample1: fail
+[overnight 19:34:26]   E2 B FUN_1e7d_018a sample2: fail
+[overnight 19:35:02]   E2 B FUN_1e7d_018a sample3: fail
+[overnight 19:35:40]   E2 B FUN_1ec2_00d0 sample0: fail
+[overnight 19:36:17]   E2 B FUN_1ec2_00d0 sample1: fail
+[overnight 19:36:54]   E2 B FUN_1ec2_00d0 sample2: fail
+[overnight 19:37:31]   E2 B FUN_1ec2_00d0 sample3: fail
+[overnight 19:38:13]   E2 B FUN_24dd_3360 sample0: fail
+[overnight 19:38:51]   E2 B FUN_24dd_3360 sample1: fail
+[overnight 19:39:30]   E2 B FUN_24dd_3360 sample2: fail
+[overnight 19:40:09]   E2 B FUN_24dd_3360 sample3: fail
+[overnight 19:40:51]   E2 B FUN_1000_5e66 sample0: fail
+[overnight 19:41:30]   E2 B FUN_1000_5e66 sample1: fail
+[overnight 19:42:09]   E2 B FUN_1000_5e66 sample2: fail
+[overnight 19:42:48]   E2 B FUN_1000_5e66 sample3: fail
+[overnight 19:42:50]   E2 C FUN_2971_65df sample0: strict
+[overnight 19:42:50]   E2 C FUN_2971_65df sample1: strict
+[overnight 19:42:52]   E2 C FUN_2971_65df sample2: strict
+[overnight 19:42:53]   E2 C FUN_2971_65df sample3: strict
+[overnight 19:42:56]   E2 C FUN_24dd_4905 sample0: strict
+[overnight 19:42:58]   E2 C FUN_24dd_4905 sample1: strict
+[overnight 19:43:01]   E2 C FUN_24dd_4905 sample2: strict
+[overnight 19:43:04]   E2 C FUN_24dd_4905 sample3: strict
+[overnight 19:43:06]   E2 C FUN_24dd_0548 sample0: strict
+[overnight 19:43:11]   E2 C FUN_24dd_0548 sample1: strict
+[overnight 19:43:13]   E2 C FUN_24dd_0548 sample2: strict
+[overnight 19:43:17]   E2 C FUN_24dd_0548 sample3: strict
+[overnight 19:43:22]   E2 C FUN_249c_0180 sample0: strict
+[overnight 19:43:27]   E2 C FUN_249c_0180 sample1: strict
+[overnight 19:43:31]   E2 C FUN_249c_0180 sample2: strict
+[overnight 19:43:36]   E2 C FUN_249c_0180 sample3: fail
+[overnight 19:43:44]   E2 C FUN_1ec2_0d5d sample0: strict
+[overnight 19:43:51]   E2 C FUN_1ec2_0d5d sample1: strict
+[overnight 19:43:58]   E2 C FUN_1ec2_0d5d sample2: strict
+[overnight 19:44:06]   E2 C FUN_1ec2_0d5d sample3: strict
+[overnight 19:44:13]   E2 C FUN_24dd_3711 sample0: strict
+[overnight 19:44:20]   E2 C FUN_24dd_3711 sample1: strict
+[overnight 19:44:26]   E2 C FUN_24dd_3711 sample2: strict
+[overnight 19:44:33]   E2 C FUN_24dd_3711 sample3: strict
+[overnight 19:44:42]   E2 C FUN_24dd_3ed3 sample0: strict
+[overnight 19:44:51]   E2 C FUN_24dd_3ed3 sample1: strict
+[overnight 19:44:59]   E2 C FUN_24dd_3ed3 sample2: strict
+[overnight 19:45:09]   E2 C FUN_24dd_3ed3 sample3: strict
+[overnight 19:45:22]   E2 C FUN_24dd_2e94 sample0: strict
+[overnight 19:45:34]   E2 C FUN_24dd_2e94 sample1: fail
+[overnight 19:45:47]   E2 C FUN_24dd_2e94 sample2: strict
+[overnight 19:46:01]   E2 C FUN_24dd_2e94 sample3: strict
+[overnight 19:46:19]   E2 C FUN_1e7d_018a sample0: strict
+[overnight 19:46:41]   E2 C FUN_1e7d_018a sample1: strict
+[overnight 19:46:59]   E2 C FUN_1e7d_018a sample2: strict
+[overnight 19:47:22]   E2 C FUN_1e7d_018a sample3: strict
+[overnight 19:47:50]   E2 C FUN_1ec2_00d0 sample0: fail
+[overnight 19:48:10]   E2 C FUN_1ec2_00d0 sample1: strict
+[overnight 19:48:35]   E2 C FUN_1ec2_00d0 sample2: fail
+[overnight 19:48:54]   E2 C FUN_1ec2_00d0 sample3: fail
+[overnight 19:49:34]   E2 C FUN_24dd_3360 sample0: fail
+[overnight 19:50:12]   E2 C FUN_24dd_3360 sample1: fail
+[overnight 19:50:50]   E2 C FUN_24dd_3360 sample2: fail
+[overnight 19:51:28]   E2 C FUN_24dd_3360 sample3: fail
+[overnight 19:51:54]   E2 C FUN_1000_5e66 sample0: fail
+[overnight 19:52:14]   E2 C FUN_1000_5e66 sample1: fail
+[overnight 19:52:30]   E2 C FUN_1000_5e66 sample2: fail
+[overnight 19:52:59]   E2 C FUN_1000_5e66 sample3: fail
+[overnight 19:52:59] === e3 ===
+[overnight 19:53:03]   E3 deepseek-coder:6.7b B FUN_2971_65df: fail
+[overnight 19:53:09]   E3 deepseek-coder:6.7b B FUN_24dd_4905: fail
+[overnight 19:53:13]   E3 deepseek-coder:6.7b B FUN_24dd_0548: strict
+[overnight 19:53:18]   E3 deepseek-coder:6.7b B FUN_249c_0180: strict
+[overnight 19:53:23]   E3 deepseek-coder:6.7b B FUN_1ec2_0d5d: strict
+[overnight 19:53:30]   E3 deepseek-coder:6.7b B FUN_24dd_3711: strict
+[overnight 19:53:40]   E3 deepseek-coder:6.7b B FUN_24dd_3ed3: strict
+[overnight 19:53:53]   E3 deepseek-coder:6.7b B FUN_24dd_2e94: strict
+[overnight 19:54:11]   E3 deepseek-coder:6.7b B FUN_1e7d_018a: fail
+[overnight 19:54:31]   E3 deepseek-coder:6.7b B FUN_1ec2_00d0: fail
+[overnight 19:54:55]   E3 deepseek-coder:6.7b B FUN_24dd_3360: fail
+[overnight 19:55:20]   E3 deepseek-coder:6.7b B FUN_1000_5e66: fail
+[overnight 19:55:24]   E3 deepseek-coder:6.7b C FUN_2971_65df: fail
+[overnight 19:55:27]   E3 deepseek-coder:6.7b C FUN_24dd_4905: strict
+[overnight 19:55:31]   E3 deepseek-coder:6.7b C FUN_24dd_0548: fail
+[overnight 19:55:34]   E3 deepseek-coder:6.7b C FUN_249c_0180: fail
+[overnight 19:55:39]   E3 deepseek-coder:6.7b C FUN_1ec2_0d5d: strict
+[overnight 19:55:44]   E3 deepseek-coder:6.7b C FUN_24dd_3711: strict
+[overnight 19:55:51]   E3 deepseek-coder:6.7b C FUN_24dd_3ed3: strict
+[overnight 19:56:00]   E3 deepseek-coder:6.7b C FUN_24dd_2e94: fail
+[overnight 19:56:09]   E3 deepseek-coder:6.7b C FUN_1e7d_018a: fail
+[overnight 19:56:19]   E3 deepseek-coder:6.7b C FUN_1ec2_00d0: fail
+[overnight 19:56:27]   E3 deepseek-coder:6.7b C FUN_24dd_3360: fail
+[overnight 19:56:32]   E3 deepseek-coder:6.7b C FUN_1000_5e66: fail
+[overnight 19:56:39]   E3 phi4:14b B FUN_2971_65df: strict
+[overnight 19:56:47]   E3 phi4:14b B FUN_24dd_4905: strict
+[overnight 19:56:56]   E3 phi4:14b B FUN_24dd_0548: strict
+[overnight 19:57:03]   E3 phi4:14b B FUN_249c_0180: fail
+[overnight 19:57:24]   E3 phi4:14b B FUN_1ec2_0d5d: strict
+[overnight 19:57:35]   E3 phi4:14b B FUN_24dd_3711: strict
+[overnight 19:57:42]   E3 phi4:14b B FUN_24dd_3ed3: strict
+[overnight 19:57:59]   E3 phi4:14b B FUN_24dd_2e94: strict
+[overnight 19:58:38]   E3 phi4:14b B FUN_1e7d_018a: fail
+[overnight 19:58:57]   E3 phi4:14b B FUN_1ec2_00d0: strict
+[overnight 19:59:39]   E3 phi4:14b B FUN_24dd_3360: fail
+[overnight 20:00:21]   E3 phi4:14b B FUN_1000_5e66: fail
+[overnight 20:00:24]   E3 phi4:14b C FUN_2971_65df: strict
+[overnight 20:00:28]   E3 phi4:14b C FUN_24dd_4905: strict
+[overnight 20:00:32]   E3 phi4:14b C FUN_24dd_0548: strict
+[overnight 20:00:38]   E3 phi4:14b C FUN_249c_0180: strict
+[overnight 20:00:46]   E3 phi4:14b C FUN_1ec2_0d5d: strict
+[overnight 20:00:52]   E3 phi4:14b C FUN_24dd_3711: strict
+[overnight 20:01:03]   E3 phi4:14b C FUN_24dd_3ed3: strict
+[overnight 20:01:20]   E3 phi4:14b C FUN_24dd_2e94: strict
+[overnight 20:01:40]   E3 phi4:14b C FUN_1e7d_018a: strict
+[overnight 20:02:08]   E3 phi4:14b C FUN_1ec2_00d0: lenient
+[overnight 20:02:48]   E3 phi4:14b C FUN_24dd_3360: fail
+[overnight 20:03:16]   E3 phi4:14b C FUN_1000_5e66: fail
+[overnight 20:03:25]   E3 deepseek-coder-v2:16b B FUN_2971_65df: strict
+[overnight 20:03:27]   E3 deepseek-coder-v2:16b B FUN_24dd_4905: fail
+[overnight 20:03:29]   E3 deepseek-coder-v2:16b B FUN_24dd_0548: strict
+[overnight 20:03:31]   E3 deepseek-coder-v2:16b B FUN_249c_0180: fail
+[overnight 20:03:34]   E3 deepseek-coder-v2:16b B FUN_1ec2_0d5d: fail
+[overnight 20:03:39]   E3 deepseek-coder-v2:16b B FUN_24dd_3711: strict
+[overnight 20:03:42]   E3 deepseek-coder-v2:16b B FUN_24dd_3ed3: fail
+[overnight 20:03:56]   E3 deepseek-coder-v2:16b B FUN_24dd_2e94: fail
+[overnight 20:04:09]   E3 deepseek-coder-v2:16b B FUN_1e7d_018a: fail
+[overnight 20:04:27]   E3 deepseek-coder-v2:16b B FUN_1ec2_00d0: fail
+[overnight 20:04:52]   E3 deepseek-coder-v2:16b B FUN_24dd_3360: fail
+[overnight 20:05:19]   E3 deepseek-coder-v2:16b B FUN_1000_5e66: fail
+[overnight 20:05:20]   E3 deepseek-coder-v2:16b C FUN_2971_65df: strict
+[overnight 20:05:21]   E3 deepseek-coder-v2:16b C FUN_24dd_4905: strict
+[overnight 20:05:23]   E3 deepseek-coder-v2:16b C FUN_24dd_0548: strict
+[overnight 20:05:24]   E3 deepseek-coder-v2:16b C FUN_249c_0180: strict
+[overnight 20:05:27]   E3 deepseek-coder-v2:16b C FUN_1ec2_0d5d: strict
+[overnight 20:05:30]   E3 deepseek-coder-v2:16b C FUN_24dd_3711: strict
+[overnight 20:05:34]   E3 deepseek-coder-v2:16b C FUN_24dd_3ed3: strict
+[overnight 20:05:39]   E3 deepseek-coder-v2:16b C FUN_24dd_2e94: strict
+[overnight 20:05:46]   E3 deepseek-coder-v2:16b C FUN_1e7d_018a: strict
+[overnight 20:05:59]   E3 deepseek-coder-v2:16b C FUN_1ec2_00d0: fail
+[overnight 20:06:22]   E3 deepseek-coder-v2:16b C FUN_24dd_3360: fail
+[overnight 20:06:22]   gen retry HTTP Error 400: Bad Request
+[overnight 20:06:52]   E3 deepseek-coder-v2:16b C FUN_1000_5e66: fail
+[overnight 20:06:52] === e4 ===
+[overnight 20:13:14] E4 exit=1 (382s)
+[overnight 20:13:14] === e6 ===
+[overnight 20:13:14] E6 -> reports/overnight/REPORT.md
+[overnight 20:13:14] overnight finished
+[overnight 20:35:02] overnight start: phases=['e4'] smoke=False n=12
+[overnight 20:35:02] === e4 ===
+[overnight 20:37:35] E4 exit=1 (153s)
+[overnight 20:37:35] overnight finished
+[overnight 20:41:03] overnight start: phases=['e4'] smoke=False n=12
+[overnight 20:41:03] === e4 ===
+[overnight 20:41:09] E4 exit=1 (6s)
+[overnight 20:41:09] overnight finished
+[overnight 20:43:43] overnight start: phases=['e4'] smoke=False n=12
+[overnight 20:43:43] === e4 ===
+[overnight 20:43:50] E4 exit=1 (6s)
+[overnight 20:43:50] overnight finished
+[overnight 20:50:28] overnight start: phases=['e4'] smoke=False n=12
+[overnight 20:50:28] === e4 ===
+[overnight 21:08:51] E4 exit=0 (1103s)
+[overnight 21:08:51] overnight finished

@@ -1,0 +1,63 @@
+; FUN_24dd_2fcd  entry=24dd:2fcd size=135
+24dd:2fcd  MOV BX,0x7b40
+24dd:2fd0  XOR DI,DI
+24dd:2fd2  MOV ES,word ptr [0x640c]
+24dd:2fd6  MOV ES,word ptr ES:[0x2c]
+24dd:2fdb  MOV CX,0x7fff
+24dd:2fde  CLD
+24dd:2fdf  MOV AX,word ptr ES:[DI]
+24dd:2fe2  OR AL,AL
+24dd:2fe4  JZ 0x2000:7dd1
+24dd:2fe6  CMP AX,0x3738
+24dd:2fe9  JNZ 0x2000:7dcb
+24dd:2feb  MOV AX,word ptr ES:[DI + 0x2]
+24dd:2fef  CMP AL,0x3d
+24dd:2ff1  JNZ 0x2000:7dcb
+24dd:2ff3  AND AH,0xdf
+24dd:2ff6  CMP AH,0x59
+24dd:2ff9  JMP 0x2000:7de8
+24dd:2ffb  XOR AX,AX
+24dd:2ffd  SCASB.REPNE ES:DI
+24dd:2fff  JZ 0x2000:7daf
+24dd:3001  XOR AX,AX
+24dd:3003  OUT 0xf0,AL
+24dd:3005  FNINIT
+24dd:3007  MOV word ptr [BX],AX
+24dd:3009  FNSTCW word ptr [BX]
+24dd:300b  MOV CX,0x14
+24dd:300e  LOOP 0x2000:7dde
+24dd:3010  MOV AX,word ptr [BX]
+24dd:3012  AND AX,0xf3f
+24dd:3015  CMP AX,0x33f
+24dd:3018  MOV DX,0x1330
+24dd:301b  MOV AL,0x0
+24dd:301d  JNZ 0x2000:7e1c
+24dd:301f  PUSH SP
+24dd:3020  POP AX
+24dd:3021  CMP AX,SP
+24dd:3023  MOV AL,0x1
+24dd:3025  JNZ 0x2000:7e1c
+24dd:3027  FINIT
+24dd:302a  WAIT
+24dd:302b  FLD1
+24dd:302d  WAIT
+24dd:302e  FLDZ
+24dd:3030  WAIT
+24dd:3031  FDIVP
+24dd:3033  WAIT
+24dd:3034  FLD ST0
+24dd:3036  WAIT
+24dd:3037  FCHS
+24dd:3039  WAIT
+24dd:303a  FCOMPP
+24dd:303c  FSTSW word ptr [BX]
+24dd:303f  WAIT
+24dd:3040  MOV AX,word ptr [BX]
+24dd:3042  SAHF
+24dd:3043  MOV AL,0x2
+24dd:3045  JZ 0x2000:7e1c
+24dd:3047  MOV DX,0x1332
+24dd:304a  MOV AL,0x3
+24dd:304c  MOV [0x6421],AL
+24dd:304f  MOV word ptr [0x7b3e],DX
+24dd:3053  RET

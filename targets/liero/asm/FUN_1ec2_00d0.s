@@ -1,0 +1,105 @@
+; FUN_1ec2_00d0  entry=1ec2:00d0 size=271
+1ec2:00d0  ENTER 0x20a,0x0
+1ec2:00d4  MOV AX,word ptr [BP + 0x6]
+1ec2:00d7  MOV DX,word ptr [BP + 0x8]
+1ec2:00da  MOV CX,0x3c
+1ec2:00dd  XOR BX,BX
+1ec2:00df  CALLF 0x2000:8b8d
+1ec2:00e4  MOV word ptr [BP + -0x4],AX
+1ec2:00e7  MOV word ptr [BP + -0x2],DX
+1ec2:00ea  MOV AX,word ptr [BP + 0x6]
+1ec2:00ed  MOV DX,word ptr [BP + 0x8]
+1ec2:00f0  MOV CX,0x3c
+1ec2:00f3  XOR BX,BX
+1ec2:00f5  CALLF 0x2000:8b8d
+1ec2:00fa  MOV AX,CX
+1ec2:00fc  MOV DX,BX
+1ec2:00fe  MOV word ptr [BP + 0x6],AX
+1ec2:0101  MOV word ptr [BP + 0x8],DX
+1ec2:0104  MOV byte ptr [BP + -0xa],0x0
+1ec2:0108  CMP word ptr [BP + -0x2],0x0
+1ec2:010c  JL 0x1000:ed36
+1ec2:010e  JG 0x1000:ed47
+1ec2:0110  CMP word ptr [BP + -0x4],0xa
+1ec2:0114  JNC 0x1000:ed47
+1ec2:0116  MOV DI,0xcc
+1ec2:0119  PUSH CS
+1ec2:011a  PUSH DI
+1ec2:011b  LEA DI,[BP + -0xa]
+1ec2:011e  PUSH SS
+1ec2:011f  PUSH DI
+1ec2:0120  PUSH 0x5
+1ec2:0122  CALLF 0x2000:8c7f
+1ec2:0127  LEA DI,[BP + 0xfdf6]
+1ec2:012b  PUSH SS
+1ec2:012c  PUSH DI
+1ec2:012d  LEA DI,[BP + -0xa]
+1ec2:0130  PUSH SS
+1ec2:0131  PUSH DI
+1ec2:0132  CALLF 0x2000:8c65
+1ec2:0137  LEA DI,[BP + 0xfef6]
+1ec2:013b  PUSH SS
+1ec2:013c  PUSH DI
+1ec2:013d  PUSH word ptr [BP + -0x2]
+1ec2:0140  PUSH word ptr [BP + -0x4]
+1ec2:0143  CALLF 0x2000:0a2d
+1ec2:0148  CALLF 0x2000:8ce4
+1ec2:014d  MOV DI,0xce
+1ec2:0150  PUSH CS
+1ec2:0151  PUSH DI
+1ec2:0152  CALLF 0x2000:8ce4
+1ec2:0157  LEA DI,[BP + -0xa]
+1ec2:015a  PUSH SS
+1ec2:015b  PUSH DI
+1ec2:015c  PUSH 0x5
+1ec2:015e  CALLF 0x2000:8c7f
+1ec2:0163  CMP word ptr [BP + 0x8],0x0
+1ec2:0167  JL 0x1000:ed91
+1ec2:0169  JG 0x1000:edb7
+1ec2:016b  CMP word ptr [BP + 0x6],0xa
+1ec2:016f  JNC 0x1000:edb7
+1ec2:0171  LEA DI,[BP + 0xfef6]
+1ec2:0175  PUSH SS
+1ec2:0176  PUSH DI
+1ec2:0177  LEA DI,[BP + -0xa]
+1ec2:017a  PUSH SS
+1ec2:017b  PUSH DI
+1ec2:017c  CALLF 0x2000:8c65
+1ec2:0181  MOV DI,0xcc
+1ec2:0184  PUSH CS
+1ec2:0185  PUSH DI
+1ec2:0186  CALLF 0x2000:8ce4
+1ec2:018b  LEA DI,[BP + -0xa]
+1ec2:018e  PUSH SS
+1ec2:018f  PUSH DI
+1ec2:0190  PUSH 0x5
+1ec2:0192  CALLF 0x2000:8c7f
+1ec2:0197  LEA DI,[BP + 0xfdf6]
+1ec2:019b  PUSH SS
+1ec2:019c  PUSH DI
+1ec2:019d  LEA DI,[BP + -0xa]
+1ec2:01a0  PUSH SS
+1ec2:01a1  PUSH DI
+1ec2:01a2  CALLF 0x2000:8c65
+1ec2:01a7  LEA DI,[BP + 0xfef6]
+1ec2:01ab  PUSH SS
+1ec2:01ac  PUSH DI
+1ec2:01ad  PUSH word ptr [BP + 0x8]
+1ec2:01b0  PUSH word ptr [BP + 0x6]
+1ec2:01b3  CALLF 0x2000:0a2d
+1ec2:01b8  CALLF 0x2000:8ce4
+1ec2:01bd  LEA DI,[BP + -0xa]
+1ec2:01c0  PUSH SS
+1ec2:01c1  PUSH DI
+1ec2:01c2  PUSH 0x5
+1ec2:01c4  CALLF 0x2000:8c7f
+1ec2:01c9  LEA DI,[BP + -0xa]
+1ec2:01cc  PUSH SS
+1ec2:01cd  PUSH DI
+1ec2:01ce  LES DI,[BP + 0xa]
+1ec2:01d1  PUSH ES
+1ec2:01d2  PUSH DI
+1ec2:01d3  PUSH 0xff
+1ec2:01d6  CALLF 0x2000:8c7f
+1ec2:01db  LEAVE
+1ec2:01dc  RETF 0x4

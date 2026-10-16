@@ -1,0 +1,35 @@
+{
+  "targets": {
+    "driver": {
+      "kind": "game",
+      "functions": 0,
+      "drafted": 1,
+      "toolchain": null,
+      "verified": 0,
+      "oracle": "none"
+    },
+    "liero": {
+      "kind": "game",
+      "functions": 295,
+      "drafted": 296,
+      "toolchain": "turbo-pascal-7",
+      "verified": 0,
+      "oracle": "none"
+    },
+    "liero-dos": {
+      "kind": "game",
+      "functions": 295,
+      "drafted": 296,
+      "toolchain": "turbo-pascal-7",
+      "verified": 0,
+      "oracle": "none"
+    }
+  },
+  "totals": {
+    "functions_ingested": 590,
+    "drafted": 593,
+    "targets_seen": 2,
+    "toolchains_seen": 1,
+    "examples_total": 5
+  }
+}

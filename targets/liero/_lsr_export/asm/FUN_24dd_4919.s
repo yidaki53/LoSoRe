@@ -1,0 +1,9 @@
+; FUN_24dd_4919  entry=24dd:4919 size=19
+24dd:4919  MOV BX,SP
+24dd:491b  MOV AL,byte ptr SS:[BX + 0x4]
+24dd:491f  CMP AL,0x61
+24dd:4921  JC 0x2000:96f9
+24dd:4923  CMP AL,0x7a
+24dd:4925  JA 0x2000:96f9
+24dd:4927  SUB AL,0x20
+24dd:4929  RETF 0x2

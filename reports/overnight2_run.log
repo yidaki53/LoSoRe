@@ -1,0 +1,728 @@
+[n2 22:40:29] night-2 start: panel=60 n1=12 exclude=70 deadline=7h45m
+[n2 22:40:29] === f1 ===
+[n2 22:40:29] f1: launching f2_train.py (budget 150min, 70 stems excluded)
+[n2 23:02:23] f1: exit=0 (1314s)
+[n2 23:02:23] === f2 ===
+[n2 23:02:23] f2: launching f2_train.py (budget 120min, 70 stems excluded)
+[n2 23:23:55] f2: exit=0 (1292s)
+[n2 23:23:55] F6 -> reports/overnight2/REPORT2.md
+[n2 23:23:55] === f3 ===
+[n2 23:23:55] F3: 46 compilable candidates to judge (dual)
+[n2 23:24:08]   F3[qwen] cfgA2 FUN_24dd_0548: 2
+[n2 23:24:13]   F3[qwen] cfgA2 FUN_2971_65df: 5
+[n2 23:24:16]   F3[qwen] cfgA2 FUN_24dd_0582: 2
+[n2 23:24:21]   F3[qwen] cfgA2 FUN_24dd_0218: 2
+[n2 23:24:24]   F3[qwen] cfgA2 FUN_24dd_3c03: 4
+[n2 23:24:28]   F3[qwen] cfgA2 FUN_235c_04f3: 5
+[n2 23:24:32]   F3[qwen] cfgA2 FUN_24dd_02b9: 2
+[n2 23:24:36]   F3[qwen] cfgA2 FUN_235c_032e: 2
+[n2 23:24:39]   F3[qwen] cfgA2 FUN_235c_118c: 2
+[n2 23:24:43]   F3[qwen] cfgA2 FUN_235c_1345: 2
+[n2 23:24:46]   F3[qwen] cfgA2 FUN_1ec2_0000: 2
+[n2 23:24:52]   F3[qwen] cfgA2 FUN_24dd_0673: 3
+[n2 23:25:02]   F3[qwen] cfgA2 FUN_24dd_48e1: 3
+[n2 23:25:05]   F3[qwen] cfgA2 FUN_24dd_0642: 5
+[n2 23:25:09]   F3[qwen] cfgA2 FUN_235c_0f1d: 2
+[n2 23:25:13]   F3[qwen] cfgA2 FUN_24dd_46b1: 2
+[n2 23:25:17]   F3[qwen] cfgA2 FUN_24dd_3d80: 2
+[n2 23:25:29]   F3[qwen] cfgA2 FUN_202c_08b2: 3
+[n2 23:25:34]   F3[qwen] cfgC FUN_1ec2_0d5d: 2
+[n2 23:25:39]   F3[qwen] cfgC FUN_24dd_3711: 2
+[n2 23:25:42]   F3[qwen] cfgC FUN_24dd_4905: 5
+[n2 23:25:47]   F3[qwen] cfgC FUN_2971_65df: 5
+[n2 23:25:50]   F3[qwen] cfgC FUN_24dd_0582: 2
+[n2 23:25:54]   F3[qwen] cfgC FUN_24dd_3c03: 4
+[n2 23:25:59]   F3[qwen] cfgC FUN_235c_04f3: 5
+[n2 23:26:07]   F3[qwen] cfgC FUN_24dd_020a: 2
+[n2 23:26:12]   F3[qwen] cfgC FUN_24dd_02b9: 2
+[n2 23:26:18]   F3[qwen] cfgC FUN_235c_032e: 2
+[n2 23:26:23]   F3[qwen] cfgC FUN_235c_1345: 2
+[n2 23:26:27]   F3[qwen] cfgC FUN_1ec2_0000: 5
+[n2 23:26:33]   F3[qwen] cfgC FUN_235c_0000: 2
+[n2 23:26:37]   F3[qwen] cfgC FUN_24dd_40ec: 2
+[n2 23:26:43]   F3[qwen] cfgC FUN_24dd_0673: 3
+[n2 23:26:47]   F3[qwen] cfgC FUN_24dd_48e1: 3
+[n2 23:26:54]   F3[qwen] cfgC FUN_24dd_3f86: 3
+[n2 23:27:03]   F3[qwen] cfgC FUN_1ec2_0810: 2
+[n2 23:27:08]   F3[qwen] cfgC FUN_202c_08b2: 2
+[n2 23:27:13]   F3[qwen] daytimeC FUN_2971_65df: 5
+[n2 23:27:16]   F3[qwen] daytimeC FUN_24dd_4905: 5
+[n2 23:27:20]   F3[qwen] daytimeC FUN_24dd_0548: 5
+[n2 23:27:25]   F3[qwen] daytimeC FUN_249c_0180: 2
+[n2 23:27:28]   F3[qwen] daytimeC FUN_1ec2_0d5d: 5
+[n2 23:27:32]   F3[qwen] daytimeC FUN_24dd_3711: 4
+[n2 23:27:36]   F3[qwen] daytimeC FUN_24dd_3ed3: 5
+[n2 23:27:40]   F3[qwen] daytimeC FUN_24dd_2e94: 4
+[n2 23:27:47]   F3[qwen] daytimeC FUN_1e7d_018a: 4
+[n2 23:28:01]   F3[phi] cfgA2 FUN_24dd_0548: 2
+[n2 23:28:06]   F3[phi] cfgA2 FUN_2971_65df: 5
+[n2 23:28:12]   F3[phi] cfgA2 FUN_24dd_0582: 1
+[n2 23:28:19]   F3[phi] cfgA2 FUN_24dd_0218: 2
+[n2 23:28:30]   F3[phi] cfgA2 FUN_24dd_3c03: 3
+[n2 23:28:34]   F3[phi] cfgA2 FUN_235c_04f3: 5
+[n2 23:28:43]   F3[phi] cfgA2 FUN_24dd_02b9: 1
+[n2 23:28:53]   F3[phi] cfgA2 FUN_235c_032e: 3
+[n2 23:29:03]   F3[phi] cfgA2 FUN_235c_118c: 2
+[n2 23:29:13]   F3[phi] cfgA2 FUN_235c_1345: 2
+[n2 23:29:22]   F3[phi] cfgA2 FUN_1ec2_0000: 3
+[n2 23:29:33]   F3[phi] cfgA2 FUN_24dd_0673: 3
+[n2 23:29:44]   F3[phi] cfgA2 FUN_24dd_48e1: 3
+[n2 23:29:50]   F3[phi] cfgA2 FUN_24dd_0642: 5
+[n2 23:30:00]   F3[phi] cfgA2 FUN_235c_0f1d: 2
+[n2 23:30:11]   F3[phi] cfgA2 FUN_24dd_46b1: 3
+[n2 23:30:21]   F3[phi] cfgA2 FUN_24dd_3d80: 2
+[n2 23:30:33]   F3[phi] cfgA2 FUN_202c_08b2: 3
+[n2 23:30:44]   F3[phi] cfgC FUN_1ec2_0d5d: 2
+[n2 23:30:55]   F3[phi] cfgC FUN_24dd_3711: 3
+[n2 23:31:06]   F3[phi] cfgC FUN_24dd_4905: 4
+[n2 23:31:11]   F3[phi] cfgC FUN_2971_65df: 5
+[n2 23:31:17]   F3[phi] cfgC FUN_24dd_0582: 1
+[n2 23:31:26]   F3[phi] cfgC FUN_24dd_3c03: 4
+[n2 23:31:30]   F3[phi] cfgC FUN_235c_04f3: 5
+[n2 23:31:41]   F3[phi] cfgC FUN_24dd_020a: 3
+[n2 23:31:52]   F3[phi] cfgC FUN_24dd_02b9: 4
+[n2 23:31:59]   F3[phi] cfgC FUN_235c_032e: 2
+[n2 23:32:08]   F3[phi] cfgC FUN_235c_1345: 3
+[n2 23:32:20]   F3[phi] cfgC FUN_1ec2_0000: 4
+[n2 23:32:28]   F3[phi] cfgC FUN_235c_0000: 2
+[n2 23:32:37]   F3[phi] cfgC FUN_24dd_40ec: 1
+[n2 23:32:48]   F3[phi] cfgC FUN_24dd_0673: 3
+[n2 23:32:58]   F3[phi] cfgC FUN_24dd_48e1: 3
+[n2 23:33:10]   F3[phi] cfgC FUN_24dd_3f86: 2
+[n2 23:33:21]   F3[phi] cfgC FUN_1ec2_0810: 2
+[n2 23:33:33]   F3[phi] cfgC FUN_202c_08b2: 2
+[n2 23:33:41]   F3[phi] daytimeC FUN_2971_65df: 5
+[n2 23:33:52]   F3[phi] daytimeC FUN_24dd_4905: 5
+[n2 23:34:01]   F3[phi] daytimeC FUN_24dd_0548: 5
+[n2 23:34:11]   F3[phi] daytimeC FUN_249c_0180: 5
+[n2 23:34:22]   F3[phi] daytimeC FUN_1ec2_0d5d: 5
+[n2 23:34:34]   F3[phi] daytimeC FUN_24dd_3711: 5
+[n2 23:34:46]   F3[phi] daytimeC FUN_24dd_3ed3: 5
+[n2 23:34:58]   F3[phi] daytimeC FUN_24dd_2e94: 4
+[n2 23:35:11]   F3[phi] daytimeC FUN_1e7d_018a: 4
+[n2 23:35:11] === f4 ===
+[n2 23:35:19]   F4 phi4:14b bans FUN_2971_65df: fail
+[n2 23:35:29]   F4 phi4:14b bans FUN_24dd_0582: strict
+[n2 23:35:34]   F4 phi4:14b bans FUN_24dd_0218: strict
+[n2 23:35:40]   F4 phi4:14b bans FUN_24dd_3c03: fail
+[n2 23:35:51]   F4 phi4:14b bans FUN_2494_0010: strict
+[n2 23:35:55]   F4 phi4:14b bans FUN_235c_04f3: strict
+[n2 23:36:05]   F4 phi4:14b bans FUN_24dd_396c: fail
+[n2 23:36:13]   F4 phi4:14b bans FUN_24dd_020a: strict
+[n2 23:36:19]   F4 phi4:14b bans FUN_24dd_02b9: fail
+[n2 23:36:24]   F4 phi4:14b bans FUN_235c_032e: fail
+[n2 23:36:36]   F4 phi4:14b bans FUN_24dd_028a: fail
+[n2 23:36:44]   F4 phi4:14b bans FUN_2494_0027: fail
+[n2 23:36:49]   F4 phi4:14b bans FUN_24dd_3951: fail
+[n2 23:36:58]   F4 phi4:14b bans FUN_235c_118c: fail
+[n2 23:37:05]   F4 phi4:14b bans FUN_235c_1345: strict
+[n2 23:37:14]   F4 phi4:14b bans FUN_1ec2_0000: strict
+[n2 23:37:21]   F4 phi4:14b bans FUN_235c_0000: fail
+[n2 23:37:30]   F4 phi4:14b bans FUN_24dd_3bde: fail
+[n2 23:37:36]   F4 phi4:14b bans FUN_24dd_40ec: strict
+[n2 23:37:41]   F4 phi4:14b bans FUN_1ec2_0c11: strict
+[n2 23:37:47]   F4 phi4:14b bans FUN_24dd_0673: strict
+[n2 23:37:58]   F4 phi4:14b bans FUN_24dd_4712: strict
+[n2 23:38:10]   F4 phi4:14b bans FUN_24dd_48e1: strict
+[n2 23:38:21]   F4 phi4:14b bans FUN_24dd_40ac: strict
+[n2 23:38:30]   F4 phi4:14b bans FUN_24dd_0642: fail
+[n2 23:38:38]   F4 phi4:14b bans FUN_235c_0f1d: strict
+[n2 23:38:47]   F4 phi4:14b bans FUN_24dd_3f86: strict
+[n2 23:38:55]   F4 phi4:14b bans FUN_235c_06d7: strict
+[n2 23:39:07]   F4 phi4:14b bans FUN_24dd_46b1: fail
+[n2 23:39:13]   F4 phi4:14b bans FUN_24dd_39ef: fail
+[n2 23:39:17]   F4 phi4:14b bans FUN_24dd_3d80: strict
+[n2 23:39:28]   F4 phi4:14b bans FUN_235c_0b33: strict
+[n2 23:39:41]   F4 phi4:14b bans FUN_24dd_36c4: strict
+[n2 23:39:56]   F4 phi4:14b bans FUN_24dd_3b22: strict
+[n2 23:40:15]   F4 phi4:14b bans FUN_202c_0000: fail
+[n2 23:40:39]   F4 phi4:14b bans FUN_24dd_3f40: fail
+[n2 23:40:50]   F4 phi4:14b bans FUN_1ec2_0810: strict
+[n2 23:41:12]   F4 phi4:14b bans FUN_24dd_041e: fail
+[n2 23:41:30]   F4 phi4:14b bans FUN_24dd_3fde: strict
+[n2 23:41:48]   F4 phi4:14b bans FUN_1000_0be1: strict
+[n2 23:42:09]   F4 phi4:14b bans FUN_202c_08b2: strict
+[n2 23:42:29]   F4 phi4:14b bans FUN_24cb_00a7: strict
+[n2 23:42:55]   F4 phi4:14b bans FUN_202c_079e: fail
+[n2 23:43:34]   F4 phi4:14b bans FUN_24dd_351a: fail
+[n2 23:44:04]   F4 phi4:14b bans FUN_24dd_0000: fail
+[n2 23:44:42]   F4 phi4:14b bans FUN_24dd_4732: fail
+[n2 23:45:21]   F4 phi4:14b bans FUN_24dd_0353: fail
+[n2 23:46:01]   F4 phi4:14b bans FUN_24dd_1190: fail
+[n2 23:46:37]   F4 phi4:14b bans FUN_1e7d_0082: fail
+[n2 23:47:05]   F4 phi4:14b bans FUN_1ec2_0c3b: fail
+[n2 23:47:26]   F4 phi4:14b bans FUN_1000_0d70: strict
+[n2 23:48:07]   F4 phi4:14b bans FUN_24dd_3054: fail
+[n2 23:48:46]   F4 phi4:14b bans FUN_1000_5c36: fail
+[n2 23:49:27]   F4 phi4:14b bans FUN_24dd_0ee2: fail
+[n2 23:50:06]   F4 phi4:14b bans FUN_202c_165d: fail
+[n2 23:50:46]   F4 phi4:14b bans FUN_235c_0bbc: fail
+[n2 23:51:27]   F4 phi4:14b bans FUN_1000_d7b5: fail
+[n2 23:52:08]   F4 phi4:14b bans FUN_202c_0f10: fail
+[n2 23:52:53]   F4 phi4:14b bans FUN_1000_929a: fail
+[n2 23:53:37]   F4 phi4:14b bans FUN_1000_5e66: fail
+[n2 23:53:41]   F4 phi4:14b sig FUN_2971_65df: fail
+[n2 23:53:51]   F4 phi4:14b sig FUN_24dd_0582: strict
+[n2 23:53:57]   F4 phi4:14b sig FUN_24dd_0218: strict
+[n2 23:54:04]   F4 phi4:14b sig FUN_24dd_3c03: fail
+[n2 23:54:15]   F4 phi4:14b sig FUN_2494_0010: strict
+[n2 23:54:19]   F4 phi4:14b sig FUN_235c_04f3: fail
+[n2 23:54:31]   F4 phi4:14b sig FUN_24dd_396c: fail
+[n2 23:54:40]   F4 phi4:14b sig FUN_24dd_020a: strict
+[n2 23:54:45]   F4 phi4:14b sig FUN_24dd_02b9: fail
+[n2 23:54:51]   F4 phi4:14b sig FUN_235c_032e: fail
+[n2 23:55:03]   F4 phi4:14b sig FUN_24dd_028a: fail
+[n2 23:55:12]   F4 phi4:14b sig FUN_2494_0027: fail
+[n2 23:55:17]   F4 phi4:14b sig FUN_24dd_3951: fail
+[n2 23:55:25]   F4 phi4:14b sig FUN_235c_118c: strict
+[n2 23:55:32]   F4 phi4:14b sig FUN_235c_1345: strict
+[n2 23:55:40]   F4 phi4:14b sig FUN_1ec2_0000: strict
+[n2 23:55:48]   F4 phi4:14b sig FUN_235c_0000: fail
+[n2 23:56:00]   F4 phi4:14b sig FUN_24dd_3bde: fail
+[n2 23:56:05]   F4 phi4:14b sig FUN_24dd_40ec: fail
+[n2 23:56:12]   F4 phi4:14b sig FUN_1ec2_0c11: fail
+[n2 23:56:19]   F4 phi4:14b sig FUN_24dd_0673: strict
+[n2 23:56:31]   F4 phi4:14b sig FUN_24dd_4712: strict
+[n2 23:56:40]   F4 phi4:14b sig FUN_24dd_48e1: strict
+[n2 23:56:52]   F4 phi4:14b sig FUN_24dd_40ac: strict
+[n2 23:57:02]   F4 phi4:14b sig FUN_24dd_0642: strict
+[n2 23:57:10]   F4 phi4:14b sig FUN_235c_0f1d: strict
+[n2 23:57:20]   F4 phi4:14b sig FUN_24dd_3f86: strict
+[n2 23:57:27]   F4 phi4:14b sig FUN_235c_06d7: strict
+[n2 23:57:39]   F4 phi4:14b sig FUN_24dd_46b1: strict
+[n2 23:57:44]   F4 phi4:14b sig FUN_24dd_39ef: fail
+[n2 23:57:50]   F4 phi4:14b sig FUN_24dd_3d80: fail
+[n2 23:58:01]   F4 phi4:14b sig FUN_235c_0b33: strict
+[n2 23:58:18]   F4 phi4:14b sig FUN_24dd_36c4: strict
+[n2 23:58:30]   F4 phi4:14b sig FUN_24dd_3b22: strict
+[n2 23:58:54]   F4 phi4:14b sig FUN_202c_0000: fail
+[n2 23:59:13]   F4 phi4:14b sig FUN_24dd_3f40: fail
+[n2 23:59:21]   F4 phi4:14b sig FUN_1ec2_0810: strict
+[n2 23:59:42]   F4 phi4:14b sig FUN_24dd_041e: fail
+[n2 00:00:01]   F4 phi4:14b sig FUN_24dd_3fde: strict
+[n2 00:00:19]   F4 phi4:14b sig FUN_1000_0be1: strict
+[n2 00:00:38]   F4 phi4:14b sig FUN_202c_08b2: strict
+[n2 00:00:58]   F4 phi4:14b sig FUN_24cb_00a7: strict
+[n2 00:01:21]   F4 phi4:14b sig FUN_202c_079e: fail
+[n2 00:02:00]   F4 phi4:14b sig FUN_24dd_351a: fail
+[n2 00:02:33]   F4 phi4:14b sig FUN_24dd_0000: fail
+[n2 00:03:11]   F4 phi4:14b sig FUN_24dd_4732: fail
+[n2 00:03:50]   F4 phi4:14b sig FUN_24dd_0353: fail
+[n2 00:04:30]   F4 phi4:14b sig FUN_24dd_1190: fail
+[n2 00:05:04]   F4 phi4:14b sig FUN_1e7d_0082: strict
+[n2 00:05:31]   F4 phi4:14b sig FUN_1ec2_0c3b: fail
+[n2 00:05:52]   F4 phi4:14b sig FUN_1000_0d70: strict
+[n2 00:06:32]   F4 phi4:14b sig FUN_24dd_3054: fail
+[n2 00:07:11]   F4 phi4:14b sig FUN_1000_5c36: fail
+[n2 00:07:52]   F4 phi4:14b sig FUN_24dd_0ee2: fail
+[n2 00:08:31]   F4 phi4:14b sig FUN_202c_165d: fail
+[n2 00:09:12]   F4 phi4:14b sig FUN_235c_0bbc: fail
+[n2 00:09:52]   F4 phi4:14b sig FUN_1000_d7b5: fail
+[n2 00:10:34]   F4 phi4:14b sig FUN_202c_0f10: fail
+[n2 00:11:19]   F4 phi4:14b sig FUN_1000_929a: fail
+[n2 00:12:02]   F4 phi4:14b sig FUN_1000_5e66: strict
+[n2 00:12:05]   F4 phi4:14b sumfirst FUN_2971_65df: strict
+[n2 00:12:14]   F4 phi4:14b sumfirst FUN_24dd_0582: fail
+[n2 00:12:26]   F4 phi4:14b sumfirst FUN_24dd_0218: fail
+[n2 00:12:32]   F4 phi4:14b sumfirst FUN_24dd_3c03: fail
+[n2 00:12:40]   F4 phi4:14b sumfirst FUN_2494_0010: strict
+[n2 00:12:46]   F4 phi4:14b sumfirst FUN_235c_04f3: strict
+[n2 00:12:53]   F4 phi4:14b sumfirst FUN_24dd_396c: fail
+[n2 00:13:01]   F4 phi4:14b sumfirst FUN_24dd_020a: strict
+[n2 00:13:05]   F4 phi4:14b sumfirst FUN_24dd_02b9: strict
+[n2 00:13:11]   F4 phi4:14b sumfirst FUN_235c_032e: strict
+[n2 00:13:17]   F4 phi4:14b sumfirst FUN_24dd_028a: fail
+[n2 00:13:22]   F4 phi4:14b sumfirst FUN_2494_0027: strict
+[n2 00:13:25]   F4 phi4:14b sumfirst FUN_24dd_3951: strict
+[n2 00:13:32]   F4 phi4:14b sumfirst FUN_235c_118c: fail
+[n2 00:13:38]   F4 phi4:14b sumfirst FUN_235c_1345: strict
+[n2 00:13:44]   F4 phi4:14b sumfirst FUN_1ec2_0000: strict
+[n2 00:13:51]   F4 phi4:14b sumfirst FUN_235c_0000: strict
+[n2 00:14:01]   F4 phi4:14b sumfirst FUN_24dd_3bde: fail
+[n2 00:14:05]   F4 phi4:14b sumfirst FUN_24dd_40ec: strict
+[n2 00:14:10]   F4 phi4:14b sumfirst FUN_1ec2_0c11: strict
+[n2 00:14:16]   F4 phi4:14b sumfirst FUN_24dd_0673: strict
+[n2 00:14:28]   F4 phi4:14b sumfirst FUN_24dd_4712: strict
+[n2 00:14:36]   F4 phi4:14b sumfirst FUN_24dd_48e1: strict
+[n2 00:14:47]   F4 phi4:14b sumfirst FUN_24dd_40ac: strict
+[n2 00:14:54]   F4 phi4:14b sumfirst FUN_24dd_0642: strict
+[n2 00:15:02]   F4 phi4:14b sumfirst FUN_235c_0f1d: strict
+[n2 00:15:12]   F4 phi4:14b sumfirst FUN_24dd_3f86: strict
+[n2 00:15:19]   F4 phi4:14b sumfirst FUN_235c_06d7: strict
+[n2 00:15:30]   F4 phi4:14b sumfirst FUN_24dd_46b1: strict
+[n2 00:15:34]   F4 phi4:14b sumfirst FUN_24dd_39ef: strict
+[n2 00:15:37]   F4 phi4:14b sumfirst FUN_24dd_3d80: strict
+[n2 00:15:45]   F4 phi4:14b sumfirst FUN_235c_0b33: strict
+[n2 00:15:59]   F4 phi4:14b sumfirst FUN_24dd_36c4: strict
+[n2 00:16:14]   F4 phi4:14b sumfirst FUN_24dd_3b22: strict
+[n2 00:16:34]   F4 phi4:14b sumfirst FUN_202c_0000: fail
+[n2 00:16:56]   F4 phi4:14b sumfirst FUN_24dd_3f40: fail
+[n2 00:17:06]   F4 phi4:14b sumfirst FUN_1ec2_0810: strict
+[n2 00:17:30]   F4 phi4:14b sumfirst FUN_24dd_041e: fail
+[n2 00:17:47]   F4 phi4:14b sumfirst FUN_24dd_3fde: strict
+[n2 00:18:04]   F4 phi4:14b sumfirst FUN_1000_0be1: strict
+[n2 00:18:19]   F4 phi4:14b sumfirst FUN_202c_08b2: strict
+[n2 00:18:39]   F4 phi4:14b sumfirst FUN_24cb_00a7: strict
+[n2 00:19:04]   F4 phi4:14b sumfirst FUN_202c_079e: fail
+[n2 00:19:43]   F4 phi4:14b sumfirst FUN_24dd_351a: fail
+[n2 00:20:15]   F4 phi4:14b sumfirst FUN_24dd_0000: fail
+[n2 00:20:42]   F4 phi4:14b sumfirst FUN_24dd_4732: strict
+[n2 00:21:20]   F4 phi4:14b sumfirst FUN_24dd_0353: fail
+[n2 00:22:01]   F4 phi4:14b sumfirst FUN_24dd_1190: fail
+[n2 00:22:39]   F4 phi4:14b sumfirst FUN_1e7d_0082: fail
+[n2 00:23:06]   F4 phi4:14b sumfirst FUN_1ec2_0c3b: fail
+[n2 00:23:27]   F4 phi4:14b sumfirst FUN_1000_0d70: strict
+[n2 00:24:07]   F4 phi4:14b sumfirst FUN_24dd_3054: fail
+[n2 00:24:46]   F4 phi4:14b sumfirst FUN_1000_5c36: fail
+[n2 00:25:27]   F4 phi4:14b sumfirst FUN_24dd_0ee2: fail
+[n2 00:26:06]   F4 phi4:14b sumfirst FUN_202c_165d: fail
+[n2 00:26:47]   F4 phi4:14b sumfirst FUN_235c_0bbc: fail
+[n2 00:27:27]   F4 phi4:14b sumfirst FUN_1000_d7b5: fail
+[n2 00:28:09]   F4 phi4:14b sumfirst FUN_202c_0f10: fail
+[n2 00:28:54]   F4 phi4:14b sumfirst FUN_1000_929a: fail
+[n2 00:29:37]   F4 phi4:14b sumfirst FUN_1000_5e66: fail
+[n2 00:29:42]   F4 qwen2.5-coder:14b bans FUN_2971_65df: strict
+[n2 00:29:49]   F4 qwen2.5-coder:14b bans FUN_24dd_0582: strict
+[n2 00:29:53]   F4 qwen2.5-coder:14b bans FUN_24dd_0218: strict
+[n2 00:29:56]   F4 qwen2.5-coder:14b bans FUN_24dd_3c03: strict
+[n2 00:30:01]   F4 qwen2.5-coder:14b bans FUN_2494_0010: strict
+[n2 00:30:05]   F4 qwen2.5-coder:14b bans FUN_235c_04f3: strict
+[n2 00:30:11]   F4 qwen2.5-coder:14b bans FUN_24dd_396c: fail
+[n2 00:30:17]   F4 qwen2.5-coder:14b bans FUN_24dd_020a: strict
+[n2 00:30:20]   F4 qwen2.5-coder:14b bans FUN_24dd_02b9: strict
+[n2 00:30:24]   F4 qwen2.5-coder:14b bans FUN_235c_032e: strict
+[n2 00:30:29]   F4 qwen2.5-coder:14b bans FUN_24dd_028a: strict
+[n2 00:30:33]   F4 qwen2.5-coder:14b bans FUN_2494_0027: strict
+[n2 00:30:37]   F4 qwen2.5-coder:14b bans FUN_24dd_3951: strict
+[n2 00:30:44]   F4 qwen2.5-coder:14b bans FUN_235c_118c: strict
+[n2 00:30:51]   F4 qwen2.5-coder:14b bans FUN_235c_1345: strict
+[n2 00:30:57]   F4 qwen2.5-coder:14b bans FUN_1ec2_0000: strict
+[n2 00:31:02]   F4 qwen2.5-coder:14b bans FUN_235c_0000: strict
+[n2 00:31:09]   F4 qwen2.5-coder:14b bans FUN_24dd_3bde: fail
+[n2 00:31:13]   F4 qwen2.5-coder:14b bans FUN_24dd_40ec: strict
+[n2 00:31:17]   F4 qwen2.5-coder:14b bans FUN_1ec2_0c11: strict
+[n2 00:31:24]   F4 qwen2.5-coder:14b bans FUN_24dd_0673: strict
+[n2 00:31:33]   F4 qwen2.5-coder:14b bans FUN_24dd_4712: fail
+[n2 00:31:42]   F4 qwen2.5-coder:14b bans FUN_24dd_48e1: strict
+[n2 00:31:57]   F4 qwen2.5-coder:14b bans FUN_24dd_40ac: fail
+[n2 00:32:05]   F4 qwen2.5-coder:14b bans FUN_24dd_0642: fail
+[n2 00:32:13]   F4 qwen2.5-coder:14b bans FUN_235c_0f1d: strict
+[n2 00:32:24]   F4 qwen2.5-coder:14b bans FUN_24dd_3f86: strict
+[n2 00:32:30]   F4 qwen2.5-coder:14b bans FUN_235c_06d7: strict
+[n2 00:32:41]   F4 qwen2.5-coder:14b bans FUN_24dd_46b1: fail
+[n2 00:32:44]   F4 qwen2.5-coder:14b bans FUN_24dd_39ef: strict
+[n2 00:32:46]   F4 qwen2.5-coder:14b bans FUN_24dd_3d80: strict
+[n2 00:32:54]   F4 qwen2.5-coder:14b bans FUN_235c_0b33: strict
+[n2 00:33:05]   F4 qwen2.5-coder:14b bans FUN_24dd_36c4: fail
+[n2 00:33:20]   F4 qwen2.5-coder:14b bans FUN_24dd_3b22: strict
+[n2 00:33:33]   F4 qwen2.5-coder:14b bans FUN_202c_0000: fail
+[n2 00:33:50]   F4 qwen2.5-coder:14b bans FUN_24dd_3f40: fail
+[n2 00:33:58]   F4 qwen2.5-coder:14b bans FUN_1ec2_0810: strict
+[n2 00:34:17]   F4 qwen2.5-coder:14b bans FUN_24dd_041e: strict
+[n2 00:34:30]   F4 qwen2.5-coder:14b bans FUN_24dd_3fde: fail
+[n2 00:34:50]   F4 qwen2.5-coder:14b bans FUN_1000_0be1: strict
+[n2 00:35:09]   F4 qwen2.5-coder:14b bans FUN_202c_08b2: fail
+[n2 00:35:28]   F4 qwen2.5-coder:14b bans FUN_24cb_00a7: strict
+[n2 00:35:54]   F4 qwen2.5-coder:14b bans FUN_202c_079e: strict
+[n2 00:36:32]   F4 qwen2.5-coder:14b bans FUN_24dd_351a: fail
+[n2 00:36:57]   F4 qwen2.5-coder:14b bans FUN_24dd_0000: fail
+[n2 00:37:34]   F4 qwen2.5-coder:14b bans FUN_24dd_4732: fail
+[n2 00:38:11]   F4 qwen2.5-coder:14b bans FUN_24dd_0353: fail
+[n2 00:38:50]   F4 qwen2.5-coder:14b bans FUN_24dd_1190: fail
+[n2 00:39:27]   F4 qwen2.5-coder:14b bans FUN_1e7d_0082: fail
+[n2 00:39:51]   F4 qwen2.5-coder:14b bans FUN_1ec2_0c3b: strict
+[n2 00:40:11]   F4 qwen2.5-coder:14b bans FUN_1000_0d70: strict
+[n2 00:40:51]   F4 qwen2.5-coder:14b bans FUN_24dd_3054: fail
+[n2 00:41:28]   F4 qwen2.5-coder:14b bans FUN_1000_5c36: fail
+[n2 00:42:09]   F4 qwen2.5-coder:14b bans FUN_24dd_0ee2: fail
+[n2 00:42:47]   F4 qwen2.5-coder:14b bans FUN_202c_165d: fail
+[n2 00:43:26]   F4 qwen2.5-coder:14b bans FUN_235c_0bbc: fail
+[n2 00:44:06]   F4 qwen2.5-coder:14b bans FUN_1000_d7b5: fail
+[n2 00:44:47]   F4 qwen2.5-coder:14b bans FUN_202c_0f10: fail
+[n2 00:45:34]   F4 qwen2.5-coder:14b bans FUN_1000_929a: fail
+[n2 00:46:16]   F4 qwen2.5-coder:14b bans FUN_1000_5e66: fail
+[n2 00:46:18]   F4 qwen2.5-coder:14b sig FUN_2971_65df: strict
+[n2 00:46:25]   F4 qwen2.5-coder:14b sig FUN_24dd_0582: strict
+[n2 00:46:28]   F4 qwen2.5-coder:14b sig FUN_24dd_0218: strict
+[n2 00:46:32]   F4 qwen2.5-coder:14b sig FUN_24dd_3c03: strict
+[n2 00:46:37]   F4 qwen2.5-coder:14b sig FUN_2494_0010: fail
+[n2 00:46:39]   F4 qwen2.5-coder:14b sig FUN_235c_04f3: strict
+[n2 00:46:43]   F4 qwen2.5-coder:14b sig FUN_24dd_396c: strict
+[n2 00:46:51]   F4 qwen2.5-coder:14b sig FUN_24dd_020a: strict
+[n2 00:46:54]   F4 qwen2.5-coder:14b sig FUN_24dd_02b9: strict
+[n2 00:46:58]   F4 qwen2.5-coder:14b sig FUN_235c_032e: strict
+[n2 00:47:03]   F4 qwen2.5-coder:14b sig FUN_24dd_028a: strict
+[n2 00:47:07]   F4 qwen2.5-coder:14b sig FUN_2494_0027: strict
+[n2 00:47:12]   F4 qwen2.5-coder:14b sig FUN_24dd_3951: strict
+[n2 00:47:19]   F4 qwen2.5-coder:14b sig FUN_235c_118c: strict
+[n2 00:47:26]   F4 qwen2.5-coder:14b sig FUN_235c_1345: strict
+[n2 00:47:32]   F4 qwen2.5-coder:14b sig FUN_1ec2_0000: strict
+[n2 00:47:37]   F4 qwen2.5-coder:14b sig FUN_235c_0000: strict
+[n2 00:47:45]   F4 qwen2.5-coder:14b sig FUN_24dd_3bde: fail
+[n2 00:47:48]   F4 qwen2.5-coder:14b sig FUN_24dd_40ec: strict
+[n2 00:47:52]   F4 qwen2.5-coder:14b sig FUN_1ec2_0c11: strict
+[n2 00:48:00]   F4 qwen2.5-coder:14b sig FUN_24dd_0673: strict
+[n2 00:48:07]   F4 qwen2.5-coder:14b sig FUN_24dd_4712: fail
+[n2 00:48:16]   F4 qwen2.5-coder:14b sig FUN_24dd_48e1: strict
+[n2 00:48:31]   F4 qwen2.5-coder:14b sig FUN_24dd_40ac: fail
+[n2 00:48:39]   F4 qwen2.5-coder:14b sig FUN_24dd_0642: fail
+[n2 00:48:47]   F4 qwen2.5-coder:14b sig FUN_235c_0f1d: strict
+[n2 00:48:54]   F4 qwen2.5-coder:14b sig FUN_24dd_3f86: strict
+[n2 00:49:00]   F4 qwen2.5-coder:14b sig FUN_235c_06d7: strict
+[n2 00:49:12]   F4 qwen2.5-coder:14b sig FUN_24dd_46b1: fail
+[n2 00:49:15]   F4 qwen2.5-coder:14b sig FUN_24dd_39ef: strict
+[n2 00:49:17]   F4 qwen2.5-coder:14b sig FUN_24dd_3d80: fail
+[n2 00:49:26]   F4 qwen2.5-coder:14b sig FUN_235c_0b33: strict
+[n2 00:49:38]   F4 qwen2.5-coder:14b sig FUN_24dd_36c4: fail
+[n2 00:49:53]   F4 qwen2.5-coder:14b sig FUN_24dd_3b22: strict
+[n2 00:50:06]   F4 qwen2.5-coder:14b sig FUN_202c_0000: fail
+[n2 00:50:22]   F4 qwen2.5-coder:14b sig FUN_24dd_3f40: fail
+[n2 00:50:22] F4 budget/deadline hit
+[n2 00:50:22] === f5 ===
+[n2 00:50:29]   F5 phi4:14b C FUN_2971_65df s0: fail
+[n2 00:50:32]   F5 phi4:14b C FUN_2971_65df s1: fail
+[n2 00:50:34]   F5 phi4:14b C FUN_2971_65df s2: strict
+[n2 00:50:37]   F5 phi4:14b C FUN_2971_65df s3: fail
+[n2 00:50:43]   F5 phi4:14b C FUN_24dd_0582 s0: fail
+[n2 00:50:48]   F5 phi4:14b C FUN_24dd_0582 s1: fail
+[n2 00:50:53]   F5 phi4:14b C FUN_24dd_0582 s2: fail
+[n2 00:50:59]   F5 phi4:14b C FUN_24dd_0582 s3: fail
+[n2 00:51:03]   F5 phi4:14b C FUN_24dd_0218 s0: fail
+[n2 00:51:09]   F5 phi4:14b C FUN_24dd_0218 s1: strict
+[n2 00:51:17]   F5 phi4:14b C FUN_24dd_0218 s2: fail
+[n2 00:51:22]   F5 phi4:14b C FUN_24dd_0218 s3: fail
+[n2 00:51:26]   F5 phi4:14b C FUN_24dd_3c03 s0: strict
+[n2 00:51:29]   F5 phi4:14b C FUN_24dd_3c03 s1: strict
+[n2 00:51:36]   F5 phi4:14b C FUN_24dd_3c03 s2: fail
+[n2 00:51:41]   F5 phi4:14b C FUN_24dd_3c03 s3: strict
+[n2 00:51:48]   F5 phi4:14b C FUN_2494_0010 s0: strict
+[n2 00:51:55]   F5 phi4:14b C FUN_2494_0010 s1: strict
+[n2 00:52:02]   F5 phi4:14b C FUN_2494_0010 s2: strict
+[n2 00:52:09]   F5 phi4:14b C FUN_2494_0010 s3: strict
+[n2 00:52:13]   F5 phi4:14b C FUN_235c_04f3 s0: strict
+[n2 00:52:15]   F5 phi4:14b C FUN_235c_04f3 s1: strict
+[n2 00:52:18]   F5 phi4:14b C FUN_235c_04f3 s2: strict
+[n2 00:52:21]   F5 phi4:14b C FUN_235c_04f3 s3: strict
+[n2 00:52:25]   F5 phi4:14b C FUN_24dd_396c s0: fail
+[n2 00:52:31]   F5 phi4:14b C FUN_24dd_396c s1: fail
+[n2 00:52:38]   F5 phi4:14b C FUN_24dd_396c s2: fail
+[n2 00:52:46]   F5 phi4:14b C FUN_24dd_396c s3: fail
+[n2 00:52:52]   F5 phi4:14b C FUN_24dd_020a s0: strict
+[n2 00:52:58]   F5 phi4:14b C FUN_24dd_020a s1: strict
+[n2 00:53:05]   F5 phi4:14b C FUN_24dd_020a s2: strict
+[n2 00:53:10]   F5 phi4:14b C FUN_24dd_020a s3: strict
+[n2 00:53:17]   F5 phi4:14b C FUN_24dd_02b9 s0: fail
+[n2 00:53:22]   F5 phi4:14b C FUN_24dd_02b9 s1: strict
+[n2 00:53:27]   F5 phi4:14b C FUN_24dd_02b9 s2: fail
+[n2 00:53:31]   F5 phi4:14b C FUN_24dd_02b9 s3: strict
+[n2 00:53:34]   F5 phi4:14b C FUN_235c_032e s0: strict
+[n2 00:53:37]   F5 phi4:14b C FUN_235c_032e s1: strict
+[n2 00:53:41]   F5 phi4:14b C FUN_235c_032e s2: strict
+[n2 00:53:44]   F5 phi4:14b C FUN_235c_032e s3: strict
+[n2 00:53:47]   F5 phi4:14b C FUN_24dd_028a s0: strict
+[n2 00:53:50]   F5 phi4:14b C FUN_24dd_028a s1: strict
+[n2 00:53:54]   F5 phi4:14b C FUN_24dd_028a s2: strict
+[n2 00:54:00]   F5 phi4:14b C FUN_24dd_028a s3: fail
+[n2 00:54:06]   F5 phi4:14b C FUN_2494_0027 s0: strict
+[n2 00:54:13]   F5 phi4:14b C FUN_2494_0027 s1: fail
+[n2 00:54:18]   F5 phi4:14b C FUN_2494_0027 s2: fail
+[n2 00:54:22]   F5 phi4:14b C FUN_2494_0027 s3: strict
+[n2 00:54:25]   F5 phi4:14b C FUN_24dd_3951 s0: strict
+[n2 00:54:28]   F5 phi4:14b C FUN_24dd_3951 s1: strict
+[n2 00:54:31]   F5 phi4:14b C FUN_24dd_3951 s2: strict
+[n2 00:54:34]   F5 phi4:14b C FUN_24dd_3951 s3: strict
+[n2 00:54:40]   F5 phi4:14b C FUN_235c_118c s0: strict
+[n2 00:54:46]   F5 phi4:14b C FUN_235c_118c s1: fail
+[n2 00:54:50]   F5 phi4:14b C FUN_235c_118c s2: strict
+[n2 00:54:55]   F5 phi4:14b C FUN_235c_118c s3: strict
+[n2 00:55:01]   F5 phi4:14b C FUN_235c_1345 s0: strict
+[n2 00:55:07]   F5 phi4:14b C FUN_235c_1345 s1: strict
+[n2 00:55:13]   F5 phi4:14b C FUN_235c_1345 s2: strict
+[n2 00:55:18]   F5 phi4:14b C FUN_235c_1345 s3: strict
+[n2 00:55:24]   F5 phi4:14b C FUN_1ec2_0000 s0: strict
+[n2 00:55:31]   F5 phi4:14b C FUN_1ec2_0000 s1: strict
+[n2 00:55:35]   F5 phi4:14b C FUN_1ec2_0000 s2: strict
+[n2 00:55:41]   F5 phi4:14b C FUN_1ec2_0000 s3: strict
+[n2 00:55:45]   F5 phi4:14b C FUN_235c_0000 s0: strict
+[n2 00:55:49]   F5 phi4:14b C FUN_235c_0000 s1: strict
+[n2 00:55:55]   F5 phi4:14b C FUN_235c_0000 s2: strict
+[n2 00:56:02]   F5 phi4:14b C FUN_235c_0000 s3: fail
+[n2 00:56:10]   F5 phi4:14b C FUN_24dd_3bde s0: fail
+[n2 00:56:17]   F5 phi4:14b C FUN_24dd_3bde s1: fail
+[n2 00:56:26]   F5 phi4:14b C FUN_24dd_3bde s2: fail
+[n2 00:56:35]   F5 phi4:14b C FUN_24dd_3bde s3: strict
+[n2 00:56:39]   F5 phi4:14b C FUN_24dd_40ec s0: strict
+[n2 00:56:44]   F5 phi4:14b C FUN_24dd_40ec s1: strict
+[n2 00:56:47]   F5 phi4:14b C FUN_24dd_40ec s2: strict
+[n2 00:56:51]   F5 phi4:14b C FUN_24dd_40ec s3: strict
+[n2 00:56:55]   F5 phi4:14b C FUN_1ec2_0c11 s0: strict
+[n2 00:56:59]   F5 phi4:14b C FUN_1ec2_0c11 s1: strict
+[n2 00:57:03]   F5 phi4:14b C FUN_1ec2_0c11 s2: strict
+[n2 00:57:07]   F5 phi4:14b C FUN_1ec2_0c11 s3: strict
+[n2 00:57:14]   F5 phi4:14b C FUN_24dd_0673 s0: strict
+[n2 00:57:18]   F5 phi4:14b C FUN_24dd_0673 s1: strict
+[n2 00:57:22]   F5 phi4:14b C FUN_24dd_0673 s2: strict
+[n2 00:57:27]   F5 phi4:14b C FUN_24dd_0673 s3: strict
+[n2 00:57:38]   F5 phi4:14b C FUN_24dd_4712 s0: strict
+[n2 00:57:48]   F5 phi4:14b C FUN_24dd_4712 s1: strict
+[n2 00:57:56]   F5 phi4:14b C FUN_24dd_4712 s2: strict
+[n2 00:58:05]   F5 phi4:14b C FUN_24dd_4712 s3: strict
+[n2 00:58:15]   F5 phi4:14b C FUN_24dd_48e1 s0: strict
+[n2 00:58:24]   F5 phi4:14b C FUN_24dd_48e1 s1: strict
+[n2 00:58:33]   F5 phi4:14b C FUN_24dd_48e1 s2: strict
+[n2 00:58:44]   F5 phi4:14b C FUN_24dd_48e1 s3: strict
+[n2 00:58:53]   F5 phi4:14b C FUN_24dd_40ac s0: strict
+[n2 00:59:06]   F5 phi4:14b C FUN_24dd_40ac s1: strict
+[n2 00:59:17]   F5 phi4:14b C FUN_24dd_40ac s2: strict
+[n2 00:59:27]   F5 phi4:14b C FUN_24dd_40ac s3: strict
+[n2 00:59:33]   F5 phi4:14b C FUN_24dd_0642 s0: fail
+[n2 00:59:40]   F5 phi4:14b C FUN_24dd_0642 s1: fail
+[n2 00:59:46]   F5 phi4:14b C FUN_24dd_0642 s2: strict
+[n2 00:59:52]   F5 phi4:14b C FUN_24dd_0642 s3: strict
+[n2 00:59:58]   F5 phi4:14b C FUN_235c_0f1d s0: strict
+[n2 01:00:06]   F5 phi4:14b C FUN_235c_0f1d s1: strict
+[n2 01:00:13]   F5 phi4:14b C FUN_235c_0f1d s2: strict
+[n2 01:00:20]   F5 phi4:14b C FUN_235c_0f1d s3: strict
+[n2 01:00:27]   F5 phi4:14b C FUN_24dd_3f86 s0: strict
+[n2 01:00:35]   F5 phi4:14b C FUN_24dd_3f86 s1: strict
+[n2 01:00:42]   F5 phi4:14b C FUN_24dd_3f86 s2: strict
+[n2 01:00:50]   F5 phi4:14b C FUN_24dd_3f86 s3: strict
+[n2 01:00:56]   F5 phi4:14b C FUN_235c_06d7 s0: strict
+[n2 01:01:01]   F5 phi4:14b C FUN_235c_06d7 s1: strict
+[n2 01:01:07]   F5 phi4:14b C FUN_235c_06d7 s2: strict
+[n2 01:01:13]   F5 phi4:14b C FUN_235c_06d7 s3: strict
+[n2 01:01:24]   F5 phi4:14b C FUN_24dd_46b1 s0: strict
+[n2 01:01:34]   F5 phi4:14b C FUN_24dd_46b1 s1: strict
+[n2 01:01:50]   F5 phi4:14b C FUN_24dd_46b1 s2: strict
+[n2 01:02:03]   F5 phi4:14b C FUN_24dd_46b1 s3: strict
+[n2 01:02:04]   F5 phi4:14b C FUN_24dd_39ef s0: strict
+[n2 01:02:06]   F5 phi4:14b C FUN_24dd_39ef s1: strict
+[n2 01:02:09]   F5 phi4:14b C FUN_24dd_39ef s2: strict
+[n2 01:02:11]   F5 phi4:14b C FUN_24dd_39ef s3: strict
+[n2 01:02:14]   F5 phi4:14b C FUN_24dd_3d80 s0: fail
+[n2 01:02:18]   F5 phi4:14b C FUN_24dd_3d80 s1: strict
+[n2 01:02:25]   F5 phi4:14b C FUN_24dd_3d80 s2: fail
+[n2 01:02:29]   F5 phi4:14b C FUN_24dd_3d80 s3: fail
+[n2 01:02:36]   F5 phi4:14b C FUN_235c_0b33 s0: strict
+[n2 01:02:43]   F5 phi4:14b C FUN_235c_0b33 s1: strict
+[n2 01:02:50]   F5 phi4:14b C FUN_235c_0b33 s2: strict
+[n2 01:02:56]   F5 phi4:14b C FUN_235c_0b33 s3: strict
+[n2 01:03:09]   F5 phi4:14b C FUN_24dd_36c4 s0: fail
+[n2 01:03:20]   F5 phi4:14b C FUN_24dd_36c4 s1: strict
+[n2 01:03:30]   F5 phi4:14b C FUN_24dd_36c4 s2: fail
+[n2 01:03:43]   F5 phi4:14b C FUN_24dd_36c4 s3: fail
+[n2 01:03:56]   F5 phi4:14b C FUN_24dd_3b22 s0: strict
+[n2 01:04:09]   F5 phi4:14b C FUN_24dd_3b22 s1: strict
+[n2 01:04:21]   F5 phi4:14b C FUN_24dd_3b22 s2: strict
+[n2 01:04:33]   F5 phi4:14b C FUN_24dd_3b22 s3: strict
+[n2 01:04:49]   F5 phi4:14b C FUN_202c_0000 s0: fail
+[n2 01:05:03]   F5 phi4:14b C FUN_202c_0000 s1: fail
+[n2 01:05:16]   F5 phi4:14b C FUN_202c_0000 s2: fail
+[n2 01:05:36]   F5 phi4:14b C FUN_202c_0000 s3: fail
+[n2 01:05:56]   F5 phi4:14b C FUN_24dd_3f40 s0: fail
+[n2 01:06:15]   F5 phi4:14b C FUN_24dd_3f40 s1: strict
+[n2 01:06:32]   F5 phi4:14b C FUN_24dd_3f40 s2: strict
+[n2 01:06:52]   F5 phi4:14b C FUN_24dd_3f40 s3: fail
+[n2 01:07:00]   F5 phi4:14b C FUN_1ec2_0810 s0: strict
+[n2 01:07:07]   F5 phi4:14b C FUN_1ec2_0810 s1: strict
+[n2 01:07:15]   F5 phi4:14b C FUN_1ec2_0810 s2: strict
+[n2 01:07:24]   F5 phi4:14b C FUN_1ec2_0810 s3: strict
+[n2 01:07:47]   F5 phi4:14b C FUN_24dd_041e s0: fail
+[n2 01:08:08]   F5 phi4:14b C FUN_24dd_041e s1: fail
+[n2 01:08:27]   F5 phi4:14b C FUN_24dd_041e s2: fail
+[n2 01:08:46]   F5 phi4:14b C FUN_24dd_041e s3: fail
+[n2 01:09:02]   F5 phi4:14b C FUN_24dd_3fde s0: strict
+[n2 01:09:15]   F5 phi4:14b C FUN_24dd_3fde s1: strict
+[n2 01:09:32]   F5 phi4:14b C FUN_24dd_3fde s2: strict
+[n2 01:09:48]   F5 phi4:14b C FUN_24dd_3fde s3: strict
+[n2 01:10:05]   F5 phi4:14b C FUN_1000_0be1 s0: strict
+[n2 01:10:21]   F5 phi4:14b C FUN_1000_0be1 s1: strict
+[n2 01:10:38]   F5 phi4:14b C FUN_1000_0be1 s2: fail
+[n2 01:10:54]   F5 phi4:14b C FUN_1000_0be1 s3: strict
+[n2 01:11:12]   F5 phi4:14b C FUN_202c_08b2 s0: strict
+[n2 01:11:28]   F5 phi4:14b C FUN_202c_08b2 s1: fail
+[n2 01:11:46]   F5 phi4:14b C FUN_202c_08b2 s2: strict
+[n2 01:12:03]   F5 phi4:14b C FUN_202c_08b2 s3: strict
+[n2 01:12:23]   F5 phi4:14b C FUN_24cb_00a7 s0: fail
+[n2 01:12:41]   F5 phi4:14b C FUN_24cb_00a7 s1: strict
+[n2 01:12:59]   F5 phi4:14b C FUN_24cb_00a7 s2: strict
+[n2 01:13:25]   F5 phi4:14b C FUN_24cb_00a7 s3: strict
+[n2 01:13:47]   F5 phi4:14b C FUN_202c_079e s0: strict
+[n2 01:14:07]   F5 phi4:14b C FUN_202c_079e s1: strict
+[n2 01:14:29]   F5 phi4:14b C FUN_202c_079e s2: strict
+[n2 01:14:52]   F5 phi4:14b C FUN_202c_079e s3: fail
+[n2 01:15:31]   F5 phi4:14b C FUN_24dd_351a s0: fail
+[n2 01:16:09]   F5 phi4:14b C FUN_24dd_351a s1: fail
+[n2 01:16:47]   F5 phi4:14b C FUN_24dd_351a s2: fail
+[n2 01:17:25]   F5 phi4:14b C FUN_24dd_351a s3: fail
+[n2 01:17:49]   F5 phi4:14b C FUN_24dd_0000 s0: strict
+[n2 01:18:16]   F5 phi4:14b C FUN_24dd_0000 s1: strict
+[n2 01:18:43]   F5 phi4:14b C FUN_24dd_0000 s2: fail
+[n2 01:19:12]   F5 phi4:14b C FUN_24dd_0000 s3: fail
+[n2 01:19:51]   F5 phi4:14b C FUN_24dd_4732 s0: fail
+[n2 01:20:28]   F5 phi4:14b C FUN_24dd_4732 s1: fail
+[n2 01:21:06]   F5 phi4:14b C FUN_24dd_4732 s2: fail
+[n2 01:21:32]   F5 phi4:14b C FUN_24dd_4732 s3: strict
+[n2 01:22:10]   F5 phi4:14b C FUN_24dd_0353 s0: fail
+[n2 01:22:47]   F5 phi4:14b C FUN_24dd_0353 s1: fail
+[n2 01:23:25]   F5 phi4:14b C FUN_24dd_0353 s2: fail
+[n2 01:24:02]   F5 phi4:14b C FUN_24dd_0353 s3: fail
+[n2 01:24:42]   F5 phi4:14b C FUN_24dd_1190 s0: fail
+[n2 01:25:20]   F5 phi4:14b C FUN_24dd_1190 s1: fail
+[n2 01:25:58]   F5 phi4:14b C FUN_24dd_1190 s2: fail
+[n2 01:26:37]   F5 phi4:14b C FUN_24dd_1190 s3: fail
+[n2 01:27:03]   F5 phi4:14b C FUN_1e7d_0082 s0: fail
+[n2 01:27:31]   F5 phi4:14b C FUN_1e7d_0082 s1: strict
+[n2 01:28:01]   F5 phi4:14b C FUN_1e7d_0082 s2: strict
+[n2 01:28:36]   F5 phi4:14b C FUN_1e7d_0082 s3: fail
+[n2 01:29:03]   F5 phi4:14b C FUN_1ec2_0c3b s0: fail
+[n2 01:29:30]   F5 phi4:14b C FUN_1ec2_0c3b s1: fail
+[n2 01:29:58]   F5 phi4:14b C FUN_1ec2_0c3b s2: fail
+[n2 01:30:26]   F5 phi4:14b C FUN_1ec2_0c3b s3: fail
+[n2 01:30:43]   F5 phi4:14b C FUN_1000_0d70 s0: strict
+[n2 01:31:03]   F5 phi4:14b C FUN_1000_0d70 s1: strict
+[n2 01:31:20]   F5 phi4:14b C FUN_1000_0d70 s2: strict
+[n2 01:31:41]   F5 phi4:14b C FUN_1000_0d70 s3: strict
+[n2 01:32:21]   F5 phi4:14b C FUN_24dd_3054 s0: fail
+[n2 01:32:59]   F5 phi4:14b C FUN_24dd_3054 s1: fail
+[n2 01:33:38]   F5 phi4:14b C FUN_24dd_3054 s2: fail
+[n2 01:34:16]   F5 phi4:14b C FUN_24dd_3054 s3: fail
+[n2 01:34:55]   F5 phi4:14b C FUN_1000_5c36 s0: fail
+[n2 01:35:32]   F5 phi4:14b C FUN_1000_5c36 s1: fail
+[n2 01:36:10]   F5 phi4:14b C FUN_1000_5c36 s2: fail
+[n2 01:36:47]   F5 phi4:14b C FUN_1000_5c36 s3: fail
+[n2 01:37:28]   F5 phi4:14b C FUN_24dd_0ee2 s0: fail
+[n2 01:38:07]   F5 phi4:14b C FUN_24dd_0ee2 s1: fail
+[n2 01:38:45]   F5 phi4:14b C FUN_24dd_0ee2 s2: fail
+[n2 01:39:24]   F5 phi4:14b C FUN_24dd_0ee2 s3: fail
+[n2 01:40:03]   F5 phi4:14b C FUN_202c_165d s0: fail
+[n2 01:40:41]   F5 phi4:14b C FUN_202c_165d s1: fail
+[n2 01:41:19]   F5 phi4:14b C FUN_202c_165d s2: fail
+[n2 01:41:57]   F5 phi4:14b C FUN_202c_165d s3: fail
+[n2 01:42:37]   F5 phi4:14b C FUN_235c_0bbc s0: fail
+[n2 01:43:16]   F5 phi4:14b C FUN_235c_0bbc s1: fail
+[n2 01:43:54]   F5 phi4:14b C FUN_235c_0bbc s2: fail
+[n2 01:44:32]   F5 phi4:14b C FUN_235c_0bbc s3: fail
+[n2 01:45:13]   F5 phi4:14b C FUN_1000_d7b5 s0: fail
+[n2 01:45:51]   F5 phi4:14b C FUN_1000_d7b5 s1: fail
+[n2 01:46:30]   F5 phi4:14b C FUN_1000_d7b5 s2: fail
+[n2 01:47:09]   F5 phi4:14b C FUN_1000_d7b5 s3: fail
+[n2 01:47:50]   F5 phi4:14b C FUN_202c_0f10 s0: fail
+[n2 01:48:29]   F5 phi4:14b C FUN_202c_0f10 s1: fail
+[n2 01:49:08]   F5 phi4:14b C FUN_202c_0f10 s2: fail
+[n2 01:49:47]   F5 phi4:14b C FUN_202c_0f10 s3: fail
+[n2 01:50:32]   F5 phi4:14b C FUN_1000_929a s0: fail
+[n2 01:51:12]   F5 phi4:14b C FUN_1000_929a s1: fail
+[n2 01:51:52]   F5 phi4:14b C FUN_1000_929a s2: fail
+[n2 01:52:32]   F5 phi4:14b C FUN_1000_929a s3: fail
+[n2 01:53:00]   F5 phi4:14b C FUN_1000_5e66 s0: fail
+[n2 01:53:28]   F5 phi4:14b C FUN_1000_5e66 s1: fail
+[n2 01:53:52]   F5 phi4:14b C FUN_1000_5e66 s2: fail
+[n2 01:54:18]   F5 phi4:14b C FUN_1000_5e66 s3: fail
+[n2 01:54:24]   F5 phi4:14b B FUN_2971_65df s0: strict
+[n2 01:54:25]   F5 phi4:14b B FUN_2971_65df s1: strict
+[n2 01:54:33]   F5 phi4:14b B FUN_2971_65df s2: strict
+[n2 01:54:35]   F5 phi4:14b B FUN_2971_65df s3: strict
+[n2 01:54:36]   F5 phi4:14b B FUN_24dd_0582 s0: strict
+[n2 01:54:37]   F5 phi4:14b B FUN_24dd_0582 s1: strict
+[n2 01:54:39]   F5 phi4:14b B FUN_24dd_0582 s2: strict
+[n2 01:54:41]   F5 phi4:14b B FUN_24dd_0582 s3: strict
+[n2 01:54:42]   F5 phi4:14b B FUN_24dd_0218 s0: strict
+[n2 01:54:44]   F5 phi4:14b B FUN_24dd_0218 s1: fail
+[n2 01:54:48]   F5 phi4:14b B FUN_24dd_0218 s2: fail
+[n2 01:54:54]   F5 phi4:14b B FUN_24dd_0218 s3: fail
+[n2 01:54:58]   F5 phi4:14b B FUN_24dd_3c03 s0: fail
+[n2 01:55:02]   F5 phi4:14b B FUN_24dd_3c03 s1: fail
+[n2 01:55:06]   F5 phi4:14b B FUN_24dd_3c03 s2: strict
+[n2 01:55:11]   F5 phi4:14b B FUN_24dd_3c03 s3: fail
+[n2 01:55:16]   F5 phi4:14b B FUN_2494_0010 s0: strict
+[n2 01:55:19]   F5 phi4:14b B FUN_2494_0010 s1: fail
+[n2 01:55:23]   F5 phi4:14b B FUN_2494_0010 s2: strict
+[n2 01:55:27]   F5 phi4:14b B FUN_2494_0010 s3: strict
+[n2 01:55:30]   F5 phi4:14b B FUN_235c_04f3 s0: strict
+[n2 01:55:32]   F5 phi4:14b B FUN_235c_04f3 s1: strict
+[n2 01:55:35]   F5 phi4:14b B FUN_235c_04f3 s2: strict
+[n2 01:55:38]   F5 phi4:14b B FUN_235c_04f3 s3: strict
+[n2 01:55:40]   F5 phi4:14b B FUN_24dd_396c s0: strict
+[n2 01:55:48]   F5 phi4:14b B FUN_24dd_396c s1: strict
+[n2 01:55:59]   F5 phi4:14b B FUN_24dd_396c s2: fail
+[n2 01:56:12]   F5 phi4:14b B FUN_24dd_396c s3: fail
+[n2 01:56:16]   F5 phi4:14b B FUN_24dd_020a s0: strict
+[n2 01:56:19]   F5 phi4:14b B FUN_24dd_020a s1: strict
+[n2 01:56:27]   F5 phi4:14b B FUN_24dd_020a s2: fail
+[n2 01:56:31]   F5 phi4:14b B FUN_24dd_020a s3: strict
+[n2 01:56:36]   F5 phi4:14b B FUN_24dd_02b9 s0: fail
+[n2 01:56:41]   F5 phi4:14b B FUN_24dd_02b9 s1: fail
+[n2 01:56:48]   F5 phi4:14b B FUN_24dd_02b9 s2: fail
+[n2 01:56:54]   F5 phi4:14b B FUN_24dd_02b9 s3: fail
+[n2 01:56:56]   F5 phi4:14b B FUN_235c_032e s0: strict
+[n2 01:56:58]   F5 phi4:14b B FUN_235c_032e s1: strict
+[n2 01:56:59]   F5 phi4:14b B FUN_235c_032e s2: strict
+[n2 01:57:03]   F5 phi4:14b B FUN_235c_032e s3: strict
+[n2 01:57:10]   F5 phi4:14b B FUN_24dd_028a s0: fail
+[n2 01:57:14]   F5 phi4:14b B FUN_24dd_028a s1: fail
+[n2 01:57:17]   F5 phi4:14b B FUN_24dd_028a s2: strict
+[n2 01:57:29]   F5 phi4:14b B FUN_24dd_028a s3: fail
+[n2 01:57:34]   F5 phi4:14b B FUN_2494_0027 s0: strict
+[n2 01:57:38]   F5 phi4:14b B FUN_2494_0027 s1: strict
+[n2 01:57:44]   F5 phi4:14b B FUN_2494_0027 s2: strict
+[n2 01:57:49]   F5 phi4:14b B FUN_2494_0027 s3: strict
+[n2 01:57:53]   F5 phi4:14b B FUN_24dd_3951 s0: fail
+[n2 01:58:05]   F5 phi4:14b B FUN_24dd_3951 s1: strict
+[n2 01:58:08]   F5 phi4:14b B FUN_24dd_3951 s2: strict
+[n2 01:58:10]   F5 phi4:14b B FUN_24dd_3951 s3: fail
+[n2 01:58:15]   F5 phi4:14b B FUN_235c_118c s0: fail
+[n2 01:58:19]   F5 phi4:14b B FUN_235c_118c s1: strict
+[n2 01:58:25]   F5 phi4:14b B FUN_235c_118c s2: strict
+[n2 01:58:30]   F5 phi4:14b B FUN_235c_118c s3: strict
+[n2 01:58:38]   F5 phi4:14b B FUN_235c_1345 s0: strict
+[n2 01:58:42]   F5 phi4:14b B FUN_235c_1345 s1: strict
+[n2 01:58:46]   F5 phi4:14b B FUN_235c_1345 s2: strict
+[n2 01:58:52]   F5 phi4:14b B FUN_235c_1345 s3: fail
+[n2 01:58:57]   F5 phi4:14b B FUN_1ec2_0000 s0: strict
+[n2 01:59:01]   F5 phi4:14b B FUN_1ec2_0000 s1: strict
+[n2 01:59:05]   F5 phi4:14b B FUN_1ec2_0000 s2: strict
+[n2 01:59:11]   F5 phi4:14b B FUN_1ec2_0000 s3: strict
+[n2 01:59:16]   F5 phi4:14b B FUN_235c_0000 s0: fail
+[n2 01:59:25]   F5 phi4:14b B FUN_235c_0000 s1: fail
+[n2 01:59:30]   F5 phi4:14b B FUN_235c_0000 s2: strict
+[n2 01:59:35]   F5 phi4:14b B FUN_235c_0000 s3: fail
+[n2 01:59:48]   F5 phi4:14b B FUN_24dd_3bde s0: lenient
+[n2 02:00:00]   F5 phi4:14b B FUN_24dd_3bde s1: fail
+[n2 02:00:12]   F5 phi4:14b B FUN_24dd_3bde s2: lenient
+[n2 02:00:26]   F5 phi4:14b B FUN_24dd_3bde s3: fail
+[n2 02:00:35]   F5 phi4:14b B FUN_24dd_40ec s0: strict
+[n2 02:00:43]   F5 phi4:14b B FUN_24dd_40ec s1: strict
+[n2 02:00:52]   F5 phi4:14b B FUN_24dd_40ec s2: strict
+[n2 02:01:02]   F5 phi4:14b B FUN_24dd_40ec s3: strict
+[n2 02:01:05]   F5 phi4:14b B FUN_1ec2_0c11 s0: strict
+[n2 02:01:09]   F5 phi4:14b B FUN_1ec2_0c11 s1: strict
+[n2 02:01:12]   F5 phi4:14b B FUN_1ec2_0c11 s2: strict
+[n2 02:01:15]   F5 phi4:14b B FUN_1ec2_0c11 s3: strict
+[n2 02:01:21]   F5 phi4:14b B FUN_24dd_0673 s0: strict
+[n2 02:01:27]   F5 phi4:14b B FUN_24dd_0673 s1: fail
+[n2 02:01:32]   F5 phi4:14b B FUN_24dd_0673 s2: strict
+[n2 02:01:37]   F5 phi4:14b B FUN_24dd_0673 s3: strict
+[n2 02:01:54]   F5 phi4:14b B FUN_24dd_4712 s0: strict
+[n2 02:02:01]   F5 phi4:14b B FUN_24dd_4712 s1: strict
+[n2 02:02:15]   F5 phi4:14b B FUN_24dd_4712 s2: fail
+[n2 02:02:24]   F5 phi4:14b B FUN_24dd_4712 s3: strict
+[n2 02:02:37]   F5 phi4:14b B FUN_24dd_48e1 s0: fail
+[n2 02:02:46]   F5 phi4:14b B FUN_24dd_48e1 s1: strict
+[n2 02:02:53]   F5 phi4:14b B FUN_24dd_48e1 s2: fail
+[n2 02:03:04]   F5 phi4:14b B FUN_24dd_48e1 s3: strict
+[n2 02:03:23]   F5 phi4:14b B FUN_24dd_40ac s0: strict
+[n2 02:03:37]   F5 phi4:14b B FUN_24dd_40ac s1: fail
+[n2 02:03:50]   F5 phi4:14b B FUN_24dd_40ac s2: strict
+[n2 02:04:09]   F5 phi4:14b B FUN_24dd_40ac s3: strict
+[n2 02:04:28]   F5 phi4:14b B FUN_24dd_0642 s0: strict
+[n2 02:04:34]   F5 phi4:14b B FUN_24dd_0642 s1: strict
+[n2 02:04:41]   F5 phi4:14b B FUN_24dd_0642 s2: strict
+[n2 02:04:48]   F5 phi4:14b B FUN_24dd_0642 s3: fail
+[n2 02:04:57]   F5 phi4:14b B FUN_235c_0f1d s0: strict
+[n2 02:05:06]   F5 phi4:14b B FUN_235c_0f1d s1: strict
+[n2 02:05:15]   F5 phi4:14b B FUN_235c_0f1d s2: fail
+[n2 02:05:31]   F5 phi4:14b B FUN_235c_0f1d s3: strict
+[n2 02:05:31] F5 budget/deadline hit
+[n2 02:05:31] F6 -> reports/overnight2/REPORT2.md
+[n2 02:05:31] night-2 finished

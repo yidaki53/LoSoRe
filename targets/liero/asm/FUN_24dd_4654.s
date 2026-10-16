@@ -1,0 +1,12 @@
+; FUN_24dd_4654  entry=24dd:4654 size=29
+24dd:4654  CALL 0x2000:9481
+24dd:4657  MOV BX,SP
+24dd:4659  MOV CX,DX
+24dd:465b  MUL word ptr SS:[BX + 0x4]
+24dd:465f  MOV AX,CX
+24dd:4661  MOV CX,DX
+24dd:4663  MUL word ptr SS:[BX + 0x4]
+24dd:4667  ADD AX,CX
+24dd:4669  ADC DX,0x0
+24dd:466c  MOV AX,DX
+24dd:466e  RETF 0x2

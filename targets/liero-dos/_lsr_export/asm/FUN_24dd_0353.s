@@ -1,0 +1,89 @@
+; FUN_24dd_0353  entry=24dd:0353 size=203
+24dd:0353  OR AX,AX
+24dd:0355  JZ 0x2000:519e
+24dd:0357  MOV [0x7b3c],AX
+24dd:035a  CALL 0x2000:52ac
+24dd:035d  MOV DI,0x63f6
+24dd:0360  MOV CX,DS
+24dd:0362  MOV CX,ES
+24dd:0364  MOV CX,DI
+24dd:0366  MOV BX,ES
+24dd:0368  LES DI,ES:[DI]
+24dd:036b  MOV SI,ES
+24dd:036d  CMP SI,word ptr [0x63f0]
+24dd:0371  JZ 0x2000:51a2
+24dd:0373  CMP DX,word ptr ES:[DI + 0x6]
+24dd:0377  JA 0x2000:5134
+24dd:0379  JC 0x2000:5151
+24dd:037b  CMP AX,word ptr ES:[DI + 0x4]
+24dd:037f  JA 0x2000:5134
+24dd:0381  PUSH ES
+24dd:0382  PUSH DI
+24dd:0383  PUSH BX
+24dd:0384  PUSH CX
+24dd:0385  MOV CX,word ptr ES:[DI]
+24dd:0388  MOV BX,word ptr ES:[DI + 0x2]
+24dd:038c  JZ 0x2000:5191
+24dd:038e  PUSH BX
+24dd:038f  PUSH CX
+24dd:0390  MOV CX,word ptr ES:[DI + 0x4]
+24dd:0394  MOV BX,word ptr ES:[DI + 0x6]
+24dd:0398  SUB CX,AX
+24dd:039a  SBB BX,DX
+24dd:039c  AND CX,0xf
+24dd:039f  ADD AX,DI
+24dd:03a1  ADD DX,SI
+24dd:03a3  ADD AL,0xf0
+24dd:03a5  ADC DX,0x0
+24dd:03a8  AND AL,0xf
+24dd:03aa  MOV DI,AX
+24dd:03ac  MOV DX,ES
+24dd:03ae  POP word ptr ES:[DI]
+24dd:03b1  POP word ptr ES:[DI + 0x2]
+24dd:03b5  MOV word ptr ES:[DI + 0x4],CX
+24dd:03b9  MOV word ptr ES:[DI + 0x6],BX
+24dd:03bd  MOV CX,DI
+24dd:03bf  MOV BX,ES
+24dd:03c1  POP DI
+24dd:03c2  POP ES
+24dd:03c3  MOV word ptr ES:[DI],CX
+24dd:03c6  MOV word ptr ES:[DI + 0x2],BX
+24dd:03ca  POP AX
+24dd:03cb  POP DX
+24dd:03cc  CLC
+24dd:03cd  RET
+24dd:03ce  XOR AX,AX
+24dd:03d0  CWD
+24dd:03d1  RET
+24dd:03d2  ADD AX,DI
+24dd:03d4  ADD DX,SI
+24dd:03d6  ADD AL,0xf0
+24dd:03d8  ADC DX,0x0
+24dd:03db  AND AL,0xf
+24dd:03dd  CMP DX,word ptr [0x63f4]
+24dd:03e1  JC 0x2000:51bb
+24dd:03e3  JA 0x2000:51da
+24dd:03e5  CMP AX,word ptr [0x63f2]
+24dd:03e9  JA 0x2000:51da
+24dd:03eb  PUSH ES
+24dd:03ec  PUSH DI
+24dd:03ed  MOV DI,CX
+24dd:03ef  MOV BX,ES
+24dd:03f1  MOV [0x63ee],AX
+24dd:03f4  MOV word ptr [0x63f0],DX
+24dd:03f8  MOV word ptr ES:[DI],AX
+24dd:03fb  MOV word ptr ES:[DI + 0x2],DX
+24dd:03ff  XOR AX,AX
+24dd:0401  PUSH AX
+24dd:0402  CALLF [0x63fe]
+24dd:0406  POP AX
+24dd:0407  POP DX
+24dd:0408  CLC
+24dd:0409  RET
+24dd:040a  PUSH word ptr [0x7b3c]
+24dd:040e  CALLF [0x63fe]
+24dd:0412  CMP AL,0x1
+24dd:0414  JC 0x2000:519d
+24dd:0416  JZ 0x2000:519e
+24dd:0418  MOV AX,[0x7b3c]
+24dd:041b  JMP 0x2000:512a

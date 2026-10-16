@@ -1,0 +1,68 @@
+; FUN_235c_10a3  entry=235c:10a3 size=191
+235c:10a3  ENTER 0x6,0x0
+235c:10a7  MOV AL,byte ptr [BP + 0x4]
+235c:10aa  XOR AH,AH
+235c:10ac  IMUL DI,AX,0xa
+235c:10af  ADD DI,0x6804
+235c:10b3  PUSH DS
+235c:10b4  POP ES
+235c:10b5  MOV word ptr [BP + -0x6],DI
+235c:10b8  MOV word ptr [BP + -0x4],ES
+235c:10bb  CMP byte ptr ES:[DI + 0x9],0x0
+235c:10c0  JZ 0x2000:4689
+235c:10c2  MOV word ptr [BP + -0x2],0x200
+235c:10c7  JMP 0x2000:46d1
+235c:10c9  LES DI,[BP + -0x6]
+235c:10cc  LES DI,ES:[DI]
+235c:10cf  MOV AX,word ptr ES:[DI + 0x6]
+235c:10d3  MOV DX,word ptr ES:[DI + 0x8]
+235c:10d7  LES DI,[BP + -0x6]
+235c:10da  SUB AX,word ptr ES:[DI + 0x5]
+235c:10de  SBB DX,word ptr ES:[DI + 0x7]
+235c:10e2  CMP DX,0x0
+235c:10e5  JG 0x2000:46ae
+235c:10e7  JL 0x2000:46b5
+235c:10e9  CMP AX,0x200
+235c:10ec  JBE 0x2000:46b5
+235c:10ee  MOV word ptr [BP + -0x2],0x200
+235c:10f3  JMP 0x2000:46d1
+235c:10f5  LES DI,[BP + -0x6]
+235c:10f8  LES DI,ES:[DI]
+235c:10fb  MOV AX,word ptr ES:[DI + 0x6]
+235c:10ff  MOV DX,word ptr ES:[DI + 0x8]
+235c:1103  LES DI,[BP + -0x6]
+235c:1106  SUB AX,word ptr ES:[DI + 0x5]
+235c:110a  SBB DX,word ptr ES:[DI + 0x7]
+235c:110e  MOV word ptr [BP + -0x2],AX
+235c:1111  MOV AL,byte ptr [BP + 0x4]
+235c:1114  XOR AH,AH
+235c:1116  IMUL DI,AX,0xa
+235c:1119  PUSH word ptr [DI + 0x6806]
+235c:111d  PUSH word ptr [DI + 0x6804]
+235c:1121  MOV AL,byte ptr [BP + 0x4]
+235c:1124  XOR AH,AH
+235c:1126  IMUL DI,AX,0xa
+235c:1129  ADD DI,0x6809
+235c:112d  PUSH DS
+235c:112e  PUSH DI
+235c:112f  PUSH word ptr [BP + -0x2]
+235c:1132  MOV AL,byte ptr [BP + 0x4]
+235c:1135  XOR AH,AH
+235c:1137  IMUL DI,AX,0xa
+235c:113a  MOV AL,byte ptr [DI + 0x680d]
+235c:113e  PUSH AX
+235c:113f  CALL 0x2000:4517
+235c:1142  LEA SI,[0x6856]
+235c:1146  MOV AX,DS
+235c:1148  MOV AX,ES
+235c:114a  LEA DI,[0x6a58]
+235c:114e  MOV CX,word ptr [BP + -0x2]
+235c:1151  MOV AL,byte ptr [SI]
+235c:1153  INC SI
+235c:1154  CBW
+235c:1155  ADD word ptr ES:[DI],AX
+235c:1158  ADD DI,0x2
+235c:115b  DEC CX
+235c:115c  JNZ 0x2000:4711
+235c:115e  LEAVE
+235c:115f  RET 0x2

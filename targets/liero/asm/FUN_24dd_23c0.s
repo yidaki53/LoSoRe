@@ -1,0 +1,26 @@
+; FUN_24dd_23c0  entry=24dd:23c0 size=47
+24dd:23c0  PUSH BX
+24dd:23c1  PUSH CX
+24dd:23c2  PUSH DX
+24dd:23c3  MOV CL,0x4
+24dd:23c5  MOV CH,0xa
+24dd:23c7  MOV BX,word ptr ES:[SI]
+24dd:23ca  MOV AL,BH
+24dd:23cc  SHR AL,CL
+24dd:23ce  MUL CH
+24dd:23d0  MOV DL,0xf
+24dd:23d2  AND DL,BH
+24dd:23d4  ADD AL,DL
+24dd:23d6  MUL CH
+24dd:23d8  MOV DX,0xf0
+24dd:23db  AND DL,BL
+24dd:23dd  SHR DX,CL
+24dd:23df  ADD AX,DX
+24dd:23e1  MOV CX,0xa
+24dd:23e4  MUL CX
+24dd:23e6  AND BX,0xf
+24dd:23e9  ADD AX,BX
+24dd:23eb  POP DX
+24dd:23ec  POP CX
+24dd:23ed  POP BX
+24dd:23ee  RET

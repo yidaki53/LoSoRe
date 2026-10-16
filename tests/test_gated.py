@@ -41,9 +41,11 @@ def test_draft_skips_without_asm(tmp_path):
     assert r.returncode == 0 and "SKIP" in r.stdout
 
 
-def test_ingest_skips_without_ghidra(tmp_path):
-    # analyzeHeadless is not installed in CI -> SKIP even if BYOD is present.
-    r = _run("engine/ingest.py", "--target", "liero")
+def test_ingest_skips_without_byod(tmp_path):
+    # Disc-gating contract: no extracted/<target>/ -> SKIP (pass), even when
+    # analyzeHeadless IS installed (a dev machine with ~/tools/ghidra_* present).
+    # Point at a target slug with no extracted/ dir under an isolated repo root.
+    r = _run("engine/ingest.py", "--target", "no-such-target-xyz", cwd=tmp_path)
     assert r.returncode == 0 and "SKIP" in r.stdout
 
 
@@ -121,6 +123,8 @@ def test_new_target_scaffold(tmp_path, monkeypatch):
     sys.path.insert(0, str(REPO / "tools"))  # absolute: survives the chdir above
     import new_target
     new_target.new_target("demo-fw", "firmware")
-    assert (tmp_path / "targets/demo-fw/src/main.c").exists()
-    assert "firmware" in (tmp_path / "targets/demo-fw/config/target.yaml").read_text()
+    # same-language policy: scaffold emits a Pascal program + language: TODO
+    assert (tmp_path / "targets/demo-fw/src/demo-fw.pas").exists()
+    ty = (tmp_path / "targets/demo-fw/config/target.yaml").read_text()
+    assert "firmware" in ty and "language: TODO" in ty
 

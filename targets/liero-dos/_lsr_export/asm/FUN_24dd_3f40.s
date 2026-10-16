@@ -1,0 +1,39 @@
+; FUN_24dd_3f40  entry=24dd:3f40 size=70
+24dd:3f40  PUSH BP
+24dd:3f41  MOV BP,SP
+24dd:3f43  PUSH DS
+24dd:3f44  LDS SI,[BP + 0xa]
+24dd:3f47  CLD
+24dd:3f48  LODSB SI
+24dd:3f49  OR AL,AL
+24dd:3f4b  JZ 0x2000:8d49
+24dd:3f4d  MOV DL,AL
+24dd:3f4f  XOR DH,DH
+24dd:3f51  LES DI,[BP + 0x6]
+24dd:3f54  MOV CL,byte ptr ES:[DI]
+24dd:3f57  XOR CH,CH
+24dd:3f59  SUB CX,DX
+24dd:3f5b  JC 0x2000:8d49
+24dd:3f5d  INC CX
+24dd:3f5e  INC DI
+24dd:3f5f  LODSB SI
+24dd:3f60  SCASB.REPNE ES:DI
+24dd:3f62  JNZ 0x2000:8d49
+24dd:3f64  MOV AX,DI
+24dd:3f66  MOV BX,CX
+24dd:3f68  MOV CX,DX
+24dd:3f6a  DEC CX
+24dd:3f6b  CMPSB.REPE ES:DI,SI
+24dd:3f6d  JZ 0x2000:8d4d
+24dd:3f6f  MOV DI,AX
+24dd:3f71  MOV CX,BX
+24dd:3f73  MOV SI,word ptr [BP + 0xa]
+24dd:3f76  INC SI
+24dd:3f77  JMP 0x2000:8d2f
+24dd:3f79  XOR AX,AX
+24dd:3f7b  JMP 0x2000:8d51
+24dd:3f7d  DEC AX
+24dd:3f7e  SUB AX,word ptr [BP + 0x6]
+24dd:3f81  POP DS
+24dd:3f82  POP BP
+24dd:3f83  RETF 0x8

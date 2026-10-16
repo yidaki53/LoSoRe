@@ -1,0 +1,3700 @@
+; FUN_1000_10ec  entry=1000:10ec size=11284
+1000:10ec  PUSH BP
+1000:10ed  MOV BP,SP
+1000:10ef  MOV AX,0x30
+1000:10f2  CALLF 0x2000:5300
+1000:10f7  SUB SP,0x30
+1000:10fa  XOR AX,AX
+1000:10fc  MOV word ptr [BP + -0x2],AX
+1000:10ff  JMP 0x1000:1104
+1000:1101  INC word ptr [BP + -0x2]
+1000:1104  IMUL AX,word ptr [BP + -0x2],0xaa
+1000:1109  LES DI,[0x6670]
+1000:110d  ADD DI,AX
+1000:110f  MOV word ptr [BP + -0x2c],DI
+1000:1112  MOV word ptr [BP + -0x2a],ES
+1000:1115  MOV DI,word ptr [BP + -0x2]
+1000:1118  SHL DI,0x1
+1000:111a  MOV AX,word ptr [DI + 0x66e8]
+1000:111e  XOR DX,DX
+1000:1120  MOV CX,AX
+1000:1122  MOV BX,DX
+1000:1124  LES DI,[BP + -0x2c]
+1000:1127  MOV AX,word ptr ES:[DI + 0x50]
+1000:112b  CWD
+1000:112c  CMP DX,BX
+1000:112e  JG 0x1000:1136
+1000:1130  JL 0x1000:1146
+1000:1132  CMP AX,CX
+1000:1134  JBE 0x1000:1146
+1000:1136  MOV DI,word ptr [BP + -0x2]
+1000:1139  SHL DI,0x1
+1000:113b  MOV AX,word ptr [DI + 0x66e8]
+1000:113f  LES DI,[BP + -0x2c]
+1000:1142  MOV word ptr ES:[DI + 0x50],AX
+1000:1146  IMUL AX,word ptr [BP + -0x2],0xaa
+1000:114b  LES DI,[0x6670]
+1000:114f  ADD DI,AX
+1000:1151  CMP word ptr ES:[DI + 0x3a],0x0
+1000:1156  JG 0x1000:116b
+1000:1158  JL 0x1000:1161
+1000:115a  CMP word ptr ES:[DI + 0x38],0x0
+1000:115f  JA 0x1000:116b
+1000:1161  CMP byte ptr [0x66ac],0x0
+1000:1166  JNZ 0x1000:116b
+1000:1168  JMP 0x1000:3501
+1000:116b  LES DI,[BP + -0x2c]
+1000:116e  CMP byte ptr ES:[DI + 0x9a],0x0
+1000:1174  JNZ 0x1000:1179
+1000:1176  JMP 0x1000:313c
+1000:1179  MOV AX,word ptr ES:[DI + 0x4]
+1000:117d  MOV DX,word ptr ES:[DI + 0x6]
+1000:1181  ADD AX,word ptr ES:[DI + 0x30]
+1000:1185  ADC DX,word ptr ES:[DI + 0x32]
+1000:1189  MOV word ptr [BP + -0x16],AX
+1000:118c  MOV word ptr [BP + -0x14],DX
+1000:118f  MOV AX,word ptr ES:[DI + 0x8]
+1000:1193  MOV DX,word ptr ES:[DI + 0xa]
+1000:1197  ADD AX,word ptr ES:[DI + 0x34]
+1000:119b  ADC DX,word ptr ES:[DI + 0x36]
+1000:119f  MOV word ptr [BP + -0x1a],AX
+1000:11a2  MOV word ptr [BP + -0x18],DX
+1000:11a5  XOR AX,AX
+1000:11a7  MOV word ptr [BP + -0x4],AX
+1000:11aa  JMP 0x1000:11af
+1000:11ac  INC word ptr [BP + -0x4]
+1000:11af  MOV AX,word ptr [BP + -0x4]
+1000:11b2  LES DI,[BP + -0x2c]
+1000:11b5  ADD DI,AX
+1000:11b7  MOV byte ptr ES:[DI + 0xa2],0x0
+1000:11bd  MOV DI,word ptr [BP + -0x4]
+1000:11c0  MOV AL,byte ptr [DI + 0x1ae]
+1000:11c4  XOR AH,AH
+1000:11c6  MOV word ptr [BP + -0x2e],AX
+1000:11c9  XOR AX,AX
+1000:11cb  CMP AX,word ptr [BP + -0x2e]
+1000:11ce  JG 0x1000:1238
+1000:11d0  MOV word ptr [BP + -0x6],AX
+1000:11d3  JMP 0x1000:11d8
+1000:11d5  INC word ptr [BP + -0x6]
+1000:11d8  MOV AX,word ptr [BP + -0x6]
+1000:11db  SHL AX,0x1
+1000:11dd  IMUL DI,word ptr [BP + -0x4],0xe
+1000:11e1  ADD DI,AX
+1000:11e3  MOV AL,byte ptr [DI + 0x1b2]
+1000:11e7  CBW
+1000:11e8  ADD AX,word ptr [BP + -0x14]
+1000:11eb  MOV DX,AX
+1000:11ed  MOV AX,word ptr [BP + -0x6]
+1000:11f0  SHL AX,0x1
+1000:11f2  IMUL DI,word ptr [BP + -0x4],0xe
+1000:11f6  ADD DI,AX
+1000:11f8  MOV AL,byte ptr [DI + 0x1b3]
+1000:11fc  CBW
+1000:11fd  ADD AX,word ptr [BP + -0x18]
+1000:1200  SHL AX,0x2
+1000:1203  LES DI,[0x6674]
+1000:1207  ADD DI,AX
+1000:1209  LES DI,ES:[DI]
+1000:120c  ADD DI,DX
+1000:120e  MOV AL,byte ptr ES:[DI]
+1000:1211  MOV AH,0x1
+1000:1213  MOV DX,0x20
+1000:1216  CALLF 0x2000:8f31
+1000:121b  MOV DI,DX
+1000:121d  TEST byte ptr [DI + 0x14c0],AL
+1000:1221  JNZ 0x1000:1230
+1000:1223  MOV AX,word ptr [BP + -0x4]
+1000:1226  LES DI,[BP + -0x2c]
+1000:1229  ADD DI,AX
+1000:122b  INC byte ptr ES:[DI + 0xa2]
+1000:1230  MOV AX,word ptr [BP + -0x6]
+1000:1233  CMP AX,word ptr [BP + -0x2e]
+1000:1236  JNZ 0x1000:11d5
+1000:1238  CMP word ptr [BP + -0x14],0x4
+1000:123c  JGE 0x1000:1247
+1000:123e  LES DI,[BP + -0x2c]
+1000:1241  ADD byte ptr ES:[DI + 0xa5],0x5
+1000:1247  CMP word ptr [BP + -0x18],0x5
+1000:124b  JGE 0x1000:1256
+1000:124d  LES DI,[BP + -0x2c]
+1000:1250  ADD byte ptr ES:[DI + 0xa2],0x5
+1000:1256  CMP word ptr [BP + -0x14],0x1f3
+1000:125b  JLE 0x1000:1266
+1000:125d  LES DI,[BP + -0x2c]
+1000:1260  ADD byte ptr ES:[DI + 0xa3],0x5
+1000:1266  CMP word ptr [BP + -0x18],0x158
+1000:126b  JLE 0x1000:1276
+1000:126d  LES DI,[BP + -0x2c]
+1000:1270  ADD byte ptr ES:[DI + 0xa4],0x5
+1000:1276  CMP word ptr [BP + -0x4],0x3
+1000:127a  JZ 0x1000:127f
+1000:127c  JMP 0x1000:11ac
+1000:127f  LES DI,[BP + -0x2c]
+1000:1282  CMP byte ptr ES:[DI + 0xa2],0x2
+1000:1288  JC 0x1000:128d
+1000:128a  JMP 0x1000:13b6
+1000:128d  CMP byte ptr ES:[DI + 0xa4],0x0
+1000:1293  JA 0x1000:1298
+1000:1295  JMP 0x1000:13b6
+1000:1298  CMP byte ptr ES:[DI + 0xa3],0x0
+1000:129e  JA 0x1000:12ab
+1000:12a0  CMP byte ptr ES:[DI + 0xa5],0x0
+1000:12a6  JA 0x1000:12ab
+1000:12a8  JMP 0x1000:13b6
+1000:12ab  LES DI,[BP + -0x2c]
+1000:12ae  DEC word ptr ES:[DI + 0xa]
+1000:12b2  MOV byte ptr ES:[DI + 0xa3],0x0
+1000:12b8  MOV byte ptr ES:[DI + 0xa5],0x0
+1000:12be  MOV AX,word ptr ES:[DI + 0x4]
+1000:12c2  MOV DX,word ptr ES:[DI + 0x6]
+1000:12c6  ADD AX,word ptr ES:[DI + 0x30]
+1000:12ca  ADC DX,word ptr ES:[DI + 0x32]
+1000:12ce  MOV word ptr [BP + -0x16],AX
+1000:12d1  MOV word ptr [BP + -0x14],DX
+1000:12d4  MOV AX,word ptr ES:[DI + 0x8]
+1000:12d8  MOV DX,word ptr ES:[DI + 0xa]
+1000:12dc  ADD AX,word ptr ES:[DI + 0x34]
+1000:12e0  ADC DX,word ptr ES:[DI + 0x36]
+1000:12e4  MOV word ptr [BP + -0x1a],AX
+1000:12e7  MOV word ptr [BP + -0x18],DX
+1000:12ea  MOV AL,[0x1af]
+1000:12ed  XOR AH,AH
+1000:12ef  MOV word ptr [BP + -0x2e],AX
+1000:12f2  XOR AX,AX
+1000:12f4  CMP AX,word ptr [BP + -0x2e]
+1000:12f7  JG 0x1000:1350
+1000:12f9  MOV word ptr [BP + -0x6],AX
+1000:12fc  JMP 0x1000:1301
+1000:12fe  INC word ptr [BP + -0x6]
+1000:1301  MOV DI,word ptr [BP + -0x6]
+1000:1304  SHL DI,0x1
+1000:1306  MOV AL,byte ptr [DI + 0x1c0]
+1000:130a  CBW
+1000:130b  ADD AX,word ptr [BP + -0x14]
+1000:130e  MOV DX,AX
+1000:1310  MOV DI,word ptr [BP + -0x6]
+1000:1313  SHL DI,0x1
+1000:1315  MOV AL,byte ptr [DI + 0x1c1]
+1000:1319  CBW
+1000:131a  ADD AX,word ptr [BP + -0x18]
+1000:131d  SHL AX,0x2
+1000:1320  LES DI,[0x6674]
+1000:1324  ADD DI,AX
+1000:1326  LES DI,ES:[DI]
+1000:1329  ADD DI,DX
+1000:132b  MOV AL,byte ptr ES:[DI]
+1000:132e  MOV AH,0x1
+1000:1330  MOV DX,0x20
+1000:1333  CALLF 0x2000:8f31
+1000:1338  MOV DI,DX
+1000:133a  TEST byte ptr [DI + 0x14c0],AL
+1000:133e  JNZ 0x1000:1348
+1000:1340  LES DI,[BP + -0x2c]
+1000:1343  INC byte ptr ES:[DI + 0xa3]
+1000:1348  MOV AX,word ptr [BP + -0x6]
+1000:134b  CMP AX,word ptr [BP + -0x2e]
+1000:134e  JNZ 0x1000:12fe
+1000:1350  MOV AL,[0x1b1]
+1000:1353  XOR AH,AH
+1000:1355  MOV word ptr [BP + -0x2e],AX
+1000:1358  XOR AX,AX
+1000:135a  CMP AX,word ptr [BP + -0x2e]
+1000:135d  JG 0x1000:13b6
+1000:135f  MOV word ptr [BP + -0x6],AX
+1000:1362  JMP 0x1000:1367
+1000:1364  INC word ptr [BP + -0x6]
+1000:1367  MOV DI,word ptr [BP + -0x6]
+1000:136a  SHL DI,0x1
+1000:136c  MOV AL,byte ptr [DI + 0x1dc]
+1000:1370  CBW
+1000:1371  ADD AX,word ptr [BP + -0x14]
+1000:1374  MOV DX,AX
+1000:1376  MOV DI,word ptr [BP + -0x6]
+1000:1379  SHL DI,0x1
+1000:137b  MOV AL,byte ptr [DI + 0x1dd]
+1000:137f  CBW
+1000:1380  ADD AX,word ptr [BP + -0x18]
+1000:1383  SHL AX,0x2
+1000:1386  LES DI,[0x6674]
+1000:138a  ADD DI,AX
+1000:138c  LES DI,ES:[DI]
+1000:138f  ADD DI,DX
+1000:1391  MOV AL,byte ptr ES:[DI]
+1000:1394  MOV AH,0x1
+1000:1396  MOV DX,0x20
+1000:1399  CALLF 0x2000:8f31
+1000:139e  MOV DI,DX
+1000:13a0  TEST byte ptr [DI + 0x14c0],AL
+1000:13a4  JNZ 0x1000:13ae
+1000:13a6  LES DI,[BP + -0x2c]
+1000:13a9  INC byte ptr ES:[DI + 0xa5]
+1000:13ae  MOV AX,word ptr [BP + -0x6]
+1000:13b1  CMP AX,word ptr [BP + -0x2e]
+1000:13b4  JNZ 0x1000:1364
+1000:13b6  LES DI,[BP + -0x2c]
+1000:13b9  CMP byte ptr ES:[DI + 0xa4],0x2
+1000:13bf  JC 0x1000:13c4
+1000:13c1  JMP 0x1000:14ed
+1000:13c4  CMP byte ptr ES:[DI + 0xa2],0x0
+1000:13ca  JA 0x1000:13cf
+1000:13cc  JMP 0x1000:14ed
+1000:13cf  CMP byte ptr ES:[DI + 0xa3],0x0
+1000:13d5  JA 0x1000:13e2
+1000:13d7  CMP byte ptr ES:[DI + 0xa5],0x0
+1000:13dd  JA 0x1000:13e2
+1000:13df  JMP 0x1000:14ed
+1000:13e2  LES DI,[BP + -0x2c]
+1000:13e5  INC word ptr ES:[DI + 0xa]
+1000:13e9  MOV byte ptr ES:[DI + 0xa3],0x0
+1000:13ef  MOV byte ptr ES:[DI + 0xa5],0x0
+1000:13f5  MOV AX,word ptr ES:[DI + 0x4]
+1000:13f9  MOV DX,word ptr ES:[DI + 0x6]
+1000:13fd  ADD AX,word ptr ES:[DI + 0x30]
+1000:1401  ADC DX,word ptr ES:[DI + 0x32]
+1000:1405  MOV word ptr [BP + -0x16],AX
+1000:1408  MOV word ptr [BP + -0x14],DX
+1000:140b  MOV AX,word ptr ES:[DI + 0x8]
+1000:140f  MOV DX,word ptr ES:[DI + 0xa]
+1000:1413  ADD AX,word ptr ES:[DI + 0x34]
+1000:1417  ADC DX,word ptr ES:[DI + 0x36]
+1000:141b  MOV word ptr [BP + -0x1a],AX
+1000:141e  MOV word ptr [BP + -0x18],DX
+1000:1421  MOV AL,[0x1af]
+1000:1424  XOR AH,AH
+1000:1426  MOV word ptr [BP + -0x2e],AX
+1000:1429  XOR AX,AX
+1000:142b  CMP AX,word ptr [BP + -0x2e]
+1000:142e  JG 0x1000:1487
+1000:1430  MOV word ptr [BP + -0x6],AX
+1000:1433  JMP 0x1000:1438
+1000:1435  INC word ptr [BP + -0x6]
+1000:1438  MOV DI,word ptr [BP + -0x6]
+1000:143b  SHL DI,0x1
+1000:143d  MOV AL,byte ptr [DI + 0x1c0]
+1000:1441  CBW
+1000:1442  ADD AX,word ptr [BP + -0x14]
+1000:1445  MOV DX,AX
+1000:1447  MOV DI,word ptr [BP + -0x6]
+1000:144a  SHL DI,0x1
+1000:144c  MOV AL,byte ptr [DI + 0x1c1]
+1000:1450  CBW
+1000:1451  ADD AX,word ptr [BP + -0x18]
+1000:1454  SHL AX,0x2
+1000:1457  LES DI,[0x6674]
+1000:145b  ADD DI,AX
+1000:145d  LES DI,ES:[DI]
+1000:1460  ADD DI,DX
+1000:1462  MOV AL,byte ptr ES:[DI]
+1000:1465  MOV AH,0x1
+1000:1467  MOV DX,0x20
+1000:146a  CALLF 0x2000:8f31
+1000:146f  MOV DI,DX
+1000:1471  TEST byte ptr [DI + 0x14c0],AL
+1000:1475  JNZ 0x1000:147f
+1000:1477  LES DI,[BP + -0x2c]
+1000:147a  INC byte ptr ES:[DI + 0xa3]
+1000:147f  MOV AX,word ptr [BP + -0x6]
+1000:1482  CMP AX,word ptr [BP + -0x2e]
+1000:1485  JNZ 0x1000:1435
+1000:1487  MOV AL,[0x1b1]
+1000:148a  XOR AH,AH
+1000:148c  MOV word ptr [BP + -0x2e],AX
+1000:148f  XOR AX,AX
+1000:1491  CMP AX,word ptr [BP + -0x2e]
+1000:1494  JG 0x1000:14ed
+1000:1496  MOV word ptr [BP + -0x6],AX
+1000:1499  JMP 0x1000:149e
+1000:149b  INC word ptr [BP + -0x6]
+1000:149e  MOV DI,word ptr [BP + -0x6]
+1000:14a1  SHL DI,0x1
+1000:14a3  MOV AL,byte ptr [DI + 0x1dc]
+1000:14a7  CBW
+1000:14a8  ADD AX,word ptr [BP + -0x14]
+1000:14ab  MOV DX,AX
+1000:14ad  MOV DI,word ptr [BP + -0x6]
+1000:14b0  SHL DI,0x1
+1000:14b2  MOV AL,byte ptr [DI + 0x1dd]
+1000:14b6  CBW
+1000:14b7  ADD AX,word ptr [BP + -0x18]
+1000:14ba  SHL AX,0x2
+1000:14bd  LES DI,[0x6674]
+1000:14c1  ADD DI,AX
+1000:14c3  LES DI,ES:[DI]
+1000:14c6  ADD DI,DX
+1000:14c8  MOV AL,byte ptr ES:[DI]
+1000:14cb  MOV AH,0x1
+1000:14cd  MOV DX,0x20
+1000:14d0  CALLF 0x2000:8f31
+1000:14d5  MOV DI,DX
+1000:14d7  TEST byte ptr [DI + 0x14c0],AL
+1000:14db  JNZ 0x1000:14e5
+1000:14dd  LES DI,[BP + -0x2c]
+1000:14e0  INC byte ptr ES:[DI + 0xa5]
+1000:14e5  MOV AX,word ptr [BP + -0x6]
+1000:14e8  CMP AX,word ptr [BP + -0x2e]
+1000:14eb  JNZ 0x1000:149b
+1000:14ed  MOV AL,[0x669c]
+1000:14f0  XOR AH,AH
+1000:14f2  MOV word ptr [BP + -0x2e],AX
+1000:14f5  MOV AX,0x1
+1000:14f8  CMP AX,word ptr [BP + -0x2e]
+1000:14fb  JLE 0x1000:1500
+1000:14fd  JMP 0x1000:1730
+1000:1500  MOV word ptr [BP + -0x6],AX
+1000:1503  JMP 0x1000:1508
+1000:1505  INC word ptr [BP + -0x6]
+1000:1508  IMUL AX,word ptr [BP + -0x6],0xe
+1000:150c  LES DI,[0x6698]
+1000:1510  ADD DI,AX
+1000:1512  CMP byte ptr ES:[DI + -0x2],0x0
+1000:1517  JA 0x1000:151c
+1000:1519  JMP 0x1000:1725
+1000:151c  LES DI,[BP + -0x2c]
+1000:151f  MOV AX,word ptr ES:[DI + 0x6]
+1000:1523  SUB AX,0x5
+1000:1526  MOV DX,AX
+1000:1528  IMUL AX,word ptr [BP + -0x6],0xe
+1000:152c  LES DI,[0x6698]
+1000:1530  ADD DI,AX
+1000:1532  MOV AX,word ptr ES:[DI + -0xe]
+1000:1536  CMP AX,DX
+1000:1538  JG 0x1000:153d
+1000:153a  JMP 0x1000:1725
+1000:153d  LES DI,[BP + -0x2c]
+1000:1540  MOV AX,word ptr ES:[DI + 0x6]
+1000:1544  ADD AX,0x5
+1000:1547  MOV DX,AX
+1000:1549  IMUL AX,word ptr [BP + -0x6],0xe
+1000:154d  LES DI,[0x6698]
+1000:1551  ADD DI,AX
+1000:1553  MOV AX,word ptr ES:[DI + -0xe]
+1000:1557  CMP AX,DX
+1000:1559  JL 0x1000:155e
+1000:155b  JMP 0x1000:1725
+1000:155e  LES DI,[BP + -0x2c]
+1000:1561  MOV AX,word ptr ES:[DI + 0xa]
+1000:1565  SUB AX,0x5
+1000:1568  MOV DX,AX
+1000:156a  IMUL AX,word ptr [BP + -0x6],0xe
+1000:156e  LES DI,[0x6698]
+1000:1572  ADD DI,AX
+1000:1574  MOV AX,word ptr ES:[DI + -0xa]
+1000:1578  CMP AX,DX
+1000:157a  JG 0x1000:157f
+1000:157c  JMP 0x1000:1725
+1000:157f  LES DI,[BP + -0x2c]
+1000:1582  MOV AX,word ptr ES:[DI + 0xa]
+1000:1586  ADD AX,0x7
+1000:1589  MOV DX,AX
+1000:158b  IMUL AX,word ptr [BP + -0x6],0xe
+1000:158f  LES DI,[0x6698]
+1000:1593  ADD DI,AX
+1000:1595  MOV AX,word ptr ES:[DI + -0xa]
+1000:1599  CMP AX,DX
+1000:159b  JL 0x1000:15a0
+1000:159d  JMP 0x1000:1725
+1000:15a0  IMUL AX,word ptr [BP + -0x6],0xe
+1000:15a4  LES DI,[0x6698]
+1000:15a8  ADD DI,AX
+1000:15aa  MOV AL,byte ptr ES:[DI + -0x2]
+1000:15ae  CMP AL,0x2
+1000:15b0  JZ 0x1000:15b5
+1000:15b2  JMP 0x1000:163a
+1000:15b5  MOV DI,word ptr [BP + -0x2]
+1000:15b8  SHL DI,0x1
+1000:15ba  MOV AX,word ptr [DI + 0x66e8]
+1000:15be  XOR DX,DX
+1000:15c0  MOV CX,AX
+1000:15c2  MOV BX,DX
+1000:15c4  LES DI,[BP + -0x2c]
+1000:15c7  MOV AX,word ptr ES:[DI + 0x50]
+1000:15cb  CWD
+1000:15cc  CMP DX,BX
+1000:15ce  JL 0x1000:15d6
+1000:15d0  JG 0x1000:1637
+1000:15d2  CMP AX,CX
+1000:15d4  JNC 0x1000:1637
+1000:15d6  IMUL AX,word ptr [BP + -0x6],0xe
+1000:15da  LES DI,[0x6698]
+1000:15de  ADD DI,AX
+1000:15e0  MOV byte ptr ES:[DI + -0x2],0x0
+1000:15e5  PUSH 0x33
+1000:15e7  CALLF 0x2000:9424
+1000:15ec  ADD AX,0xa
+1000:15ef  MOV DI,word ptr [BP + -0x2]
+1000:15f2  SHL DI,0x1
+1000:15f4  MUL word ptr [DI + 0x66e8]
+1000:15f8  XOR DX,DX
+1000:15fa  MOV CX,0x64
+1000:15fd  DIV CX
+1000:15ff  LES DI,[BP + -0x2c]
+1000:1602  ADD word ptr ES:[DI + 0x50],AX
+1000:1606  MOV DI,word ptr [BP + -0x2]
+1000:1609  SHL DI,0x1
+1000:160b  MOV AX,word ptr [DI + 0x66e8]
+1000:160f  XOR DX,DX
+1000:1611  MOV CX,AX
+1000:1613  MOV BX,DX
+1000:1615  LES DI,[BP + -0x2c]
+1000:1618  MOV AX,word ptr ES:[DI + 0x50]
+1000:161c  CWD
+1000:161d  CMP DX,BX
+1000:161f  JG 0x1000:1627
+1000:1621  JL 0x1000:1637
+1000:1623  CMP AX,CX
+1000:1625  JBE 0x1000:1637
+1000:1627  MOV DI,word ptr [BP + -0x2]
+1000:162a  SHL DI,0x1
+1000:162c  MOV AX,word ptr [DI + 0x66e8]
+1000:1630  LES DI,[BP + -0x2c]
+1000:1633  MOV word ptr ES:[DI + 0x50],AX
+1000:1637  JMP 0x1000:1725
+1000:163a  CMP AL,0x1
+1000:163c  JZ 0x1000:1641
+1000:163e  JMP 0x1000:1725
+1000:1641  PUSH 0xa
+1000:1643  CALLF 0x2000:9424
+1000:1648  CMP AX,0x1
+1000:164b  JA 0x1000:1650
+1000:164d  JMP 0x1000:16f3
+1000:1650  LES DI,[BP + -0x2c]
+1000:1653  MOV byte ptr ES:[DI + 0x99],0x0
+1000:1659  MOV word ptr ES:[DI + 0x48],0xffff
+1000:165f  IMUL AX,word ptr [BP + -0x6],0xe
+1000:1663  LES DI,[0x6698]
+1000:1667  ADD DI,AX
+1000:1669  MOV AL,byte ptr ES:[DI + -0x1]
+1000:166d  XOR AH,AH
+1000:166f  MOV DX,AX
+1000:1671  LES DI,[BP + -0x2c]
+1000:1674  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1678  SHL AX,0x1
+1000:167a  ADD DI,AX
+1000:167c  MOV word ptr ES:[DI + 0x73],DX
+1000:1680  LES DI,[BP + -0x2c]
+1000:1683  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1687  SHL AX,0x1
+1000:1689  ADD DI,AX
+1000:168b  MOV DI,word ptr ES:[DI + 0x73]
+1000:168f  MOV AL,byte ptr [DI + 0xe0d]
+1000:1693  XOR AH,AH
+1000:1695  MOV DX,AX
+1000:1697  LES DI,[BP + -0x2c]
+1000:169a  MOV AX,word ptr ES:[DI + 0x4e]
+1000:169e  SHL AX,0x1
+1000:16a0  ADD DI,AX
+1000:16a2  MOV word ptr ES:[DI + 0x7d],DX
+1000:16a6  CMP byte ptr [0x4b8],0x0
+1000:16ab  JZ 0x1000:16be
+1000:16ad  PUSH word ptr [0x679a]
+1000:16b1  PUSH word ptr [0x6798]
+1000:16b5  PUSH 0x19
+1000:16b7  PUSH 0x0
+1000:16b9  CALLF 0x2000:3f1c
+1000:16be  IMUL AX,word ptr [BP + -0x6],0xe
+1000:16c2  LES DI,[0x6698]
+1000:16c6  ADD DI,AX
+1000:16c8  MOV byte ptr ES:[DI + -0x2],0x0
+1000:16cd  LES DI,[BP + -0x2c]
+1000:16d0  MOV AX,word ptr ES:[DI + 0x4e]
+1000:16d4  ADD DI,AX
+1000:16d6  MOV byte ptr ES:[DI + 0x6f],0x1
+1000:16db  LES DI,[BP + -0x2c]
+1000:16de  MOV AX,word ptr ES:[DI + 0x4e]
+1000:16e2  SHL AX,0x2
+1000:16e5  ADD DI,AX
+1000:16e7  XOR AX,AX
+1000:16e9  MOV word ptr ES:[DI + 0x58],AX
+1000:16ed  MOV word ptr ES:[DI + 0x5a],AX
+1000:16f1  JMP 0x1000:1725
+1000:16f3  IMUL AX,word ptr [BP + -0x6],0xe
+1000:16f7  LES DI,[0x6698]
+1000:16fb  ADD DI,AX
+1000:16fd  MOV byte ptr ES:[DI + -0x2],0x0
+1000:1702  PUSH 0x1
+1000:1704  IMUL AX,word ptr [BP + -0x6],0xe
+1000:1708  LES DI,[0x6698]
+1000:170c  ADD DI,AX
+1000:170e  PUSH word ptr ES:[DI + -0xe]
+1000:1712  IMUL AX,word ptr [BP + -0x6],0xe
+1000:1716  LES DI,[0x6698]
+1000:171a  ADD DI,AX
+1000:171c  PUSH word ptr ES:[DI + -0xa]
+1000:1720  CALLF 0x2000:1e44
+1000:1725  MOV AX,word ptr [BP + -0x6]
+1000:1728  CMP AX,word ptr [BP + -0x2e]
+1000:172b  JZ 0x1000:1730
+1000:172d  JMP 0x1000:1505
+1000:1730  LES DI,[BP + -0x2c]
+1000:1733  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1737  SHL AX,0x1
+1000:1739  ADD DI,AX
+1000:173b  MOV DI,word ptr ES:[DI + 0x73]
+1000:173f  CMP byte ptr [DI + 0x11a5],0x2
+1000:1744  JZ 0x1000:1749
+1000:1746  JMP 0x1000:17f4
+1000:1749  XOR AX,AX
+1000:174b  MOV word ptr [BP + -0x4],AX
+1000:174e  JMP 0x1000:1753
+1000:1750  INC word ptr [BP + -0x4]
+1000:1753  IMUL AX,word ptr [BP + -0x4],0x14
+1000:1757  LES DI,[0x6688]
+1000:175b  ADD DI,AX
+1000:175d  MOV word ptr [BP + -0x30],DI
+1000:1760  MOV word ptr [BP + -0x2e],ES
+1000:1763  LES DI,[BP + -0x2c]
+1000:1766  MOV AX,word ptr ES:[DI + 0x4e]
+1000:176a  SHL AX,0x1
+1000:176c  ADD DI,AX
+1000:176e  MOV DX,word ptr ES:[DI + 0x73]
+1000:1772  LES DI,[BP + -0x30]
+1000:1775  MOV AL,byte ptr ES:[DI + 0x10]
+1000:1779  AND AL,0x7f
+1000:177b  XOR AH,AH
+1000:177d  CMP AX,DX
+1000:177f  JNZ 0x1000:17ea
+1000:1781  MOV AL,byte ptr ES:[DI + 0x10]
+1000:1785  AND AL,0x80
+1000:1787  MOV DI,word ptr [BP + -0x2]
+1000:178a  CMP AL,byte ptr [DI + 0x6c]
+1000:178e  JNZ 0x1000:17ea
+1000:1790  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1794  MOV AL,byte ptr [DI + 0x6722]
+1000:1798  XOR AH,AH
+1000:179a  MOV DI,AX
+1000:179c  CMP byte ptr [DI + 0x783b],0x0
+1000:17a1  JZ 0x1000:17b1
+1000:17a3  MOV AX,[0x6520]
+1000:17a6  AND AX,0x1
+1000:17a9  INC AX
+1000:17aa  LES DI,[BP + -0x30]
+1000:17ad  SUB byte ptr ES:[DI + 0x11],AL
+1000:17b1  IMUL DI,word ptr [BP + -0x2],0x7
+1000:17b5  MOV AL,byte ptr [DI + 0x6723]
+1000:17b9  XOR AH,AH
+1000:17bb  MOV DI,AX
+1000:17bd  CMP byte ptr [DI + 0x783b],0x0
+1000:17c2  JZ 0x1000:17d2
+1000:17c4  MOV AX,[0x6520]
+1000:17c7  AND AX,0x1
+1000:17ca  INC AX
+1000:17cb  LES DI,[BP + -0x30]
+1000:17ce  ADD byte ptr ES:[DI + 0x11],AL
+1000:17d2  LES DI,[BP + -0x30]
+1000:17d5  CMP byte ptr ES:[DI + 0x11],0x7f
+1000:17da  JBE 0x1000:17e1
+1000:17dc  ADD byte ptr ES:[DI + 0x11],0x80
+1000:17e1  LES DI,[BP + -0x2c]
+1000:17e4  MOV byte ptr ES:[DI + 0xa0],0x0
+1000:17ea  CMP word ptr [BP + -0x4],0x258
+1000:17ef  JZ 0x1000:17f4
+1000:17f1  JMP 0x1000:1750
+1000:17f4  LES DI,[BP + -0x2c]
+1000:17f7  CMP byte ptr ES:[DI + 0xa0],0x0
+1000:17fd  JNZ 0x1000:1841
+1000:17ff  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1803  MOV AL,byte ptr [DI + 0x6720]
+1000:1807  XOR AH,AH
+1000:1809  MOV DI,AX
+1000:180b  CMP byte ptr [DI + 0x783b],0x0
+1000:1810  JNZ 0x1000:1841
+1000:1812  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1816  MOV AL,byte ptr [DI + 0x6722]
+1000:181a  XOR AH,AH
+1000:181c  MOV DI,AX
+1000:181e  CMP byte ptr [DI + 0x783b],0x0
+1000:1823  JNZ 0x1000:1841
+1000:1825  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1829  MOV AL,byte ptr [DI + 0x6723]
+1000:182d  XOR AH,AH
+1000:182f  MOV DI,AX
+1000:1831  CMP byte ptr [DI + 0x783b],0x0
+1000:1836  JNZ 0x1000:1841
+1000:1838  LES DI,[BP + -0x2c]
+1000:183b  MOV byte ptr ES:[DI + 0xa0],0x1
+1000:1841  LES DI,[BP + -0x2c]
+1000:1844  MOV AX,word ptr ES:[DI + 0x58]
+1000:1848  OR AX,word ptr ES:[DI + 0x5a]
+1000:184c  JNZ 0x1000:1851
+1000:184e  JMP 0x1000:1923
+1000:1851  MOV AX,word ptr ES:[DI + 0x58]
+1000:1855  MOV DX,word ptr ES:[DI + 0x5a]
+1000:1859  ADD word ptr ES:[DI + 0x54],AX
+1000:185d  ADC word ptr ES:[DI + 0x56],DX
+1000:1861  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1865  MOV AL,byte ptr [DI + 0x6720]
+1000:1869  XOR AH,AH
+1000:186b  MOV DI,AX
+1000:186d  CMP byte ptr [DI + 0x783b],0x0
+1000:1872  JNZ 0x1000:18b1
+1000:1874  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1878  MOV AL,byte ptr [DI + 0x6721]
+1000:187c  XOR AH,AH
+1000:187e  MOV DI,AX
+1000:1880  CMP byte ptr [DI + 0x783b],0x0
+1000:1885  JNZ 0x1000:18b1
+1000:1887  LES DI,[BP + -0x2c]
+1000:188a  MOV AX,word ptr ES:[DI + 0x58]
+1000:188e  MOV DX,word ptr ES:[DI + 0x5a]
+1000:1892  MOV CX,0x53
+1000:1895  XOR BX,BX
+1000:1897  CALLF 0x2000:8b50
+1000:189c  MOV CX,0x64
+1000:189f  XOR BX,BX
+1000:18a1  CALLF 0x2000:8b8d
+1000:18a6  LES DI,[BP + -0x2c]
+1000:18a9  MOV word ptr ES:[DI + 0x58],AX
+1000:18ad  MOV word ptr ES:[DI + 0x5a],DX
+1000:18b1  LES DI,[BP + -0x2c]
+1000:18b4  CMP byte ptr ES:[DI + 0x9b],0x0
+1000:18ba  JZ 0x1000:18ef
+1000:18bc  CMP word ptr ES:[DI + 0x56],0x74
+1000:18c1  JLE 0x1000:18d3
+1000:18c3  XOR AX,AX
+1000:18c5  MOV word ptr ES:[DI + 0x58],AX
+1000:18c9  MOV word ptr ES:[DI + 0x5a],AX
+1000:18cd  MOV word ptr ES:[DI + 0x56],0x74
+1000:18d3  LES DI,[BP + -0x2c]
+1000:18d6  CMP word ptr ES:[DI + 0x56],0x40
+1000:18db  JGE 0x1000:18ed
+1000:18dd  XOR AX,AX
+1000:18df  MOV word ptr ES:[DI + 0x58],AX
+1000:18e3  MOV word ptr ES:[DI + 0x5a],AX
+1000:18e7  MOV word ptr ES:[DI + 0x56],0x40
+1000:18ed  JMP 0x1000:1923
+1000:18ef  LES DI,[BP + -0x2c]
+1000:18f2  CMP word ptr ES:[DI + 0x56],0xc
+1000:18f7  JGE 0x1000:1909
+1000:18f9  XOR AX,AX
+1000:18fb  MOV word ptr ES:[DI + 0x58],AX
+1000:18ff  MOV word ptr ES:[DI + 0x5a],AX
+1000:1903  MOV word ptr ES:[DI + 0x56],0xc
+1000:1909  LES DI,[BP + -0x2c]
+1000:190c  CMP word ptr ES:[DI + 0x56],0x40
+1000:1911  JLE 0x1000:1923
+1000:1913  XOR AX,AX
+1000:1915  MOV word ptr ES:[DI + 0x58],AX
+1000:1919  MOV word ptr ES:[DI + 0x5a],AX
+1000:191d  MOV word ptr ES:[DI + 0x56],0x40
+1000:1923  LES DI,[BP + -0x2c]
+1000:1926  CMP byte ptr ES:[DI + 0xa0],0x0
+1000:192c  JZ 0x1000:1949
+1000:192e  CMP byte ptr ES:[DI + 0x9c],0x0
+1000:1934  JZ 0x1000:1949
+1000:1936  IMUL DI,word ptr [BP + -0x2],0x7
+1000:193a  MOV AL,byte ptr [DI + 0x6725]
+1000:193e  XOR AH,AH
+1000:1940  MOV DI,AX
+1000:1942  CMP byte ptr [DI + 0x783b],0x0
+1000:1947  JNZ 0x1000:194d
+1000:1949  MOV AL,0x0
+1000:194b  JMP 0x1000:194f
+1000:194d  MOV AL,0x1
+1000:194f  OR AL,AL
+1000:1951  JZ 0x1000:1956
+1000:1953  JMP 0x1000:1a22
+1000:1956  IMUL DI,word ptr [BP + -0x2],0x7
+1000:195a  MOV AL,byte ptr [DI + 0x6720]
+1000:195e  XOR AH,AH
+1000:1960  MOV DI,AX
+1000:1962  CMP byte ptr [DI + 0x783b],0x0
+1000:1967  JZ 0x1000:19bc
+1000:1969  LES DI,[BP + -0x2c]
+1000:196c  MOV AL,byte ptr ES:[DI + 0x9b]
+1000:1971  CMP AL,0x0
+1000:1973  JNZ 0x1000:1996
+1000:1975  CMP word ptr ES:[DI + 0x5a],0x1
+1000:197a  JL 0x1000:1986
+1000:197c  JG 0x1000:1994
+1000:197e  CMP word ptr ES:[DI + 0x58],0x1170
+1000:1984  JNC 0x1000:1994
+1000:1986  LES DI,[BP + -0x2c]
+1000:1989  ADD word ptr ES:[DI + 0x58],0xfa0
+1000:198f  ADC word ptr ES:[DI + 0x5a],0x0
+1000:1994  JMP 0x1000:19bc
+1000:1996  CMP AL,0x1
+1000:1998  JNZ 0x1000:19bc
+1000:199a  LES DI,[BP + -0x2c]
+1000:199d  CMP word ptr ES:[DI + 0x5a],-0x2
+1000:19a2  JG 0x1000:19ae
+1000:19a4  JL 0x1000:19bc
+1000:19a6  CMP word ptr ES:[DI + 0x58],0xee90
+1000:19ac  JBE 0x1000:19bc
+1000:19ae  LES DI,[BP + -0x2c]
+1000:19b1  SUB word ptr ES:[DI + 0x58],0xfa0
+1000:19b7  SBB word ptr ES:[DI + 0x5a],0x0
+1000:19bc  IMUL DI,word ptr [BP + -0x2],0x7
+1000:19c0  MOV AL,byte ptr [DI + 0x6721]
+1000:19c4  XOR AH,AH
+1000:19c6  MOV DI,AX
+1000:19c8  CMP byte ptr [DI + 0x783b],0x0
+1000:19cd  JZ 0x1000:1a22
+1000:19cf  LES DI,[BP + -0x2c]
+1000:19d2  MOV AL,byte ptr ES:[DI + 0x9b]
+1000:19d7  CMP AL,0x1
+1000:19d9  JNZ 0x1000:19fc
+1000:19db  CMP word ptr ES:[DI + 0x5a],0x1
+1000:19e0  JL 0x1000:19ec
+1000:19e2  JG 0x1000:19fa
+1000:19e4  CMP word ptr ES:[DI + 0x58],0x1170
+1000:19ea  JNC 0x1000:19fa
+1000:19ec  LES DI,[BP + -0x2c]
+1000:19ef  ADD word ptr ES:[DI + 0x58],0xfa0
+1000:19f5  ADC word ptr ES:[DI + 0x5a],0x0
+1000:19fa  JMP 0x1000:1a22
+1000:19fc  CMP AL,0x0
+1000:19fe  JNZ 0x1000:1a22
+1000:1a00  LES DI,[BP + -0x2c]
+1000:1a03  CMP word ptr ES:[DI + 0x5a],-0x2
+1000:1a08  JG 0x1000:1a14
+1000:1a0a  JL 0x1000:1a22
+1000:1a0c  CMP word ptr ES:[DI + 0x58],0xee90
+1000:1a12  JBE 0x1000:1a22
+1000:1a14  LES DI,[BP + -0x2c]
+1000:1a17  SUB word ptr ES:[DI + 0x58],0xfa0
+1000:1a1d  SBB word ptr ES:[DI + 0x5a],0x0
+1000:1a22  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1a26  MOV AL,byte ptr [DI + 0x6725]
+1000:1a2a  XOR AH,AH
+1000:1a2c  MOV DI,AX
+1000:1a2e  CMP byte ptr [DI + 0x783b],0x0
+1000:1a33  JNZ 0x1000:1a38
+1000:1a35  JMP 0x1000:1b82
+1000:1a38  LES DI,[BP + -0x2c]
+1000:1a3b  CMP byte ptr ES:[DI + 0x9c],0x0
+1000:1a41  JNZ 0x1000:1a46
+1000:1a43  JMP 0x1000:1acc
+1000:1a46  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1a4a  MOV AL,byte ptr [DI + 0x6720]
+1000:1a4e  XOR AH,AH
+1000:1a50  MOV DI,AX
+1000:1a52  CMP byte ptr [DI + 0x783b],0x0
+1000:1a57  JZ 0x1000:1a66
+1000:1a59  LES DI,[BP + -0x2c]
+1000:1a5c  SUB word ptr ES:[DI + 0x26],0x18
+1000:1a61  SBB word ptr ES:[DI + 0x28],0x0
+1000:1a66  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1a6a  MOV AL,byte ptr [DI + 0x6721]
+1000:1a6e  XOR AH,AH
+1000:1a70  MOV DI,AX
+1000:1a72  CMP byte ptr [DI + 0x783b],0x0
+1000:1a77  JZ 0x1000:1a86
+1000:1a79  LES DI,[BP + -0x2c]
+1000:1a7c  ADD word ptr ES:[DI + 0x26],0x18
+1000:1a81  ADC word ptr ES:[DI + 0x28],0x0
+1000:1a86  LES DI,[BP + -0x2c]
+1000:1a89  CMP word ptr ES:[DI + 0x28],0x0
+1000:1a8e  JL 0x1000:1a9a
+1000:1a90  JG 0x1000:1aa9
+1000:1a92  CMP word ptr ES:[DI + 0x26],0xaa
+1000:1a98  JNC 0x1000:1aa9
+1000:1a9a  LES DI,[BP + -0x2c]
+1000:1a9d  MOV word ptr ES:[DI + 0x26],0xaa
+1000:1aa3  MOV word ptr ES:[DI + 0x28],0x0
+1000:1aa9  LES DI,[BP + -0x2c]
+1000:1aac  CMP word ptr ES:[DI + 0x28],0x0
+1000:1ab1  JG 0x1000:1abd
+1000:1ab3  JL 0x1000:1acc
+1000:1ab5  CMP word ptr ES:[DI + 0x26],0xfa0
+1000:1abb  JBE 0x1000:1acc
+1000:1abd  LES DI,[BP + -0x2c]
+1000:1ac0  MOV word ptr ES:[DI + 0x26],0xfa0
+1000:1ac6  MOV word ptr ES:[DI + 0x28],0x0
+1000:1acc  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1ad0  MOV AL,byte ptr [DI + 0x6726]
+1000:1ad4  XOR AH,AH
+1000:1ad6  MOV DI,AX
+1000:1ad8  CMP byte ptr [DI + 0x783b],0x0
+1000:1add  JNZ 0x1000:1ae2
+1000:1adf  JMP 0x1000:1b80
+1000:1ae2  LES DI,[BP + -0x2c]
+1000:1ae5  MOV byte ptr ES:[DI + 0x9c],0x1
+1000:1aeb  MOV byte ptr ES:[DI + 0xc],0x0
+1000:1af0  CMP byte ptr [0x4b8],0x0
+1000:1af5  JZ 0x1000:1b08
+1000:1af7  PUSH word ptr [0x674e]
+1000:1afb  PUSH word ptr [0x674c]
+1000:1aff  PUSH 0x6
+1000:1b01  PUSH 0x0
+1000:1b03  CALLF 0x2000:3f1c
+1000:1b08  LES DI,[BP + -0x2c]
+1000:1b0b  MOV AX,word ptr ES:[DI + 0x6]
+1000:1b0f  MOV word ptr ES:[DI + 0x10],AX
+1000:1b13  MOV AX,word ptr ES:[DI + 0xa]
+1000:1b17  MOV word ptr ES:[DI + 0x14],AX
+1000:1b1b  MOV DI,word ptr ES:[DI + 0x56]
+1000:1b1f  SHL DI,0x3
+1000:1b22  MOV AX,word ptr [DI + 0x159e]
+1000:1b26  MOV DX,word ptr [DI + 0x15a0]
+1000:1b2a  MOV CX,0x2
+1000:1b2d  XOR BX,BX
+1000:1b2f  CALLF 0x2000:8c4c
+1000:1b34  LES DI,[BP + -0x2c]
+1000:1b37  MOV word ptr ES:[DI + 0x16],AX
+1000:1b3b  MOV word ptr ES:[DI + 0x18],DX
+1000:1b3f  MOV DI,word ptr ES:[DI + 0x56]
+1000:1b43  SHL DI,0x3
+1000:1b46  MOV AX,word ptr [DI + 0x15a2]
+1000:1b4a  MOV DX,word ptr [DI + 0x15a4]
+1000:1b4e  MOV CX,0x2
+1000:1b51  XOR BX,BX
+1000:1b53  CALLF 0x2000:8c4c
+1000:1b58  LES DI,[BP + -0x2c]
+1000:1b5b  MOV word ptr ES:[DI + 0x1a],AX
+1000:1b5f  MOV word ptr ES:[DI + 0x1c],DX
+1000:1b63  MOV word ptr ES:[DI + 0x26],0xfa0
+1000:1b69  MOV word ptr ES:[DI + 0x28],0x0
+1000:1b6f  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1b73  MOV AL,byte ptr [DI + 0x6726]
+1000:1b77  XOR AH,AH
+1000:1b79  MOV DI,AX
+1000:1b7b  MOV byte ptr [DI + 0x783b],0x0
+1000:1b80  JMP 0x1000:1bcf
+1000:1b82  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1b86  MOV AL,byte ptr [DI + 0x6726]
+1000:1b8a  XOR AH,AH
+1000:1b8c  MOV DI,AX
+1000:1b8e  CMP byte ptr [DI + 0x783b],0x0
+1000:1b93  JZ 0x1000:1bc6
+1000:1b95  LES DI,[BP + -0x2c]
+1000:1b98  MOV byte ptr ES:[DI + 0xc],0x0
+1000:1b9d  MOV byte ptr ES:[DI + 0x9c],0x0
+1000:1ba3  CMP byte ptr ES:[DI + 0xa4],0x0
+1000:1ba9  JBE 0x1000:1bc4
+1000:1bab  CMP byte ptr ES:[DI + 0x93],0x0
+1000:1bb1  JZ 0x1000:1bc4
+1000:1bb3  SUB word ptr ES:[DI + 0x34],0xdb00
+1000:1bb9  SBB word ptr ES:[DI + 0x36],0x0
+1000:1bbe  MOV byte ptr ES:[DI + 0x93],0x0
+1000:1bc4  JMP 0x1000:1bcf
+1000:1bc6  LES DI,[BP + -0x2c]
+1000:1bc9  MOV byte ptr ES:[DI + 0x93],0x1
+1000:1bcf  MOV word ptr [BP + -0x6],0x1
+1000:1bd4  JMP 0x1000:1bd9
+1000:1bd6  INC word ptr [BP + -0x6]
+1000:1bd9  MOV AX,word ptr [BP + -0x6]
+1000:1bdc  SHL AX,0x1
+1000:1bde  LES DI,[BP + -0x2c]
+1000:1be1  ADD DI,AX
+1000:1be3  CMP word ptr ES:[DI + 0x87],0x0
+1000:1be9  JL 0x1000:1bfa
+1000:1beb  MOV AX,word ptr [BP + -0x6]
+1000:1bee  SHL AX,0x1
+1000:1bf0  LES DI,[BP + -0x2c]
+1000:1bf3  ADD DI,AX
+1000:1bf5  DEC word ptr ES:[DI + 0x87]
+1000:1bfa  CMP word ptr [BP + -0x6],0x5
+1000:1bfe  JNZ 0x1000:1bd6
+1000:1c00  LES DI,[BP + -0x2c]
+1000:1c03  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c07  SHL AX,0x1
+1000:1c09  ADD DI,AX
+1000:1c0b  CMP word ptr ES:[DI + 0x7d],0x1
+1000:1c10  JGE 0x1000:1c74
+1000:1c12  LES DI,[BP + -0x2c]
+1000:1c15  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c19  ADD DI,AX
+1000:1c1b  MOV byte ptr ES:[DI + 0x6f],0x0
+1000:1c20  LES DI,[BP + -0x2c]
+1000:1c23  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c27  SHL AX,0x1
+1000:1c29  ADD DI,AX
+1000:1c2b  MOV DI,word ptr ES:[DI + 0x73]
+1000:1c2f  SHL DI,0x2
+1000:1c32  MOV CX,word ptr [DI + 0x6478]
+1000:1c36  MOV BX,word ptr [DI + 0x647a]
+1000:1c3a  LES DI,[BP + -0x2c]
+1000:1c3d  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c41  SHL AX,0x2
+1000:1c44  ADD DI,AX
+1000:1c46  MOV word ptr ES:[DI + 0x58],CX
+1000:1c4a  MOV word ptr ES:[DI + 0x5a],BX
+1000:1c4e  LES DI,[BP + -0x2c]
+1000:1c51  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c55  SHL AX,0x1
+1000:1c57  ADD DI,AX
+1000:1c59  MOV DI,word ptr ES:[DI + 0x73]
+1000:1c5d  MOV AL,byte ptr [DI + 0xe0d]
+1000:1c61  XOR AH,AH
+1000:1c63  MOV DX,AX
+1000:1c65  LES DI,[BP + -0x2c]
+1000:1c68  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c6c  SHL AX,0x1
+1000:1c6e  ADD DI,AX
+1000:1c70  MOV word ptr ES:[DI + 0x7d],DX
+1000:1c74  LES DI,[BP + -0x2c]
+1000:1c77  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c7b  SHL AX,0x2
+1000:1c7e  ADD DI,AX
+1000:1c80  CMP word ptr ES:[DI + 0x5a],0x0
+1000:1c85  JG 0x1000:1c90
+1000:1c87  JL 0x1000:1d01
+1000:1c89  CMP word ptr ES:[DI + 0x58],0x0
+1000:1c8e  JBE 0x1000:1d01
+1000:1c90  LES DI,[BP + -0x2c]
+1000:1c93  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1c97  SHL AX,0x2
+1000:1c9a  ADD DI,AX
+1000:1c9c  SUB word ptr ES:[DI + 0x58],0x1
+1000:1ca1  SBB word ptr ES:[DI + 0x5a],0x0
+1000:1ca6  LES DI,[BP + -0x2c]
+1000:1ca9  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1cad  SHL AX,0x2
+1000:1cb0  ADD DI,AX
+1000:1cb2  CMP word ptr ES:[DI + 0x5a],0x0
+1000:1cb7  JL 0x1000:1cc2
+1000:1cb9  JG 0x1000:1d01
+1000:1cbb  CMP word ptr ES:[DI + 0x58],0x1
+1000:1cc0  JNC 0x1000:1d01
+1000:1cc2  CMP byte ptr [0x4b8],0x0
+1000:1cc7  JZ 0x1000:1cf3
+1000:1cc9  LES DI,[BP + -0x2c]
+1000:1ccc  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1cd0  SHL AX,0x1
+1000:1cd2  ADD DI,AX
+1000:1cd4  MOV DI,word ptr ES:[DI + 0x73]
+1000:1cd8  MOV AL,byte ptr [DI + 0xed5]
+1000:1cdc  AND AL,0x1
+1000:1cde  CMP AL,0x1
+1000:1ce0  JNZ 0x1000:1cf3
+1000:1ce2  PUSH word ptr [0x679a]
+1000:1ce6  PUSH word ptr [0x6798]
+1000:1cea  PUSH 0x19
+1000:1cec  PUSH 0x0
+1000:1cee  CALLF 0x2000:3f1c
+1000:1cf3  LES DI,[BP + -0x2c]
+1000:1cf6  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1cfa  ADD DI,AX
+1000:1cfc  MOV byte ptr ES:[DI + 0x6f],0x1
+1000:1d01  LES DI,[BP + -0x2c]
+1000:1d04  CMP word ptr ES:[DI + 0x48],0x0
+1000:1d09  JL 0x1000:1d1c
+1000:1d0b  DEC word ptr ES:[DI + 0x48]
+1000:1d0f  CMP word ptr ES:[DI + 0x48],0x0
+1000:1d14  JNZ 0x1000:1d1c
+1000:1d16  MOV byte ptr ES:[DI + 0x99],0x0
+1000:1d1c  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1d20  MOV AL,byte ptr [DI + 0x6724]
+1000:1d24  XOR AH,AH
+1000:1d26  MOV DI,AX
+1000:1d28  CMP byte ptr [DI + 0x783b],0x0
+1000:1d2d  JNZ 0x1000:1d32
+1000:1d2f  JMP 0x1000:21ae
+1000:1d32  IMUL DI,word ptr [BP + -0x2],0x7
+1000:1d36  MOV AL,byte ptr [DI + 0x6725]
+1000:1d3a  XOR AH,AH
+1000:1d3c  MOV DI,AX
+1000:1d3e  CMP byte ptr [DI + 0x783b],0x0
+1000:1d43  JZ 0x1000:1d48
+1000:1d45  JMP 0x1000:21ae
+1000:1d48  LES DI,[BP + -0x2c]
+1000:1d4b  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1d4f  ADD DI,AX
+1000:1d51  CMP byte ptr ES:[DI + 0x6f],0x0
+1000:1d56  JNZ 0x1000:1d5b
+1000:1d58  JMP 0x1000:21ae
+1000:1d5b  LES DI,[BP + -0x2c]
+1000:1d5e  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1d62  SHL AX,0x1
+1000:1d64  ADD DI,AX
+1000:1d66  CMP word ptr ES:[DI + 0x87],0x0
+1000:1d6c  JL 0x1000:1d71
+1000:1d6e  JMP 0x1000:21ac
+1000:1d71  LES DI,[BP + -0x2c]
+1000:1d74  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1d78  SHL AX,0x1
+1000:1d7a  ADD DI,AX
+1000:1d7c  DEC word ptr ES:[DI + 0x7d]
+1000:1d80  LES DI,[BP + -0x2c]
+1000:1d83  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1d87  SHL AX,0x1
+1000:1d89  ADD DI,AX
+1000:1d8b  MOV DI,word ptr ES:[DI + 0x73]
+1000:1d8f  SHL DI,0x1
+1000:1d91  MOV DX,word ptr [DI + 0xd6c]
+1000:1d95  LES DI,[BP + -0x2c]
+1000:1d98  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1d9c  SHL AX,0x1
+1000:1d9e  ADD DI,AX
+1000:1da0  MOV word ptr ES:[DI + 0x87],DX
+1000:1da5  LES DI,[BP + -0x2c]
+1000:1da8  MOV byte ptr ES:[DI + 0x99],0x1
+1000:1dae  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1db2  SHL AX,0x1
+1000:1db4  ADD DI,AX
+1000:1db6  MOV DI,word ptr ES:[DI + 0x73]
+1000:1dba  MOV AL,byte ptr [DI + 0xf75]
+1000:1dbe  XOR AH,AH
+1000:1dc0  LES DI,[BP + -0x2c]
+1000:1dc3  MOV word ptr ES:[DI + 0x48],AX
+1000:1dc7  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1dcb  SHL AX,0x1
+1000:1dcd  ADD DI,AX
+1000:1dcf  MOV DI,word ptr ES:[DI + 0x73]
+1000:1dd3  MOV AL,byte ptr [DI + 0xa25]
+1000:1dd7  XOR AH,AH
+1000:1dd9  ADD AX,0x5
+1000:1ddc  CWD
+1000:1ddd  LES DI,[BP + -0x2c]
+1000:1de0  MOV DI,word ptr ES:[DI + 0x56]
+1000:1de4  SHL DI,0x3
+1000:1de7  MOV CX,word ptr [DI + 0x159e]
+1000:1deb  MOV BX,word ptr [DI + 0x15a0]
+1000:1def  CALLF 0x2000:8b50
+1000:1df4  LES DI,[BP + -0x2c]
+1000:1df7  ADD AX,word ptr ES:[DI + 0x4]
+1000:1dfb  ADC DX,word ptr ES:[DI + 0x6]
+1000:1dff  MOV word ptr [BP + -0x1e],AX
+1000:1e02  MOV word ptr [BP + -0x1c],DX
+1000:1e05  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1e09  SHL AX,0x1
+1000:1e0b  ADD DI,AX
+1000:1e0d  MOV DI,word ptr ES:[DI + 0x73]
+1000:1e11  MOV AL,byte ptr [DI + 0xa25]
+1000:1e15  XOR AH,AH
+1000:1e17  ADD AX,0x5
+1000:1e1a  CWD
+1000:1e1b  LES DI,[BP + -0x2c]
+1000:1e1e  MOV DI,word ptr ES:[DI + 0x56]
+1000:1e22  SHL DI,0x3
+1000:1e25  MOV CX,word ptr [DI + 0x15a2]
+1000:1e29  MOV BX,word ptr [DI + 0x15a4]
+1000:1e2d  CALLF 0x2000:8b50
+1000:1e32  LES DI,[BP + -0x2c]
+1000:1e35  ADD AX,word ptr ES:[DI + 0x8]
+1000:1e39  ADC DX,word ptr ES:[DI + 0xa]
+1000:1e3d  SUB AX,0x0
+1000:1e40  SBB DX,0x1
+1000:1e43  MOV word ptr [BP + -0x22],AX
+1000:1e46  MOV word ptr [BP + -0x20],DX
+1000:1e49  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1e4d  SHL AX,0x1
+1000:1e4f  ADD DI,AX
+1000:1e51  MOV DI,word ptr ES:[DI + 0x73]
+1000:1e55  CMP byte ptr [DI + 0xe85],0x0
+1000:1e5a  JBE 0x1000:1e97
+1000:1e5c  LES DI,[BP + -0x2c]
+1000:1e5f  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1e63  SHL AX,0x1
+1000:1e65  ADD DI,AX
+1000:1e67  MOV DI,word ptr ES:[DI + 0x73]
+1000:1e6b  MOV AL,byte ptr [DI + 0xe85]
+1000:1e6f  XOR AH,AH
+1000:1e71  PUSH AX
+1000:1e72  CALLF 0x2000:9424
+1000:1e77  OR AX,AX
+1000:1e79  JNZ 0x1000:1e97
+1000:1e7b  LES DI,[BP + -0x2c]
+1000:1e7e  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1e82  SHL AX,0x1
+1000:1e84  ADD DI,AX
+1000:1e86  MOV DI,word ptr ES:[DI + 0x73]
+1000:1e8a  MOV AL,byte ptr [DI + 0xead]
+1000:1e8e  XOR AH,AH
+1000:1e90  LES DI,[BP + -0x2c]
+1000:1e93  MOV word ptr ES:[DI + 0x4a],AX
+1000:1e97  CMP byte ptr [0x4b8],0x0
+1000:1e9c  JNZ 0x1000:1ea1
+1000:1e9e  JMP 0x1000:1fa2
+1000:1ea1  LES DI,[BP + -0x2c]
+1000:1ea4  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1ea8  SHL AX,0x1
+1000:1eaa  ADD DI,AX
+1000:1eac  MOV DI,word ptr ES:[DI + 0x73]
+1000:1eb0  CMP byte ptr [DI + 0xb65],0x0
+1000:1eb5  JA 0x1000:1eba
+1000:1eb7  JMP 0x1000:1fa2
+1000:1eba  LES DI,[BP + -0x2c]
+1000:1ebd  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1ec1  SHL AX,0x1
+1000:1ec3  ADD DI,AX
+1000:1ec5  MOV DI,word ptr ES:[DI + 0x73]
+1000:1ec9  MOV AL,byte ptr [DI + 0xb8d]
+1000:1ecd  AND AL,0x1
+1000:1ecf  CMP AL,0x1
+1000:1ed1  JNZ 0x1000:1f4a
+1000:1ed3  LES DI,[BP + -0x2c]
+1000:1ed6  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1eda  SHL AX,0x1
+1000:1edc  ADD DI,AX
+1000:1ede  MOV DI,word ptr ES:[DI + 0x73]
+1000:1ee2  MOV AL,byte ptr [DI + 0xb65]
+1000:1ee6  PUSH AX
+1000:1ee7  CALLF 0x2000:3fde
+1000:1eec  OR AL,AL
+1000:1eee  JNZ 0x1000:1f48
+1000:1ef0  LES DI,[BP + -0x2c]
+1000:1ef3  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1ef7  SHL AX,0x1
+1000:1ef9  ADD DI,AX
+1000:1efb  MOV DI,word ptr ES:[DI + 0x73]
+1000:1eff  MOV AL,byte ptr [DI + 0xb65]
+1000:1f03  XOR AH,AH
+1000:1f05  MOV DI,AX
+1000:1f07  SHL DI,0x2
+1000:1f0a  PUSH word ptr [DI + 0x6736]
+1000:1f0e  PUSH word ptr [DI + 0x6734]
+1000:1f12  LES DI,[BP + -0x2c]
+1000:1f15  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1f19  SHL AX,0x1
+1000:1f1b  ADD DI,AX
+1000:1f1d  MOV DI,word ptr ES:[DI + 0x73]
+1000:1f21  MOV AL,byte ptr [DI + 0xb65]
+1000:1f25  PUSH AX
+1000:1f26  LES DI,[BP + -0x2c]
+1000:1f29  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1f2d  SHL AX,0x1
+1000:1f2f  ADD DI,AX
+1000:1f31  MOV DI,word ptr ES:[DI + 0x73]
+1000:1f35  MOV AL,byte ptr [DI + 0xb8d]
+1000:1f39  AND AL,0x1
+1000:1f3b  CMP AL,0x1
+1000:1f3d  MOV AL,0x0
+1000:1f3f  JNZ 0x1000:1f42
+1000:1f41  INC AX
+1000:1f42  PUSH AX
+1000:1f43  CALLF 0x2000:3f1c
+1000:1f48  JMP 0x1000:1fa2
+1000:1f4a  LES DI,[BP + -0x2c]
+1000:1f4d  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1f51  SHL AX,0x1
+1000:1f53  ADD DI,AX
+1000:1f55  MOV DI,word ptr ES:[DI + 0x73]
+1000:1f59  MOV AL,byte ptr [DI + 0xb65]
+1000:1f5d  XOR AH,AH
+1000:1f5f  MOV DI,AX
+1000:1f61  SHL DI,0x2
+1000:1f64  PUSH word ptr [DI + 0x6736]
+1000:1f68  PUSH word ptr [DI + 0x6734]
+1000:1f6c  LES DI,[BP + -0x2c]
+1000:1f6f  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1f73  SHL AX,0x1
+1000:1f75  ADD DI,AX
+1000:1f77  MOV DI,word ptr ES:[DI + 0x73]
+1000:1f7b  MOV AL,byte ptr [DI + 0xb65]
+1000:1f7f  PUSH AX
+1000:1f80  LES DI,[BP + -0x2c]
+1000:1f83  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1f87  SHL AX,0x1
+1000:1f89  ADD DI,AX
+1000:1f8b  MOV DI,word ptr ES:[DI + 0x73]
+1000:1f8f  MOV AL,byte ptr [DI + 0xb8d]
+1000:1f93  AND AL,0x1
+1000:1f95  CMP AL,0x1
+1000:1f97  MOV AL,0x0
+1000:1f99  JNZ 0x1000:1f9c
+1000:1f9b  INC AX
+1000:1f9c  PUSH AX
+1000:1f9d  CALLF 0x2000:3f1c
+1000:1fa2  LES DI,[BP + -0x2c]
+1000:1fa5  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1fa9  SHL AX,0x1
+1000:1fab  ADD DI,AX
+1000:1fad  MOV DI,word ptr ES:[DI + 0x73]
+1000:1fb1  CMP byte ptr [DI + 0xa4d],0x1
+1000:1fb6  JZ 0x1000:1fbb
+1000:1fb8  JMP 0x1000:20a8
+1000:1fbb  LES DI,[BP + -0x2c]
+1000:1fbe  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1fc2  SHL AX,0x1
+1000:1fc4  ADD DI,AX
+1000:1fc6  MOV DI,word ptr ES:[DI + 0x73]
+1000:1fca  SHL DI,0x1
+1000:1fcc  MOV AX,word ptr [DI + 0xbdc]
+1000:1fd0  MOV word ptr [BP + -0x8],AX
+1000:1fd3  CMP word ptr [BP + -0x8],0x64
+1000:1fd7  JGE 0x1000:1fde
+1000:1fd9  MOV word ptr [BP + -0x8],0x64
+1000:1fde  LES DI,[BP + -0x2c]
+1000:1fe1  MOV AX,word ptr ES:[DI + 0x4e]
+1000:1fe5  SHL AX,0x1
+1000:1fe7  ADD DI,AX
+1000:1fe9  MOV DI,word ptr ES:[DI + 0x73]
+1000:1fed  MOV AL,byte ptr [DI + 0xccd]
+1000:1ff1  XOR AH,AH
+1000:1ff3  MOV word ptr [BP + -0x2e],AX
+1000:1ff6  MOV AX,0x1
+1000:1ff9  CMP AX,word ptr [BP + -0x2e]
+1000:1ffc  JLE 0x1000:2001
+1000:1ffe  JMP 0x1000:20a5
+1000:2001  MOV word ptr [BP + -0xa],AX
+1000:2004  JMP 0x1000:2009
+1000:2006  INC word ptr [BP + -0xa]
+1000:2009  LES DI,[BP + -0x2c]
+1000:200c  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2010  SHL AX,0x1
+1000:2012  ADD DI,AX
+1000:2014  MOV DX,word ptr ES:[DI + 0x73]
+1000:2018  MOV DI,word ptr [BP + -0x2]
+1000:201b  MOV AL,byte ptr [DI + 0x6c]
+1000:201f  XOR AH,AH
+1000:2021  OR AX,DX
+1000:2023  PUSH AX
+1000:2024  PUSH word ptr [BP + -0x1c]
+1000:2027  PUSH word ptr [BP + -0x1e]
+1000:202a  PUSH word ptr [BP + -0x20]
+1000:202d  PUSH word ptr [BP + -0x22]
+1000:2030  LES DI,[BP + -0x2c]
+1000:2033  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2037  SHL AX,0x1
+1000:2039  ADD DI,AX
+1000:203b  MOV DI,word ptr ES:[DI + 0x73]
+1000:203f  SHL DI,0x1
+1000:2041  PUSH word ptr [DI + 0xbdc]
+1000:2045  MOV AX,word ptr [BP + -0x8]
+1000:2048  CWD
+1000:2049  PUSH DX
+1000:204a  PUSH AX
+1000:204b  LES DI,[BP + -0x2c]
+1000:204e  MOV AX,word ptr ES:[DI + 0x30]
+1000:2052  MOV DX,word ptr ES:[DI + 0x32]
+1000:2056  MOV CX,0x64
+1000:2059  XOR BX,BX
+1000:205b  CALLF 0x2000:8b50
+1000:2060  POP CX
+1000:2061  POP BX
+1000:2062  CALLF 0x2000:8b8d
+1000:2067  PUSH DX
+1000:2068  PUSH AX
+1000:2069  MOV AX,word ptr [BP + -0x8]
+1000:206c  CWD
+1000:206d  PUSH DX
+1000:206e  PUSH AX
+1000:206f  LES DI,[BP + -0x2c]
+1000:2072  MOV AX,word ptr ES:[DI + 0x34]
+1000:2076  MOV DX,word ptr ES:[DI + 0x36]
+1000:207a  MOV CX,0x64
+1000:207d  XOR BX,BX
+1000:207f  CALLF 0x2000:8b50
+1000:2084  POP CX
+1000:2085  POP BX
+1000:2086  CALLF 0x2000:8b8d
+1000:208b  PUSH DX
+1000:208c  PUSH AX
+1000:208d  LES DI,[BP + -0x2c]
+1000:2090  MOV AL,byte ptr ES:[DI + 0x56]
+1000:2094  PUSH AX
+1000:2095  CALLF 0x2000:1b80
+1000:209a  MOV AX,word ptr [BP + -0xa]
+1000:209d  CMP AX,word ptr [BP + -0x2e]
+1000:20a0  JZ 0x1000:20a5
+1000:20a2  JMP 0x1000:2006
+1000:20a5  JMP 0x1000:2129
+1000:20a8  LES DI,[BP + -0x2c]
+1000:20ab  MOV AX,word ptr ES:[DI + 0x4e]
+1000:20af  SHL AX,0x1
+1000:20b1  ADD DI,AX
+1000:20b3  MOV DI,word ptr ES:[DI + 0x73]
+1000:20b7  MOV AL,byte ptr [DI + 0xccd]
+1000:20bb  XOR AH,AH
+1000:20bd  MOV word ptr [BP + -0x2e],AX
+1000:20c0  MOV AX,0x1
+1000:20c3  CMP AX,word ptr [BP + -0x2e]
+1000:20c6  JG 0x1000:2129
+1000:20c8  MOV word ptr [BP + -0xa],AX
+1000:20cb  JMP 0x1000:20d0
+1000:20cd  INC word ptr [BP + -0xa]
+1000:20d0  LES DI,[BP + -0x2c]
+1000:20d3  MOV AX,word ptr ES:[DI + 0x4e]
+1000:20d7  SHL AX,0x1
+1000:20d9  ADD DI,AX
+1000:20db  MOV DX,word ptr ES:[DI + 0x73]
+1000:20df  MOV DI,word ptr [BP + -0x2]
+1000:20e2  MOV AL,byte ptr [DI + 0x6c]
+1000:20e6  XOR AH,AH
+1000:20e8  OR AX,DX
+1000:20ea  PUSH AX
+1000:20eb  PUSH word ptr [BP + -0x1c]
+1000:20ee  PUSH word ptr [BP + -0x1e]
+1000:20f1  PUSH word ptr [BP + -0x20]
+1000:20f4  PUSH word ptr [BP + -0x22]
+1000:20f7  LES DI,[BP + -0x2c]
+1000:20fa  MOV AX,word ptr ES:[DI + 0x4e]
+1000:20fe  SHL AX,0x1
+1000:2100  ADD DI,AX
+1000:2102  MOV DI,word ptr ES:[DI + 0x73]
+1000:2106  SHL DI,0x1
+1000:2108  PUSH word ptr [DI + 0xbdc]
+1000:210c  PUSH 0x0
+1000:210e  PUSH 0x0
+1000:2110  PUSH 0x0
+1000:2112  PUSH 0x0
+1000:2114  LES DI,[BP + -0x2c]
+1000:2117  MOV AL,byte ptr ES:[DI + 0x56]
+1000:211b  PUSH AX
+1000:211c  CALLF 0x2000:1b80
+1000:2121  MOV AX,word ptr [BP + -0xa]
+1000:2124  CMP AX,word ptr [BP + -0x2e]
+1000:2127  JNZ 0x1000:20cd
+1000:2129  LES DI,[BP + -0x2c]
+1000:212c  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2130  SHL AX,0x1
+1000:2132  ADD DI,AX
+1000:2134  MOV DI,word ptr ES:[DI + 0x73]
+1000:2138  MOV AL,byte ptr [DI + 0xcf5]
+1000:213c  XOR AH,AH
+1000:213e  XOR DX,DX
+1000:2140  LES DI,[BP + -0x2c]
+1000:2143  MOV DI,word ptr ES:[DI + 0x56]
+1000:2147  SHL DI,0x3
+1000:214a  MOV CX,word ptr [DI + 0x159e]
+1000:214e  MOV BX,word ptr [DI + 0x15a0]
+1000:2152  CALLF 0x2000:8b50
+1000:2157  MOV CX,0x64
+1000:215a  XOR BX,BX
+1000:215c  CALLF 0x2000:8b8d
+1000:2161  LES DI,[BP + -0x2c]
+1000:2164  SUB word ptr ES:[DI + 0x30],AX
+1000:2168  SBB word ptr ES:[DI + 0x32],DX
+1000:216c  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2170  SHL AX,0x1
+1000:2172  ADD DI,AX
+1000:2174  MOV DI,word ptr ES:[DI + 0x73]
+1000:2178  MOV AL,byte ptr [DI + 0xcf5]
+1000:217c  XOR AH,AH
+1000:217e  XOR DX,DX
+1000:2180  LES DI,[BP + -0x2c]
+1000:2183  MOV DI,word ptr ES:[DI + 0x56]
+1000:2187  SHL DI,0x3
+1000:218a  MOV CX,word ptr [DI + 0x15a2]
+1000:218e  MOV BX,word ptr [DI + 0x15a4]
+1000:2192  CALLF 0x2000:8b50
+1000:2197  MOV CX,0x64
+1000:219a  XOR BX,BX
+1000:219c  CALLF 0x2000:8b8d
+1000:21a1  LES DI,[BP + -0x2c]
+1000:21a4  SUB word ptr ES:[DI + 0x34],AX
+1000:21a8  SBB word ptr ES:[DI + 0x36],DX
+1000:21ac  JMP 0x1000:21e7
+1000:21ae  CMP byte ptr [0x4b8],0x0
+1000:21b3  JZ 0x1000:21e7
+1000:21b5  LES DI,[BP + -0x2c]
+1000:21b8  MOV AX,word ptr ES:[DI + 0x4e]
+1000:21bc  SHL AX,0x1
+1000:21be  ADD DI,AX
+1000:21c0  MOV DI,word ptr ES:[DI + 0x73]
+1000:21c4  MOV AL,byte ptr [DI + 0xb8d]
+1000:21c8  AND AL,0x1
+1000:21ca  CMP AL,0x1
+1000:21cc  JNZ 0x1000:21e7
+1000:21ce  LES DI,[BP + -0x2c]
+1000:21d1  MOV AX,word ptr ES:[DI + 0x4e]
+1000:21d5  SHL AX,0x1
+1000:21d7  ADD DI,AX
+1000:21d9  MOV DI,word ptr ES:[DI + 0x73]
+1000:21dd  MOV AL,byte ptr [DI + 0xb65]
+1000:21e1  PUSH AX
+1000:21e2  CALLF 0x2000:3fab
+1000:21e7  LES DI,[BP + -0x2c]
+1000:21ea  CMP word ptr ES:[DI + 0x4a],0x0
+1000:21ef  JLE 0x1000:2239
+1000:21f1  DEC word ptr ES:[DI + 0x4a]
+1000:21f5  CMP word ptr ES:[DI + 0x4a],0x0
+1000:21fa  JNZ 0x1000:2239
+1000:21fc  PUSH 0x8
+1000:21fe  PUSH 0x0
+1000:2200  PUSH word ptr ES:[DI + 0x6]
+1000:2204  PUSH word ptr ES:[DI + 0xa]
+1000:2208  PUSH 0x3e80
+1000:220b  CALLF 0x2000:9424
+1000:2210  XOR DX,DX
+1000:2212  ADD AX,0xe0c0
+1000:2215  ADC DX,-0x1
+1000:2218  PUSH DX
+1000:2219  PUSH AX
+1000:221a  PUSH 0x4e20
+1000:221d  CALLF 0x2000:9424
+1000:2222  XOR DX,DX
+1000:2224  MOV CX,AX
+1000:2226  MOV BX,DX
+1000:2228  MOV AX,0xb1e0
+1000:222b  MOV DX,0xffff
+1000:222e  SUB AX,CX
+1000:2230  SBB DX,BX
+1000:2232  PUSH DX
+1000:2233  PUSH AX
+1000:2234  CALLF 0x2000:1776
+1000:2239  LES DI,[BP + -0x2c]
+1000:223c  CMP byte ptr ES:[DI + 0xa4],0x0
+1000:2242  JBE 0x1000:226b
+1000:2244  MOV AX,word ptr ES:[DI + 0x30]
+1000:2248  MOV DX,word ptr ES:[DI + 0x32]
+1000:224c  MOV CX,0x59
+1000:224f  XOR BX,BX
+1000:2251  CALLF 0x2000:8b50
+1000:2256  MOV CX,0x64
+1000:2259  XOR BX,BX
+1000:225b  CALLF 0x2000:8b8d
+1000:2260  LES DI,[BP + -0x2c]
+1000:2263  MOV word ptr ES:[DI + 0x30],AX
+1000:2267  MOV word ptr ES:[DI + 0x32],DX
+1000:226b  LES DI,[BP + -0x2c]
+1000:226e  CMP word ptr ES:[DI + 0x32],0x0
+1000:2273  JG 0x1000:227e
+1000:2275  JL 0x1000:22e8
+1000:2277  CMP word ptr ES:[DI + 0x30],0x0
+1000:227c  JBE 0x1000:22e8
+1000:227e  LES DI,[BP + -0x2c]
+1000:2281  CMP byte ptr ES:[DI + 0xa3],0x0
+1000:2287  JBE 0x1000:22e8
+1000:2289  CMP word ptr ES:[DI + 0x32],0x0
+1000:228e  JG 0x1000:229a
+1000:2290  JL 0x1000:22db
+1000:2292  CMP word ptr ES:[DI + 0x30],0xd000
+1000:2298  JBE 0x1000:22db
+1000:229a  CMP byte ptr [0x4b8],0x0
+1000:229f  JZ 0x1000:22b2
+1000:22a1  PUSH word ptr [0x6772]
+1000:22a5  PUSH word ptr [0x6770]
+1000:22a9  PUSH 0xf
+1000:22ab  PUSH 0x0
+1000:22ad  CALLF 0x2000:3f1c
+1000:22b2  LES DI,[BP + -0x2c]
+1000:22b5  MOV AX,word ptr ES:[DI + 0x30]
+1000:22b9  MOV DX,word ptr ES:[DI + 0x32]
+1000:22bd  NOT DX
+1000:22bf  NEG AX
+1000:22c1  SBB DX,-0x1
+1000:22c4  MOV CX,0x3
+1000:22c7  XOR BX,BX
+1000:22c9  CALLF 0x2000:8b8d
+1000:22ce  LES DI,[BP + -0x2c]
+1000:22d1  MOV word ptr ES:[DI + 0x30],AX
+1000:22d5  MOV word ptr ES:[DI + 0x32],DX
+1000:22d9  JMP 0x1000:22e8
+1000:22db  LES DI,[BP + -0x2c]
+1000:22de  XOR AX,AX
+1000:22e0  MOV word ptr ES:[DI + 0x30],AX
+1000:22e4  MOV word ptr ES:[DI + 0x32],AX
+1000:22e8  LES DI,[BP + -0x2c]
+1000:22eb  CMP word ptr ES:[DI + 0x32],0x0
+1000:22f0  JL 0x1000:22fb
+1000:22f2  JG 0x1000:2365
+1000:22f4  CMP word ptr ES:[DI + 0x30],0x0
+1000:22f9  JNC 0x1000:2365
+1000:22fb  LES DI,[BP + -0x2c]
+1000:22fe  CMP byte ptr ES:[DI + 0xa5],0x0
+1000:2304  JBE 0x1000:2365
+1000:2306  CMP word ptr ES:[DI + 0x32],-0x1
+1000:230b  JL 0x1000:2317
+1000:230d  JG 0x1000:2358
+1000:230f  CMP word ptr ES:[DI + 0x30],0x3000
+1000:2315  JNC 0x1000:2358
+1000:2317  CMP byte ptr [0x4b8],0x0
+1000:231c  JZ 0x1000:232f
+1000:231e  PUSH word ptr [0x6772]
+1000:2322  PUSH word ptr [0x6770]
+1000:2326  PUSH 0xf
+1000:2328  PUSH 0x0
+1000:232a  CALLF 0x2000:3f1c
+1000:232f  LES DI,[BP + -0x2c]
+1000:2332  MOV AX,word ptr ES:[DI + 0x30]
+1000:2336  MOV DX,word ptr ES:[DI + 0x32]
+1000:233a  NOT DX
+1000:233c  NEG AX
+1000:233e  SBB DX,-0x1
+1000:2341  MOV CX,0x3
+1000:2344  XOR BX,BX
+1000:2346  CALLF 0x2000:8b8d
+1000:234b  LES DI,[BP + -0x2c]
+1000:234e  MOV word ptr ES:[DI + 0x30],AX
+1000:2352  MOV word ptr ES:[DI + 0x32],DX
+1000:2356  JMP 0x1000:2365
+1000:2358  LES DI,[BP + -0x2c]
+1000:235b  XOR AX,AX
+1000:235d  MOV word ptr ES:[DI + 0x30],AX
+1000:2361  MOV word ptr ES:[DI + 0x32],AX
+1000:2365  LES DI,[BP + -0x2c]
+1000:2368  CMP word ptr ES:[DI + 0x36],0x0
+1000:236d  JG 0x1000:2378
+1000:236f  JL 0x1000:23e2
+1000:2371  CMP word ptr ES:[DI + 0x34],0x0
+1000:2376  JBE 0x1000:23e2
+1000:2378  LES DI,[BP + -0x2c]
+1000:237b  CMP byte ptr ES:[DI + 0xa4],0x0
+1000:2381  JBE 0x1000:23e2
+1000:2383  CMP word ptr ES:[DI + 0x36],0x0
+1000:2388  JG 0x1000:2394
+1000:238a  JL 0x1000:23d5
+1000:238c  CMP word ptr ES:[DI + 0x34],0xd000
+1000:2392  JBE 0x1000:23d5
+1000:2394  CMP byte ptr [0x4b8],0x0
+1000:2399  JZ 0x1000:23ac
+1000:239b  PUSH word ptr [0x6772]
+1000:239f  PUSH word ptr [0x6770]
+1000:23a3  PUSH 0xf
+1000:23a5  PUSH 0x0
+1000:23a7  CALLF 0x2000:3f1c
+1000:23ac  LES DI,[BP + -0x2c]
+1000:23af  MOV AX,word ptr ES:[DI + 0x34]
+1000:23b3  MOV DX,word ptr ES:[DI + 0x36]
+1000:23b7  NOT DX
+1000:23b9  NEG AX
+1000:23bb  SBB DX,-0x1
+1000:23be  MOV CX,0x3
+1000:23c1  XOR BX,BX
+1000:23c3  CALLF 0x2000:8b8d
+1000:23c8  LES DI,[BP + -0x2c]
+1000:23cb  MOV word ptr ES:[DI + 0x34],AX
+1000:23cf  MOV word ptr ES:[DI + 0x36],DX
+1000:23d3  JMP 0x1000:23e2
+1000:23d5  LES DI,[BP + -0x2c]
+1000:23d8  XOR AX,AX
+1000:23da  MOV word ptr ES:[DI + 0x34],AX
+1000:23de  MOV word ptr ES:[DI + 0x36],AX
+1000:23e2  LES DI,[BP + -0x2c]
+1000:23e5  CMP word ptr ES:[DI + 0x36],0x0
+1000:23ea  JL 0x1000:23f5
+1000:23ec  JG 0x1000:245f
+1000:23ee  CMP word ptr ES:[DI + 0x34],0x0
+1000:23f3  JNC 0x1000:245f
+1000:23f5  LES DI,[BP + -0x2c]
+1000:23f8  CMP byte ptr ES:[DI + 0xa2],0x0
+1000:23fe  JBE 0x1000:245f
+1000:2400  CMP word ptr ES:[DI + 0x36],-0x1
+1000:2405  JL 0x1000:2411
+1000:2407  JG 0x1000:2452
+1000:2409  CMP word ptr ES:[DI + 0x34],0x3000
+1000:240f  JNC 0x1000:2452
+1000:2411  CMP byte ptr [0x4b8],0x0
+1000:2416  JZ 0x1000:2429
+1000:2418  PUSH word ptr [0x6772]
+1000:241c  PUSH word ptr [0x6770]
+1000:2420  PUSH 0xf
+1000:2422  PUSH 0x0
+1000:2424  CALLF 0x2000:3f1c
+1000:2429  LES DI,[BP + -0x2c]
+1000:242c  MOV AX,word ptr ES:[DI + 0x34]
+1000:2430  MOV DX,word ptr ES:[DI + 0x36]
+1000:2434  NOT DX
+1000:2436  NEG AX
+1000:2438  SBB DX,-0x1
+1000:243b  MOV CX,0x3
+1000:243e  XOR BX,BX
+1000:2440  CALLF 0x2000:8b8d
+1000:2445  LES DI,[BP + -0x2c]
+1000:2448  MOV word ptr ES:[DI + 0x34],AX
+1000:244c  MOV word ptr ES:[DI + 0x36],DX
+1000:2450  JMP 0x1000:245f
+1000:2452  LES DI,[BP + -0x2c]
+1000:2455  XOR AX,AX
+1000:2457  MOV word ptr ES:[DI + 0x34],AX
+1000:245b  MOV word ptr ES:[DI + 0x36],AX
+1000:245f  LES DI,[BP + -0x2c]
+1000:2462  CMP byte ptr ES:[DI + 0xa4],0x0
+1000:2468  JNZ 0x1000:2475
+1000:246a  ADD word ptr ES:[DI + 0x34],0x5dc
+1000:2470  ADC word ptr ES:[DI + 0x36],0x0
+1000:2475  LES DI,[BP + -0x2c]
+1000:2478  CMP word ptr ES:[DI + 0x32],0x0
+1000:247d  JG 0x1000:248c
+1000:247f  JL 0x1000:2488
+1000:2481  CMP word ptr ES:[DI + 0x30],0x0
+1000:2486  JA 0x1000:248c
+1000:2488  MOV AL,0x0
+1000:248a  JMP 0x1000:248e
+1000:248c  MOV AL,0x1
+1000:248e  CMP AL,0x1
+1000:2490  JNZ 0x1000:24af
+1000:2492  LES DI,[BP + -0x2c]
+1000:2495  CMP byte ptr ES:[DI + 0xa3],0x2
+1000:249b  JNC 0x1000:24ad
+1000:249d  MOV AX,word ptr ES:[DI + 0x30]
+1000:24a1  MOV DX,word ptr ES:[DI + 0x32]
+1000:24a5  ADD word ptr ES:[DI + 0x4],AX
+1000:24a9  ADC word ptr ES:[DI + 0x6],DX
+1000:24ad  JMP 0x1000:24ce
+1000:24af  CMP AL,0x0
+1000:24b1  JNZ 0x1000:24ce
+1000:24b3  LES DI,[BP + -0x2c]
+1000:24b6  CMP byte ptr ES:[DI + 0xa5],0x2
+1000:24bc  JNC 0x1000:24ce
+1000:24be  MOV AX,word ptr ES:[DI + 0x30]
+1000:24c2  MOV DX,word ptr ES:[DI + 0x32]
+1000:24c6  ADD word ptr ES:[DI + 0x4],AX
+1000:24ca  ADC word ptr ES:[DI + 0x6],DX
+1000:24ce  LES DI,[BP + -0x2c]
+1000:24d1  CMP word ptr ES:[DI + 0x36],0x0
+1000:24d6  JG 0x1000:24e5
+1000:24d8  JL 0x1000:24e1
+1000:24da  CMP word ptr ES:[DI + 0x34],0x0
+1000:24df  JA 0x1000:24e5
+1000:24e1  MOV AL,0x0
+1000:24e3  JMP 0x1000:24e7
+1000:24e5  MOV AL,0x1
+1000:24e7  CMP AL,0x1
+1000:24e9  JNZ 0x1000:2508
+1000:24eb  LES DI,[BP + -0x2c]
+1000:24ee  CMP byte ptr ES:[DI + 0xa4],0x2
+1000:24f4  JNC 0x1000:2506
+1000:24f6  MOV AX,word ptr ES:[DI + 0x34]
+1000:24fa  MOV DX,word ptr ES:[DI + 0x36]
+1000:24fe  ADD word ptr ES:[DI + 0x8],AX
+1000:2502  ADC word ptr ES:[DI + 0xa],DX
+1000:2506  JMP 0x1000:2527
+1000:2508  CMP AL,0x0
+1000:250a  JNZ 0x1000:2527
+1000:250c  LES DI,[BP + -0x2c]
+1000:250f  CMP byte ptr ES:[DI + 0xa2],0x2
+1000:2515  JNC 0x1000:2527
+1000:2517  MOV AX,word ptr ES:[DI + 0x34]
+1000:251b  MOV DX,word ptr ES:[DI + 0x36]
+1000:251f  ADD word ptr ES:[DI + 0x8],AX
+1000:2523  ADC word ptr ES:[DI + 0xa],DX
+1000:2527  LES DI,[BP + -0x2c]
+1000:252a  MOV AX,word ptr ES:[DI + 0x4e]
+1000:252e  ADD DI,AX
+1000:2530  CMP byte ptr ES:[DI + 0x6f],0x0
+1000:2535  JNZ 0x1000:253a
+1000:2537  JMP 0x1000:267c
+1000:253a  LES DI,[BP + -0x2c]
+1000:253d  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2541  SHL AX,0x1
+1000:2543  ADD DI,AX
+1000:2545  MOV DI,word ptr ES:[DI + 0x73]
+1000:2549  CMP byte ptr [DI + 0xb3d],0x1
+1000:254e  JZ 0x1000:2565
+1000:2550  LES DI,[BP + -0x2c]
+1000:2553  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2557  SHL AX,0x1
+1000:2559  ADD DI,AX
+1000:255b  CMP word ptr ES:[DI + 0x73],0x1d
+1000:2560  JZ 0x1000:2565
+1000:2562  JMP 0x1000:267c
+1000:2565  LES DI,[BP + -0x2c]
+1000:2568  MOV AX,word ptr ES:[DI + 0x4]
+1000:256c  MOV DX,word ptr ES:[DI + 0x6]
+1000:2570  MOV word ptr [BP + -0x16],AX
+1000:2573  MOV word ptr [BP + -0x14],DX
+1000:2576  MOV AX,word ptr ES:[DI + 0x8]
+1000:257a  MOV DX,word ptr ES:[DI + 0xa]
+1000:257e  MOV word ptr [BP + -0x1a],AX
+1000:2581  MOV word ptr [BP + -0x18],DX
+1000:2584  DEC word ptr [BP + -0x18]
+1000:2587  MOV DI,word ptr ES:[DI + 0x56]
+1000:258b  SHL DI,0x3
+1000:258e  MOV AX,word ptr [DI + 0x159e]
+1000:2592  MOV DX,word ptr [DI + 0x15a0]
+1000:2596  MOV CX,0x6
+1000:2599  XOR BX,BX
+1000:259b  CALLF 0x2000:8b50
+1000:25a0  ADD word ptr [BP + -0x16],AX
+1000:25a3  ADC word ptr [BP + -0x14],DX
+1000:25a6  LES DI,[BP + -0x2c]
+1000:25a9  MOV DI,word ptr ES:[DI + 0x56]
+1000:25ad  SHL DI,0x3
+1000:25b0  MOV AX,word ptr [DI + 0x15a2]
+1000:25b4  MOV DX,word ptr [DI + 0x15a4]
+1000:25b8  MOV CX,0x6
+1000:25bb  XOR BX,BX
+1000:25bd  CALLF 0x2000:8b50
+1000:25c2  ADD word ptr [BP + -0x1a],AX
+1000:25c5  ADC word ptr [BP + -0x18],DX
+1000:25c8  LES DI,[BP + -0x2c]
+1000:25cb  MOV DI,word ptr ES:[DI + 0x56]
+1000:25cf  SHL DI,0x3
+1000:25d2  MOV AX,word ptr [DI + 0x159e]
+1000:25d6  MOV DX,word ptr [DI + 0x15a0]
+1000:25da  ADD word ptr [BP + -0x16],AX
+1000:25dd  ADC word ptr [BP + -0x14],DX
+1000:25e0  LES DI,[BP + -0x2c]
+1000:25e3  MOV DI,word ptr ES:[DI + 0x56]
+1000:25e7  SHL DI,0x3
+1000:25ea  MOV AX,word ptr [DI + 0x15a2]
+1000:25ee  MOV DX,word ptr [DI + 0x15a4]
+1000:25f2  ADD word ptr [BP + -0x1a],AX
+1000:25f5  ADC word ptr [BP + -0x18],DX
+1000:25f8  MOV AX,word ptr [BP + -0x2]
+1000:25fb  XOR AX,0x1
+1000:25fe  PUSH AX
+1000:25ff  PUSH 0x0
+1000:2601  PUSH word ptr [BP + -0x14]
+1000:2604  PUSH word ptr [BP + -0x18]
+1000:2607  CALL 0x1000:0d70
+1000:260a  LES DI,[BP + -0x2c]
+1000:260d  MOV byte ptr ES:[DI + 0x97],AL
+1000:2612  MOV DX,word ptr [BP + -0x14]
+1000:2615  MOV AX,word ptr [BP + -0x18]
+1000:2618  SHL AX,0x2
+1000:261b  LES DI,[0x6674]
+1000:261f  ADD DI,AX
+1000:2621  LES DI,ES:[DI]
+1000:2624  ADD DI,DX
+1000:2626  MOV AL,byte ptr ES:[DI]
+1000:2629  MOV AH,0x1
+1000:262b  MOV DX,0x20
+1000:262e  CALLF 0x2000:8f31
+1000:2633  MOV DI,DX
+1000:2635  TEST byte ptr [DI + 0x14c0],AL
+1000:2639  MOV AL,0x0
+1000:263b  JZ 0x1000:263e
+1000:263d  INC AX
+1000:263e  OR AL,AL
+1000:2640  JZ 0x1000:266a
+1000:2642  LES DI,[BP + -0x2c]
+1000:2645  CMP byte ptr ES:[DI + 0x97],0x0
+1000:264b  JNZ 0x1000:266a
+1000:264d  CMP word ptr [BP + -0x14],0x0
+1000:2651  JL 0x1000:266a
+1000:2653  CMP word ptr [BP + -0x14],0x1f7
+1000:2658  JG 0x1000:266a
+1000:265a  CMP word ptr [BP + -0x18],0x0
+1000:265e  JL 0x1000:266a
+1000:2660  CMP word ptr [BP + -0x18],0x15d
+1000:2665  JG 0x1000:266a
+1000:2667  JMP 0x1000:25c8
+1000:266a  MOV AX,word ptr [BP + -0x14]
+1000:266d  LES DI,[BP + -0x2c]
+1000:2670  MOV word ptr ES:[DI],AX
+1000:2673  MOV AX,word ptr [BP + -0x18]
+1000:2676  MOV word ptr ES:[DI + 0x2],AX
+1000:267a  JMP 0x1000:2685
+1000:267c  LES DI,[BP + -0x2c]
+1000:267f  MOV byte ptr ES:[DI + 0x97],0x0
+1000:2685  IMUL DI,word ptr [BP + -0x2],0x7
+1000:2689  MOV AL,byte ptr [DI + 0x6725]
+1000:268d  XOR AH,AH
+1000:268f  MOV DI,AX
+1000:2691  CMP byte ptr [DI + 0x783b],0x0
+1000:2696  JNZ 0x1000:269b
+1000:2698  JMP 0x1000:27d2
+1000:269b  LES DI,[BP + -0x2c]
+1000:269e  CMP byte ptr ES:[DI + 0x98],0x0
+1000:26a4  JNZ 0x1000:26d1
+1000:26a6  IMUL DI,word ptr [BP + -0x2],0x7
+1000:26aa  MOV AL,byte ptr [DI + 0x6722]
+1000:26ae  XOR AH,AH
+1000:26b0  MOV DI,AX
+1000:26b2  MOV byte ptr [DI + 0x783b],0x0
+1000:26b7  IMUL DI,word ptr [BP + -0x2],0x7
+1000:26bb  MOV AL,byte ptr [DI + 0x6723]
+1000:26bf  XOR AH,AH
+1000:26c1  MOV DI,AX
+1000:26c3  MOV byte ptr [DI + 0x783b],0x0
+1000:26c8  LES DI,[BP + -0x2c]
+1000:26cb  MOV byte ptr ES:[DI + 0x98],0x1
+1000:26d1  LES DI,[BP + -0x2c]
+1000:26d4  MOV byte ptr ES:[DI + 0x99],0x0
+1000:26da  MOV byte ptr ES:[DI + 0x9d],0x0
+1000:26e0  MOV AX,word ptr ES:[DI + 0x4e]
+1000:26e4  SHL AX,0x1
+1000:26e6  ADD DI,AX
+1000:26e8  MOV DI,word ptr ES:[DI + 0x73]
+1000:26ec  MOV AL,byte ptr [DI + 0xb8d]
+1000:26f0  AND AL,0x1
+1000:26f2  CMP AL,0x1
+1000:26f4  JNZ 0x1000:270f
+1000:26f6  LES DI,[BP + -0x2c]
+1000:26f9  MOV AX,word ptr ES:[DI + 0x4e]
+1000:26fd  SHL AX,0x1
+1000:26ff  ADD DI,AX
+1000:2701  MOV DI,word ptr ES:[DI + 0x73]
+1000:2705  MOV AL,byte ptr [DI + 0xb65]
+1000:2709  PUSH AX
+1000:270a  CALLF 0x2000:3fab
+1000:270f  LES DI,[BP + -0x2c]
+1000:2712  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2716  ADD DI,AX
+1000:2718  CMP byte ptr ES:[DI + 0x6f],0x0
+1000:271d  JNZ 0x1000:2729
+1000:271f  CMP byte ptr [0x6716],0x0
+1000:2724  JNZ 0x1000:2729
+1000:2726  JMP 0x1000:27cf
+1000:2729  IMUL DI,word ptr [BP + -0x2],0x7
+1000:272d  MOV AL,byte ptr [DI + 0x6722]
+1000:2731  XOR AH,AH
+1000:2733  MOV DI,AX
+1000:2735  CMP byte ptr [DI + 0x783b],0x0
+1000:273a  JZ 0x1000:277c
+1000:273c  LES DI,[BP + -0x2c]
+1000:273f  DEC word ptr ES:[DI + 0x4e]
+1000:2743  CMP word ptr ES:[DI + 0x4e],0x1
+1000:2748  JGE 0x1000:2750
+1000:274a  MOV word ptr ES:[DI + 0x4e],0x5
+1000:2750  LES DI,[BP + -0x2c]
+1000:2753  XOR AX,AX
+1000:2755  MOV word ptr ES:[DI + 0x52],AX
+1000:2759  IMUL DI,word ptr [BP + -0x2],0x7
+1000:275d  MOV AL,byte ptr [DI + 0x6722]
+1000:2761  XOR AH,AH
+1000:2763  MOV DI,AX
+1000:2765  MOV byte ptr [DI + 0x783b],0x0
+1000:276a  LES DI,[BP + -0x2c]
+1000:276d  MOV AX,word ptr ES:[DI + 0x6]
+1000:2771  MOV word ptr ES:[DI],AX
+1000:2774  MOV AX,word ptr ES:[DI + 0xa]
+1000:2778  MOV word ptr ES:[DI + 0x2],AX
+1000:277c  IMUL DI,word ptr [BP + -0x2],0x7
+1000:2780  MOV AL,byte ptr [DI + 0x6723]
+1000:2784  XOR AH,AH
+1000:2786  MOV DI,AX
+1000:2788  CMP byte ptr [DI + 0x783b],0x0
+1000:278d  JZ 0x1000:27cf
+1000:278f  LES DI,[BP + -0x2c]
+1000:2792  INC word ptr ES:[DI + 0x4e]
+1000:2796  CMP word ptr ES:[DI + 0x4e],0x5
+1000:279b  JLE 0x1000:27a3
+1000:279d  MOV word ptr ES:[DI + 0x4e],0x1
+1000:27a3  LES DI,[BP + -0x2c]
+1000:27a6  XOR AX,AX
+1000:27a8  MOV word ptr ES:[DI + 0x52],AX
+1000:27ac  IMUL DI,word ptr [BP + -0x2],0x7
+1000:27b0  MOV AL,byte ptr [DI + 0x6723]
+1000:27b4  XOR AH,AH
+1000:27b6  MOV DI,AX
+1000:27b8  MOV byte ptr [DI + 0x783b],0x0
+1000:27bd  LES DI,[BP + -0x2c]
+1000:27c0  MOV AX,word ptr ES:[DI + 0x6]
+1000:27c4  MOV word ptr ES:[DI],AX
+1000:27c7  MOV AX,word ptr ES:[DI + 0xa]
+1000:27cb  MOV word ptr ES:[DI + 0x2],AX
+1000:27cf  JMP 0x1000:2e1c
+1000:27d2  LES DI,[BP + -0x2c]
+1000:27d5  MOV byte ptr ES:[DI + 0x98],0x0
+1000:27db  CMP byte ptr ES:[DI + 0xa0],0x0
+1000:27e1  JNZ 0x1000:27e6
+1000:27e3  JMP 0x1000:2e1c
+1000:27e6  IMUL DI,word ptr [BP + -0x2],0x7
+1000:27ea  MOV AL,byte ptr [DI + 0x6723]
+1000:27ee  XOR AH,AH
+1000:27f0  MOV DI,AX
+1000:27f2  CMP byte ptr [DI + 0x783b],0x0
+1000:27f7  JNZ 0x1000:2867
+1000:27f9  IMUL DI,word ptr [BP + -0x2],0x7
+1000:27fd  MOV AL,byte ptr [DI + 0x6722]
+1000:2801  XOR AH,AH
+1000:2803  MOV DI,AX
+1000:2805  CMP byte ptr [DI + 0x783b],0x0
+1000:280a  JZ 0x1000:2867
+1000:280c  LES DI,[BP + -0x2c]
+1000:280f  CMP word ptr ES:[DI + 0x32],-0x1
+1000:2814  JG 0x1000:2820
+1000:2816  JL 0x1000:282e
+1000:2818  CMP word ptr ES:[DI + 0x30],0x8e00
+1000:281e  JBE 0x1000:282e
+1000:2820  LES DI,[BP + -0x2c]
+1000:2823  SUB word ptr ES:[DI + 0x30],0xbb8
+1000:2829  SBB word ptr ES:[DI + 0x32],0x0
+1000:282e  LES DI,[BP + -0x2c]
+1000:2831  CMP byte ptr ES:[DI + 0x9b],0x0
+1000:2837  JZ 0x1000:285e
+1000:2839  XOR AX,AX
+1000:283b  MOV word ptr ES:[DI + 0x58],AX
+1000:283f  MOV word ptr ES:[DI + 0x5a],AX
+1000:2843  CMP word ptr ES:[DI + 0x56],0x40
+1000:2848  JLE 0x1000:2855
+1000:284a  MOV AX,0x80
+1000:284d  SUB AX,word ptr ES:[DI + 0x56]
+1000:2851  MOV word ptr ES:[DI + 0x56],AX
+1000:2855  LES DI,[BP + -0x2c]
+1000:2858  MOV byte ptr ES:[DI + 0x9b],0x0
+1000:285e  LES DI,[BP + -0x2c]
+1000:2861  MOV byte ptr ES:[DI + 0x9d],0x1
+1000:2867  IMUL DI,word ptr [BP + -0x2],0x7
+1000:286b  MOV AL,byte ptr [DI + 0x6722]
+1000:286f  XOR AH,AH
+1000:2871  MOV DI,AX
+1000:2873  CMP byte ptr [DI + 0x783b],0x0
+1000:2878  JNZ 0x1000:28e8
+1000:287a  IMUL DI,word ptr [BP + -0x2],0x7
+1000:287e  MOV AL,byte ptr [DI + 0x6723]
+1000:2882  XOR AH,AH
+1000:2884  MOV DI,AX
+1000:2886  CMP byte ptr [DI + 0x783b],0x0
+1000:288b  JZ 0x1000:28e8
+1000:288d  LES DI,[BP + -0x2c]
+1000:2890  CMP word ptr ES:[DI + 0x32],0x0
+1000:2895  JL 0x1000:28a1
+1000:2897  JG 0x1000:28af
+1000:2899  CMP word ptr ES:[DI + 0x30],0x7200
+1000:289f  JNC 0x1000:28af
+1000:28a1  LES DI,[BP + -0x2c]
+1000:28a4  ADD word ptr ES:[DI + 0x30],0xbb8
+1000:28aa  ADC word ptr ES:[DI + 0x32],0x0
+1000:28af  LES DI,[BP + -0x2c]
+1000:28b2  CMP byte ptr ES:[DI + 0x9b],0x0
+1000:28b8  JNZ 0x1000:28df
+1000:28ba  XOR AX,AX
+1000:28bc  MOV word ptr ES:[DI + 0x58],AX
+1000:28c0  MOV word ptr ES:[DI + 0x5a],AX
+1000:28c4  CMP word ptr ES:[DI + 0x56],0x40
+1000:28c9  JGE 0x1000:28d6
+1000:28cb  MOV AX,0x80
+1000:28ce  SUB AX,word ptr ES:[DI + 0x56]
+1000:28d2  MOV word ptr ES:[DI + 0x56],AX
+1000:28d6  LES DI,[BP + -0x2c]
+1000:28d9  MOV byte ptr ES:[DI + 0x9b],0x1
+1000:28df  LES DI,[BP + -0x2c]
+1000:28e2  MOV byte ptr ES:[DI + 0x9d],0x1
+1000:28e8  IMUL DI,word ptr [BP + -0x2],0x7
+1000:28ec  MOV AL,byte ptr [DI + 0x6722]
+1000:28f0  XOR AH,AH
+1000:28f2  MOV DI,AX
+1000:28f4  CMP byte ptr [DI + 0x783b],0x0
+1000:28f9  JNZ 0x1000:28fe
+1000:28fb  JMP 0x1000:2de4
+1000:28fe  IMUL DI,word ptr [BP + -0x2],0x7
+1000:2902  MOV AL,byte ptr [DI + 0x6723]
+1000:2906  XOR AH,AH
+1000:2908  MOV DI,AX
+1000:290a  CMP byte ptr [DI + 0x783b],0x0
+1000:290f  JNZ 0x1000:2914
+1000:2911  JMP 0x1000:2de4
+1000:2914  LES DI,[BP + -0x2c]
+1000:2917  CMP byte ptr ES:[DI + 0x9e],0x0
+1000:291d  JNZ 0x1000:2922
+1000:291f  JMP 0x1000:2de2
+1000:2922  MOV byte ptr ES:[DI + 0x9e],0x0
+1000:2928  MOV DI,word ptr ES:[DI + 0x56]
+1000:292c  SHL DI,0x3
+1000:292f  MOV AX,word ptr [DI + 0x159e]
+1000:2933  MOV DX,word ptr [DI + 0x15a0]
+1000:2937  MOV CX,0x1
+1000:293a  XOR BX,BX
+1000:293c  CALLF 0x2000:8c4c
+1000:2941  LES DI,[BP + -0x2c]
+1000:2944  ADD AX,word ptr ES:[DI + 0x4]
+1000:2948  ADC DX,word ptr ES:[DI + 0x6]
+1000:294c  MOV word ptr [BP + -0x16],AX
+1000:294f  MOV word ptr [BP + -0x14],DX
+1000:2952  MOV DI,word ptr ES:[DI + 0x56]
+1000:2956  SHL DI,0x3
+1000:2959  MOV AX,word ptr [DI + 0x15a2]
+1000:295d  MOV DX,word ptr [DI + 0x15a4]
+1000:2961  MOV CX,0x1
+1000:2964  XOR BX,BX
+1000:2966  CALLF 0x2000:8c4c
+1000:296b  LES DI,[BP + -0x2c]
+1000:296e  ADD AX,word ptr ES:[DI + 0x8]
+1000:2972  ADC DX,word ptr ES:[DI + 0xa]
+1000:2976  MOV word ptr [BP + -0x1a],AX
+1000:2979  MOV word ptr [BP + -0x18],DX
+1000:297c  MOV word ptr [BP + -0x1e],0xfffc
+1000:2981  MOV word ptr [BP + -0x1c],0xffff
+1000:2986  JMP 0x1000:2990
+1000:2988  ADD word ptr [BP + -0x1e],0x1
+1000:298c  ADC word ptr [BP + -0x1c],0x0
+1000:2990  MOV AX,word ptr [BP + -0x14]
+1000:2993  CWD
+1000:2994  ADD AX,word ptr [BP + -0x1e]
+1000:2997  ADC DX,word ptr [BP + -0x1c]
+1000:299a  MOV word ptr [BP + -0xc],AX
+1000:299d  MOV word ptr [BP + -0x22],0xfffc
+1000:29a2  MOV word ptr [BP + -0x20],0xffff
+1000:29a7  JMP 0x1000:29b1
+1000:29a9  ADD word ptr [BP + -0x22],0x1
+1000:29ad  ADC word ptr [BP + -0x20],0x0
+1000:29b1  MOV AX,word ptr [BP + -0x18]
+1000:29b4  CWD
+1000:29b5  ADD AX,word ptr [BP + -0x22]
+1000:29b8  ADC DX,word ptr [BP + -0x20]
+1000:29bb  MOV word ptr [BP + -0xe],AX
+1000:29be  MOV DX,word ptr [BP + -0xc]
+1000:29c1  MOV AX,word ptr [BP + -0xe]
+1000:29c4  SHL AX,0x2
+1000:29c7  LES DI,[0x6674]
+1000:29cb  ADD DI,AX
+1000:29cd  LES DI,ES:[DI]
+1000:29d0  ADD DI,DX
+1000:29d2  MOV AL,byte ptr ES:[DI]
+1000:29d5  MOV AH,0x1
+1000:29d7  MOV DX,0x20
+1000:29da  CALLF 0x2000:8f31
+1000:29df  MOV DI,DX
+1000:29e1  TEST byte ptr [DI + 0x6624],AL
+1000:29e5  JZ 0x1000:2a2a
+1000:29e7  PUSH 0x3
+1000:29e9  CALLF 0x2000:9424
+1000:29ee  OR AX,AX
+1000:29f0  JNZ 0x1000:2a2a
+1000:29f2  PUSH 0x3
+1000:29f4  MOV DX,word ptr [BP + -0xc]
+1000:29f7  MOV AX,word ptr [BP + -0xe]
+1000:29fa  SHL AX,0x2
+1000:29fd  LES DI,[0x6674]
+1000:2a01  ADD DI,AX
+1000:2a03  LES DI,ES:[DI]
+1000:2a06  ADD DI,DX
+1000:2a08  MOV AL,byte ptr ES:[DI]
+1000:2a0b  XOR AH,AH
+1000:2a0d  PUSH AX
+1000:2a0e  PUSH word ptr [BP + -0xc]
+1000:2a11  PUSH word ptr [BP + -0xe]
+1000:2a14  PUSH 0x0
+1000:2a16  PUSH 0x0
+1000:2a18  PUSH 0x0
+1000:2a1a  PUSH 0x0
+1000:2a1c  PUSH 0x80
+1000:2a1f  CALLF 0x2000:9424
+1000:2a24  PUSH AX
+1000:2a25  CALLF 0x2000:191d
+1000:2a2a  CMP word ptr [BP + -0x20],0x0
+1000:2a2e  JZ 0x1000:2a33
+1000:2a30  JMP 0x1000:29a9
+1000:2a33  CMP word ptr [BP + -0x22],0x4
+1000:2a37  JZ 0x1000:2a3c
+1000:2a39  JMP 0x1000:29a9
+1000:2a3c  CMP word ptr [BP + -0x1c],0x0
+1000:2a40  JZ 0x1000:2a45
+1000:2a42  JMP 0x1000:2988
+1000:2a45  CMP word ptr [BP + -0x1e],0x4
+1000:2a49  JZ 0x1000:2a4e
+1000:2a4b  JMP 0x1000:2988
+1000:2a4e  SUB word ptr [BP + -0x14],0x7
+1000:2a52  SUB word ptr [BP + -0x18],0x7
+1000:2a56  PUSH word ptr [BP + -0x14]
+1000:2a59  PUSH word ptr [BP + -0x18]
+1000:2a5c  MOV AL,[0x1371]
+1000:2a5f  XOR AH,AH
+1000:2a61  SHL AX,0x8
+1000:2a64  LES DI,[0x6678]
+1000:2a68  ADD DI,AX
+1000:2a6a  PUSH ES
+1000:2a6b  PUSH DI
+1000:2a6c  MOV AL,[0x1385]
+1000:2a6f  XOR AH,AH
+1000:2a71  PUSH AX
+1000:2a72  CALLF 0x2000:9424
+1000:2a77  MOV DX,AX
+1000:2a79  MOV AL,[0x1376]
+1000:2a7c  XOR AH,AH
+1000:2a7e  ADD AX,DX
+1000:2a80  SHL AX,0x8
+1000:2a83  LES DI,[0x6678]
+1000:2a87  ADD DI,AX
+1000:2a89  PUSH ES
+1000:2a8a  PUSH DI
+1000:2a8b  PUSH 0x1
+1000:2a8d  CALLF 0x2000:031a
+1000:2a92  CMP byte ptr [0x66af],0x0
+1000:2a97  JNZ 0x1000:2a9c
+1000:2a99  JMP 0x1000:2bf4
+1000:2a9c  MOV AX,word ptr [BP + -0x14]
+1000:2a9f  ADD AX,0x11
+1000:2aa2  MOV word ptr [BP + -0x2e],AX
+1000:2aa5  MOV AX,word ptr [BP + -0x14]
+1000:2aa8  SUB AX,0x3
+1000:2aab  CMP AX,word ptr [BP + -0x2e]
+1000:2aae  JLE 0x1000:2ab3
+1000:2ab0  JMP 0x1000:2bf4
+1000:2ab3  MOV word ptr [BP + -0xc],AX
+1000:2ab6  JMP 0x1000:2abb
+1000:2ab8  INC word ptr [BP + -0xc]
+1000:2abb  CMP word ptr [BP + -0xc],-0x1
+1000:2abf  JG 0x1000:2ac4
+1000:2ac1  JMP 0x1000:2be9
+1000:2ac4  CMP word ptr [BP + -0xc],0x1f8
+1000:2ac9  JL 0x1000:2ace
+1000:2acb  JMP 0x1000:2be9
+1000:2ace  MOV AX,word ptr [BP + -0x18]
+1000:2ad1  ADD AX,0x11
+1000:2ad4  MOV word ptr [BP + -0x30],AX
+1000:2ad7  MOV AX,word ptr [BP + -0x18]
+1000:2ada  SUB AX,0x3
+1000:2add  CMP AX,word ptr [BP + -0x30]
+1000:2ae0  JLE 0x1000:2ae5
+1000:2ae2  JMP 0x1000:2be9
+1000:2ae5  MOV word ptr [BP + -0xe],AX
+1000:2ae8  JMP 0x1000:2aed
+1000:2aea  INC word ptr [BP + -0xe]
+1000:2aed  CMP word ptr [BP + -0xe],-0x1
+1000:2af1  JG 0x1000:2af6
+1000:2af3  JMP 0x1000:2bde
+1000:2af6  CMP word ptr [BP + -0xe],0x15e
+1000:2afb  JL 0x1000:2b00
+1000:2afd  JMP 0x1000:2bde
+1000:2b00  MOV DX,word ptr [BP + -0xc]
+1000:2b03  MOV AX,word ptr [BP + -0xe]
+1000:2b06  SHL AX,0x2
+1000:2b09  LES DI,[0x6674]
+1000:2b0d  ADD DI,AX
+1000:2b0f  LES DI,ES:[DI]
+1000:2b12  ADD DI,DX
+1000:2b14  MOV AL,byte ptr ES:[DI]
+1000:2b17  MOV AH,0x1
+1000:2b19  MOV DX,0x20
+1000:2b1c  CALLF 0x2000:8f31
+1000:2b21  MOV DI,DX
+1000:2b23  TEST byte ptr [DI + 0x14e0],AL
+1000:2b27  JZ 0x1000:2b74
+1000:2b29  MOV AX,word ptr [BP + -0xc]
+1000:2b2c  ADD AX,0x3
+1000:2b2f  MOV DX,AX
+1000:2b31  MOV AX,word ptr [BP + -0xe]
+1000:2b34  SUB AX,0x3
+1000:2b37  SHL AX,0x2
+1000:2b3a  LES DI,[0x6674]
+1000:2b3e  ADD DI,AX
+1000:2b40  LES DI,ES:[DI]
+1000:2b43  ADD DI,DX
+1000:2b45  MOV AL,byte ptr ES:[DI]
+1000:2b48  MOV AH,0x1
+1000:2b4a  MOV DX,0x20
+1000:2b4d  CALLF 0x2000:8f31
+1000:2b52  MOV DI,DX
+1000:2b54  TEST byte ptr [DI + 0x6604],AL
+1000:2b58  JZ 0x1000:2b74
+1000:2b5a  MOV DX,word ptr [BP + -0xc]
+1000:2b5d  MOV AX,word ptr [BP + -0xe]
+1000:2b60  SHL AX,0x2
+1000:2b63  LES DI,[0x6674]
+1000:2b67  ADD DI,AX
+1000:2b69  LES DI,ES:[DI]
+1000:2b6c  ADD DI,DX
+1000:2b6e  ADD byte ptr ES:[DI],0x4
+1000:2b72  JMP 0x1000:2bde
+1000:2b74  MOV DX,word ptr [BP + -0xc]
+1000:2b77  MOV AX,word ptr [BP + -0xe]
+1000:2b7a  SHL AX,0x2
+1000:2b7d  LES DI,[0x6674]
+1000:2b81  ADD DI,AX
+1000:2b83  LES DI,ES:[DI]
+1000:2b86  ADD DI,DX
+1000:2b88  MOV AL,byte ptr ES:[DI]
+1000:2b8b  CMP AL,0xa4
+1000:2b8d  JC 0x1000:2bde
+1000:2b8f  CMP AL,0xa7
+1000:2b91  JA 0x1000:2bde
+1000:2b93  MOV AX,word ptr [BP + -0xc]
+1000:2b96  ADD AX,0x3
+1000:2b99  MOV DX,AX
+1000:2b9b  MOV AX,word ptr [BP + -0xe]
+1000:2b9e  SUB AX,0x3
+1000:2ba1  SHL AX,0x2
+1000:2ba4  LES DI,[0x6674]
+1000:2ba8  ADD DI,AX
+1000:2baa  LES DI,ES:[DI]
+1000:2bad  ADD DI,DX
+1000:2baf  MOV AL,byte ptr ES:[DI]
+1000:2bb2  NOT AL
+1000:2bb4  MOV AH,0x1
+1000:2bb6  MOV DX,0x20
+1000:2bb9  CALLF 0x2000:8f31
+1000:2bbe  MOV DI,DX
+1000:2bc0  TEST byte ptr [DI + 0x6604],AL
+1000:2bc4  JZ 0x1000:2bde
+1000:2bc6  MOV DX,word ptr [BP + -0xc]
+1000:2bc9  MOV AX,word ptr [BP + -0xe]
+1000:2bcc  SHL AX,0x2
+1000:2bcf  LES DI,[0x6674]
+1000:2bd3  ADD DI,AX
+1000:2bd5  LES DI,ES:[DI]
+1000:2bd8  ADD DI,DX
+1000:2bda  SUB byte ptr ES:[DI],0x4
+1000:2bde  MOV AX,word ptr [BP + -0xe]
+1000:2be1  CMP AX,word ptr [BP + -0x30]
+1000:2be4  JZ 0x1000:2be9
+1000:2be6  JMP 0x1000:2aea
+1000:2be9  MOV AX,word ptr [BP + -0xc]
+1000:2bec  CMP AX,word ptr [BP + -0x2e]
+1000:2bef  JZ 0x1000:2bf4
+1000:2bf1  JMP 0x1000:2ab8
+1000:2bf4  LES DI,[BP + -0x2c]
+1000:2bf7  MOV DI,word ptr ES:[DI + 0x56]
+1000:2bfb  SHL DI,0x3
+1000:2bfe  MOV AX,word ptr [DI + 0x159e]
+1000:2c02  MOV DX,word ptr [DI + 0x15a0]
+1000:2c06  MOV CX,0x1
+1000:2c09  XOR BX,BX
+1000:2c0b  CALLF 0x2000:8c4c
+1000:2c10  ADD AX,word ptr [BP + -0x16]
+1000:2c13  ADC DX,word ptr [BP + -0x14]
+1000:2c16  MOV word ptr [BP + -0x16],AX
+1000:2c19  MOV word ptr [BP + -0x14],DX
+1000:2c1c  LES DI,[BP + -0x2c]
+1000:2c1f  MOV DI,word ptr ES:[DI + 0x56]
+1000:2c23  SHL DI,0x3
+1000:2c26  MOV AX,word ptr [DI + 0x15a2]
+1000:2c2a  MOV DX,word ptr [DI + 0x15a4]
+1000:2c2e  MOV CX,0x1
+1000:2c31  XOR BX,BX
+1000:2c33  CALLF 0x2000:8c4c
+1000:2c38  ADD AX,word ptr [BP + -0x1a]
+1000:2c3b  ADC DX,word ptr [BP + -0x18]
+1000:2c3e  MOV word ptr [BP + -0x1a],AX
+1000:2c41  MOV word ptr [BP + -0x18],DX
+1000:2c44  PUSH word ptr [BP + -0x14]
+1000:2c47  PUSH word ptr [BP + -0x18]
+1000:2c4a  MOV AL,[0x1371]
+1000:2c4d  XOR AH,AH
+1000:2c4f  SHL AX,0x8
+1000:2c52  LES DI,[0x6678]
+1000:2c56  ADD DI,AX
+1000:2c58  PUSH ES
+1000:2c59  PUSH DI
+1000:2c5a  MOV AL,[0x1385]
+1000:2c5d  XOR AH,AH
+1000:2c5f  PUSH AX
+1000:2c60  CALLF 0x2000:9424
+1000:2c65  MOV DX,AX
+1000:2c67  MOV AL,[0x1376]
+1000:2c6a  XOR AH,AH
+1000:2c6c  ADD AX,DX
+1000:2c6e  SHL AX,0x8
+1000:2c71  LES DI,[0x6678]
+1000:2c75  ADD DI,AX
+1000:2c77  PUSH ES
+1000:2c78  PUSH DI
+1000:2c79  PUSH 0x1
+1000:2c7b  CALLF 0x2000:031a
+1000:2c80  CMP byte ptr [0x66af],0x0
+1000:2c85  JNZ 0x1000:2c8a
+1000:2c87  JMP 0x1000:2de2
+1000:2c8a  MOV AX,word ptr [BP + -0x14]
+1000:2c8d  ADD AX,0x11
+1000:2c90  MOV word ptr [BP + -0x2e],AX
+1000:2c93  MOV AX,word ptr [BP + -0x14]
+1000:2c96  SUB AX,0x3
+1000:2c99  CMP AX,word ptr [BP + -0x2e]
+1000:2c9c  JLE 0x1000:2ca1
+1000:2c9e  JMP 0x1000:2de2
+1000:2ca1  MOV word ptr [BP + -0xc],AX
+1000:2ca4  JMP 0x1000:2ca9
+1000:2ca6  INC word ptr [BP + -0xc]
+1000:2ca9  CMP word ptr [BP + -0xc],-0x1
+1000:2cad  JG 0x1000:2cb2
+1000:2caf  JMP 0x1000:2dd7
+1000:2cb2  CMP word ptr [BP + -0xc],0x1f8
+1000:2cb7  JL 0x1000:2cbc
+1000:2cb9  JMP 0x1000:2dd7
+1000:2cbc  MOV AX,word ptr [BP + -0x18]
+1000:2cbf  ADD AX,0x11
+1000:2cc2  MOV word ptr [BP + -0x30],AX
+1000:2cc5  MOV AX,word ptr [BP + -0x18]
+1000:2cc8  SUB AX,0x3
+1000:2ccb  CMP AX,word ptr [BP + -0x30]
+1000:2cce  JLE 0x1000:2cd3
+1000:2cd0  JMP 0x1000:2dd7
+1000:2cd3  MOV word ptr [BP + -0xe],AX
+1000:2cd6  JMP 0x1000:2cdb
+1000:2cd8  INC word ptr [BP + -0xe]
+1000:2cdb  CMP word ptr [BP + -0xe],-0x1
+1000:2cdf  JG 0x1000:2ce4
+1000:2ce1  JMP 0x1000:2dcc
+1000:2ce4  CMP word ptr [BP + -0xe],0x15e
+1000:2ce9  JL 0x1000:2cee
+1000:2ceb  JMP 0x1000:2dcc
+1000:2cee  MOV DX,word ptr [BP + -0xc]
+1000:2cf1  MOV AX,word ptr [BP + -0xe]
+1000:2cf4  SHL AX,0x2
+1000:2cf7  LES DI,[0x6674]
+1000:2cfb  ADD DI,AX
+1000:2cfd  LES DI,ES:[DI]
+1000:2d00  ADD DI,DX
+1000:2d02  MOV AL,byte ptr ES:[DI]
+1000:2d05  MOV AH,0x1
+1000:2d07  MOV DX,0x20
+1000:2d0a  CALLF 0x2000:8f31
+1000:2d0f  MOV DI,DX
+1000:2d11  TEST byte ptr [DI + 0x14e0],AL
+1000:2d15  JZ 0x1000:2d62
+1000:2d17  MOV AX,word ptr [BP + -0xc]
+1000:2d1a  ADD AX,0x3
+1000:2d1d  MOV DX,AX
+1000:2d1f  MOV AX,word ptr [BP + -0xe]
+1000:2d22  SUB AX,0x3
+1000:2d25  SHL AX,0x2
+1000:2d28  LES DI,[0x6674]
+1000:2d2c  ADD DI,AX
+1000:2d2e  LES DI,ES:[DI]
+1000:2d31  ADD DI,DX
+1000:2d33  MOV AL,byte ptr ES:[DI]
+1000:2d36  MOV AH,0x1
+1000:2d38  MOV DX,0x20
+1000:2d3b  CALLF 0x2000:8f31
+1000:2d40  MOV DI,DX
+1000:2d42  TEST byte ptr [DI + 0x6604],AL
+1000:2d46  JZ 0x1000:2d62
+1000:2d48  MOV DX,word ptr [BP + -0xc]
+1000:2d4b  MOV AX,word ptr [BP + -0xe]
+1000:2d4e  SHL AX,0x2
+1000:2d51  LES DI,[0x6674]
+1000:2d55  ADD DI,AX
+1000:2d57  LES DI,ES:[DI]
+1000:2d5a  ADD DI,DX
+1000:2d5c  ADD byte ptr ES:[DI],0x4
+1000:2d60  JMP 0x1000:2dcc
+1000:2d62  MOV DX,word ptr [BP + -0xc]
+1000:2d65  MOV AX,word ptr [BP + -0xe]
+1000:2d68  SHL AX,0x2
+1000:2d6b  LES DI,[0x6674]
+1000:2d6f  ADD DI,AX
+1000:2d71  LES DI,ES:[DI]
+1000:2d74  ADD DI,DX
+1000:2d76  MOV AL,byte ptr ES:[DI]
+1000:2d79  CMP AL,0xa4
+1000:2d7b  JC 0x1000:2dcc
+1000:2d7d  CMP AL,0xa7
+1000:2d7f  JA 0x1000:2dcc
+1000:2d81  MOV AX,word ptr [BP + -0xc]
+1000:2d84  ADD AX,0x3
+1000:2d87  MOV DX,AX
+1000:2d89  MOV AX,word ptr [BP + -0xe]
+1000:2d8c  SUB AX,0x3
+1000:2d8f  SHL AX,0x2
+1000:2d92  LES DI,[0x6674]
+1000:2d96  ADD DI,AX
+1000:2d98  LES DI,ES:[DI]
+1000:2d9b  ADD DI,DX
+1000:2d9d  MOV AL,byte ptr ES:[DI]
+1000:2da0  NOT AL
+1000:2da2  MOV AH,0x1
+1000:2da4  MOV DX,0x20
+1000:2da7  CALLF 0x2000:8f31
+1000:2dac  MOV DI,DX
+1000:2dae  TEST byte ptr [DI + 0x6604],AL
+1000:2db2  JZ 0x1000:2dcc
+1000:2db4  MOV DX,word ptr [BP + -0xc]
+1000:2db7  MOV AX,word ptr [BP + -0xe]
+1000:2dba  SHL AX,0x2
+1000:2dbd  LES DI,[0x6674]
+1000:2dc1  ADD DI,AX
+1000:2dc3  LES DI,ES:[DI]
+1000:2dc6  ADD DI,DX
+1000:2dc8  SUB byte ptr ES:[DI],0x4
+1000:2dcc  MOV AX,word ptr [BP + -0xe]
+1000:2dcf  CMP AX,word ptr [BP + -0x30]
+1000:2dd2  JZ 0x1000:2dd7
+1000:2dd4  JMP 0x1000:2cd8
+1000:2dd7  MOV AX,word ptr [BP + -0xc]
+1000:2dda  CMP AX,word ptr [BP + -0x2e]
+1000:2ddd  JZ 0x1000:2de2
+1000:2ddf  JMP 0x1000:2ca6
+1000:2de2  JMP 0x1000:2ded
+1000:2de4  LES DI,[BP + -0x2c]
+1000:2de7  MOV byte ptr ES:[DI + 0x9e],0x1
+1000:2ded  IMUL DI,word ptr [BP + -0x2],0x7
+1000:2df1  MOV AL,byte ptr [DI + 0x6722]
+1000:2df5  XOR AH,AH
+1000:2df7  MOV DI,AX
+1000:2df9  CMP byte ptr [DI + 0x783b],0x0
+1000:2dfe  JNZ 0x1000:2e1c
+1000:2e00  IMUL DI,word ptr [BP + -0x2],0x7
+1000:2e04  MOV AL,byte ptr [DI + 0x6723]
+1000:2e08  XOR AH,AH
+1000:2e0a  MOV DI,AX
+1000:2e0c  CMP byte ptr [DI + 0x783b],0x0
+1000:2e11  JNZ 0x1000:2e1c
+1000:2e13  LES DI,[BP + -0x2c]
+1000:2e16  MOV byte ptr ES:[DI + 0x9d],0x0
+1000:2e1c  MOV DI,word ptr [BP + -0x2]
+1000:2e1f  SHL DI,0x1
+1000:2e21  MOV AX,word ptr [DI + 0x66e8]
+1000:2e25  SHR AX,0x2
+1000:2e28  XOR DX,DX
+1000:2e2a  MOV CX,AX
+1000:2e2c  MOV BX,DX
+1000:2e2e  LES DI,[BP + -0x2c]
+1000:2e31  MOV AX,word ptr ES:[DI + 0x50]
+1000:2e35  CWD
+1000:2e36  CMP DX,BX
+1000:2e38  JL 0x1000:2e46
+1000:2e3a  JLE 0x1000:2e3f
+1000:2e3c  JMP 0x1000:2ec7
+1000:2e3f  CMP AX,CX
+1000:2e41  JC 0x1000:2e46
+1000:2e43  JMP 0x1000:2ec7
+1000:2e46  LES DI,[BP + -0x2c]
+1000:2e49  MOV AX,word ptr ES:[DI + 0x50]
+1000:2e4d  ADD AX,0x6
+1000:2e50  PUSH AX
+1000:2e51  CALLF 0x2000:9424
+1000:2e56  OR AX,AX
+1000:2e58  JNZ 0x1000:2ec7
+1000:2e5a  CMP byte ptr [0x4b8],0x0
+1000:2e5f  JZ 0x1000:2ea3
+1000:2e61  PUSH 0x3
+1000:2e63  CALLF 0x2000:9424
+1000:2e68  OR AX,AX
+1000:2e6a  JNZ 0x1000:2ea3
+1000:2e6c  MOV DI,word ptr [BP + -0x2]
+1000:2e6f  MOV AL,byte ptr [DI + 0x4b6]
+1000:2e73  PUSH AX
+1000:2e74  CALLF 0x2000:3fde
+1000:2e79  OR AL,AL
+1000:2e7b  JNZ 0x1000:2ea3
+1000:2e7d  PUSH 0x3
+1000:2e7f  CALLF 0x2000:9424
+1000:2e84  ADD AX,0x13
+1000:2e87  MOV DI,AX
+1000:2e89  SHL DI,0x2
+1000:2e8c  PUSH word ptr [DI + 0x6736]
+1000:2e90  PUSH word ptr [DI + 0x6734]
+1000:2e94  MOV DI,word ptr [BP + -0x2]
+1000:2e97  MOV AL,byte ptr [DI + 0x4b6]
+1000:2e9b  PUSH AX
+1000:2e9c  PUSH 0x0
+1000:2e9e  CALLF 0x2000:3f1c
+1000:2ea3  PUSH 0x7
+1000:2ea5  PUSH 0x0
+1000:2ea7  LES DI,[BP + -0x2c]
+1000:2eaa  PUSH word ptr ES:[DI + 0x6]
+1000:2eae  PUSH word ptr ES:[DI + 0xa]
+1000:2eb2  PUSH word ptr ES:[DI + 0x32]
+1000:2eb6  PUSH word ptr ES:[DI + 0x30]
+1000:2eba  PUSH word ptr ES:[DI + 0x36]
+1000:2ebe  PUSH word ptr ES:[DI + 0x34]
+1000:2ec2  CALLF 0x2000:1776
+1000:2ec7  LES DI,[BP + -0x2c]
+1000:2eca  CMP word ptr ES:[DI + 0x50],0x1
+1000:2ecf  JL 0x1000:2ed4
+1000:2ed1  JMP 0x1000:3139
+1000:2ed4  CMP byte ptr ES:[DI + 0x95],0x0
+1000:2eda  JZ 0x1000:2f1d
+1000:2edc  CMP word ptr [BP + -0x2],0x0
+1000:2ee0  JNZ 0x1000:2ee9
+1000:2ee2  MOV word ptr [BP + -0x6],0x16
+1000:2ee7  JMP 0x1000:2eee
+1000:2ee9  MOV word ptr [BP + -0x6],0x15
+1000:2eee  MOV AL,byte ptr [BP + -0x6]
+1000:2ef1  PUSH AX
+1000:2ef2  PUSH 0x0
+1000:2ef4  LES DI,[BP + -0x2c]
+1000:2ef7  PUSH word ptr ES:[DI + 0x6]
+1000:2efb  PUSH word ptr ES:[DI + 0xa]
+1000:2eff  PUSH word ptr ES:[DI + 0x32]
+1000:2f03  PUSH word ptr ES:[DI + 0x30]
+1000:2f07  PUSH word ptr ES:[DI + 0x36]
+1000:2f0b  PUSH word ptr ES:[DI + 0x34]
+1000:2f0f  CALLF 0x2000:1776
+1000:2f14  LES DI,[BP + -0x2c]
+1000:2f17  MOV byte ptr ES:[DI + 0x95],0x0
+1000:2f1d  MOV AL,[0x651f]
+1000:2f20  XOR AH,AH
+1000:2f22  CMP AX,word ptr [BP + -0x2]
+1000:2f25  MOV AL,0x0
+1000:2f27  JZ 0x1000:2f2a
+1000:2f29  INC AX
+1000:2f2a  MOV [0x651e],AL
+1000:2f2d  CMP byte ptr [0x651e],0x0
+1000:2f32  JZ 0x1000:2f3a
+1000:2f34  MOV AL,byte ptr [BP + -0x2]
+1000:2f37  MOV [0x651f],AL
+1000:2f3a  LES DI,[BP + -0x2c]
+1000:2f3d  XOR AX,AX
+1000:2f3f  MOV word ptr ES:[DI + 0x4a],AX
+1000:2f43  MOV AX,word ptr [BP + -0x2]
+1000:2f46  XOR AX,0x1
+1000:2f49  IMUL AX,AX,0xaa
+1000:2f4d  LES DI,[0x6670]
+1000:2f51  ADD DI,AX
+1000:2f53  MOV byte ptr ES:[DI + 0x97],0x0
+1000:2f59  MOV DI,word ptr [BP + -0x2]
+1000:2f5c  MOV byte ptr [DI + 0x652c],0xf8
+1000:2f61  CMP byte ptr [0x4b8],0x0
+1000:2f66  JZ 0x1000:2fba
+1000:2f68  LES DI,[BP + -0x2c]
+1000:2f6b  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2f6f  SHL AX,0x1
+1000:2f71  ADD DI,AX
+1000:2f73  MOV DI,word ptr ES:[DI + 0x73]
+1000:2f77  MOV AL,byte ptr [DI + 0xb8d]
+1000:2f7b  AND AL,0x1
+1000:2f7d  CMP AL,0x1
+1000:2f7f  JNZ 0x1000:2f9a
+1000:2f81  LES DI,[BP + -0x2c]
+1000:2f84  MOV AX,word ptr ES:[DI + 0x4e]
+1000:2f88  SHL AX,0x1
+1000:2f8a  ADD DI,AX
+1000:2f8c  MOV DI,word ptr ES:[DI + 0x73]
+1000:2f90  MOV AL,byte ptr [DI + 0xb65]
+1000:2f94  PUSH AX
+1000:2f95  CALLF 0x2000:3fab
+1000:2f9a  PUSH 0x3
+1000:2f9c  CALLF 0x2000:9424
+1000:2fa1  ADD AX,0x10
+1000:2fa4  MOV DI,AX
+1000:2fa6  SHL DI,0x2
+1000:2fa9  PUSH word ptr [DI + 0x6736]
+1000:2fad  PUSH word ptr [DI + 0x6734]
+1000:2fb1  PUSH 0x10
+1000:2fb3  PUSH 0x0
+1000:2fb5  CALLF 0x2000:3f1c
+1000:2fba  LES DI,[BP + -0x2c]
+1000:2fbd  MOV byte ptr ES:[DI + 0x99],0x0
+1000:2fc3  MOV byte ptr ES:[DI + 0x9c],0x0
+1000:2fc9  SUB word ptr ES:[DI + 0x38],0x1
+1000:2fce  SBB word ptr ES:[DI + 0x3a],0x0
+1000:2fd3  CMP byte ptr ES:[DI + 0x96],0x0
+1000:2fd9  JZ 0x1000:2ff5
+1000:2fdb  MOV AX,word ptr [BP + -0x2]
+1000:2fde  XOR AX,0x1
+1000:2fe1  IMUL AX,AX,0xaa
+1000:2fe5  LES DI,[0x6670]
+1000:2fe9  ADD DI,AX
+1000:2feb  ADD word ptr ES:[DI + 0x3c],0x1
+1000:2ff0  ADC word ptr ES:[DI + 0x3e],0x0
+1000:2ff5  LES DI,[BP + -0x2c]
+1000:2ff8  MOV byte ptr ES:[DI + 0x9a],0x0
+1000:2ffe  MOV word ptr ES:[DI + 0x4c],0x96
+1000:3004  XOR AX,AX
+1000:3006  MOV word ptr [BP + -0x4],AX
+1000:3009  MOV AX,[0x6e]
+1000:300c  MUL word ptr [0x66aa]
+1000:3010  CWD
+1000:3011  MOV CX,0x64
+1000:3014  IDIV CX
+1000:3016  MOV word ptr [BP + -0x2e],AX
+1000:3019  MOV AX,0x1
+1000:301c  CMP AX,word ptr [BP + -0x2e]
+1000:301f  JG 0x1000:3079
+1000:3021  MOV word ptr [BP + -0xa],AX
+1000:3024  JMP 0x1000:3029
+1000:3026  INC word ptr [BP + -0xa]
+1000:3029  PUSH 0x7
+1000:302b  PUSH 0x0
+1000:302d  LES DI,[BP + -0x2c]
+1000:3030  PUSH word ptr ES:[DI + 0x6]
+1000:3034  PUSH word ptr ES:[DI + 0xa]
+1000:3038  MOV AX,word ptr ES:[DI + 0x30]
+1000:303c  MOV DX,word ptr ES:[DI + 0x32]
+1000:3040  MOV CX,0x3
+1000:3043  XOR BX,BX
+1000:3045  CALLF 0x2000:8b8d
+1000:304a  PUSH DX
+1000:304b  PUSH AX
+1000:304c  LES DI,[BP + -0x2c]
+1000:304f  MOV AX,word ptr ES:[DI + 0x34]
+1000:3053  MOV DX,word ptr ES:[DI + 0x36]
+1000:3057  MOV CX,0x3
+1000:305a  XOR BX,BX
+1000:305c  CALLF 0x2000:8b8d
+1000:3061  PUSH DX
+1000:3062  PUSH AX
+1000:3063  PUSH 0x80
+1000:3066  CALLF 0x2000:9424
+1000:306b  PUSH AX
+1000:306c  CALLF 0x2000:191d
+1000:3071  MOV AX,word ptr [BP + -0xa]
+1000:3074  CMP AX,word ptr [BP + -0x2e]
+1000:3077  JNZ 0x1000:3026
+1000:3079  XOR AX,AX
+1000:307b  MOV word ptr [BP + -0x4],AX
+1000:307e  XOR AX,AX
+1000:3080  MOV word ptr [BP + -0xa],AX
+1000:3083  JMP 0x1000:3088
+1000:3085  INC word ptr [BP + -0xa]
+1000:3088  MOV AX,word ptr [BP + -0x2]
+1000:308b  INC AX
+1000:308c  PUSH AX
+1000:308d  PUSH 0x0
+1000:308f  LES DI,[BP + -0x2c]
+1000:3092  PUSH word ptr ES:[DI + 0x6]
+1000:3096  PUSH word ptr ES:[DI + 0xa]
+1000:309a  MOV AX,word ptr ES:[DI + 0x30]
+1000:309e  MOV DX,word ptr ES:[DI + 0x32]
+1000:30a2  MOV CX,0x3
+1000:30a5  XOR BX,BX
+1000:30a7  CALLF 0x2000:8b8d
+1000:30ac  PUSH DX
+1000:30ad  PUSH AX
+1000:30ae  LES DI,[BP + -0x2c]
+1000:30b1  MOV AX,word ptr ES:[DI + 0x34]
+1000:30b5  MOV DX,word ptr ES:[DI + 0x36]
+1000:30b9  MOV CX,0x3
+1000:30bc  XOR BX,BX
+1000:30be  CALLF 0x2000:8b8d
+1000:30c3  PUSH DX
+1000:30c4  PUSH AX
+1000:30c5  PUSH 0xe
+1000:30c7  CALLF 0x2000:9424
+1000:30cc  XOR DX,DX
+1000:30ce  MOV CX,AX
+1000:30d0  MOV BX,DX
+1000:30d2  IMUL AX,word ptr [BP + -0xa],0xe
+1000:30d6  ADD AX,0xe
+1000:30d9  SUB AX,0x7
+1000:30dc  CWD
+1000:30dd  ADD AX,CX
+1000:30df  ADC DX,BX
+1000:30e1  PUSH AX
+1000:30e2  CALLF 0x2000:191d
+1000:30e7  CMP word ptr [BP + -0xa],0x7
+1000:30eb  JNZ 0x1000:3085
+1000:30ed  PUSH 0x64
+1000:30ef  CALLF 0x2000:9424
+1000:30f4  CMP AX,0x32
+1000:30f7  JBE 0x1000:3104
+1000:30f9  LES DI,[BP + -0x2c]
+1000:30fc  MOV word ptr ES:[DI + 0x56],0x20
+1000:3102  JMP 0x1000:310d
+1000:3104  LES DI,[BP + -0x2c]
+1000:3107  MOV word ptr ES:[DI + 0x56],0x60
+1000:310d  LES DI,[BP + -0x2c]
+1000:3110  CMP word ptr ES:[DI + 0x56],0x20
+1000:3115  JLE 0x1000:311f
+1000:3117  MOV byte ptr ES:[DI + 0x9b],0x1
+1000:311d  JMP 0x1000:3128
+1000:311f  LES DI,[BP + -0x2c]
+1000:3122  MOV byte ptr ES:[DI + 0x9b],0x0
+1000:3128  IMUL DI,word ptr [BP + -0x2],0x7
+1000:312c  MOV AL,byte ptr [DI + 0x6724]
+1000:3130  XOR AH,AH
+1000:3132  MOV DI,AX
+1000:3134  MOV byte ptr [DI + 0x783b],0x0
+1000:3139  JMP 0x1000:3501
+1000:313c  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3140  MOV AL,byte ptr [DI + 0x6724]
+1000:3144  XOR AH,AH
+1000:3146  MOV DI,AX
+1000:3148  CMP byte ptr [DI + 0x783b],0x0
+1000:314d  JZ 0x1000:3169
+1000:314f  LES DI,[BP + -0x2c]
+1000:3152  MOV byte ptr ES:[DI + 0x9f],0x1
+1000:3158  IMUL DI,word ptr [BP + -0x2],0x7
+1000:315c  MOV AL,byte ptr [DI + 0x6724]
+1000:3160  XOR AH,AH
+1000:3162  MOV DI,AX
+1000:3164  MOV byte ptr [DI + 0x783b],0x0
+1000:3169  LES DI,[BP + -0x2c]
+1000:316c  CMP word ptr ES:[DI + 0x4c],0x0
+1000:3171  JLE 0x1000:3177
+1000:3173  DEC word ptr ES:[DI + 0x4c]
+1000:3177  LES DI,[BP + -0x2c]
+1000:317a  CMP word ptr ES:[DI + 0x4c],0x0
+1000:317f  JZ 0x1000:3184
+1000:3181  JMP 0x1000:3242
+1000:3184  MOV AX,word ptr ES:[DI + 0x6]
+1000:3188  CWD
+1000:3189  MOV word ptr [BP + -0x1e],AX
+1000:318c  MOV word ptr [BP + -0x1c],DX
+1000:318f  MOV AX,word ptr ES:[DI + 0xa]
+1000:3193  CWD
+1000:3194  MOV word ptr [BP + -0x22],AX
+1000:3197  MOV word ptr [BP + -0x20],DX
+1000:319a  PUSH 0x1ee
+1000:319d  CALLF 0x2000:9424
+1000:31a2  ADD AX,0x5
+1000:31a5  LES DI,[BP + -0x2c]
+1000:31a8  MOV word ptr ES:[DI + 0x6],AX
+1000:31ac  PUSH 0x154
+1000:31af  CALLF 0x2000:9424
+1000:31b4  ADD AX,0x5
+1000:31b7  LES DI,[BP + -0x2c]
+1000:31ba  MOV word ptr ES:[DI + 0xa],AX
+1000:31be  LES DI,[BP + -0x2c]
+1000:31c1  MOV DX,word ptr ES:[DI + 0x6]
+1000:31c5  MOV AX,word ptr ES:[DI + 0xa]
+1000:31c9  ADD AX,0x4
+1000:31cc  SHL AX,0x2
+1000:31cf  LES DI,[0x6674]
+1000:31d3  ADD DI,AX
+1000:31d5  LES DI,ES:[DI]
+1000:31d8  ADD DI,DX
+1000:31da  MOV AL,byte ptr ES:[DI]
+1000:31dd  MOV AH,0x1
+1000:31df  MOV DX,0x20
+1000:31e2  CALLF 0x2000:8f31
+1000:31e7  MOV DI,DX
+1000:31e9  TEST byte ptr [DI + 0x14c0],AL
+1000:31ed  JZ 0x1000:31f8
+1000:31ef  LES DI,[BP + -0x2c]
+1000:31f2  INC word ptr ES:[DI + 0xa]
+1000:31f6  JMP 0x1000:31be
+1000:31f8  LES DI,[BP + -0x2c]
+1000:31fb  PUSH word ptr ES:[DI + 0x6]
+1000:31ff  PUSH word ptr ES:[DI + 0xa]
+1000:3203  PUSH word ptr [BP + -0x1e]
+1000:3206  PUSH word ptr [BP + -0x22]
+1000:3209  MOV AX,word ptr [BP + -0x2]
+1000:320c  XOR AX,0x1
+1000:320f  IMUL AX,AX,0xaa
+1000:3213  LES DI,[0x6670]
+1000:3217  ADD DI,AX
+1000:3219  PUSH word ptr ES:[DI + 0x6]
+1000:321d  MOV AX,word ptr [BP + -0x2]
+1000:3220  XOR AX,0x1
+1000:3223  IMUL AX,AX,0xaa
+1000:3227  LES DI,[0x6670]
+1000:322b  ADD DI,AX
+1000:322d  PUSH word ptr ES:[DI + 0xa]
+1000:3231  CALL 0x1000:0c7f
+1000:3234  OR AL,AL
+1000:3236  JNZ 0x1000:323b
+1000:3238  JMP 0x1000:319a
+1000:323b  LES DI,[BP + -0x2c]
+1000:323e  DEC word ptr ES:[DI + 0x4c]
+1000:3242  LES DI,[BP + -0x2c]
+1000:3245  CMP word ptr ES:[DI + 0x4c],0x0
+1000:324a  JL 0x1000:324f
+1000:324c  JMP 0x1000:3501
+1000:324f  MOV AX,word ptr ES:[DI + 0x6]
+1000:3253  SUB AX,0x50
+1000:3256  MOV word ptr [BP + -0x8],AX
+1000:3259  CMP word ptr [BP + -0x8],0x0
+1000:325d  JGE 0x1000:3264
+1000:325f  XOR AX,AX
+1000:3261  MOV word ptr [BP + -0x8],AX
+1000:3264  CMP word ptr [BP + -0x8],0x15a
+1000:3269  JLE 0x1000:3270
+1000:326b  MOV word ptr [BP + -0x8],0x15a
+1000:3270  LES DI,[BP + -0x2c]
+1000:3273  MOV AX,word ptr ES:[DI + 0xa]
+1000:3277  SUB AX,0x50
+1000:327a  MOV word ptr [BP + -0xa],AX
+1000:327d  CMP word ptr [BP + -0xa],0x0
+1000:3281  JGE 0x1000:3288
+1000:3283  XOR AX,AX
+1000:3285  MOV word ptr [BP + -0xa],AX
+1000:3288  CMP word ptr [BP + -0xa],0xc0
+1000:328d  JLE 0x1000:3294
+1000:328f  MOV word ptr [BP + -0xa],0xc0
+1000:3294  MOV AX,word ptr [BP + -0x8]
+1000:3297  SUB AX,0x5
+1000:329a  MOV DI,word ptr [BP + -0x2]
+1000:329d  SHL DI,0x1
+1000:329f  CMP AX,word ptr [DI + 0x67b0]
+1000:32a3  JL 0x1000:32a8
+1000:32a5  JMP 0x1000:3501
+1000:32a8  MOV AX,word ptr [BP + -0x8]
+1000:32ab  ADD AX,0x5
+1000:32ae  MOV DI,word ptr [BP + -0x2]
+1000:32b1  SHL DI,0x1
+1000:32b3  CMP AX,word ptr [DI + 0x67b0]
+1000:32b7  JG 0x1000:32bc
+1000:32b9  JMP 0x1000:3501
+1000:32bc  MOV AX,word ptr [BP + -0xa]
+1000:32bf  SUB AX,0x5
+1000:32c2  MOV DI,word ptr [BP + -0x2]
+1000:32c5  SHL DI,0x1
+1000:32c7  CMP AX,word ptr [DI + 0x67b4]
+1000:32cb  JL 0x1000:32d0
+1000:32cd  JMP 0x1000:3501
+1000:32d0  MOV AX,word ptr [BP + -0xa]
+1000:32d3  ADD AX,0x5
+1000:32d6  MOV DI,word ptr [BP + -0x2]
+1000:32d9  SHL DI,0x1
+1000:32db  CMP AX,word ptr [DI + 0x67b4]
+1000:32df  JG 0x1000:32e4
+1000:32e1  JMP 0x1000:3501
+1000:32e4  LES DI,[BP + -0x2c]
+1000:32e7  CMP byte ptr ES:[DI + 0x9f],0x0
+1000:32ed  JNZ 0x1000:32f2
+1000:32ef  JMP 0x1000:3501
+1000:32f2  MOV AX,word ptr ES:[DI + 0x6]
+1000:32f6  SUB AX,0x7
+1000:32f9  PUSH AX
+1000:32fa  MOV AX,word ptr ES:[DI + 0xa]
+1000:32fe  SUB AX,0x7
+1000:3301  PUSH AX
+1000:3302  MOV AL,[0x136a]
+1000:3305  XOR AH,AH
+1000:3307  SHL AX,0x8
+1000:330a  LES DI,[0x6678]
+1000:330e  ADD DI,AX
+1000:3310  PUSH ES
+1000:3311  PUSH DI
+1000:3312  MOV AL,[0x137e]
+1000:3315  XOR AH,AH
+1000:3317  PUSH AX
+1000:3318  CALLF 0x2000:9424
+1000:331d  MOV DX,AX
+1000:331f  MOV AL,[0x1374]
+1000:3322  XOR AH,AH
+1000:3324  ADD AX,DX
+1000:3326  SHL AX,0x8
+1000:3329  LES DI,[0x6678]
+1000:332d  ADD DI,AX
+1000:332f  PUSH ES
+1000:3330  PUSH DI
+1000:3331  CMP byte ptr [0x1388],0x1
+1000:3336  MOV AL,0x0
+1000:3338  JNZ 0x1000:333b
+1000:333a  INC AX
+1000:333b  PUSH AX
+1000:333c  CALLF 0x2000:031a
+1000:3341  CMP byte ptr [0x66af],0x0
+1000:3346  JNZ 0x1000:334b
+1000:3348  JMP 0x1000:34ad
+1000:334b  LES DI,[BP + -0x2c]
+1000:334e  MOV AX,word ptr ES:[DI + 0x6]
+1000:3352  ADD AX,0xa
+1000:3355  MOV word ptr [BP + -0x2e],AX
+1000:3358  MOV AX,word ptr ES:[DI + 0x6]
+1000:335c  SUB AX,0xa
+1000:335f  CMP AX,word ptr [BP + -0x2e]
+1000:3362  JLE 0x1000:3367
+1000:3364  JMP 0x1000:34ad
+1000:3367  MOV word ptr [BP + -0xc],AX
+1000:336a  JMP 0x1000:336f
+1000:336c  INC word ptr [BP + -0xc]
+1000:336f  CMP word ptr [BP + -0xc],-0x1
+1000:3373  JG 0x1000:3378
+1000:3375  JMP 0x1000:34a2
+1000:3378  CMP word ptr [BP + -0xc],0x1f8
+1000:337d  JL 0x1000:3382
+1000:337f  JMP 0x1000:34a2
+1000:3382  LES DI,[BP + -0x2c]
+1000:3385  MOV AX,word ptr ES:[DI + 0xa]
+1000:3389  ADD AX,0xa
+1000:338c  MOV word ptr [BP + -0x30],AX
+1000:338f  MOV AX,word ptr ES:[DI + 0xa]
+1000:3393  SUB AX,0xa
+1000:3396  CMP AX,word ptr [BP + -0x30]
+1000:3399  JLE 0x1000:339e
+1000:339b  JMP 0x1000:34a2
+1000:339e  MOV word ptr [BP + -0xe],AX
+1000:33a1  JMP 0x1000:33a6
+1000:33a3  INC word ptr [BP + -0xe]
+1000:33a6  CMP word ptr [BP + -0xe],-0x1
+1000:33aa  JG 0x1000:33af
+1000:33ac  JMP 0x1000:3497
+1000:33af  CMP word ptr [BP + -0xe],0x15e
+1000:33b4  JL 0x1000:33b9
+1000:33b6  JMP 0x1000:3497
+1000:33b9  MOV DX,word ptr [BP + -0xc]
+1000:33bc  MOV AX,word ptr [BP + -0xe]
+1000:33bf  SHL AX,0x2
+1000:33c2  LES DI,[0x6674]
+1000:33c6  ADD DI,AX
+1000:33c8  LES DI,ES:[DI]
+1000:33cb  ADD DI,DX
+1000:33cd  MOV AL,byte ptr ES:[DI]
+1000:33d0  MOV AH,0x1
+1000:33d2  MOV DX,0x20
+1000:33d5  CALLF 0x2000:8f31
+1000:33da  MOV DI,DX
+1000:33dc  TEST byte ptr [DI + 0x14e0],AL
+1000:33e0  JZ 0x1000:342d
+1000:33e2  MOV AX,word ptr [BP + -0xc]
+1000:33e5  ADD AX,0x3
+1000:33e8  MOV DX,AX
+1000:33ea  MOV AX,word ptr [BP + -0xe]
+1000:33ed  SUB AX,0x3
+1000:33f0  SHL AX,0x2
+1000:33f3  LES DI,[0x6674]
+1000:33f7  ADD DI,AX
+1000:33f9  LES DI,ES:[DI]
+1000:33fc  ADD DI,DX
+1000:33fe  MOV AL,byte ptr ES:[DI]
+1000:3401  MOV AH,0x1
+1000:3403  MOV DX,0x20
+1000:3406  CALLF 0x2000:8f31
+1000:340b  MOV DI,DX
+1000:340d  TEST byte ptr [DI + 0x6604],AL
+1000:3411  JZ 0x1000:342d
+1000:3413  MOV DX,word ptr [BP + -0xc]
+1000:3416  MOV AX,word ptr [BP + -0xe]
+1000:3419  SHL AX,0x2
+1000:341c  LES DI,[0x6674]
+1000:3420  ADD DI,AX
+1000:3422  LES DI,ES:[DI]
+1000:3425  ADD DI,DX
+1000:3427  ADD byte ptr ES:[DI],0x4
+1000:342b  JMP 0x1000:3497
+1000:342d  MOV DX,word ptr [BP + -0xc]
+1000:3430  MOV AX,word ptr [BP + -0xe]
+1000:3433  SHL AX,0x2
+1000:3436  LES DI,[0x6674]
+1000:343a  ADD DI,AX
+1000:343c  LES DI,ES:[DI]
+1000:343f  ADD DI,DX
+1000:3441  MOV AL,byte ptr ES:[DI]
+1000:3444  CMP AL,0xa4
+1000:3446  JC 0x1000:3497
+1000:3448  CMP AL,0xa7
+1000:344a  JA 0x1000:3497
+1000:344c  MOV AX,word ptr [BP + -0xc]
+1000:344f  ADD AX,0x3
+1000:3452  MOV DX,AX
+1000:3454  MOV AX,word ptr [BP + -0xe]
+1000:3457  SUB AX,0x3
+1000:345a  SHL AX,0x2
+1000:345d  LES DI,[0x6674]
+1000:3461  ADD DI,AX
+1000:3463  LES DI,ES:[DI]
+1000:3466  ADD DI,DX
+1000:3468  MOV AL,byte ptr ES:[DI]
+1000:346b  NOT AL
+1000:346d  MOV AH,0x1
+1000:346f  MOV DX,0x20
+1000:3472  CALLF 0x2000:8f31
+1000:3477  MOV DI,DX
+1000:3479  TEST byte ptr [DI + 0x6604],AL
+1000:347d  JZ 0x1000:3497
+1000:347f  MOV DX,word ptr [BP + -0xc]
+1000:3482  MOV AX,word ptr [BP + -0xe]
+1000:3485  SHL AX,0x2
+1000:3488  LES DI,[0x6674]
+1000:348c  ADD DI,AX
+1000:348e  LES DI,ES:[DI]
+1000:3491  ADD DI,DX
+1000:3493  SUB byte ptr ES:[DI],0x4
+1000:3497  MOV AX,word ptr [BP + -0xe]
+1000:349a  CMP AX,word ptr [BP + -0x30]
+1000:349d  JZ 0x1000:34a2
+1000:349f  JMP 0x1000:33a3
+1000:34a2  MOV AX,word ptr [BP + -0xc]
+1000:34a5  CMP AX,word ptr [BP + -0x2e]
+1000:34a8  JZ 0x1000:34ad
+1000:34aa  JMP 0x1000:336c
+1000:34ad  LES DI,[BP + -0x2c]
+1000:34b0  MOV byte ptr ES:[DI + 0x9f],0x0
+1000:34b6  CMP byte ptr [0x4b8],0x0
+1000:34bb  JZ 0x1000:34ce
+1000:34bd  PUSH word ptr [0x678e]
+1000:34c1  PUSH word ptr [0x678c]
+1000:34c5  PUSH 0x16
+1000:34c7  PUSH 0x0
+1000:34c9  CALLF 0x2000:3f1c
+1000:34ce  LES DI,[BP + -0x2c]
+1000:34d1  MOV byte ptr ES:[DI + 0x9a],0x1
+1000:34d7  MOV byte ptr ES:[DI + 0x99],0x0
+1000:34dd  XOR AX,AX
+1000:34df  MOV word ptr ES:[DI + 0x30],AX
+1000:34e3  MOV word ptr ES:[DI + 0x32],AX
+1000:34e7  XOR AX,AX
+1000:34e9  MOV word ptr ES:[DI + 0x34],AX
+1000:34ed  MOV word ptr ES:[DI + 0x36],AX
+1000:34f1  MOV DI,word ptr [BP + -0x2]
+1000:34f4  SHL DI,0x1
+1000:34f6  MOV AX,word ptr [DI + 0x66e8]
+1000:34fa  LES DI,[BP + -0x2c]
+1000:34fd  MOV word ptr ES:[DI + 0x50],AX
+1000:3501  MOV DI,word ptr [BP + -0x2]
+1000:3504  CMP byte ptr [DI + 0x66a7],0x0
+1000:3509  JNZ 0x1000:350e
+1000:350b  JMP 0x1000:3d2e
+1000:350e  MOV AX,word ptr [BP + -0x2]
+1000:3511  XOR AX,0x1
+1000:3514  MOV word ptr [BP + -0x6],AX
+1000:3517  LES DI,[BP + -0x2c]
+1000:351a  MOV AX,word ptr ES:[DI + 0x4e]
+1000:351e  SHL AX,0x1
+1000:3520  ADD DI,AX
+1000:3522  MOV DI,word ptr ES:[DI + 0x73]
+1000:3526  SHL DI,0x1
+1000:3528  CMP word ptr [DI + 0x1014],0x0
+1000:352d  JLE 0x1000:359c
+1000:352f  LES DI,[BP + -0x2c]
+1000:3532  MOV AX,word ptr ES:[DI + 0x4e]
+1000:3536  SHL AX,0x1
+1000:3538  ADD DI,AX
+1000:353a  MOV DI,word ptr ES:[DI + 0x73]
+1000:353e  SHL DI,0x1
+1000:3540  CMP word ptr [DI + 0x1014],0x1f4
+1000:3546  JGE 0x1000:359c
+1000:3548  LES DI,[BP + -0x2c]
+1000:354b  MOV AX,word ptr ES:[DI + 0x4e]
+1000:354f  SHL AX,0x1
+1000:3551  ADD DI,AX
+1000:3553  MOV DI,word ptr ES:[DI + 0x73]
+1000:3557  SHL DI,0x1
+1000:3559  MOV AX,word ptr [DI + 0x1064]
+1000:355d  SHR AX,0x1
+1000:355f  MOV DX,AX
+1000:3561  LES DI,[BP + -0x2c]
+1000:3564  MOV AX,word ptr ES:[DI + 0x4e]
+1000:3568  SHL AX,0x1
+1000:356a  ADD DI,AX
+1000:356c  MOV DI,word ptr ES:[DI + 0x73]
+1000:3570  SHL DI,0x1
+1000:3572  MOV AX,word ptr [DI + 0x1014]
+1000:3576  SUB AX,DX
+1000:3578  MOV DX,AX
+1000:357a  LES DI,[BP + -0x2c]
+1000:357d  MOV AX,word ptr ES:[DI + 0x4e]
+1000:3581  SHL AX,0x1
+1000:3583  ADD DI,AX
+1000:3585  MOV DI,word ptr ES:[DI + 0x73]
+1000:3589  SHL DI,0x1
+1000:358b  MOV AX,word ptr [DI + 0xbdc]
+1000:358f  MUL DX
+1000:3591  CWD
+1000:3592  MOV CX,0x82
+1000:3595  IDIV CX
+1000:3597  MOV word ptr [BP + -0x10],AX
+1000:359a  JMP 0x1000:35d3
+1000:359c  LES DI,[BP + -0x2c]
+1000:359f  MOV AX,word ptr ES:[DI + 0x4e]
+1000:35a3  SHL AX,0x1
+1000:35a5  ADD DI,AX
+1000:35a7  MOV DI,word ptr ES:[DI + 0x73]
+1000:35ab  SHL DI,0x1
+1000:35ad  MOV AX,word ptr [DI + 0xac4]
+1000:35b1  CWD
+1000:35b2  MOV CX,0xa
+1000:35b5  IDIV CX
+1000:35b7  MOV DX,AX
+1000:35b9  LES DI,[BP + -0x2c]
+1000:35bc  MOV AX,word ptr ES:[DI + 0x4e]
+1000:35c0  SHL AX,0x1
+1000:35c2  ADD DI,AX
+1000:35c4  MOV DI,word ptr ES:[DI + 0x73]
+1000:35c8  SHL DI,0x1
+1000:35ca  MOV AX,word ptr [DI + 0xbdc]
+1000:35ce  SUB AX,DX
+1000:35d0  MOV word ptr [BP + -0x10],AX
+1000:35d3  CMP word ptr [BP + -0x10],0x5a
+1000:35d7  JGE 0x1000:35de
+1000:35d9  MOV word ptr [BP + -0x10],0x5a
+1000:35de  LES DI,[BP + -0x2c]
+1000:35e1  MOV AX,word ptr ES:[DI + 0x6]
+1000:35e5  CWD
+1000:35e6  PUSH DX
+1000:35e7  PUSH AX
+1000:35e8  MOV AX,word ptr ES:[DI + 0xa]
+1000:35ec  CWD
+1000:35ed  PUSH DX
+1000:35ee  PUSH AX
+1000:35ef  IMUL AX,word ptr [BP + -0x6],0xaa
+1000:35f4  LES DI,[0x6670]
+1000:35f8  ADD DI,AX
+1000:35fa  MOV AX,word ptr ES:[DI + 0x6]
+1000:35fe  CWD
+1000:35ff  PUSH DX
+1000:3600  PUSH AX
+1000:3601  IMUL AX,word ptr [BP + -0x6],0xaa
+1000:3606  LES DI,[0x6670]
+1000:360a  ADD DI,AX
+1000:360c  MOV AX,word ptr ES:[DI + 0xa]
+1000:3610  CWD
+1000:3611  PUSH DX
+1000:3612  PUSH AX
+1000:3613  CALLF 0x2000:02c0
+1000:3618  MOV word ptr [BP + -0x12],AX
+1000:361b  MOV AX,word ptr [BP + -0x12]
+1000:361e  CMP AX,word ptr [BP + -0x10]
+1000:3621  JLE 0x1000:362e
+1000:3623  LES DI,[BP + -0x2c]
+1000:3626  CMP byte ptr ES:[DI + 0x9a],0x0
+1000:362c  JNZ 0x1000:3679
+1000:362e  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3632  MOV AL,byte ptr [DI + 0x6724]
+1000:3636  XOR AH,AH
+1000:3638  MOV DI,AX
+1000:363a  MOV AL,byte ptr [DI + 0x783b]
+1000:363e  CBW
+1000:363f  IMUL DI,AX,0xe
+1000:3642  PUSH word ptr [DI + 0x78]
+1000:3646  CALLF 0x2000:9424
+1000:364b  OR AX,AX
+1000:364d  JNZ 0x1000:3677
+1000:364f  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3653  MOV AL,byte ptr [DI + 0x6724]
+1000:3657  XOR AH,AH
+1000:3659  MOV DI,AX
+1000:365b  CMP byte ptr [DI + 0x783b],0x0
+1000:3660  MOV AL,0x0
+1000:3662  JNZ 0x1000:3665
+1000:3664  INC AX
+1000:3665  MOV DL,AL
+1000:3667  IMUL DI,word ptr [BP + -0x2],0x7
+1000:366b  MOV AL,byte ptr [DI + 0x6724]
+1000:366f  XOR AH,AH
+1000:3671  MOV DI,AX
+1000:3673  MOV byte ptr [DI + 0x783b],DL
+1000:3677  JMP 0x1000:368a
+1000:3679  IMUL DI,word ptr [BP + -0x2],0x7
+1000:367d  MOV AL,byte ptr [DI + 0x6724]
+1000:3681  XOR AH,AH
+1000:3683  MOV DI,AX
+1000:3685  MOV byte ptr [DI + 0x783b],0x0
+1000:368a  MOV word ptr [BP + -0x4],0x5
+1000:368f  JMP 0x1000:3694
+1000:3691  INC word ptr [BP + -0x4]
+1000:3694  MOV AX,word ptr [BP + -0x4]
+1000:3697  SHL AX,0x1
+1000:3699  MOV DX,AX
+1000:369b  MOV AX,word ptr [BP + -0x4]
+1000:369e  IMUL DI,word ptr [BP + -0x2],0x7
+1000:36a2  ADD DI,AX
+1000:36a4  MOV AL,byte ptr [DI + 0x6720]
+1000:36a8  XOR AH,AH
+1000:36aa  MOV DI,AX
+1000:36ac  MOV AL,byte ptr [DI + 0x783b]
+1000:36b0  CBW
+1000:36b1  IMUL DI,AX,0xe
+1000:36b4  ADD DI,DX
+1000:36b6  PUSH word ptr [DI + 0x70]
+1000:36ba  CALLF 0x2000:9424
+1000:36bf  OR AX,AX
+1000:36c1  JNZ 0x1000:36f5
+1000:36c3  MOV AX,word ptr [BP + -0x4]
+1000:36c6  IMUL DI,word ptr [BP + -0x2],0x7
+1000:36ca  ADD DI,AX
+1000:36cc  MOV AL,byte ptr [DI + 0x6720]
+1000:36d0  XOR AH,AH
+1000:36d2  MOV DI,AX
+1000:36d4  CMP byte ptr [DI + 0x783b],0x0
+1000:36d9  MOV AL,0x0
+1000:36db  JNZ 0x1000:36de
+1000:36dd  INC AX
+1000:36de  MOV DL,AL
+1000:36e0  MOV AX,word ptr [BP + -0x4]
+1000:36e3  IMUL DI,word ptr [BP + -0x2],0x7
+1000:36e7  ADD DI,AX
+1000:36e9  MOV AL,byte ptr [DI + 0x6720]
+1000:36ed  XOR AH,AH
+1000:36ef  MOV DI,AX
+1000:36f1  MOV byte ptr [DI + 0x783b],DL
+1000:36f5  CMP word ptr [BP + -0x4],0x6
+1000:36f9  JNZ 0x1000:3691
+1000:36fb  IMUL AX,word ptr [BP + -0x6],0xaa
+1000:3700  LES DI,[0x6670]
+1000:3704  ADD DI,AX
+1000:3706  MOV AX,word ptr ES:[DI + 0x6]
+1000:370a  LES DI,[BP + -0x2c]
+1000:370d  SUB AX,word ptr ES:[DI + 0x6]
+1000:3711  MOV word ptr [BP + -0xc],AX
+1000:3714  IMUL AX,word ptr [BP + -0x6],0xaa
+1000:3719  LES DI,[0x6670]
+1000:371d  ADD DI,AX
+1000:371f  MOV AX,word ptr ES:[DI + 0xa]
+1000:3723  LES DI,[BP + -0x2c]
+1000:3726  SUB AX,word ptr ES:[DI + 0xa]
+1000:372a  MOV word ptr [BP + -0xe],AX
+1000:372d  IMUL AX,word ptr [BP + -0x6],0xaa
+1000:3732  LES DI,[0x6670]
+1000:3736  ADD DI,AX
+1000:3738  MOV AX,word ptr ES:[DI + 0x4]
+1000:373c  MOV DX,word ptr ES:[DI + 0x6]
+1000:3740  LES DI,[BP + -0x2c]
+1000:3743  SUB AX,word ptr ES:[DI + 0x4]
+1000:3747  SBB DX,word ptr ES:[DI + 0x6]
+1000:374b  MOV word ptr [BP + -0x1e],AX
+1000:374e  MOV word ptr [BP + -0x1c],DX
+1000:3751  IMUL AX,word ptr [BP + -0x6],0xaa
+1000:3756  LES DI,[0x6670]
+1000:375a  ADD DI,AX
+1000:375c  MOV AX,word ptr ES:[DI + 0x8]
+1000:3760  MOV DX,word ptr ES:[DI + 0xa]
+1000:3764  LES DI,[BP + -0x2c]
+1000:3767  SUB AX,word ptr ES:[DI + 0x8]
+1000:376b  SBB DX,word ptr ES:[DI + 0xa]
+1000:376f  MOV word ptr [BP + -0x22],AX
+1000:3772  MOV word ptr [BP + -0x20],DX
+1000:3775  CMP word ptr [BP + -0x12],0x0
+1000:3779  JLE 0x1000:37af
+1000:377b  MOV AX,word ptr [BP + -0x12]
+1000:377e  CWD
+1000:377f  MOV CX,AX
+1000:3781  MOV BX,DX
+1000:3783  MOV AX,word ptr [BP + -0x1e]
+1000:3786  MOV DX,word ptr [BP + -0x1c]
+1000:3789  CALLF 0x2000:8b8d
+1000:378e  MOV word ptr [BP + -0x1e],AX
+1000:3791  MOV word ptr [BP + -0x1c],DX
+1000:3794  MOV AX,word ptr [BP + -0x12]
+1000:3797  CWD
+1000:3798  MOV CX,AX
+1000:379a  MOV BX,DX
+1000:379c  MOV AX,word ptr [BP + -0x22]
+1000:379f  MOV DX,word ptr [BP + -0x20]
+1000:37a2  CALLF 0x2000:8b8d
+1000:37a7  MOV word ptr [BP + -0x22],AX
+1000:37aa  MOV word ptr [BP + -0x20],DX
+1000:37ad  JMP 0x1000:37bf
+1000:37af  XOR AX,AX
+1000:37b1  MOV word ptr [BP + -0x1e],AX
+1000:37b4  MOV word ptr [BP + -0x1c],AX
+1000:37b7  XOR AX,AX
+1000:37b9  MOV word ptr [BP + -0x22],AX
+1000:37bc  MOV word ptr [BP + -0x20],AX
+1000:37bf  XOR AX,AX
+1000:37c1  MOV word ptr [BP + -0x6],AX
+1000:37c4  INC word ptr [BP + -0x6]
+1000:37c7  CMP word ptr [BP + -0x6],0x7f
+1000:37cb  JG 0x1000:3823
+1000:37cd  MOV DI,word ptr [BP + -0x6]
+1000:37d0  SHL DI,0x3
+1000:37d3  MOV AX,word ptr [DI + 0x159e]
+1000:37d7  MOV DX,word ptr [DI + 0x15a0]
+1000:37db  SUB AX,word ptr [BP + -0x1e]
+1000:37de  SBB DX,word ptr [BP + -0x1c]
+1000:37e1  OR DX,DX
+1000:37e3  JNS 0x1000:37ec
+1000:37e5  NOT DX
+1000:37e7  NEG AX
+1000:37e9  SBB DX,-0x1
+1000:37ec  CMP DX,0x0
+1000:37ef  JL 0x1000:37f8
+1000:37f1  JG 0x1000:37c4
+1000:37f3  CMP AX,0xc00
+1000:37f6  JNC 0x1000:37c4
+1000:37f8  MOV DI,word ptr [BP + -0x6]
+1000:37fb  SHL DI,0x3
+1000:37fe  MOV AX,word ptr [DI + 0x15a2]
+1000:3802  MOV DX,word ptr [DI + 0x15a4]
+1000:3806  SUB AX,word ptr [BP + -0x22]
+1000:3809  SBB DX,word ptr [BP + -0x20]
+1000:380c  OR DX,DX
+1000:380e  JNS 0x1000:3817
+1000:3810  NOT DX
+1000:3812  NEG AX
+1000:3814  SBB DX,-0x1
+1000:3817  CMP DX,0x0
+1000:381a  JL 0x1000:3823
+1000:381c  JG 0x1000:37c4
+1000:381e  CMP AX,0xc00
+1000:3821  JNC 0x1000:37c4
+1000:3823  CMP word ptr [BP + -0x6],0x0
+1000:3827  JZ 0x1000:3833
+1000:3829  CMP word ptr [BP + -0x6],0x80
+1000:382e  JZ 0x1000:3833
+1000:3830  JMP 0x1000:398d
+1000:3833  CMP word ptr [BP + -0xc],0x0
+1000:3837  JG 0x1000:383c
+1000:3839  JMP 0x1000:38e6
+1000:383c  CMP word ptr [BP + -0xe],0x0
+1000:3840  JGE 0x1000:38a5
+1000:3842  MOV AX,word ptr [BP + -0xc]
+1000:3845  CWD
+1000:3846  XOR AX,DX
+1000:3848  SUB AX,DX
+1000:384a  MOV CX,AX
+1000:384c  MOV AX,word ptr [BP + -0xe]
+1000:384f  CWD
+1000:3850  XOR AX,DX
+1000:3852  SUB AX,DX
+1000:3854  CMP AX,CX
+1000:3856  JLE 0x1000:3865
+1000:3858  PUSH 0x10
+1000:385a  CALLF 0x2000:9424
+1000:385f  ADD AX,0x40
+1000:3862  MOV word ptr [BP + -0x6],AX
+1000:3865  MOV AX,word ptr [BP + -0xe]
+1000:3868  CWD
+1000:3869  XOR AX,DX
+1000:386b  SUB AX,DX
+1000:386d  MOV CX,AX
+1000:386f  MOV AX,word ptr [BP + -0xc]
+1000:3872  CWD
+1000:3873  XOR AX,DX
+1000:3875  SUB AX,DX
+1000:3877  CMP AX,CX
+1000:3879  JLE 0x1000:3888
+1000:387b  PUSH 0x10
+1000:387d  CALLF 0x2000:9424
+1000:3882  ADD AX,0x50
+1000:3885  MOV word ptr [BP + -0x6],AX
+1000:3888  MOV AX,word ptr [BP + -0xe]
+1000:388b  CWD
+1000:388c  XOR AX,DX
+1000:388e  SUB AX,DX
+1000:3890  MOV CX,AX
+1000:3892  MOV AX,word ptr [BP + -0xc]
+1000:3895  CWD
+1000:3896  XOR AX,DX
+1000:3898  SUB AX,DX
+1000:389a  CMP AX,CX
+1000:389c  JNZ 0x1000:38a3
+1000:389e  MOV word ptr [BP + -0x6],0x50
+1000:38a3  JMP 0x1000:38e3
+1000:38a5  MOV AX,word ptr [BP + -0xe]
+1000:38a8  CWD
+1000:38a9  XOR AX,DX
+1000:38ab  SUB AX,DX
+1000:38ad  MOV CX,AX
+1000:38af  MOV AX,word ptr [BP + -0xc]
+1000:38b2  CWD
+1000:38b3  XOR AX,DX
+1000:38b5  SUB AX,DX
+1000:38b7  CMP AX,CX
+1000:38b9  JLE 0x1000:38c8
+1000:38bb  PUSH 0x10
+1000:38bd  CALLF 0x2000:9424
+1000:38c2  ADD AX,0x60
+1000:38c5  MOV word ptr [BP + -0x6],AX
+1000:38c8  MOV AX,word ptr [BP + -0xc]
+1000:38cb  CWD
+1000:38cc  XOR AX,DX
+1000:38ce  SUB AX,DX
+1000:38d0  MOV CX,AX
+1000:38d2  MOV AX,word ptr [BP + -0xe]
+1000:38d5  CWD
+1000:38d6  XOR AX,DX
+1000:38d8  SUB AX,DX
+1000:38da  CMP AX,CX
+1000:38dc  JL 0x1000:38e3
+1000:38de  MOV word ptr [BP + -0x6],0x74
+1000:38e3  JMP 0x1000:398d
+1000:38e6  CMP word ptr [BP + -0xe],0x0
+1000:38ea  JGE 0x1000:394f
+1000:38ec  MOV AX,word ptr [BP + -0xc]
+1000:38ef  CWD
+1000:38f0  XOR AX,DX
+1000:38f2  SUB AX,DX
+1000:38f4  MOV CX,AX
+1000:38f6  MOV AX,word ptr [BP + -0xe]
+1000:38f9  CWD
+1000:38fa  XOR AX,DX
+1000:38fc  SUB AX,DX
+1000:38fe  CMP AX,CX
+1000:3900  JLE 0x1000:390f
+1000:3902  PUSH 0x10
+1000:3904  CALLF 0x2000:9424
+1000:3909  ADD AX,0x30
+1000:390c  MOV word ptr [BP + -0x6],AX
+1000:390f  MOV AX,word ptr [BP + -0xe]
+1000:3912  CWD
+1000:3913  XOR AX,DX
+1000:3915  SUB AX,DX
+1000:3917  MOV CX,AX
+1000:3919  MOV AX,word ptr [BP + -0xc]
+1000:391c  CWD
+1000:391d  XOR AX,DX
+1000:391f  SUB AX,DX
+1000:3921  CMP AX,CX
+1000:3923  JLE 0x1000:3932
+1000:3925  PUSH 0x10
+1000:3927  CALLF 0x2000:9424
+1000:392c  ADD AX,0x20
+1000:392f  MOV word ptr [BP + -0x6],AX
+1000:3932  MOV AX,word ptr [BP + -0xe]
+1000:3935  CWD
+1000:3936  XOR AX,DX
+1000:3938  SUB AX,DX
+1000:393a  MOV CX,AX
+1000:393c  MOV AX,word ptr [BP + -0xc]
+1000:393f  CWD
+1000:3940  XOR AX,DX
+1000:3942  SUB AX,DX
+1000:3944  CMP AX,CX
+1000:3946  JNZ 0x1000:394d
+1000:3948  MOV word ptr [BP + -0x6],0x38
+1000:394d  JMP 0x1000:398d
+1000:394f  MOV AX,word ptr [BP + -0xe]
+1000:3952  CWD
+1000:3953  XOR AX,DX
+1000:3955  SUB AX,DX
+1000:3957  MOV CX,AX
+1000:3959  MOV AX,word ptr [BP + -0xc]
+1000:395c  CWD
+1000:395d  XOR AX,DX
+1000:395f  SUB AX,DX
+1000:3961  CMP AX,CX
+1000:3963  JLE 0x1000:3972
+1000:3965  PUSH 0x10
+1000:3967  CALLF 0x2000:9424
+1000:396c  ADD AX,0xc
+1000:396f  MOV word ptr [BP + -0x6],AX
+1000:3972  MOV AX,word ptr [BP + -0xc]
+1000:3975  CWD
+1000:3976  XOR AX,DX
+1000:3978  SUB AX,DX
+1000:397a  MOV CX,AX
+1000:397c  MOV AX,word ptr [BP + -0xe]
+1000:397f  CWD
+1000:3980  XOR AX,DX
+1000:3982  SUB AX,DX
+1000:3984  CMP AX,CX
+1000:3986  JL 0x1000:398d
+1000:3988  MOV word ptr [BP + -0x6],0xc
+1000:398d  MOV AX,word ptr [BP + -0x12]
+1000:3990  CMP AX,word ptr [BP + -0x10]
+1000:3993  JL 0x1000:3998
+1000:3995  JMP 0x1000:3a56
+1000:3998  CMP word ptr [BP + -0x6],0x40
+1000:399c  JGE 0x1000:39f7
+1000:399e  LES DI,[BP + -0x2c]
+1000:39a1  MOV AX,word ptr ES:[DI + 0x4e]
+1000:39a5  SHL AX,0x1
+1000:39a7  ADD DI,AX
+1000:39a9  MOV DI,word ptr ES:[DI + 0x73]
+1000:39ad  SHL DI,0x1
+1000:39af  INT 0x3b
+1000:39b1  TEST SP,AX
+1000:39b3  OR AL,AH
+1000:39b5  JLE 0x1000:398b
+1000:39b7  MOV AX,word ptr ES:[DI + 0x4e]
+1000:39bb  SHL AX,0x1
+1000:39bd  ADD DI,AX
+1000:39bf  MOV DI,word ptr ES:[DI + 0x73]
+1000:39c3  SHL DI,0x1
+1000:39c5  INT 0x3b
+1000:39c7  TEST SP,BX
+1000:39c9  OR CX,BP
+1000:39cb  CMP BH,CL
+1000:39cd  INT 0x3b
+1000:39cf  INC SI
+1000:39d0  OUT DX,AL
+1000:39d1  INT 0x3b
+1000:39d3  INC SI
+1000:39ea  INC SI
+1000:39eb  CLI
+1000:39ec  CMP word ptr [BP + -0x6],0x40
+1000:39f0  JLE 0x1000:39f7
+1000:39f2  MOV word ptr [BP + -0x6],0x40
+1000:39f7  CMP word ptr [BP + -0x6],0x40
+1000:39fb  JLE 0x1000:3a56
+1000:39fd  LES DI,[BP + -0x2c]
+1000:3a00  MOV AX,word ptr ES:[DI + 0x4e]
+1000:3a04  SHL AX,0x1
+1000:3a06  ADD DI,AX
+1000:3a08  MOV DI,word ptr ES:[DI + 0x73]
+1000:3a0c  SHL DI,0x1
+1000:3a0e  INT 0x3b
+1000:3a10  TEST SP,AX
+1000:3a12  OR AL,AH
+1000:3a14  JLE 0x1000:39ea
+1000:3a16  MOV AX,word ptr ES:[DI + 0x4e]
+1000:3a1a  SHL AX,0x1
+1000:3a1c  ADD DI,AX
+1000:3a1e  MOV DI,word ptr ES:[DI + 0x73]
+1000:3a22  SHL DI,0x1
+1000:3a24  INT 0x3b
+1000:3a26  TEST SP,BX
+1000:3a28  OR CX,BP
+1000:3a2a  CMP BH,CL
+1000:3a2c  INT 0x3b
+1000:3a2e  INC SI
+1000:3a2f  OUT DX,AL
+1000:3a30  INT 0x3b
+1000:3a32  INC SI
+1000:3a56  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3a5a  MOV AL,byte ptr [DI + 0x6725]
+1000:3a5e  XOR AH,AH
+1000:3a60  MOV DI,AX
+1000:3a62  CMP byte ptr [DI + 0x783b],0x0
+1000:3a67  JNZ 0x1000:3a6c
+1000:3a69  JMP 0x1000:3b8b
+1000:3a6c  MOV word ptr [BP + -0x4],0x2
+1000:3a71  JMP 0x1000:3a76
+1000:3a73  INC word ptr [BP + -0x4]
+1000:3a76  MOV AX,word ptr [BP + -0x4]
+1000:3a79  SHL AX,0x1
+1000:3a7b  MOV DX,AX
+1000:3a7d  MOV AX,word ptr [BP + -0x4]
+1000:3a80  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3a84  ADD DI,AX
+1000:3a86  MOV AL,byte ptr [DI + 0x6720]
+1000:3a8a  XOR AH,AH
+1000:3a8c  MOV DI,AX
+1000:3a8e  MOV AL,byte ptr [DI + 0x783b]
+1000:3a92  CBW
+1000:3a93  IMUL DI,AX,0xe
+1000:3a96  ADD DI,DX
+1000:3a98  PUSH word ptr [DI + 0x70]
+1000:3a9c  CALLF 0x2000:9424
+1000:3aa1  OR AX,AX
+1000:3aa3  JNZ 0x1000:3ad7
+1000:3aa5  MOV AX,word ptr [BP + -0x4]
+1000:3aa8  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3aac  ADD DI,AX
+1000:3aae  MOV AL,byte ptr [DI + 0x6720]
+1000:3ab2  XOR AH,AH
+1000:3ab4  MOV DI,AX
+1000:3ab6  CMP byte ptr [DI + 0x783b],0x0
+1000:3abb  MOV AL,0x0
+1000:3abd  JNZ 0x1000:3ac0
+1000:3abf  INC AX
+1000:3ac0  MOV DL,AL
+1000:3ac2  MOV AX,word ptr [BP + -0x4]
+1000:3ac5  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3ac9  ADD DI,AX
+1000:3acb  MOV AL,byte ptr [DI + 0x6720]
+1000:3acf  XOR AH,AH
+1000:3ad1  MOV DI,AX
+1000:3ad3  MOV byte ptr [DI + 0x783b],DL
+1000:3ad7  CMP word ptr [BP + -0x4],0x3
+1000:3adb  JNZ 0x1000:3a73
+1000:3add  LES DI,[BP + -0x2c]
+1000:3ae0  CMP byte ptr ES:[DI + 0x9c],0x0
+1000:3ae6  JZ 0x1000:3b62
+1000:3ae8  CMP byte ptr ES:[DI + 0xc],0x0
+1000:3aed  JZ 0x1000:3b62
+1000:3aef  XOR AX,AX
+1000:3af1  MOV word ptr [BP + -0x4],AX
+1000:3af4  JMP 0x1000:3af9
+1000:3af6  INC word ptr [BP + -0x4]
+1000:3af9  MOV AX,word ptr [BP + -0x4]
+1000:3afc  SHL AX,0x1
+1000:3afe  MOV DX,AX
+1000:3b00  MOV AX,word ptr [BP + -0x4]
+1000:3b03  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3b07  ADD DI,AX
+1000:3b09  MOV AL,byte ptr [DI + 0x6720]
+1000:3b0d  XOR AH,AH
+1000:3b0f  MOV DI,AX
+1000:3b11  MOV AL,byte ptr [DI + 0x783b]
+1000:3b15  CBW
+1000:3b16  IMUL DI,AX,0xe
+1000:3b19  ADD DI,DX
+1000:3b1b  PUSH word ptr [DI + 0x70]
+1000:3b1f  CALLF 0x2000:9424
+1000:3b24  OR AX,AX
+1000:3b26  JNZ 0x1000:3b5a
+1000:3b28  MOV AX,word ptr [BP + -0x4]
+1000:3b2b  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3b2f  ADD DI,AX
+1000:3b31  MOV AL,byte ptr [DI + 0x6720]
+1000:3b35  XOR AH,AH
+1000:3b37  MOV DI,AX
+1000:3b39  CMP byte ptr [DI + 0x783b],0x0
+1000:3b3e  MOV AL,0x0
+1000:3b40  JNZ 0x1000:3b43
+1000:3b42  INC AX
+1000:3b43  MOV DL,AL
+1000:3b45  MOV AX,word ptr [BP + -0x4]
+1000:3b48  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3b4c  ADD DI,AX
+1000:3b4e  MOV AL,byte ptr [DI + 0x6720]
+1000:3b52  XOR AH,AH
+1000:3b54  MOV DI,AX
+1000:3b56  MOV byte ptr [DI + 0x783b],DL
+1000:3b5a  CMP word ptr [BP + -0x4],0x1
+1000:3b5e  JNZ 0x1000:3af6
+1000:3b60  JMP 0x1000:3b88
+1000:3b62  XOR AX,AX
+1000:3b64  MOV word ptr [BP + -0x4],AX
+1000:3b67  JMP 0x1000:3b6c
+1000:3b69  INC word ptr [BP + -0x4]
+1000:3b6c  MOV AX,word ptr [BP + -0x4]
+1000:3b6f  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3b73  ADD DI,AX
+1000:3b75  MOV AL,byte ptr [DI + 0x6720]
+1000:3b79  XOR AH,AH
+1000:3b7b  MOV DI,AX
+1000:3b7d  MOV byte ptr [DI + 0x783b],0x0
+1000:3b82  CMP word ptr [BP + -0x4],0x1
+1000:3b86  JNZ 0x1000:3b69
+1000:3b88  JMP 0x1000:3d2e
+1000:3b8b  MOV AX,word ptr [BP + -0x12]
+1000:3b8e  CMP AX,word ptr [BP + -0x10]
+1000:3b91  JLE 0x1000:3b99
+1000:3b93  CMP word ptr [BP + -0xc],0x0
+1000:3b97  JGE 0x1000:3b9d
+1000:3b99  MOV AL,0x0
+1000:3b9b  JMP 0x1000:3b9f
+1000:3b9d  MOV AL,0x1
+1000:3b9f  MOV DL,AL
+1000:3ba1  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3ba5  MOV AL,byte ptr [DI + 0x6723]
+1000:3ba9  XOR AH,AH
+1000:3bab  MOV DI,AX
+1000:3bad  MOV byte ptr [DI + 0x783b],DL
+1000:3bb1  MOV AX,word ptr [BP + -0x12]
+1000:3bb4  CMP AX,word ptr [BP + -0x10]
+1000:3bb7  JLE 0x1000:3bbf
+1000:3bb9  CMP word ptr [BP + -0xc],0x0
+1000:3bbd  JLE 0x1000:3bc3
+1000:3bbf  MOV AL,0x0
+1000:3bc1  JMP 0x1000:3bc5
+1000:3bc3  MOV AL,0x1
+1000:3bc5  MOV DL,AL
+1000:3bc7  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3bcb  MOV AL,byte ptr [DI + 0x6722]
+1000:3bcf  XOR AH,AH
+1000:3bd1  MOV DI,AX
+1000:3bd3  MOV byte ptr [DI + 0x783b],DL
+1000:3bd7  LES DI,[BP + -0x2c]
+1000:3bda  CMP byte ptr ES:[DI + 0x9b],0x0
+1000:3be0  JZ 0x1000:3c3f
+1000:3be2  CMP word ptr [BP + -0x6],0x40
+1000:3be6  JGE 0x1000:3bf9
+1000:3be8  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3bec  MOV AL,byte ptr [DI + 0x6722]
+1000:3bf0  XOR AH,AH
+1000:3bf2  MOV DI,AX
+1000:3bf4  MOV byte ptr [DI + 0x783b],0x1
+1000:3bf9  MOV AX,word ptr [BP + -0x6]
+1000:3bfc  INC AX
+1000:3bfd  LES DI,[BP + -0x2c]
+1000:3c00  CMP AX,word ptr ES:[DI + 0x56]
+1000:3c04  MOV AL,0x0
+1000:3c06  JGE 0x1000:3c09
+1000:3c08  INC AX
+1000:3c09  MOV DL,AL
+1000:3c0b  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3c0f  MOV AL,byte ptr [DI + 0x6720]
+1000:3c13  XOR AH,AH
+1000:3c15  MOV DI,AX
+1000:3c17  MOV byte ptr [DI + 0x783b],DL
+1000:3c1b  MOV AX,word ptr [BP + -0x6]
+1000:3c1e  DEC AX
+1000:3c1f  LES DI,[BP + -0x2c]
+1000:3c22  CMP AX,word ptr ES:[DI + 0x56]
+1000:3c26  MOV AL,0x0
+1000:3c28  JLE 0x1000:3c2b
+1000:3c2a  INC AX
+1000:3c2b  MOV DL,AL
+1000:3c2d  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3c31  MOV AL,byte ptr [DI + 0x6721]
+1000:3c35  XOR AH,AH
+1000:3c37  MOV DI,AX
+1000:3c39  MOV byte ptr [DI + 0x783b],DL
+1000:3c3d  JMP 0x1000:3c9a
+1000:3c3f  CMP word ptr [BP + -0x6],0x40
+1000:3c43  JLE 0x1000:3c56
+1000:3c45  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3c49  MOV AL,byte ptr [DI + 0x6723]
+1000:3c4d  XOR AH,AH
+1000:3c4f  MOV DI,AX
+1000:3c51  MOV byte ptr [DI + 0x783b],0x1
+1000:3c56  MOV AX,word ptr [BP + -0x6]
+1000:3c59  DEC AX
+1000:3c5a  LES DI,[BP + -0x2c]
+1000:3c5d  CMP AX,word ptr ES:[DI + 0x56]
+1000:3c61  MOV AL,0x0
+1000:3c63  JLE 0x1000:3c66
+1000:3c65  INC AX
+1000:3c66  MOV DL,AL
+1000:3c68  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3c6c  MOV AL,byte ptr [DI + 0x6720]
+1000:3c70  XOR AH,AH
+1000:3c72  MOV DI,AX
+1000:3c74  MOV byte ptr [DI + 0x783b],DL
+1000:3c78  MOV AX,word ptr [BP + -0x6]
+1000:3c7b  INC AX
+1000:3c7c  LES DI,[BP + -0x2c]
+1000:3c7f  CMP AX,word ptr ES:[DI + 0x56]
+1000:3c83  MOV AL,0x0
+1000:3c85  JGE 0x1000:3c88
+1000:3c87  INC AX
+1000:3c88  MOV DL,AL
+1000:3c8a  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3c8e  MOV AL,byte ptr [DI + 0x6721]
+1000:3c92  XOR AH,AH
+1000:3c94  MOV DI,AX
+1000:3c96  MOV byte ptr [DI + 0x783b],DL
+1000:3c9a  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3c9e  MOV AL,byte ptr [DI + 0x6722]
+1000:3ca2  XOR AH,AH
+1000:3ca4  MOV DI,AX
+1000:3ca6  CMP byte ptr [DI + 0x783b],0x0
+1000:3cab  JZ 0x1000:3ce4
+1000:3cad  LES DI,[BP + -0x2c]
+1000:3cb0  CMP byte ptr ES:[DI + 0xa5],0x0
+1000:3cb6  JBE 0x1000:3ce4
+1000:3cb8  CMP byte ptr ES:[DI + 0xa2],0x0
+1000:3cbe  JBE 0x1000:3cd3
+1000:3cc0  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3cc4  MOV AL,byte ptr [DI + 0x6723]
+1000:3cc8  XOR AH,AH
+1000:3cca  MOV DI,AX
+1000:3ccc  MOV byte ptr [DI + 0x783b],0x1
+1000:3cd1  JMP 0x1000:3ce4
+1000:3cd3  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3cd7  MOV AL,byte ptr [DI + 0x6726]
+1000:3cdb  XOR AH,AH
+1000:3cdd  MOV DI,AX
+1000:3cdf  MOV byte ptr [DI + 0x783b],0x1
+1000:3ce4  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3ce8  MOV AL,byte ptr [DI + 0x6723]
+1000:3cec  XOR AH,AH
+1000:3cee  MOV DI,AX
+1000:3cf0  CMP byte ptr [DI + 0x783b],0x0
+1000:3cf5  JZ 0x1000:3d2e
+1000:3cf7  LES DI,[BP + -0x2c]
+1000:3cfa  CMP byte ptr ES:[DI + 0xa3],0x0
+1000:3d00  JBE 0x1000:3d2e
+1000:3d02  CMP byte ptr ES:[DI + 0xa2],0x0
+1000:3d08  JBE 0x1000:3d1d
+1000:3d0a  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3d0e  MOV AL,byte ptr [DI + 0x6722]
+1000:3d12  XOR AH,AH
+1000:3d14  MOV DI,AX
+1000:3d16  MOV byte ptr [DI + 0x783b],0x1
+1000:3d1b  JMP 0x1000:3d2e
+1000:3d1d  IMUL DI,word ptr [BP + -0x2],0x7
+1000:3d21  MOV AL,byte ptr [DI + 0x6726]
+1000:3d25  XOR AH,AH
+1000:3d27  MOV DI,AX
+1000:3d29  MOV byte ptr [DI + 0x783b],0x1
+1000:3d2e  CMP word ptr [BP + -0x2],0x1
+1000:3d32  JZ 0x1000:3d37
+1000:3d34  JMP 0x1000:1101
+1000:3d37  LEAVE
+1000:3d38  RET

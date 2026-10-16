@@ -1,0 +1,21 @@
+; FUN_24dd_3f86  entry=24dd:3f86 size=43
+24dd:3f86  CLD
+24dd:3f87  MOV BX,SP
+24dd:3f89  MOV DX,DS
+24dd:3f8b  LDS SI,SS:[BX + 0x8]
+24dd:3f8f  LES DI,SS:[BX + 0x4]
+24dd:3f93  LODSB SI
+24dd:3f94  MOV AH,byte ptr ES:[DI]
+24dd:3f97  INC DI
+24dd:3f98  MOV CL,AL
+24dd:3f9a  CMP CL,AH
+24dd:3f9c  JBE 0x2000:8d70
+24dd:3f9e  MOV CL,AH
+24dd:3fa0  OR CL,CL
+24dd:3fa2  JZ 0x2000:8d7a
+24dd:3fa4  XOR CH,CH
+24dd:3fa6  CMPSB.REPE ES:DI,SI
+24dd:3fa8  JNZ 0x2000:8d7c
+24dd:3faa  CMP AL,AH
+24dd:3fac  MOV DX,DS
+24dd:3fae  RETF 0x8

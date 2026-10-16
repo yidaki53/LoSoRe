@@ -1,0 +1,18 @@
+; FUN_235c_131a  entry=235c:131a size=43
+235c:131a  PUSH BP
+235c:131b  MOV BP,SP
+235c:131d  CLI
+235c:131e  MOV DX,word ptr [0x67dc]
+235c:1322  IN AL,DX
+235c:1323  OR AL,byte ptr [0x67eb]
+235c:1327  MOV DX,word ptr [0x67dc]
+235c:132b  OUT DX,AL
+235c:132c  MOV AL,[0x67ec]
+235c:132f  PUSH AX
+235c:1330  PUSH word ptr [0x67f4]
+235c:1334  PUSH word ptr [0x67f2]
+235c:1338  CALLF 0x2000:4d44
+235c:133d  STI
+235c:133e  MOV byte ptr [0x67fa],0x0
+235c:1343  LEAVE
+235c:1344  RET

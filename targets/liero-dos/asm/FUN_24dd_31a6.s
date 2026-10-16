@@ -1,0 +1,26 @@
+; FUN_24dd_31a6  entry=24dd:31a6 size=50
+24dd:31a6  WAIT
+24dd:31a7  FXAM
+24dd:31a9  FSTSW word ptr [0x7b40]
+24dd:31ae  WAIT
+24dd:31af  MOV AX,[0x7b40]
+24dd:31b2  TEST AX,0x4500
+24dd:31b5  JZ 0x2000:7f98
+24dd:31b7  TEST AX,0x4000
+24dd:31ba  JZ 0x2000:7fa7
+24dd:31bc  TEST AX,0x400
+24dd:31bf  JZ 0x2000:7fa7
+24dd:31c1  WAIT
+24dd:31c2  FSTP ST0
+24dd:31c4  WAIT
+24dd:31c5  FLDZ
+24dd:31c7  RET
+24dd:31c8  WAIT
+24dd:31c9  FLD extended double ptr CS:[0x2fc3]
+24dd:31ce  WAIT
+24dd:31cf  FXCH
+24dd:31d1  WAIT
+24dd:31d2  FPREM
+24dd:31d4  WAIT
+24dd:31d5  FSTP ST1
+24dd:31d7  RET

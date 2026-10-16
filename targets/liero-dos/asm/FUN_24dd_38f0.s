@@ -1,0 +1,13 @@
+; FUN_24dd_38f0  entry=24dd:38f0 size=30
+24dd:38f0  PUSH BP
+24dd:38f1  MOV BP,SP
+24dd:38f3  LES BX,[BP + 0x6]
+24dd:38f6  MOV AX,0x390e
+24dd:38f9  XOR DX,DX
+24dd:38fb  CALL 0x2000:85bc
+24dd:38fe  JNZ 0x2000:86da
+24dd:3900  CMP word ptr ES:[BX + 0x1a],0x0
+24dd:3905  JZ 0x2000:86da
+24dd:3907  CALL 0x2000:874a
+24dd:390a  POP BP
+24dd:390b  RETF 0x4

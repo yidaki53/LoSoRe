@@ -1,0 +1,5 @@
+; FUN_24dd_022a  entry=24dd:022a size=8
+24dd:022a  ADD AL,0x30
+24dd:022c  CMP AL,0x3a
+24dd:022e  JC 0x2000:5002
+24dd:0230  ADD AL,0x7

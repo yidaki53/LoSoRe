@@ -1,0 +1,46 @@
+; FUN_24dd_047d  entry=24dd:047d size=95
+24dd:047d  MOV AX,DI
+24dd:047f  MOV DX,ES
+24dd:0481  MOV DI,CX
+24dd:0483  MOV BX,ES
+24dd:0485  ADD CX,word ptr ES:[DI + 0x4]
+24dd:0489  ADD BX,word ptr ES:[DI + 0x6]
+24dd:048d  ADD CL,0xf0
+24dd:0490  ADC BX,0x0
+24dd:0493  AND CL,0xf
+24dd:0496  CMP BX,DX
+24dd:0498  JNZ 0x2000:52a4
+24dd:049a  CMP CX,AX
+24dd:049c  JNZ 0x2000:52a4
+24dd:049e  CMP DX,word ptr [0x63f0]
+24dd:04a2  JNZ 0x2000:5283
+24dd:04a4  CMP AX,word ptr [0x63ee]
+24dd:04a8  JNZ 0x2000:5283
+24dd:04aa  MOV word ptr [0x63ee],DI
+24dd:04ae  MOV word ptr [0x63f0],ES
+24dd:04b2  RET
+24dd:04b3  PUSH DS
+24dd:04b4  PUSH DI
+24dd:04b5  MOV SI,AX
+24dd:04b7  MOV DX,DS
+24dd:04b9  CLD
+24dd:04ba  MOVSW ES:DI,SI
+24dd:04bb  MOVSW ES:DI,SI
+24dd:04bc  LODSW SI
+24dd:04bd  XCHG AX,DX
+24dd:04be  LODSW SI
+24dd:04bf  XCHG AX,DX
+24dd:04c0  ADD AX,word ptr ES:[DI]
+24dd:04c3  ADD DX,word ptr ES:[DI + 0x2]
+24dd:04c7  ADD AL,0xf0
+24dd:04c9  ADC DX,0x0
+24dd:04cc  AND AL,0xf
+24dd:04ce  STOSW ES:DI
+24dd:04cf  XCHG AX,DX
+24dd:04d0  STOSW ES:DI
+24dd:04d1  POP DI
+24dd:04d2  POP DS
+24dd:04d3  RET
+24dd:04d4  MOV word ptr ES:[DI],AX
+24dd:04d7  MOV word ptr ES:[DI + 0x2],DX
+24dd:04db  RET

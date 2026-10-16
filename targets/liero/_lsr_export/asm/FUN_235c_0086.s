@@ -1,0 +1,49 @@
+; FUN_235c_0086  entry=235c:0086 size=137
+235c:0086  ENTER 0x6,0x0
+235c:008a  MOV AX,word ptr [BP + 0xc]
+235c:008d  ADD AX,0x6
+235c:0090  MOV [0x67d0],AX
+235c:0093  MOV AX,word ptr [BP + 0xc]
+235c:0096  ADD AX,0xa
+235c:0099  MOV [0x67d2],AX
+235c:009c  MOV AX,word ptr [BP + 0xc]
+235c:009f  ADD AX,0xc
+235c:00a2  MOV [0x67d4],AX
+235c:00a5  MOV AX,word ptr [BP + 0xc]
+235c:00a8  ADD AX,0xe
+235c:00ab  MOV [0x67d6],AX
+235c:00ae  CALL 0x2000:35f6
+235c:00b1  OR AL,AL
+235c:00b3  JNZ 0x2000:367c
+235c:00b5  MOV byte ptr [BP + -0x1],0x0
+235c:00b9  JMP 0x2000:38e7
+235c:00bc  PUSH -0x1f
+235c:00be  CALL 0x2000:35c0
+235c:00c1  CALL 0x2000:35da
+235c:00c4  XOR AH,AH
+235c:00c6  XOR DX,DX
+235c:00c8  CALLF 0x2000:93fe
+235c:00cd  MOV [0x67c6],AX
+235c:00d0  MOV word ptr [0x67c8],BX
+235c:00d4  MOV word ptr [0x67ca],DX
+235c:00d8  MOV AX,[0x67c6]
+235c:00db  MOV BX,word ptr [0x67c8]
+235c:00df  MOV DX,word ptr [0x67ca]
+235c:00e3  CALLF 0x2000:7fa8
+235c:00e8  CALL 0x2000:35da
+235c:00eb  XOR AH,AH
+235c:00ed  XOR DX,DX
+235c:00ef  MOV word ptr [BP + -0x6],AX
+235c:00f2  MOV word ptr [BP + -0x4],DX
+235c:00f5  INT 0x37
+235c:00f7  INC SI
+235c:00f8  CLI
+235c:00f9  INT 0x3c
+235c:00fb  CBW
+235c:00fc  JP 0x2000:36bf
+235c:00ff  INT 0x3a
+235c:0101  RCR word ptr [BP + SI + 0x3202],0xdd
+235c:0106  AND AL,0xa3
+235c:0327  MOV AL,byte ptr [BP + -0x1]
+235c:032a  LEAVE
+235c:032b  RETF 0x8

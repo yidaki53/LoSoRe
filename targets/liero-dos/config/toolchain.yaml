@@ -1,0 +1,16 @@
+slug: liero-dos
+compiler: turbo-pascal-7
+compiler_confidence: high
+language: pascal
+platform: dos
+detected: 2026-10-11
+evidence:
+  - levedit.exe: "Portions Copyright (c) 1983,92 Borland" (strong)
+  - levedit.exe: "Runtime error" (strong)
+  - levedit.exe: "Borland" (medium)
+  - lieroeng.txt: "Runtime error" (strong)
+  - liero.txt: "Runtime error" (strong)
+  - liero.exe: "Portions Copyright (c) 1983,92 Borland" (strong)
+  - liero.exe: "Runtime error" (strong)
+  - liero.exe: "Borland" (medium)
+  - (format) MZ executable (DOS real-mode)

@@ -1,0 +1,8 @@
+; FUN_24dd_350e  entry=24dd:350e size=12
+24dd:350e  MOV AL,byte ptr [BP + SI + -0x28]
+24dd:3511  INC SI
+24dd:3512  OR AL,AL
+24dd:3514  JNZ 0x2000:82e9
+24dd:3516  MOV AL,0x30
+24dd:3518  DEC SI
+24dd:3519  RET

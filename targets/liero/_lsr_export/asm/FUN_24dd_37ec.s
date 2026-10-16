@@ -1,0 +1,47 @@
+; FUN_24dd_37ec  entry=24dd:37ec size=94
+24dd:37ec  CMP word ptr [0x6410],0x0
+24dd:37f1  JNZ 0x2000:85f8
+24dd:37f3  CMP word ptr ES:[BX + 0x2],0xd7b1
+24dd:37f9  JNZ 0x2000:85f9
+24dd:37fb  MOV SI,word ptr ES:[BX + 0x8]
+24dd:37ff  CMP SI,word ptr ES:[BX + 0xa]
+24dd:3803  JZ 0x2000:8600
+24dd:3805  PUSH DS
+24dd:3806  PUSH ES
+24dd:3807  PUSH BX
+24dd:3808  PUSH DX
+24dd:3809  LDS DX,ES:[BX + 0xc]
+24dd:380d  MOV BX,word ptr ES:[BX + 0xa]
+24dd:3811  POP ES
+24dd:3812  ADD BX,DX
+24dd:3814  ADD SI,DX
+24dd:3816  CLD
+24dd:3817  CALL AX
+24dd:3819  SUB SI,DX
+24dd:381b  MOV DX,ES
+24dd:381d  POP BX
+24dd:381e  POP ES
+24dd:381f  POP DS
+24dd:3820  MOV word ptr ES:[BX + 0x8],SI
+24dd:3824  OR AX,AX
+24dd:3826  JNZ 0x2000:8600
+24dd:3828  RET
+24dd:3829  MOV word ptr [0x6410],0x68
+24dd:382f  RET
+24dd:3830  PUSH AX
+24dd:3831  PUSH CX
+24dd:3832  PUSH DX
+24dd:3833  PUSH DI
+24dd:3834  PUSH ES
+24dd:3835  PUSH BX
+24dd:3836  CALL 0x2000:873c
+24dd:3839  POP BX
+24dd:383a  POP ES
+24dd:383b  POP DI
+24dd:383c  POP DX
+24dd:383d  POP CX
+24dd:383e  POP AX
+24dd:383f  MOV SI,word ptr ES:[BX + 0x8]
+24dd:3843  CMP SI,word ptr ES:[BX + 0xa]
+24dd:3847  JNZ 0x2000:85d5
+24dd:3849  RET

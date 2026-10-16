@@ -1,21 +1,27 @@
-.PHONY: init test verify new-target lint report provenance ingest draft
+.PHONY: init test verify new-target lint report provenance ingest draft learn build pipeline
 init:
 	uv sync --extra dev || pip install -e .[dev]
 test:
 	python3 -m pytest tests/ -q
 verify:
-	python3 engine/verify.py --target $(TARGET) --oracle $(or $(ORACLE),byte-exact)
+	python3 engine/verify.py --target $(TARGET) --oracle $(or $(ORACLE),dat-parity)
 provenance:
 	python3 tools/provenance.py --target $(TARGET)
 ingest:
 	python3 engine/ingest.py --target $(TARGET)
 draft:
 	python3 engine/draft.py --target $(TARGET) $(if $(FN),--fn $(FN)) $(if $(LLM),--llm --endpoint $(LLM))
+learn:
+	python3 engine/learn.py --target $(TARGET)
+# full run: ingest -> learn (update knowledge) -> draft (few-shot) -> verify
+pipeline:
+	python3 tools/provenance.py --target $(TARGET)
+	python3 engine/ingest.py --target $(TARGET)
+	python3 engine/learn.py --target $(TARGET)
+	python3 engine/draft.py --target $(TARGET)
+	python3 engine/verify.py --target $(TARGET) --oracle $(or $(ORACLE),dat-parity)
 new-target:
 	python3 tools/new_target.py --slug $(SLUG) --kind $(or $(KIND),game)
-# compat (deprecated, will be removed): GAME= -> TARGET=
-new-game:
-	python3 tools/new_target.py --slug $(SLUG) --kind game
 lint:
 	ruff check . || true
 report:

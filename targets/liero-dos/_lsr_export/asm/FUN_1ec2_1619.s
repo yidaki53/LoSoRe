@@ -1,0 +1,66 @@
+; FUN_1ec2_1619  entry=1ec2:1619 size=132
+1ec2:1619  ENTER 0x8,0x0
+1ec2:161d  LEA DI,[BP + 0x6]
+1ec2:1620  PUSH SS
+1ec2:1621  PUSH DI
+1ec2:1622  LEA DI,[BP + -0x2]
+1ec2:1625  PUSH SS
+1ec2:1626  PUSH DI
+1ec2:1627  LEA DI,[BP + -0x3]
+1ec2:162a  PUSH SS
+1ec2:162b  PUSH DI
+1ec2:162c  LEA DI,[BP + -0x4]
+1ec2:162f  PUSH SS
+1ec2:1630  PUSH DI
+1ec2:1631  PUSH CS
+1ec2:1632  CALL 0x2000:014f
+1ec2:1635  DEC byte ptr [BP + 0x6]
+1ec2:1638  MOV AL,byte ptr [BP + 0x8]
+1ec2:163b  MOV byte ptr [BP + -0x8],AL
+1ec2:163e  MOV AL,byte ptr [BP + 0x6]
+1ec2:1641  CMP AL,byte ptr [BP + -0x8]
+1ec2:1644  JC 0x2000:02a5
+1ec2:1646  MOV byte ptr [BP + -0x1],AL
+1ec2:1649  JMP 0x2000:026e
+1ec2:164b  DEC byte ptr [BP + -0x1]
+1ec2:164e  LEA DI,[BP + -0x1]
+1ec2:1651  PUSH SS
+1ec2:1652  PUSH DI
+1ec2:1653  LEA DI,[BP + -0x5]
+1ec2:1656  PUSH SS
+1ec2:1657  PUSH DI
+1ec2:1658  LEA DI,[BP + -0x6]
+1ec2:165b  PUSH SS
+1ec2:165c  PUSH DI
+1ec2:165d  LEA DI,[BP + -0x7]
+1ec2:1660  PUSH SS
+1ec2:1661  PUSH DI
+1ec2:1662  PUSH CS
+1ec2:1663  CALL 0x2000:014f
+1ec2:1666  MOV AL,byte ptr [BP + -0x1]
+1ec2:1669  XOR AH,AH
+1ec2:166b  INC AX
+1ec2:166c  PUSH AX
+1ec2:166d  MOV AL,byte ptr [BP + -0x5]
+1ec2:1670  PUSH AX
+1ec2:1671  MOV AL,byte ptr [BP + -0x6]
+1ec2:1674  PUSH AX
+1ec2:1675  MOV AL,byte ptr [BP + -0x7]
+1ec2:1678  PUSH AX
+1ec2:1679  PUSH CS
+1ec2:167a  CALL 0x2000:fcef
+1ec2:167d  MOV AL,byte ptr [BP + -0x1]
+1ec2:1680  CMP AL,byte ptr [BP + -0x8]
+1ec2:1683  JNZ 0x2000:026b
+1ec2:1685  MOV AL,byte ptr [BP + 0x8]
+1ec2:1688  PUSH AX
+1ec2:1689  MOV AL,byte ptr [BP + -0x2]
+1ec2:168c  PUSH AX
+1ec2:168d  MOV AL,byte ptr [BP + -0x3]
+1ec2:1690  PUSH AX
+1ec2:1691  MOV AL,byte ptr [BP + -0x4]
+1ec2:1694  PUSH AX
+1ec2:1695  PUSH CS
+1ec2:1696  CALL 0x2000:fcef
+1ec2:1699  LEAVE
+1ec2:169a  RETF 0x4

@@ -1,0 +1,118 @@
+#include <stdint.h>
+#include <stddef.h>
+typedef unsigned char undefined1, byte, uchar;
+typedef unsigned short undefined2, ushort, word;
+typedef unsigned int undefined4;
+typedef unsigned long undefined8;
+typedef long long longlong;
+typedef unsigned long long ulonglong;
+typedef unsigned int uint;
+typedef short int16;
+#define __cdecl16near
+#define __cdecl16far
+#define __stdcall16near
+#define __stdcall16far
+#define __cdecl
+#define __stdcall
+#define __fastcall
+#define __pascal
+#define __near
+#define __far
+#define __interrupt
+#define __declspec(x)
+/* BSD/kernel types some models assume (not Ghidra, but harmless to accept) */
+typedef unsigned char u_char;
+typedef unsigned short u_short, u_int16;
+typedef unsigned int u_int, u32, uint32;
+typedef unsigned short uint16, ushort_t;
+typedef unsigned char uint8;
+#ifndef true
+#define true 1
+#define false 0
+#endif
+
+void FUN_24dd_3360() {
+    uint16_t local_28;
+    uint16_t local_26;
+    uint16_t local_24;
+    uint16_t local_22;
+    uint16_t local_20;
+    uint16_t local_1e;
+    uint16_t local_1c;
+    uint16_t local_1a;
+    uint16_t local_18;
+    uint16_t local_16;
+    uint16_t local_14;
+    uint16_t local_12;
+    uint16_t local_10;
+    uint16_t local_e;
+    uint16_t local_c;
+    uint16_t local_a;
+    uint16_t local_8;
+    uint16_t local_6;
+    uint16_t local_4;
+    uint16_t local_2;
+    uint16_t local_0;
+
+    __asm__("push bp");
+    __asm__("mov bp, sp");
+    __asm__("sub sp, 0x28");
+
+    __asm__("int 0x35");
+    __asm__("jle 0x2000:8138");
+    __asm__("int 0x3c");
+    __asm__("cwd");
+    __asm__("pop si");
+    __asm__("xor cx, bp");
+    __asm__("aaa");
+    __asm__("jle 0x2000:8130");
+    __asm__("push di");
+    __asm__("cmp cx, 0x12");
+    __asm__("jle 0x2000:814d");
+    __asm__("mov cx, 0x12");
+    __asm__("cmp cx, -0x12");
+    __asm__("jge 0x2000:8155");
+    __asm__("mov cx, 0xffee");
+    __asm__("mov word ptr [bp + -0x6], cx");
+    __asm__("cld");
+    __asm__("int 0x3d");
+    __asm__("mov ax, word ptr [bp + -0xc]");
+    __asm__("mov word ptr [bp + -0xa], ax");
+    __asm__("and ax, 0x7fff");
+    __asm__("jz 0x2000:818f");
+    __asm__("cmp ax, 0x7fff");
+    __asm__("jnz 0x2000:8198");
+    __asm__("cmp word ptr [bp + -0xe], 0x8000");
+    __asm__("jz 0x2000:817c");
+    __asm__("mov ax, 0x414e");
+    __asm__("stosw es:di");
+    __asm__("mov al, 0x4e");
+    __asm__("stosb es:di");
+    __asm__("jmp 0x2000:82cc");
+    __asm__("cmp word ptr [bp + -0xa], 0x0");
+    __asm__("jns 0x2000:8185");
+    __asm__("mov al, 0x2d");
+    __asm__("stosb es:di");
+    __asm__("mov ax, 0x4e49");
+    __asm__("stosw es:di");
+    __asm__("mov al, 0x46");
+    __asm__("stosb es:di");
+    __asm__("jmp 0x2000:82cc");
+    __asm__("mov word ptr [bp + -0x8], ax");
+    __asm__("mov byte ptr [bp + -0x28], al");
+    __asm__("jmp 0x2000:8249");
+    __asm__("mov word ptr [bp + -0xc], ax");
+    __asm__("int 0x37");
+    __asm__("outsb dx, si");
+    __asm__("in al, dx");
+    __asm__("sub ax, 0x3fff");
+    __asm__("mov dx, 0x4d10");
+    __asm__("imul dx");
+    __asm__("mov word ptr [bp + -0x8], dx");
+    __asm__("mov ax, 0x11");
+    __asm__("sub ax, dx");
+    __asm__("call 0x2000:83a4");
+    __asm__("int 0x35");
+    __asm__("cld");
+    __asm__("int 0x3c");
+    __asm__("wait");

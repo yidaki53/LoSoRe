@@ -1,0 +1,10 @@
+; FUN_235c_04a2  entry=235c:04a2 size=26
+235c:04a2  PUSH BP
+235c:04a3  MOV BP,SP
+235c:04a5  CMP byte ptr [0x7688],0x0
+235c:04aa  JZ 0x2000:3a75
+235c:04ac  PUSH word ptr [0x768a]
+235c:04b0  CALLF 0x2000:4990
+235c:04b5  MOV byte ptr [0x7688],0x0
+235c:04ba  LEAVE
+235c:04bb  RETF

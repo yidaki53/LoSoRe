@@ -1,0 +1,12 @@
+; FUN_235c_0ad3  entry=235c:0ad3 size=24
+235c:0ad3  PUSH BP
+235c:0ad4  MOV BP,SP
+235c:0ad6  CMP byte ptr [0x6854],0x1
+235c:0adb  JNZ 0x2000:40a4
+235c:0add  PUSH 0x2
+235c:0adf  CALL 0x2000:406d
+235c:0ae2  JMP 0x2000:40a9
+235c:0ae4  PUSH 0x1
+235c:0ae6  CALL 0x2000:406d
+235c:0ae9  LEAVE
+235c:0aea  RET

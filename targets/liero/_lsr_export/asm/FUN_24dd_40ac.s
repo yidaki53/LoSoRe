@@ -1,0 +1,19 @@
+; FUN_24dd_40ac  entry=24dd:40ac size=42
+24dd:40ac  CLD
+24dd:40ad  MOV BX,SP
+24dd:40af  MOV DX,DS
+24dd:40b1  LES DI,SS:[BX + 0xa]
+24dd:40b5  LDS SI,SS:[BX + 0x6]
+24dd:40b9  MOV BX,word ptr SS:[BX + 0x4]
+24dd:40bd  MOV CL,BH
+24dd:40bf  XOR CH,CH
+24dd:40c1  XOR AL,AL
+24dd:40c3  STOSB.REP ES:DI
+24dd:40c5  MOV CL,BL
+24dd:40c7  MOVSB.REP ES:DI,SI
+24dd:40c9  MOV CL,0x20
+24dd:40cb  SUB CL,BL
+24dd:40cd  SUB CL,BH
+24dd:40cf  STOSB.REP ES:DI
+24dd:40d1  MOV DX,DS
+24dd:40d3  RETF 0x6

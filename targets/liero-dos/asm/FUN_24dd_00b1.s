@@ -1,0 +1,23 @@
+; FUN_24dd_00b1  entry=24dd:00b1 size=37
+24dd:00b1  XOR AX,AX
+24dd:00b3  PUSHF
+24dd:00b4  POP BX
+24dd:00b5  AND BH,0xf
+24dd:00b8  PUSH BX
+24dd:00b9  POPF
+24dd:00ba  PUSHF
+24dd:00bb  POP CX
+24dd:00bc  AND CH,0xf0
+24dd:00bf  CMP CH,0xf0
+24dd:00c2  JZ 0x2000:4ea2
+24dd:00c4  INC AX
+24dd:00c5  OR BH,0xf0
+24dd:00c8  PUSH BX
+24dd:00c9  POPF
+24dd:00ca  PUSHF
+24dd:00cb  POP CX
+24dd:00cc  AND CH,0xf0
+24dd:00cf  JZ 0x2000:4ea2
+24dd:00d1  INC AX
+24dd:00d2  MOV [0x6420],AL
+24dd:00d5  RET

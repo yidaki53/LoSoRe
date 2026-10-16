@@ -1,0 +1,18 @@
+; FUN_24dd_48e1  entry=24dd:48e1 size=36
+24dd:48e1  MOV BX,SP
+24dd:48e3  MOV DX,DS
+24dd:48e5  LDS SI,SS:[BX + 0xa]
+24dd:48e9  LES DI,SS:[BX + 0x6]
+24dd:48ed  MOV CX,word ptr SS:[BX + 0x4]
+24dd:48f1  CLD
+24dd:48f2  CMP SI,DI
+24dd:48f4  JNC 0x2000:96cd
+24dd:48f6  ADD SI,CX
+24dd:48f8  ADD DI,CX
+24dd:48fa  DEC SI
+24dd:48fb  DEC DI
+24dd:48fc  STD
+24dd:48fd  MOVSB.REP ES:DI,SI
+24dd:48ff  CLD
+24dd:4900  MOV DX,DS
+24dd:4902  RETF 0xa

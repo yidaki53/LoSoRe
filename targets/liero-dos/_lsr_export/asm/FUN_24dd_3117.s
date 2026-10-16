@@ -1,0 +1,8 @@
+; FUN_24dd_3117  entry=24dd:3117 size=10
+24dd:3117  PUSH DS
+24dd:3118  LDS BX,[0x7b4e]
+24dd:311c  WAIT
+24dd:311d  NOP
+24dd:311e  NOP
+24dd:311f  POP DS
+24dd:3120  RET

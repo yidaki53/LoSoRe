@@ -1,0 +1,7 @@
+; FUN_24dd_021f  entry=24dd:021f size=11
+24dd:021f  PUSH AX
+24dd:0220  MOV CL,0x4
+24dd:0222  SHR AL,CL
+24dd:0224  CALL 0x2000:4ffa
+24dd:0227  POP AX
+24dd:0228  AND AL,0xf

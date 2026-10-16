@@ -1,0 +1,20 @@
+; FUN_24dd_24ba  entry=24dd:24ba size=30
+24dd:24ba  PUSH AX
+24dd:24bb  PUSH CX
+24dd:24bc  MOV AL,0x64
+24dd:24be  MOV CL,0x4
+24dd:24c0  XCHG AX,DX
+24dd:24c1  DIV DL
+24dd:24c3  MOV DL,AH
+24dd:24c5  AAM 0xa
+24dd:24c7  SHL AH,CL
+24dd:24c9  OR AH,AL
+24dd:24cb  XCHG AX,DX
+24dd:24cc  AAM 0xa
+24dd:24ce  SHL AH,CL
+24dd:24d0  OR AL,AH
+24dd:24d2  MOV AH,DH
+24dd:24d4  STOSW ES:DI
+24dd:24d5  POP CX
+24dd:24d6  POP AX
+24dd:24d7  RET

@@ -1,0 +1,39 @@
+; FUN_24dd_14c4  entry=24dd:14c4 size=85
+24dd:14c4  PUSH BP
+24dd:14c5  MOV BP,SP
+24dd:14c7  PUSH SI
+24dd:14c8  PUSH DI
+24dd:14c9  MOV AX,word ptr [SI + 0x8]
+24dd:14cc  CMP AX,0xc001
+24dd:14cf  JLE 0x2000:62ca
+24dd:14d1  CMP AX,0x4001
+24dd:14d4  JGE 0x2000:62ce
+24dd:14d6  CMP byte ptr [SI + 0xa],0x0
+24dd:14da  JNZ 0x2000:62d8
+24dd:14dc  CALL 0x2000:53f8
+24dd:14df  CALL 0x2000:62e9
+24dd:14e2  MOV DI,word ptr [0xd8]
+24dd:14e6  PUSH SI
+24dd:14e7  PUSH DI
+24dd:14e8  PUSH SI
+24dd:14e9  CALL 0x2000:6047
+24dd:14ec  PUSH DI
+24dd:14ed  PUSH SI
+24dd:14ee  PUSH SI
+24dd:14ef  CALL 0x2000:5cb2
+24dd:14f2  DEC word ptr [SI + 0x8]
+24dd:14f5  ADD word ptr [0xd8],0xc
+24dd:14fa  POP DI
+24dd:14fb  POP SI
+24dd:14fc  POP BP
+24dd:14fd  RET
+24dd:14fe  MOV BX,0xffff
+24dd:1501  MOV DI,SI
+24dd:1503  CALL 0x2000:5c27
+24dd:1506  JMP 0x2000:62ca
+24dd:1508  MOV CH,0x1
+24dd:150a  CALL 0x2000:7131
+24dd:150d  MOV DI,SI
+24dd:150f  CALL 0x2000:53b8
+24dd:1512  MOV word ptr [DI + 0x8],0x4001
+24dd:1517  JMP 0x2000:62ca

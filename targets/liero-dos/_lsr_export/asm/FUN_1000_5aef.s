@@ -1,0 +1,105 @@
+; FUN_1000_5aef  entry=1000:5aef size=327
+1000:5aef  PUSH BP
+1000:5af0  MOV BP,SP
+1000:5af2  MOV AX,0xc
+1000:5af5  CALLF 0x2000:5300
+1000:5afa  SUB SP,0xc
+1000:5afd  IMUL AX,word ptr [BP + 0x4],0xe
+1000:5b01  LES DI,[0x6698]
+1000:5b05  ADD DI,AX
+1000:5b07  ADD DI,0xfff2
+1000:5b0b  MOV word ptr [BP + -0xc],DI
+1000:5b0e  MOV word ptr [BP + -0xa],ES
+1000:5b11  MOV AX,word ptr ES:[DI + 0x6]
+1000:5b15  MOV DX,word ptr ES:[DI + 0x8]
+1000:5b19  ADD word ptr ES:[DI + 0x2],AX
+1000:5b1d  ADC word ptr ES:[DI + 0x4],DX
+1000:5b21  MOV DX,word ptr ES:[DI]
+1000:5b24  MOV AX,word ptr ES:[DI + 0x4]
+1000:5b28  INC AX
+1000:5b29  SHL AX,0x2
+1000:5b2c  LES DI,[0x6674]
+1000:5b30  ADD DI,AX
+1000:5b32  LES DI,ES:[DI]
+1000:5b35  ADD DI,DX
+1000:5b37  MOV AL,byte ptr ES:[DI]
+1000:5b3a  MOV AH,0x1
+1000:5b3c  MOV DX,0x20
+1000:5b3f  CALLF 0x2000:8f31
+1000:5b44  MOV DI,DX
+1000:5b46  TEST byte ptr [DI + 0x14c0],AL
+1000:5b4a  JZ 0x1000:5b5a
+1000:5b4c  LES DI,[BP + -0xc]
+1000:5b4f  ADD word ptr ES:[DI + 0x6],0x5dc
+1000:5b55  ADC word ptr ES:[DI + 0x8],0x0
+1000:5b5a  LES DI,[BP + -0xc]
+1000:5b5d  MOV AX,word ptr ES:[DI + 0x2]
+1000:5b61  MOV DX,word ptr ES:[DI + 0x4]
+1000:5b65  ADD AX,word ptr ES:[DI + 0x6]
+1000:5b69  ADC DX,word ptr ES:[DI + 0x8]
+1000:5b6d  MOV word ptr [BP + -0x8],AX
+1000:5b70  MOV word ptr [BP + -0x6],DX
+1000:5b73  MOV DX,word ptr ES:[DI]
+1000:5b76  MOV AX,word ptr [BP + -0x6]
+1000:5b79  SHL AX,0x2
+1000:5b7c  LES DI,[0x6674]
+1000:5b80  ADD DI,AX
+1000:5b82  LES DI,ES:[DI]
+1000:5b85  ADD DI,DX
+1000:5b87  MOV AL,byte ptr ES:[DI]
+1000:5b8a  MOV AH,0x1
+1000:5b8c  MOV DX,0x20
+1000:5b8f  CALLF 0x2000:8f31
+1000:5b94  MOV DI,DX
+1000:5b96  TEST byte ptr [DI + 0x6604],AL
+1000:5b9a  JNZ 0x1000:5ba3
+1000:5b9c  CMP word ptr [BP + -0x6],0x15d
+1000:5ba1  JL 0x1000:5c00
+1000:5ba3  LES DI,[BP + -0xc]
+1000:5ba6  MOV AX,word ptr ES:[DI + 0x6]
+1000:5baa  MOV DX,word ptr ES:[DI + 0x8]
+1000:5bae  MOV CX,0x28
+1000:5bb1  XOR BX,BX
+1000:5bb3  CALLF 0x2000:8b50
+1000:5bb8  MOV CX,0x64
+1000:5bbb  XOR BX,BX
+1000:5bbd  CALLF 0x2000:8b8d
+1000:5bc2  NOT DX
+1000:5bc4  NEG AX
+1000:5bc6  SBB DX,-0x1
+1000:5bc9  LES DI,[BP + -0xc]
+1000:5bcc  MOV word ptr ES:[DI + 0x6],AX
+1000:5bd0  MOV word ptr ES:[DI + 0x8],DX
+1000:5bd4  MOV AX,word ptr ES:[DI + 0x6]
+1000:5bd8  MOV DX,word ptr ES:[DI + 0x8]
+1000:5bdc  OR DX,DX
+1000:5bde  JNS 0x1000:5be7
+1000:5be0  NOT DX
+1000:5be2  NEG AX
+1000:5be4  SBB DX,-0x1
+1000:5be7  CMP DX,0x0
+1000:5bea  JL 0x1000:5bf3
+1000:5bec  JG 0x1000:5c00
+1000:5bee  CMP AX,0x64
+1000:5bf1  JNC 0x1000:5c00
+1000:5bf3  LES DI,[BP + -0xc]
+1000:5bf6  XOR AX,AX
+1000:5bf8  MOV word ptr ES:[DI + 0x6],AX
+1000:5bfc  MOV word ptr ES:[DI + 0x8],AX
+1000:5c00  LES DI,[BP + -0xc]
+1000:5c03  DEC word ptr ES:[DI + 0xa]
+1000:5c07  CMP word ptr ES:[DI + 0xa],0x1
+1000:5c0c  JNC 0x1000:5c32
+1000:5c0e  MOV AL,byte ptr ES:[DI + 0xc]
+1000:5c12  XOR AH,AH
+1000:5c14  MOV DI,AX
+1000:5c16  MOV AL,byte ptr [DI + 0x135f]
+1000:5c1a  PUSH AX
+1000:5c1b  LES DI,[BP + -0xc]
+1000:5c1e  PUSH word ptr ES:[DI]
+1000:5c21  PUSH word ptr ES:[DI + 0x4]
+1000:5c25  CALLF 0x2000:1e44
+1000:5c2a  LES DI,[BP + -0xc]
+1000:5c2d  MOV byte ptr ES:[DI + 0xc],0x0
+1000:5c32  LEAVE
+1000:5c33  RET 0x2

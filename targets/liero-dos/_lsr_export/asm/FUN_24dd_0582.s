@@ -1,0 +1,3 @@
+; FUN_24dd_0582  entry=24dd:0582 size=5
+24dd:0582  MOV AX,0x576
+24dd:0585  JMP 0x2000:53bb

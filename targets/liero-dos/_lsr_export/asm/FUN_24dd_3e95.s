@@ -1,0 +1,13 @@
+; FUN_24dd_3e95  entry=24dd:3e95 size=26
+24dd:3e95  CLD
+24dd:3e96  MOV BX,SP
+24dd:3e98  MOV DX,DS
+24dd:3e9a  LES DI,SS:[BX + 0x8]
+24dd:3e9e  LDS SI,SS:[BX + 0x4]
+24dd:3ea2  LODSB SI
+24dd:3ea3  STOSB ES:DI
+24dd:3ea4  MOV CL,AL
+24dd:3ea6  XOR CH,CH
+24dd:3ea8  MOVSB.REP ES:DI,SI
+24dd:3eaa  MOV DX,DS
+24dd:3eac  RETF 0x4

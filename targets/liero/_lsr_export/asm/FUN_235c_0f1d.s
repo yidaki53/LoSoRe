@@ -1,0 +1,20 @@
+; FUN_235c_0f1d  entry=235c:0f1d size=58
+235c:0f1d  PUSH BP
+235c:0f1e  MOV BP,SP
+235c:0f20  CALL 0x2000:3a1d
+235c:0f23  MOV AX,[0x6e58]
+235c:0f26  OR AX,word ptr [0x6e5a]
+235c:0f2a  JZ 0x2000:4515
+235c:0f2c  CMP byte ptr [0x67cd],0x0
+235c:0f31  JZ 0x2000:4505
+235c:0f33  PUSH word ptr [0x6e5a]
+235c:0f37  PUSH word ptr [0x6e58]
+235c:0f3b  PUSH 0x1000
+235c:0f3e  CALLF 0x2000:506f
+235c:0f43  JMP 0x2000:4515
+235c:0f45  PUSH word ptr [0x6e5a]
+235c:0f49  PUSH word ptr [0x6e58]
+235c:0f4d  PUSH 0x800
+235c:0f50  CALLF 0x2000:506f
+235c:0f55  LEAVE
+235c:0f56  RETF

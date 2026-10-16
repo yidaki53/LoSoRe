@@ -1,0 +1,5 @@
+; FUN_24dd_0232  entry=24dd:0232 size=7
+24dd:0232  MOV DL,AL
+24dd:0234  MOV AH,0x6
+24dd:0236  INT 0x21
+24dd:0238  RET

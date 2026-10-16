@@ -1,0 +1,13 @@
+; FUN_235c_001a  entry=235c:001a size=28
+235c:001a  ENTER 0x2,0x0
+235c:001e  MOV DX,word ptr [0x67d6]
+235c:0022  IN AL,DX
+235c:0023  AND AL,0x80
+235c:0025  OR AL,AL
+235c:0027  JZ 0x2000:35de
+235c:0029  MOV DX,word ptr [0x67d2]
+235c:002d  IN AL,DX
+235c:002e  MOV byte ptr [BP + -0x1],AL
+235c:0031  MOV AL,byte ptr [BP + -0x1]
+235c:0034  LEAVE
+235c:0035  RET

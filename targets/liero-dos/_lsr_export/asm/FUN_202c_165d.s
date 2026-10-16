@@ -1,0 +1,224 @@
+; FUN_202c_165d  entry=202c:165d size=611
+202c:165d  ENTER 0xe,0x0
+202c:1661  XOR AX,AX
+202c:1663  MOV word ptr [BP + -0x2],AX
+202c:1666  IMUL AX,word ptr [BP + -0x2],0x14
+202c:166a  LES DI,[0x6694]
+202c:166e  ADD DI,AX
+202c:1670  CMP byte ptr ES:[DI + 0x12],0x0
+202c:1675  JBE 0x2000:1943
+202c:1677  CMP word ptr [BP + -0x2],0x258
+202c:167c  JGE 0x2000:1943
+202c:167e  INC word ptr [BP + -0x2]
+202c:1681  JMP 0x2000:1926
+202c:1683  MOV AL,byte ptr [BP + 0x16]
+202c:1686  AND AL,0x7f
+202c:1688  MOV byte ptr [BP + -0xd],AL
+202c:168b  MOV DL,byte ptr [BP + 0x16]
+202c:168e  IMUL AX,word ptr [BP + -0x2],0x14
+202c:1692  LES DI,[0x6694]
+202c:1696  ADD DI,AX
+202c:1698  MOV byte ptr ES:[DI + 0x12],DL
+202c:169c  MOV DX,word ptr [BP + 0x12]
+202c:169f  IMUL AX,word ptr [BP + -0x2],0x14
+202c:16a3  LES DI,[0x6694]
+202c:16a7  ADD DI,AX
+202c:16a9  MOV word ptr ES:[DI + 0x2],DX
+202c:16ad  MOV DX,word ptr [BP + 0x10]
+202c:16b0  IMUL AX,word ptr [BP + -0x2],0x14
+202c:16b4  LES DI,[0x6694]
+202c:16b8  ADD DI,AX
+202c:16ba  MOV word ptr ES:[DI + 0x6],DX
+202c:16be  MOV AL,byte ptr [BP + -0xd]
+202c:16c1  XOR AH,AH
+202c:16c3  MOV DI,AX
+202c:16c5  SHL DI,0x1
+202c:16c7  PUSH word ptr [DI + 0x53c]
+202c:16cb  CALLF 0x2000:9424
+202c:16d0  XOR DX,DX
+202c:16d2  MOV CX,AX
+202c:16d4  MOV BX,DX
+202c:16d6  MOV AL,byte ptr [BP + -0xd]
+202c:16d9  XOR AH,AH
+202c:16db  MOV DI,AX
+202c:16dd  SHL DI,0x1
+202c:16df  MOV AX,word ptr [DI + 0x50c]
+202c:16e3  CWD
+202c:16e4  SUB AX,CX
+202c:16e6  SBB DX,BX
+202c:16e8  MOV word ptr [BP + -0x4],AX
+202c:16eb  MOV AL,byte ptr [BP + -0xd]
+202c:16ee  XOR AH,AH
+202c:16f0  MOV DI,AX
+202c:16f2  SHL DI,0x1
+202c:16f4  MOV AX,word ptr [DI + 0x56c]
+202c:16f8  SHL AX,0x1
+202c:16fa  PUSH AX
+202c:16fb  CALLF 0x2000:9424
+202c:1700  XOR DX,DX
+202c:1702  PUSH DX
+202c:1703  PUSH AX
+202c:1704  MOV AL,byte ptr [BP + -0xd]
+202c:1707  XOR AH,AH
+202c:1709  MOV DI,AX
+202c:170b  SHL DI,0x1
+202c:170d  MOV AX,word ptr [DI + 0x56c]
+202c:1711  CWD
+202c:1712  PUSH DX
+202c:1713  PUSH AX
+202c:1714  MOV AL,byte ptr [BP + 0x6]
+202c:1717  CBW
+202c:1718  MOV DI,AX
+202c:171a  SHL DI,0x3
+202c:171d  MOV CX,word ptr [DI + 0x159e]
+202c:1721  MOV BX,word ptr [DI + 0x15a0]
+202c:1725  MOV AX,word ptr [BP + -0x4]
+202c:1728  CWD
+202c:1729  CALLF 0x2000:8b50
+202c:172e  MOV CX,0x64
+202c:1731  XOR BX,BX
+202c:1733  CALLF 0x2000:8b8d
+202c:1738  ADD AX,word ptr [BP + 0xc]
+202c:173b  ADC DX,word ptr [BP + 0xe]
+202c:173e  POP CX
+202c:173f  POP BX
+202c:1740  SUB AX,CX
+202c:1742  SBB DX,BX
+202c:1744  POP CX
+202c:1745  POP BX
+202c:1746  ADD AX,CX
+202c:1748  ADC DX,BX
+202c:174a  MOV CX,AX
+202c:174c  MOV BX,DX
+202c:174e  IMUL AX,word ptr [BP + -0x2],0x14
+202c:1752  LES DI,[0x6694]
+202c:1756  ADD DI,AX
+202c:1758  MOV word ptr ES:[DI + 0x8],CX
+202c:175c  MOV word ptr ES:[DI + 0xa],BX
+202c:1760  MOV AL,byte ptr [BP + -0xd]
+202c:1763  XOR AH,AH
+202c:1765  MOV DI,AX
+202c:1767  SHL DI,0x1
+202c:1769  MOV AX,word ptr [DI + 0x56c]
+202c:176d  SHL AX,0x1
+202c:176f  PUSH AX
+202c:1770  CALLF 0x2000:9424
+202c:1775  XOR DX,DX
+202c:1777  PUSH DX
+202c:1778  PUSH AX
+202c:1779  MOV AL,byte ptr [BP + -0xd]
+202c:177c  XOR AH,AH
+202c:177e  MOV DI,AX
+202c:1780  SHL DI,0x1
+202c:1782  MOV AX,word ptr [DI + 0x56c]
+202c:1786  CWD
+202c:1787  PUSH DX
+202c:1788  PUSH AX
+202c:1789  MOV AL,byte ptr [BP + 0x6]
+202c:178c  CBW
+202c:178d  MOV DI,AX
+202c:178f  SHL DI,0x3
+202c:1792  MOV CX,word ptr [DI + 0x15a2]
+202c:1796  MOV BX,word ptr [DI + 0x15a4]
+202c:179a  MOV AX,word ptr [BP + -0x4]
+202c:179d  CWD
+202c:179e  CALLF 0x2000:8b50
+202c:17a3  MOV CX,0x64
+202c:17a6  XOR BX,BX
+202c:17a8  CALLF 0x2000:8b8d
+202c:17ad  ADD AX,word ptr [BP + 0x8]
+202c:17b0  ADC DX,word ptr [BP + 0xa]
+202c:17b3  POP CX
+202c:17b4  POP BX
+202c:17b5  SUB AX,CX
+202c:17b7  SBB DX,BX
+202c:17b9  POP CX
+202c:17ba  POP BX
+202c:17bb  ADD AX,CX
+202c:17bd  ADC DX,BX
+202c:17bf  MOV CX,AX
+202c:17c1  MOV BX,DX
+202c:17c3  IMUL AX,word ptr [BP + -0x2],0x14
+202c:17c7  LES DI,[0x6694]
+202c:17cb  ADD DI,AX
+202c:17cd  MOV word ptr ES:[DI + 0xc],CX
+202c:17d1  MOV word ptr ES:[DI + 0xe],BX
+202c:17d5  IMUL AX,word ptr [BP + -0x2],0x14
+202c:17d9  LES DI,[0x6694]
+202c:17dd  ADD DI,AX
+202c:17df  MOV CX,word ptr ES:[DI + 0x8]
+202c:17e3  MOV BX,word ptr ES:[DI + 0xa]
+202c:17e7  IMUL AX,word ptr [BP + -0x2],0x14
+202c:17eb  LES DI,[0x6694]
+202c:17ef  ADD DI,AX
+202c:17f1  ADD word ptr ES:[DI],CX
+202c:17f4  ADC word ptr ES:[DI + 0x2],BX
+202c:17f8  IMUL AX,word ptr [BP + -0x2],0x14
+202c:17fc  LES DI,[0x6694]
+202c:1800  ADD DI,AX
+202c:1802  MOV CX,word ptr ES:[DI + 0xc]
+202c:1806  MOV BX,word ptr ES:[DI + 0xe]
+202c:180a  IMUL AX,word ptr [BP + -0x2],0x14
+202c:180e  LES DI,[0x6694]
+202c:1812  ADD DI,AX
+202c:1814  ADD word ptr ES:[DI + 0x4],CX
+202c:1818  ADC word ptr ES:[DI + 0x6],BX
+202c:181c  MOV AL,byte ptr [BP + -0xd]
+202c:181f  XOR AH,AH
+202c:1821  MOV DI,AX
+202c:1823  CMP byte ptr [DI + 0x645],0x0
+202c:1828  JBE 0x2000:1b10
+202c:182a  MOV AL,byte ptr [BP + -0xd]
+202c:182d  XOR AH,AH
+202c:182f  MOV DI,AX
+202c:1831  MOV AL,byte ptr [DI + 0x65d]
+202c:1835  XOR AH,AH
+202c:1837  INC AX
+202c:1838  PUSH AX
+202c:1839  CALLF 0x2000:9424
+202c:183e  MOV DL,AL
+202c:1840  IMUL AX,word ptr [BP + -0x2],0x14
+202c:1844  LES DI,[0x6694]
+202c:1848  ADD DI,AX
+202c:184a  MOV byte ptr ES:[DI + 0x13],DL
+202c:184e  JMP 0x2000:1b42
+202c:1850  CMP word ptr [BP + 0x14],0x0
+202c:1854  JLE 0x2000:1b29
+202c:1856  MOV DL,byte ptr [BP + 0x14]
+202c:1859  IMUL AX,word ptr [BP + -0x2],0x14
+202c:185d  LES DI,[0x6694]
+202c:1861  ADD DI,AX
+202c:1863  MOV byte ptr ES:[DI + 0x13],DL
+202c:1867  JMP 0x2000:1b42
+202c:1869  MOV AL,byte ptr [BP + -0xd]
+202c:186c  XOR AH,AH
+202c:186e  MOV DI,AX
+202c:1870  MOV DL,byte ptr [DI + 0x68d]
+202c:1874  IMUL AX,word ptr [BP + -0x2],0x14
+202c:1878  LES DI,[0x6694]
+202c:187c  ADD DI,AX
+202c:187e  MOV byte ptr ES:[DI + 0x13],DL
+202c:1882  MOV AL,byte ptr [BP + -0xd]
+202c:1885  XOR AH,AH
+202c:1887  MOV DI,AX
+202c:1889  SHL DI,0x1
+202c:188b  PUSH word ptr [DI + 0x7c4]
+202c:188f  CALLF 0x2000:9424
+202c:1894  XOR DX,DX
+202c:1896  MOV CX,AX
+202c:1898  MOV BX,DX
+202c:189a  MOV AL,byte ptr [BP + -0xd]
+202c:189d  XOR AH,AH
+202c:189f  MOV DI,AX
+202c:18a1  SHL DI,0x1
+202c:18a3  MOV AX,word ptr [DI + 0x794]
+202c:18a7  CWD
+202c:18a8  SUB AX,CX
+202c:18aa  SBB DX,BX
+202c:18ac  MOV DX,AX
+202c:18ae  IMUL AX,word ptr [BP + -0x2],0x14
+202c:18b2  LES DI,[0x6694]
+202c:18b6  ADD DI,AX
+202c:18b8  MOV word ptr ES:[DI + 0x10],DX
+202c:18bc  LEAVE
+202c:18bd  RETF 0x12

@@ -1,0 +1,23 @@
+; FUN_235c_11aa  entry=235c:11aa size=49
+235c:11aa  PUSH BP
+235c:11ab  MOV DX,SS
+235c:11ad  PUSHF
+235c:11ae  CLI
+235c:11af  MOV AX,DS
+235c:11b1  MOV AX,SS
+235c:11b3  LEA SI,[0x6e86]
+235c:11b7  ADD SI,0x400
+235c:11bb  LEA BP,[0x6a58]
+235c:11bf  LES DI,[0x6e6c]
+235c:11c3  MOV CX,0x200
+235c:11c6  MOV BX,word ptr [BP + 0x0]
+235c:11c9  INC DI
+235c:11ca  ADD BP,0x2
+235c:11cd  MOV AL,byte ptr [BX + SI]
+235c:11cf  MOV byte ptr ES:[DI + -0x1],AL
+235c:11d3  DEC CX
+235c:11d4  JNZ 0x2000:4786
+235c:11d6  MOV DX,SS
+235c:11d8  POPF
+235c:11d9  POP BP
+235c:11da  RET

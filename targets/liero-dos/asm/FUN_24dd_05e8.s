@@ -1,0 +1,13 @@
+; FUN_24dd_05e8  entry=24dd:05e8 size=21
+24dd:05e8  MOV AX,0x5dc
+24dd:05eb  PUSH DS
+24dd:05ec  MOV CX,CS
+24dd:05ee  MOV CX,DS
+24dd:05f0  XCHG AX,SI
+24dd:05f1  CLD
+24dd:05f2  MOV CX,0x6
+24dd:05f5  MOVSW.REP ES:DI,SI
+24dd:05f7  SUB DI,0xc
+24dd:05fa  XCHG AX,SI
+24dd:05fb  POP DS
+24dd:05fc  RET

@@ -1,0 +1,39 @@
+; FUN_202c_0706  entry=202c:0706 size=103
+202c:0706  ENTER 0x10a,0x0
+202c:070a  MOV BX,SS
+202c:070c  MOV BX,ES
+202c:070e  MOV BX,DS
+202c:0710  CLD
+202c:0711  LEA DI,[BP + 0xfefc]
+202c:0715  LDS SI,[BP + 0x6]
+202c:0718  LODSB SI
+202c:0719  STOSB ES:DI
+202c:071a  XCHG AX,CX
+202c:071b  XOR CH,CH
+202c:071d  MOVSB.REP ES:DI,SI
+202c:071f  MOV BX,DS
+202c:0721  LEA DI,[BP + 0xfefc]
+202c:0725  PUSH SS
+202c:0726  PUSH DI
+202c:0727  LEA DI,[BP + 0xfef6]
+202c:072b  PUSH SS
+202c:072c  PUSH DI
+202c:072d  CALLF 0x2000:95f4
+202c:0732  MOV word ptr [BP + 0xfef8],AX
+202c:0736  MOV word ptr [BP + 0xfefa],DX
+202c:073a  CALLF 0x2000:94b9
+202c:073f  CMP word ptr [BP + 0xfef6],0x0
+202c:0744  JNZ 0x2000:0a16
+202c:0746  MOV AX,word ptr [BP + 0xfef8]
+202c:074a  MOV DX,word ptr [BP + 0xfefa]
+202c:074e  MOV word ptr [BP + -0x4],AX
+202c:0751  MOV word ptr [BP + -0x2],DX
+202c:0754  JMP 0x2000:0a23
+202c:0756  MOV AX,[0x6412]
+202c:0759  MOV DX,word ptr [0x6414]
+202c:075d  MOV word ptr [BP + -0x4],AX
+202c:0760  MOV word ptr [BP + -0x2],DX
+202c:0763  MOV AX,word ptr [BP + -0x4]
+202c:0766  MOV DX,word ptr [BP + -0x2]
+202c:0769  LEAVE
+202c:076a  RETF 0x4

@@ -1,0 +1,10 @@
+; FUN_24dd_028a  entry=24dd:028a size=21
+24dd:028a  PUSH BP
+24dd:028b  MOV BP,SP
+24dd:028d  MOV AX,word ptr [BP + 0x6]
+24dd:0290  CALL 0x2000:5123
+24dd:0293  POP BP
+24dd:0294  JC 0x2000:5069
+24dd:0296  RETF 0x2
+24dd:0299  MOV AX,0xcb
+24dd:029c  JMP 0x2000:4edf
