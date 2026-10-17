@@ -162,8 +162,14 @@ def _parse_decl(seed_c: str, fn: str) -> str | None:
     m = re.search(r"(\w[\w\s]*?)\s*(\*?)\s*" + re.escape(fn) + r"\s*\(([^)]*)\)", seed_c)
     if not m:
         return None
-    ret_words = m.group(1).split()
+    ret_words = [w for w in m.group(1).split() if not w.startswith("__")]
     ret = ret_words[-1].lower() if ret_words else "void"
+    # Guard against matching the tail of a parameter list rather than the
+    # routine's own signature (e.g. '(undefined2 param_1, undefined2 *param_2)'
+    # with no return type ahead of the name): the "return type" must be a
+    # single C type word possibly followed by '*', not a param fragment.
+    if len(ret_words) > 2 or re.search(r"[(),;]", m.group(1)):
+        return f"procedure {_pas_ident(fn)};"
     ret_ptr = bool(m.group(2))
     params: list[tuple[str, str]] = []
     for i, raw in enumerate(m.group(3).split(",")):
@@ -414,6 +420,17 @@ def _compile_gate(root: pathlib.Path, target: str,
         return stems, lines
 
     bad, why = _errors()
+    # FPC stops at the first fatal error, so a *truncated* LLM body (token cap
+    # hit, no closing `end;`) poisons every later include while only the next
+    # file is blamed. Catch truncation directly: any body not ending in `end;`
+    # is reverted regardless of what FPC attributed.
+    for ip in sorted(src.glob("FUN_*.inc")):
+        tail = [ln for ln in ip.read_text().splitlines() if ln.strip()]
+        if tail and not tail[-1].rstrip().endswith("end;"):
+            if ip.stem in bad:
+                continue
+            print(f"[compile-gate] {ip.name} truncated body (no closing end;)")
+            bad.add(ip.stem)
     if not bad:
         return 0
     for ln in why[:8]:
