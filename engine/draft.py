@@ -237,23 +237,28 @@ def _force_decl(clean: str, decl: str) -> str:
 
 
 def _sanitize_pascal(text: str) -> str:
-    """Strip markdown fences / prose so the LLM output is bare, compilable Pascal.
+    """Strip markdown fences / prose so LLM output is compilable Pascal.
 
-    Models often wrap code in ```pascal ... ``` or prepend a sentence ("This Pascal
-    code..."). Both break compilation when INCLUDEd. We keep the fenced code if
-    present, then REQUIRE a real routine declaration line (`procedure|function Name`)
-    plus a `begin`; otherwise return "" so the caller falls back to a skeleton.
+    The model is instructed to start with the declaration, but in practice it
+    frequently emits prose before the routine, or stray text/C residue after a
+    valid ``begin...end;`` body. We extract the *last* complete routine block
+    instead of forcing a single ``begin`` token, so trailing prose can no longer
+    silently kill a good draft. The compile-gate remains the final arbiter: any
+    body that still will not compile is reverted to a skeleton.
     """
     if not text:
         return ""
     t = text.strip()
-    if "```" in t:  # keep the largest fenced chunk (the code)
-        chunks = [p for p in t.split("```") if p.strip()]
-        code = max(chunks, key=len)
-        code = "\n".join(ln for ln in code.splitlines()
-                         if ln.strip().lower() not in ("pascal", "delphi", "pas", "cpp", "c"))
-        t = code.strip()
-    # drop any leading prose: keep from the first real routine-declaration line
+
+    # markdown fences -> keep the largest fenced chunk
+    if "```" in t:
+        chunks = [q for q in t.split("```") if q.strip()]
+        t = max(chunks, key=len)
+        t = "\n".join(ln for ln in t.splitlines()
+                      if ln.strip().lower() not in ("pascal", "delphi", "pas", "cpp", "c"))
+        t = t.strip()
+
+    # leading prose: keep from the first real routine-declaration line
     lines = t.splitlines()
     start = 0
     for i, ln in enumerate(lines):
@@ -261,24 +266,25 @@ def _sanitize_pascal(text: str) -> str:
             start = i
             break
     t = "\n".join(lines[start:]).strip()
-    # strip any `...; forward;` declarations the model emits: _forward.inc
-    # already declares every sibling routine, so re-declaring them is an error.
-    t = re.sub(r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*(\s*\([^;]*\))?\s*;\s*forward\s*;\s*$",
-               "", t).strip()
-    # strict: must contain an actual routine declaration and a begin
-    has_decl = re.search(r"^\s*(procedure|function)\s+[A-Za-z_]\w*", t, re.M | re.I)
-    if not has_decl or "begin" not in t.lower():
+
+    # strip leftover `...; forward;` declarations (siblings are already declared)
+    t = re.sub(r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*(\s*\([^;]*\))?'\s*;\s*forward\s*;'\s*$", "", t).strip()
+
+    # last complete routine block: declaration ... closing ``end`` (``end;`` / ``end.``)
+    decl = re.search(r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*", t)
+    if not decl:
+        return ""                                 # no routine at all
+    body = t[decl.start():].strip()
+    ends = list(re.finditer(r"(?im)^\s*end\s*;?\s*$", body))
+    if not ends:
+        return ""                                 # no closing 'end'
+    end_m = ends[-1]
+    body = body[:end_m.end()].strip()
+
+    # TP7 validity gate on the body only (skip the reference comment block)
+    if re.search(r"\bDAT_\w+|\bPCode\b|\bPop\b|\b(unaff|out)_[A-Za-z]\w*|\b(AX|BX|CX|DX|SI|DI|SP|BP|ES|DS|CS|SS)\b|\b0x[0-9a-fA-F]+\b|\*\(|-\>", body):
         return ""
-    # TP7-validity gate: reject output that still carries Ghidra/C residue the
-    # model failed to translate into real Pascal. These are undeclared globals
-    # (DAT_), register/param noise (unaff_, in_, out_, AX..DI), non-TP7 syntax
-    # (0x hex, C pointer deref, ->), or C types. Better to fall back to a
-    # compiling skeleton than ship a .inc that breaks the whole-program build.
-    if re.search(r"\bDAT_\w+|\bPCode\b|\bPop\b|"
-                 r"\b(unaff|in|out)_[A-Za-z]\w*|\b(AX|BX|CX|DX|SI|DI|SP|BP|ES|DS|CS|SS)\b"
-                 r"|\b0x[0-9a-fA-F]+\b|\*\(|->|\b(uint|ushort|uchar|int|short|long|float|double|undefined)\d*\b", t):
-        return ""
-    return t
+    return body
 
 
 def fewshot_context(target: str, compiler: str, platform: str) -> str:
