@@ -403,68 +403,222 @@ def _write_program(root: pathlib.Path, slug: str, fns: list[str],
         PAS_PROGRAM.format(slug=slug, prog=prog, includes=incs))
 
 
+MAX_REPAIR_ROUNDS = 3
+
+
+def _compile_errors(root: pathlib.Path) -> tuple[set[str], list[str]]:
+    """Run `make build`; return (broken .inc stems, matching error lines)."""
+    r = subprocess.run(["make", "build"], cwd=root, capture_output=True,
+                       text=True, timeout=300)
+    out = r.stdout + r.stderr
+    lines_ = [ln.strip() for ln in out.splitlines()
+              if re.search(r"\.(inc|pas)\(\d+,\d+\)\s+(?:Error|Fatal)", ln)]
+    stems = set(re.findall(r"([A-Za-z_]\w*)\.inc\(\d+,\d+\)\s+(?:Error|Fatal)", out))
+    return stems, lines_
+
+
+def _truncation_bad(src: pathlib.Path) -> set[str]:
+    """Stems whose .inc body doesn't end in `end;` (truncated LLM output)."""
+    out = set()
+    for ip in sorted(src.glob("FUN_*.inc")):
+        tail = [ln for ln in ip.read_text(errors="replace").splitlines() if ln.strip()]
+        if tail and not tail[-1].rstrip().endswith("end;"):
+            out.add(ip.stem)
+    return out
+
+
+def _revert_to_skeleton(root: pathlib.Path, target: str, src: pathlib.Path,
+                        stem: str, recon: pathlib.Path | None,
+                        allowed: set[str] | None) -> None:
+    """Overwrite `stem`'s .inc with a compiling skeleton."""
+    p = src / f"{stem}.inc"
+    if not p.exists() or stem.startswith("_"):
+        return
+    seed = read_decomp_seed(root, stem)
+    ref_source = "Ghidra"
+    if recon is not None:
+        rcode, rwhy = read_recon_seed(recon, stem, allowed or set())
+        if rcode:
+            seed, ref_source = rcode, f"recon:{rwhy}"
+    ref = _c_ref_block(seed, ref_source) if seed else "(* no decompiler seed yet *)"
+    p.write_text(PAS_TEMPLATE.format(
+        slug=target, fn=stem,
+        kind=_yaml_kv(root / "config" / "target.yaml", "kind", "game"),
+        oracle="none", backend="skeleton(compile-gate)", ref=ref,
+        sig=_pascal_fn_skeleton(stem, _decl_for(root, stem, recon, allowed))))
+
+
+def _repair_stem(root: pathlib.Path, target: str, src: pathlib.Path,
+                 stem: str, why_lines: list[str],
+                 recon: pathlib.Path | None,
+                 allowed: set[str] | None,
+                 model: str | None, endpoint: str | None,
+                 fs_prefix: str, use_llm: bool) -> bool:
+    """Ask the LLM to fix `stem` using the compiler error as feedback.
+
+    Returns True if a plausible repair was written back to the .inc.
+    """
+    if not use_llm:
+        return False
+    p = src / f"{stem}.inc"
+    if not p.exists():
+        return False
+    seed_c = read_decomp_seed(root, stem) or ""
+    ref_source = "Ghidra"
+    if recon is not None:
+        rcode, rwhy = read_recon_seed(recon, stem, allowed or set())
+        if rcode:
+            seed_c, ref_source = rcode, f"recon:{rwhy}"
+    decl = _decl_for(root, stem, recon, allowed)
+    asm_path = root / "asm" / f"{stem}.s"
+    asm_text = asm_path.read_text(errors="replace")[:3000] if asm_path.exists() else ""
+    # error lines specific to this stem, falling back to all of them
+    mine = [ln for ln in why_lines if f"{stem}.inc(" in ln] or list(why_lines)
+    repair_note = "\n".join(mine[:10])
+    prompt = fs_prefix + _build_pascal_prompt(root, target, stem, asm_text,
+                                              seed_c, ref_source, decl, allowed,
+                                              recon, repair_note=repair_note)
+    llm_out = run_llm(prompt, model, endpoint)
+    clean = _sanitize_pascal(llm_out) if llm_out else ""
+    if not clean:
+        return False
+    clean = _force_decl(clean, decl)
+    seed = read_decomp_seed(root, stem)
+    ref = _c_ref_block(seed, ref_source) if seed else "(* no decompiler seed yet *)"
+    p.write_text(PAS_TEMPLATE.format(
+        slug=target, fn=stem,
+        kind=_yaml_kv(root / "config" / "target.yaml", "kind", "game"),
+        oracle="none",
+        backend=f"c->pascal+llm-repair({model or endpoint},{ref_source})",
+        ref=ref, sig=clean))
+    return True
+
+
 def _compile_gate(root: pathlib.Path, target: str,
                   recon: pathlib.Path | None = None,
-                  allowed: set[str] | None = None) -> int:
-    """Revert any .inc that breaks the FPC whole-program build to a skeleton.
+                  allowed: set[str] | None = None,
+                  model: str | None = None,
+                  endpoint: str | None = None,
+                  fs_prefix: str = "",
+                  use_llm: bool = False) -> int:
+    """Revert/repair any .inc that breaks the FPC whole-program build.
 
-    The LLM sometimes emits Pascal that passes the token gate but still fails
-    FPC (type mismatches, illegal qualifiers, duplicate declares). Rather than
-    ship a broken build, run `make build`, parse which src/<fn>.inc files errored,
-    overwrite those with compiling skeletons, and rebuild. Returns the number of
-    functions reverted.
+    Rather than shipping a broken build, first attempt to *repair* each failing
+    function by re-asking the LLM with the compiler error fed back (up to
+    MAX_REPAIR_ROUNDS). Only functions that still fail after repair -- or when
+    LLM is disabled -- are reverted to a compiling skeleton. Returns the number
+    of functions reverted to skeleton.
     """
     src = root / "src"
 
-    def _errors() -> tuple[set[str], list[str]]:
-        r = subprocess.run(["make", "build"], cwd=root, capture_output=True,
-                           text=True, timeout=300)
-        out = r.stdout + r.stderr
-        lines = [ln.strip() for ln in out.splitlines()
-                 if re.search(r"\.(inc|pas)\(\d+,\d+\)\s+(?:Error|Fatal)", ln)]
-        stems = set(re.findall(r"([A-Za-z_]\w*)\.inc\(\d+,\d+\)\s+(?:Error|Fatal)", out))
-        return stems, lines
+    bad, why = _compile_errors(root)
+    bad |= _truncation_bad(src)
 
-    bad, why = _errors()
-    # FPC stops at the first fatal error, so a *truncated* LLM body (token cap
-    # hit, no closing `end;`) poisons every later include while only the next
-    # file is blamed. Catch truncation directly: any body not ending in `end;`
-    # is reverted regardless of what FPC attributed.
-    for ip in sorted(src.glob("FUN_*.inc")):
-        tail = [ln for ln in ip.read_text().splitlines() if ln.strip()]
-        if tail and not tail[-1].rstrip().endswith("end;"):
-            if ip.stem in bad:
+    repaired = 0
+    if bad:
+        for _round in range(MAX_REPAIR_ROUNDS):
+            if not bad:
+                break
+            # attempt to repair every currently-bad function
+            next_bad = set()
+            for stem in sorted(bad):
+                if stem.startswith("_"):
+                    next_bad.add(stem)
+                    continue
+                if _repair_stem(root, target, src, stem, why, recon, allowed,
+                                model, endpoint, fs_prefix, use_llm):
+                    repaired += 1
+                else:
+                    next_bad.add(stem)
+            bad = next_bad
+            if not bad:
+                break
+            # FPC stops at the first fatal, so rediscover the next failure
+            bad, why = _compile_errors(root)
+            bad |= _truncation_bad(src)
+
+        # revert anything still broken to a compiling skeleton
+        for stem in sorted(bad):
+            if stem.startswith("_"):
                 continue
-            print(f"[compile-gate] {ip.name} truncated body (no closing end;)")
-            bad.add(ip.stem)
-    if not bad:
-        return 0
-    for ln in why[:8]:
-        print(f"[compile-gate] {ln}")
-    reverted = 0
-    for stem in sorted(bad):
-        p = src / f"{stem}.inc"
-        if not p.exists() or stem.startswith("_"):
-            continue
-        seed = read_decomp_seed(root, stem)
-        ref_source = "Ghidra"
-        if recon is not None:
-            rcode, rwhy = read_recon_seed(recon, stem, allowed or set())
-            if rcode:
-                seed, ref_source = rcode, f"recon:{rwhy}"
-        ref = _c_ref_block(seed, ref_source) if seed else "(* no decompiler seed yet *)"
-        p.write_text(PAS_TEMPLATE.format(
-            slug=target, fn=stem,
-            kind=_yaml_kv(root / "config" / "target.yaml", "kind", "game"),
-            oracle="none", backend="skeleton(compile-gate)", ref=ref,
-            sig=_pascal_fn_skeleton(stem, _decl_for(root, stem, recon, allowed))))
-        reverted += 1
-    still, why2 = _errors()
-    for ln in why2[:6]:
-        print(f"[compile-gate-still] {ln}")
-    print(f"[draft:{target}] compile-gate reverted {reverted} fn(s) that broke the "
-          f"build -> {'GREEN' if not still else 'STILL BROKEN: ' + ','.join(sorted(still))}")
+            _revert_to_skeleton(root, target, src, stem, recon, allowed)
+        reverted = len(bad)
+        # final rebuild to confirm
+        still, why2 = _compile_errors(root)
+        still |= _truncation_bad(src)
+        for ln in why2[:6]:
+            print(f"[compile-gate-still] {ln}")
+        bad = still
+    else:
+        reverted = 0
+
+    if reverted:
+        print(f"[draft:{target}] compile-gate repaired {repaired}, "
+              f"reverted {reverted} fn(s) that broke the build -> "
+              f"{'GREEN' if not bad else 'STILL BROKEN: ' + ','.join(sorted(bad))}")
+    else:
+        print(f"[draft:{target}] compile-gate GREEN (no functions broke the build)")
     return reverted
+
+
+
+
+def _build_pascal_prompt(root, target, fn, asm_text, seed_c, ref_source, decl, allowed,
+                         recon=None, repair_note: str = "") -> str:
+    """Build the Turbo Pascal 7 LLM prompt for `fn` (no few-shot prefix).
+
+    `repair_note` (optional) is prepended when the previous attempt failed to
+    compile: it feeds the compiler error back to the model so it can fix the
+    specific defect instead of regressing to a skeleton.
+    """
+    sib_txt = ""
+    if seed_c:
+        refs = sorted({s for s in re.findall(r"\bFUN_[0-9A-Fa-f]{4}\w*\b", seed_c)
+                       if s != fn})[:12]
+        if refs:
+            rows = "\n".join(f"  {s}: {_decl_for(root, s, recon, allowed)}" for s in refs)
+            sib_txt = ("Called routines are forward-declared with EXACTLY these "
+                       "signatures — match arity and argument types when calling:\n"
+                       + rows + "\n")
+    ps = (
+        "You are reconstructing the ORIGINAL Turbo Pascal 7 (16-bit real-mode "
+        "DOS) source of a function. Given the disassembly and a C reference, "
+        "output the Pascal it most likely came from.\n"
+        "RULES:\n"
+        "- Output ONLY Turbo Pascal 7 source: a single `procedure Name;` (or "
+        "a `function`) with a `begin ... end;` body. No markdown, no prose, no "
+        "comments except brief ones.\n"
+        "- It must compile standalone under {$MODE TP} with no undeclared "
+        "identifiers. Use only standard TP7 types (Byte, Word, Integer, "
+        "Boolean, Char, Pointer, String).\n"
+        "- The C uses fake identifiers (FUN_xxxx, DAT_xxxx, uVarN) - replace "
+        "them with plain Pascal locals/params; do not invent globals.\n"
+        "- Preserve control flow and arithmetic exactly. If a construct has no "
+        "clean Pascal form (e.g. a far call to another routine), call "
+        "that routine by name; every sibling routine is ALREADY forward-declared, "
+        "so DO NOT declare or define any other procedure/function.\n"
+        "- Raw/absolute memory: declare typed pointer variables (`p: ^Byte;`) "
+        "and use `p^`, Inc(p, n); do not use Seg()/Ofs() and do not cast "
+        "comparisons (Byte(x = 0) is invalid Pascal - write an `if`).\n"
+        "- You may NOT dereference an expression: (p + n)^ and p^[i] on a "
+        "non-array are ILLEGAL. Do q := p; Inc(q, n); first, then q^.\n"
+        "- Keep value types exact: never assign Word/Integer to Char or vice "
+        "versa - convert with Chr(n)/Ord(c)/Byte(x)/Word(x). The sibling "
+        "signature table is authoritative for return types.\n"
+        f"- The routine is named `{fn}`. Its first line MUST be exactly:\n"
+        f"    {decl}\n"
+        "  Do not add, drop or rename parameters; read argument values only "
+        "through these parameter names.\n"
+        f"{sib_txt}"
+        f"ASSEMBLY:\n{asm_text}\n\nREFERENCE C ({ref_source}, "
+        f"for meaning only):\n{seed_c}\n")
+    if repair_note:
+        ps = ("PREVIOUS ATTEMPT FAILED to compile under {$MODE TP}. The compiler "
+              "error(s) you must fix:\n\n" + repair_note + "\n\nUse the SAME "
+              "signature above. Output only a single valid Turbo Pascal 7 routine. "
+              "Do NOT emit markdown fences, prose, or a `forward` declaration.\n\n"
+              + ps)
+    return ps
 
 
 def draft(target: str, fn: str | None = None, oracle: str = "none",
@@ -562,49 +716,8 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
                 n_seeded += 1
                 if use_llm and (batch is None or f in batch):
                     asm_text = (asm / f"{f}.s").read_text(errors="replace")[:3000]
-                    sib_txt = ""
-                    if seed_c:
-                        refs = sorted({s for s in re.findall(r"\bFUN_[0-9A-Fa-f]{4}\w*\b",
-                                                             seed_c) if s != f})[:12]
-                        if refs:
-                            rows = "\n".join(f"  {s}: {_decl_for(root, s, recon, allowed)}"
-                                              for s in refs)
-                            sib_txt = ("Called routines are forward-declared with EXACTLY "
-                                       "these signatures — match arity and argument types "
-                                       "when calling:\n" + rows + "\n")
-                    prompt = (
-                        "You are reconstructing the ORIGINAL Turbo Pascal 7 (16-bit real-mode "
-                        "DOS) source of a function. Given the disassembly and a C reference, "
-                        "output the Pascal it most likely came from.\n"
-                        "RULES:\n"
-                        "- Output ONLY Turbo Pascal 7 source: a single `procedure Name;` (or "
-                        "`function`) with a `begin ... end;` body. No markdown, no prose, no "
-                        "comments except brief ones.\n"
-                        "- It must compile standalone under {$MODE TP} with no undeclared "
-                        "identifiers. Use only standard TP7 types (Byte, Word, Integer, "
-                        "Boolean, Char, Pointer, String).\n"
-                        "- The C uses fake identifiers (FUN_xxxx, DAT_xxxx, uVarN) — replace "
-                        "them with plain Pascal locals/params; do not invent globals.\n"
-                        "- Preserve control flow and arithmetic exactly. If a construct has no "
-                        "clean Pascal form (e.g. a far call to another routine), call "
-                        "that routine by name; every sibling routine is ALREADY "
-                        "forward-declared, so DO NOT declare or define any "
-                        "other procedure/function.\n"
-                        "- Raw/absolute memory: declare typed pointer variables (`p: ^Byte;`) "
-                        "and use `p^`, `Inc(p, n)`; do not use `Seg()`/`Ofs()` and do not "
-                        "cast comparisons (`Byte(x = 0)` is invalid Pascal - write an `if`).\n"
-                        "- You may NOT dereference an expression: `(p + n)^` and `p^[i]` on a "
-                        "non-array are ILLEGAL. Do `q := p; Inc(q, n);` first, then `q^`.\n"
-                        "- Keep value types exact: never assign Word/Integer to Char or vice "
-                        "versa - convert with `Chr(n)`/`Ord(c)`/`Byte(x)`/`Word(x)`. The "
-                        "sibling signature table is authoritative for return types.\n"
-                        f"- The routine is named `{f}`. Its first line MUST be exactly:\n"
-                        f"    {decl}\n"
-                        "  Do not add, drop or rename parameters; read argument values\n"
-                        "  only through these parameter names.\n"
-                        f"{sib_txt}"
-                        f"ASSEMBLY:\n{asm_text}\n\nREFERENCE C ({ref_source}, "
-                        f"for meaning only):\n{seed_c}\n")
+                    prompt = _build_pascal_prompt(root, target, f, asm_text, seed_c,
+                                                  ref_source, decl, allowed, recon)
                     llm_out = run_llm(prompt, model, endpoint)
                     clean = _sanitize_pascal(llm_out) if llm_out else ""
                     if clean:
@@ -616,7 +729,9 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
     if language == "pascal":
         _write_program(root, target, fns, recon, allowed)
         if use_llm:
-            _compile_gate(root, target, recon, allowed)
+            _compile_gate(root, target, recon, allowed,
+                          model=model, endpoint=endpoint,
+                          fs_prefix=fs_prefix, use_llm=True)
     if fs_prefix:
         print(f"[draft:{target}] few-shot {compiler}/{platform} context applied "
               f"(learned from prior targets)")
