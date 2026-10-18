@@ -407,13 +407,23 @@ MAX_REPAIR_ROUNDS = 3
 
 
 def _compile_errors(root: pathlib.Path) -> tuple[set[str], list[str]]:
-    """Run `make build`; return (broken .inc stems, matching error lines)."""
+    """Run `make build`; return (broken .inc stems, matching error lines).
+
+    If make exits non-zero but no per-file error line could be parsed (broken
+    docker, missing toolchain, Makefile bug), report a synthetic `_MAKE_FAILED`
+    stem: the gate then refuses to claim GREEN without attributing blame to an
+    innocent .inc (the `_`-prefix convention excludes it from reversion).
+    """
     r = subprocess.run(["make", "build"], cwd=root, capture_output=True,
                        text=True, timeout=300)
     out = r.stdout + r.stderr
     lines_ = [ln.strip() for ln in out.splitlines()
               if re.search(r"\.(inc|pas)\(\d+,\d+\)\s+(?:Error|Fatal)", ln)]
     stems = set(re.findall(r"([A-Za-z_]\w*)\.inc\(\d+,\d+\)\s+(?:Error|Fatal)", out))
+    if r.returncode != 0 and not stems:
+        stems.add("_MAKE_FAILED")
+        lines_.append(f"make build exited rc={r.returncode} with no parseable "
+                      f"compiler error (infrastructure failure, not the .inc)")
     return stems, lines_
 
 
@@ -520,20 +530,17 @@ def _compile_gate(root: pathlib.Path, target: str,
             if not bad:
                 break
             # attempt to repair every currently-bad function
-            next_bad = set()
             for stem in sorted(bad):
                 if stem.startswith("_"):
-                    next_bad.add(stem)
                     continue
                 if _repair_stem(root, target, src, stem, why, recon, allowed,
                                 model, endpoint, fs_prefix, use_llm):
                     repaired += 1
-                else:
-                    next_bad.add(stem)
-            bad = next_bad
-            if not bad:
-                break
-            # FPC stops at the first fatal, so rediscover the next failure
+            # The compiler — not the repair attempt — decides what is still
+            # bad: _repair_stem "succeeding" only means plausible text was
+            # written, which frequently still fails to compile. FPC also stops
+            # at the first fatal, so rediscover every round instead of
+            # assuming the remaining stems are fixed.
             bad, why = _compile_errors(root)
             bad |= _truncation_bad(src)
 
@@ -556,6 +563,11 @@ def _compile_gate(root: pathlib.Path, target: str,
         print(f"[draft:{target}] compile-gate repaired {repaired}, "
               f"reverted {reverted} fn(s) that broke the build -> "
               f"{'GREEN' if not bad else 'STILL BROKEN: ' + ','.join(sorted(bad))}")
+    elif bad:
+        # never claim GREEN over a red build (e.g. only shared `_`-prefixed
+        # includes are broken and cannot be reverted per-function)
+        print(f"[draft:{target}] compile-gate STILL BROKEN "
+              f"(nothing revertible): {','.join(sorted(bad))}")
     else:
         print(f"[draft:{target}] compile-gate GREEN (no functions broke the build)")
     return reverted
@@ -590,7 +602,9 @@ def _build_pascal_prompt(root, target, fn, asm_text, seed_c, ref_source, decl, a
         "comments except brief ones.\n"
         "- It must compile standalone under {$MODE TP} with no undeclared "
         "identifiers. Use only standard TP7 types (Byte, Word, Integer, "
-        "Boolean, Char, Pointer, String).\n"
+        "Boolean, Char, Pointer, String). For pointers use local declarations "
+        "(`p: ^Word;`) or the TP7 predefined PChar; WordPtr/CharPtr/BytePtr/"
+        "PByte/PWord do NOT exist and will not compile.\n"
         "- The C uses fake identifiers (FUN_xxxx, DAT_xxxx, uVarN) - replace "
         "them with plain Pascal locals/params; do not invent globals.\n"
         "- Preserve control flow and arithmetic exactly. If a construct has no "
