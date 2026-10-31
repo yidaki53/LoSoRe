@@ -1,0 +1,108 @@
+Metadata-Version: 2.4
+Name: lost-source-revival
+Version: 0.1.0
+Summary: FOSS decompilation factory: BYOD binary -> matching C -> verified compilable targets/<slug>/ (games, apps, firmware — any lost source)
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest>=7; extra == "dev"
+Requires-Dist: ruff>=0.9; extra == "dev"
+Provides-Extra: training
+Requires-Dist: torch>=2.4; extra == "training"
+Requires-Dist: transformers<5,>=4.46; extra == "training"
+Requires-Dist: peft<1,>=0.15; extra == "training"
+Requires-Dist: accelerate>=1.0; extra == "training"
+Dynamic: license-file
+
+# Lost-Source Revival Factory
+BYOD binary -> detect -> disasm -> same-language drafts -> verify loop -> compilable `targets/<slug>/`.
+Any program with lost source: games, applications, firmware, drivers. Nothing counts as decompiled until an oracle passes.
+
+## Same-language policy
+The rebuild is **always written in the language the original was written in** (Turbo Pascal 7 for the Liero pilot). Detection (`tools/provenance.py` -> `config/toolchain.yaml`, with confidence) is the gate: `engine/draft.py` refuses to emit until the language is known, then emits that language. Porting verified source to a modern, more maintainable language is a **separate, later project** that consumes this project's output — it is explicitly out of scope here.
+
+## Playable-parity MVP
+`make build TARGET=liero` compiles the same-language Pascal program (Free Pascal `-Mtp` proxy in the `rev:dos-tp7` Docker image; DOSBox available for behavioral runs). `make verify TARGET=liero --oracle dat-parity` runs a **real** format oracle (DAT parse->serialize round-trip + fixture selftest). An empty oracle gate reports **NOT verified**, never a vacuous PASS.
+
+Own code: MIT (see LICENSE). No vendor bytes committed. `extracted/` gitignored.
+Disc-gated tests skip-and-pass in CI.
+
+## Quickstart
+```sh
+make init && make test        # green with no target data
+python3 tools/new_target.py --slug liero --kind game  # scaffold targets/liero
+# drop a legally-owned copy in extracted/liero/, then:
+make pipeline TARGET=liero    # provenance -> ingest -> learn -> draft -> verify -> improve -> optional train
+make build TARGET=liero       # compile the same-language program (Docker FPC proxy)
+make report                   # per-target + learning stats
+```
+`make pipeline` = `provenance` (detect compiler/language/confidence) -> `ingest`
+(Ghidra headless -> asm/+decomp/) -> `learn` (mine toolchain recipe + few-shot
+examples into `knowledge/`) -> `draft` (emit the detected language; Pascal for
+Liero, decompiler C kept as `//` reference) -> `verify` -> `improve` -> a
+threshold-gated local model training check. Training is skipped unless a local
+base model is configured and enough new verified Pascal function pairs exist.
+
+## Learning (target-over-target)
+`engine/knowledge.py` + `engine/learn.py` keep a committed store
+`knowledge/knowledge.json`. Each learned target adds, per (compiler, platform)
+toolchain: calling conventions, image base, and instruction idioms. The legacy
+asm-to-decompiler-C examples remain useful context, but they are not treated as
+verified Pascal or used for fine-tuning.
+
+Function-level oracle passes add a separate `verified_pascal_examples` corpus.
+Each record keeps its assembly, optional decompiler pseudocode, Pascal body,
+toolchain, target, and oracle provenance. Pascal drafting retrieves examples
+from other targets using assembly anchors and calling-convention similarity;
+the raw instructions remain authoritative when they conflict with the lossy
+decompiler reference. File/format checks such as `dat-parity` do not certify
+function drafts and therefore never add training examples.
+
+### Optional local fine-tuning
+
+The pipeline uses Hugging Face Transformers + PEFT/LoRA locally. Install the
+optional dependencies and point to a local causal-language-model directory:
+
+```sh
+uv sync --extra dev --extra training
+export LSR_TRAIN_MODEL=/path/to/local/model
+export LSR_TRAIN_THRESHOLD=64  # optional; default is 64 new verified pairs
+make pipeline TARGET=liero
+```
+
+Training triggers only after the configured count of new, unique oracle-verified
+Pascal pairs is reached. The dataset must include at least two targets; one
+target is held out from training for validation to reduce project leakage.
+Adapters are versioned under `.lsr/adapters/`, and the best accepted adapter is
+used by later drafts for the same toolchain. The base model and adapter are
+loaded with local-only paths; no project data or model weights are sent to a
+hosted service by this training path. Existing LLM endpoints remain a fallback
+when no usable adapter is activated.
+
+Useful commands:
+
+```sh
+make train-export TARGET=liero              # write training_data/liero.jsonl
+make train-now TARGET=liero                 # train immediately (requires >=2 targets)
+LSR_TRAIN_THRESHOLD=32 make train TARGET=liero
+```
+
+Research-inspired design choices include assembly-aligned evidence rather than
+pseudocode-only prompting, feedback-driven refinement, and target-level
+validation. See [ASAP](https://arxiv.org/abs/2610.06900),
+[AutoDecompiler](https://arxiv.org/abs/2606.16162),
+[CodeInverter](https://arxiv.org/abs/2503.07215), and the
+[PEFT LoRA guide](https://huggingface.co/docs/peft/main/developer_guides/lora).
+
+## Layout
+`targets/<slug>/{src,include,asm,config,tools,docs}/ engine/ compilers/ reports/ tests/ knowledge/`
+
+## Oracles (strongest first)
+byte-exact > relocation-aware > round-trip .bin->src->.bin > format/trace parity.
+`dat-parity` (real today): DAT parse->serialize round-trip + fixture selftest.
+See `engine/verify.py` and `docs/ORACLES.md`.
+
+## Canon
+sm64, isledecomp/isle (MSVC4.2+ReproBit), adonis-singh/re4, sm64ds crackloop, open-spyro+maspsx, Francesco149/openrecet, pathologic_re. Full citations: ../EPIC3_ABANDONWARE_REVIVAL_PLAN.md

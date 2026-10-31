@@ -1,0 +1,10 @@
+
+[dev]
+pytest>=7
+ruff>=0.9
+
+[training]
+torch>=2.4
+transformers<5,>=4.46
+peft<1,>=0.15
+accelerate>=1.0
