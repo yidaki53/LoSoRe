@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 /home/robin/OneDrive/University\ and\ such/LoSoRe/tools/pascal/e6_match.py --target stickman --panel --attempts 2 --few-shot --model 'hf.co/mradermacher/llm4decompile-9b-v2-GGUF:Q4_K_M' > /home/robin/OneDrive/University\ and\ such/LoSoRe/tools/pascal/panel_run3.log 2>&1

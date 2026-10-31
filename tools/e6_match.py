@@ -2,6 +2,8 @@
 from __future__ import annotations
 import argparse, json, math, pathlib, re, subprocess, sys, time, urllib.request
 
+from tools.asmcfg import parse_ghidra_asm, resolve_branch_target
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TARGET = ROOT / "targets" / "liero-dos"
 OUT = ROOT / "reports" / "overnight6"
@@ -115,32 +117,9 @@ def _is_call(inst: str) -> bool:
 def _is_ret(inst: str) -> bool:
     return bool(re.match(r"^(RET|IRET)", inst))
 
-def _branch_target(inst: str) -> int | None:
-    m = re.search(r"(?:0x)?([0-9a-fA-F]{4,})", inst)
-    if m:
-        try:
-            return int(m.group(1), 16)
-        except ValueError:
-            return None
-    return None
-
 def cfg_from_ghidra_asm(text: str) -> dict:
-    addrs: list[int] = []
-    insts: list[str] = []
-    for line in text.splitlines():
-        line = line.strip()
-        if not line or line.startswith(";"):
-            continue
-        m = re.match(r"^([0-9a-fA-F]{4}):([0-9a-fA-F]{4})\s+(.+)$", line)
-        if not m:
-            continue
-        seg = int(m.group(1), 16)
-        off = int(m.group(2), 16)
-        addr = seg * 16 + off
-        inst = m.group(3).upper()
-        addrs.append(addr)
-        insts.append(inst)
-    return _cfg_from_lists(addrs, insts)
+    parsed = parse_ghidra_asm(text)
+    return _cfg_from_lists(parsed["addrs"], parsed["insts"], parsed["segments"])
 
 def cfg_from_objdump(text: str) -> dict:
     addrs: list[int] = []
@@ -157,8 +136,16 @@ def cfg_from_objdump(text: str) -> dict:
         insts.append(inst)
     return _cfg_from_lists(addrs, insts)
 
-def _cfg_from_lists(addrs: list[int], insts: list[str]) -> dict:
+def _cfg_from_lists(
+    addrs: list[int],
+    insts: list[str],
+    source_segments: list[int | None] | None = None,
+) -> dict:
     n = len(addrs)
+    if source_segments is None:
+        source_segments = [None] * n
+    elif len(source_segments) != n:
+        raise ValueError("source_segments must match the instruction count")
     if n == 0:
         return {"blocks": 0, "edges": 0, "cond": 0, "call": 0, "ret": 0,
                 "sizes": [], "addrs": [], "insts": []}
@@ -169,7 +156,7 @@ def _cfg_from_lists(addrs: list[int], insts: list[str]) -> dict:
         if _is_branch(inst) or _is_call(inst) or _is_ret(inst):
             if i + 1 < n:
                 leader.add(i + 1)
-            t = _branch_target(inst)
+            t = resolve_branch_target(inst, source_segments[i])
             if t is not None:
                 try:
                     j = addrs.index(t)
@@ -198,7 +185,7 @@ def _cfg_from_lists(addrs: list[int], insts: list[str]) -> dict:
         if _is_branch(inst) or _is_call(inst) or _is_ret(inst):
             if i + 1 < n:
                 edges.add((cur, block_id[i + 1]))
-            t = _branch_target(inst)
+            t = resolve_branch_target(inst, source_segments[i])
             if t is not None:
                 try:
                     j = addrs.index(t)
@@ -379,6 +366,15 @@ def sanitize_pas(text: str, fn: str, decl: str) -> str:
     idxs = [m.start() for m in re.finditer(r"(?im)^\s*end\s*;\s*$", body)]
     if idxs:
         body = body[:idxs[-1]] + "end;\n"
+    # Convert C type declarations to Pascal types in var block
+    body = re.sub(r"\bint\b", "Integer", body)
+    body = re.sub(r"\buint\b", "Word", body)
+    body = re.sub(r"\bundefined4\b", "Longint", body)
+    body = re.sub(r"\bqword\b", "Longint", body)
+    body = re.sub(r"\bQWord\b", "Longint", body)
+    body = re.sub(r"\bbyte_t\b", "Byte", body)
+    body = re.sub(r"\bword_t\b", "Word", body)
+    body = re.sub(r"\buint32_t\b", "Longint", body)
     return body.strip() + "\n"
 
 
@@ -547,3 +543,255 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+def _fix_types(src: str) -> str:
+    """Convert C type names to Pascal types."""
+    import re
+    src = re.sub(r"\bregister\b", "", src)
+    type_patterns = [
+        (r"\b(uint)\b", " Word"),
+        (r"\b(int)\b", " Integer"),
+        (r"\b(undefined4)\b", " Longint"),
+        (r"\b(qword|QWord)\b", " Longint"),
+        (r"\b(byte_t)\b", " Byte"),
+        (r"\b(word_t)\b", " Word"),
+        (r"\b(uint32_t)\b", " Longint"),
+    ]
+    for pattern, replacement in type_patterns:
+        src = re.sub(pattern, replacement, src)
+    # Remove "var" keyword from var declarations, keep the variable name and type
+    src = re.sub(r"^var\s+", "", src, flags=re.MULTILINE)
+    # Clean up leading/trailing spaces on each line (preserve newlines)
+    parts = src.split("\n")
+    cleaned = []
+    for part in parts:
+        part = re.sub(r"^[ \t]+", "", part)
+        part = re.sub(r"[ \t]+$", "", part)
+        cleaned.append(part)
+    src = "\n".join(cleaned)
+    # Remove any standalone "var " left without declaration
+    src = re.sub(r"^var\s*$", "", src, flags=re.MULTILINE)
+    # Clean up multiple consecutive spaces within lines
+    src = re.sub(r"[ \t]{2,}", " ", src)
+    return src
+
+def _fix_arity(src: str) -> str:
+    """
+Fix procedure/function arity - truncate surplus args and remove args from zero-param functions."""
+    import re
+    import pathlib
+    # Try to find _forward.inc in various locations
+    fwd_paths = [
+        pathlib.Path(__file__).resolve().parent.parent / "reports" / "overnight6" / "src" / "_forward.inc",
+        pathlib.Path(__file__).resolve().parent.parent / "src" / "_forward.inc",
+        pathlib.Path(__file__).resolve().parent.parent / "targets" / "liero-dos" / "src" / "_forward.inc",
+    ]
+    funcs = {}
+    for fwd in fwd_paths:
+        if fwd.exists():
+            for line in fwd.read_text(errors="replace").splitlines():
+                m = re.match(r"function\s+(FUN_\w+)\(([^)]*)\);", line)
+                if m:
+                    fname = m.group(1)
+                    params_str = m.group(2)
+                    nparams = len([p for p in params_str.split(",") if p.strip()])
+                    funcs[fname] = nparams
+            break  # Use first found _forward.inc
+
+    # Process function/procedure calls to fix arity
+    # Find all FUN_* calls in source
+    calls = re.findall(r"(FUN_\w+)\s*\(([^)]*)\),?\s*", src)
+    for call_name, args_str in calls:
+        if call_name in funcs:
+            ndeclared = funcs[call_name]
+            # Parse actual args
+            if args_str.strip():
+                arg_list = [a.strip() for a in args_str.split(",") if a.strip()]
+            else:
+                arg_list = []
+
+            if ndeclared == 0:
+                # Zero-param function: remove all args
+                src = re.sub(
+                    r"\b" + re.escape(call_name) + r"\([^)]*\)",
+                    call_name + ";",
+                    src,
+                )
+            elif len(arg_list) > ndeclared:
+                # Truncate surplus args
+                new_args = ", ".join(arg_list[:ndeclared])
+                src = re.sub(
+                    r"\b" + re.escape(call_name) + r"\([^)]*\)",
+                    call_name + "(" + new_args + ")",
+                    src,
+                )
+    return src
+
+
+def _normalize_c_early(src: str) -> str:
+    """Normalize C idioms early before Pascal matching."""
+    import re
+    # GCC inline-asm crumbs collapse away
+    if re.match(r"^\s*__asm__", src):
+        return ""
+    if re.match(r'^"[^"]*\\n[^"]*"\s*;?\s*$', src):
+        return ""
+    # Strip storage-class keywords
+    src = re.sub(r"\bregister\b\s*", "", src)
+    # Scalar casts vanish: x = (int)y; -> x = y;
+    src = re.sub(r"\(\s*(?:int|unsigned\s+short|unsigned|char|long|void)\s*\)", "", src)
+    # for countdown sentinel: for (i = param_2; i; i--); -> for__countdown__i__param_2
+    m = re.match(r"for\s*\(\s*(\w+)\s*=\s*(\w+)\s*;\s*\1\s*;\s*\1--\s*\)\s*;?\s*$", src)
+    if m:
+        return f"for__countdown__{m.group(1)}__{m.group(2)}"
+    # Cast-pointer store with post-increment: *(Byte*)param_4++ = wDestLen;
+    m = re.match(r"\*\(\s*Byte\s*\*\s*\)\s*(\w+)\s*\+\+\s*=\s*(.+);?\s*$", src)
+    if m:
+        return f"MemW[Word({m.group(1)})] := {m.group(2)}\nInc({m.group(1)})"
+    # Deref load: wSrcLen = *(Byte*)param_3;
+    m = re.match(r"(\w+)\s*=\s*\*\(\s*Byte\s*\*\s*\)\s*(\w+);?\s*$", src)
+    if m:
+        return f"{m.group(1)} = MemW[Word({m.group(2)})]"
+    # Pointer bump compound assignment: param_4 += line_rem; -> Inc(param_4, line_rem)
+    m = re.match(r"(\w+)\s*\+\=\s*(.+?);?\s*$", src)
+    if m:
+        return f"Inc({m.group(1)}, {m.group(2)})"
+    # Standalone ++ / --
+    m = re.match(r"^(\w+)\+\+\s*;?\s*$", src)
+    if m:
+        return f"Inc({m.group(1)})"
+    m = re.match(r"^(\w+)--\s*;?\s*$", src)
+    if m:
+        return f"Dec({m.group(1)})"
+    # Multiplication survives unchanged
+    return src
+
+
+def _strip_stmt_decls(src: str) -> str:
+    """Remove C-style declarations leaked into the statement section."""
+    import re
+    lines = src.splitlines(keepends=True)
+    out = []
+    for line in lines:
+        stripped = line.strip()
+        # Match C-type declarations like "Word param_1;" or "Byte y2 = 3;"
+        if re.match(r"^(?:Byte|Char|Word|Integer|Longint|Boolean)\s+\w+(?:\s*=\s*\d+)?\s*;\s*$", stripped):
+            continue  # Skip this declaration line
+        out.append(line)
+    return "".join(out)
+
+
+def region_outline(asm: str) -> str:
+    """Outline natural loops in assembly code."""
+    import re
+    lines = asm.splitlines()
+    if not lines or all(not l.strip() or l.strip().startswith(";") for l in lines):
+        return "no loops available"
+    # Parse instructions: seg:off  INSTR ...
+    addrs = []
+    insts = []
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith(";"):
+            continue
+        m = re.match(r"^([0-9a-fA-F]{4}):([0-9a-fA-F]{4})\s+(.+)$", line)
+        if m:
+            seg = int(m.group(1), 16)
+            off = int(m.group(2), 16)
+            addr = seg * 16 + off
+            inst = m.group(3).upper()
+            addrs.append(addr)
+            insts.append(inst)
+    if not addrs:
+        return "no loops available"
+    # Find back-edges: branch to an earlier address = loop header
+    loop_headers = set()
+    for i, inst in enumerate(insts):
+        # Match all x86 branch instructions (JMP, Jcc, LOOP, JCXZ, JECXZ)
+        if re.match(r"^(JMP|J[A-Z][A-Z0-9]|LOOP[ECZ]?|JCXZ|JECXZ)", inst):
+            # Match segment:offset targets like 0x1000:5e9a (case-insensitive 0x prefix)
+            t = re.search(r"0[xX]([0-9a-fA-F]+):([0-9a-fA-F]+)", inst)
+            if t:
+                try:
+                    seg = int(t.group(1), 16)
+                    off = int(t.group(2), 16)
+                    target = seg * 16 + off
+                    if target in addrs:
+                        j = addrs.index(target)
+                        if j <= i:
+                            loop_headers.add(target)
+                except ValueError:
+                    pass
+    # Cap at 40 loops
+    headers = sorted(loop_headers)[:40]
+    if not headers:
+        return "no loops available"
+    out = [f"loop@0x{h:04x}" for h in headers]
+    out.insert(0, f"instrs={len(insts)}")
+    return "\n".join(out)
+
+
+def _declare_undeclared(body: str) -> str:
+    """Add declarations for undeclared variables in a Pascal procedure body."""
+    import re
+    # Find var block
+    var_block_match = re.search(r"(\nvar\s*)(.+?)(^\nbegin|\nbegin)", body, re.DOTALL | re.MULTILINE)
+
+    # Collect already-declared variables in var block
+    declared = set()
+    if var_block_match:
+        var_block = var_block_match.group(2)
+        for m in re.finditer(r"^\s*(\w+)\s*:\s*(Char|Byte|Word|Integer|Longint|Boolean)\s*;", var_block, re.MULTILINE):
+            declared.add(m.group(1).lower())
+
+    # Variables to declare (known TP7 types only, skip known names)
+    # Exclude names that are already params/procedure declarations
+    names_to_declare = []
+    skip_names = {"procedure", "function", "begin", "end", "var", "Word", "Byte", "Integer",
+                  "Longint", "Char", "Boolean", "Mem", "MemW", "param"}
+    for name in re.findall(r"\b([a-zA-Z_][a-zA-Z0-9_]*)\b", body):
+        if name in skip_names:
+            continue
+        # Skip names that appear in procedure declarations like "proc Name(Param: Word);"
+        # These are parameter declarations, not var declarations
+        if name.lower() in declared:
+            continue
+        if name.startswith("FUN_") or name.startswith("Mem") or name == "Param":
+            continue
+        if name[0].isupper() and len(name) <= 4:
+            continue
+        # Skip if this is a param declaration pattern (Name: Type in procedure heading)
+        # Check if this name appears as a parameter in a procedure/function declaration
+        if re.search(r"\bprocedure\s+\w+\s*\([^)]*" + "(?<![a-zA-Z])" + re.escape(name) + "(?![a-zA-Z])" + r"[^)]*\)", body, re.I):
+            continue
+        if re.search(r"\bfunction\s+\w+\s*\([^)]*" + "(?<![a-zA-Z])" + re.escape(name) + "(?![a-zA-Z])" + r"[^)]*\)", body, re.I):
+            continue
+        names_to_declare.append(name)
+
+    # Add declarations after var block header, without duplicating existing vars
+    if names_to_declare:
+        # Check if there's already a var block
+        if var_block_match:
+            # Add new declarations after the existing var block variables
+            # but before "begin"
+            new_decls = [name for name in names_to_declare if name.lower() not in declared]
+            if new_decls:
+                decl_line = "  " + "\n  ".join(f"{name}: Word;" for name in new_decls)
+                # Insert after the var block, before "begin"
+                body = re.sub(
+                    r"(\nvar\s*)(.+?)(^\nbegin|\nbegin)",
+                    rf"\1\2\n  {decl_line}\n\3",
+                    body,
+                    flags=re.DOTALL | re.MULTILINE
+                )
+        else:
+            # No var block exists, add one with the new declarations
+            decl_line = "  " + "\n  ".join(f"{name}: Word;" for name in names_to_declare)
+            body = re.sub(
+                r"(\nbegin)",
+                rf"\2  {decl_line}\n",
+                body,
+                flags=re.DOTALL | re.MULTILINE
+            )
+    return body

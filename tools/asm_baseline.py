@@ -245,6 +245,8 @@ def stratified_pick(root: pathlib.Path, n: int) -> list[str]:
         key=lambda x: x[1])
     if n >= len(sizes):
         return [s[0] for s in sizes]
+    if n <= 1:  # single pick: median-size function (n-1 would be 0 below)
+        return [sizes[(len(sizes) - 1) // 2][0]]
     idx = sorted({round(i * (len(sizes) - 1) / (n - 1)) for i in range(n)})
     return [sizes[i][0] for i in idx]
 
