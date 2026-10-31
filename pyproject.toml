@@ -9,6 +9,15 @@ dependencies = []  # engine/tools are stdlib-only by design
 
 [project.optional-dependencies]
 dev = ["pytest>=7", "ruff>=0.9"]
+training = [
+    "torch>=2.4",
+    "transformers>=4.46,<5",
+    "peft>=0.15,<1",
+    "accelerate>=1.0",
+]
+experiments = [
+    "mlflow>=3.17.2",
+]
 
 [tool.uv]
 package = false

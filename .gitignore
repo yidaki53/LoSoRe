@@ -8,3 +8,7 @@ vendor/
 __pycache__/
 .venv/
 build/
+.lsr/
+models/
+training_data/
+mlruns/
