@@ -95,8 +95,32 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_01df;
+procedure FUN_1ec2_01df(param_1, param_2: Char; param_3: Longint; param_4: Pointer; param_5, param_6: Integer);
+var
+  bitmap: array[0..255] of Byte;
+  source: ^Byte;
+  rowIndex: Integer;
+  columnIndex: Integer;
+  pixelColor: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_01df.s — UNMATCHED until an oracle passes }
-end;
+  source := param_4;
+  for rowIndex := 0 to 255 do
+  begin
+    bitmap[rowIndex] := source^;
+    Inc(source);
+  end;
+  if (param_1 <> #0) and (param_1 <> #1) then
+    Exit;
 
+  for rowIndex := 0 to 8 do
+    for columnIndex := 2 to 11 do
+    begin
+      pixelColor := bitmap[rowIndex * 16 + columnIndex];
+      if param_1 = #0 then
+        FUN_1ec2_0dc8(param_3, Char(pixelColor), param_5 + rowIndex,
+          (14 - columnIndex) + param_6)
+      else
+        FUN_1ec2_0e06(param_3, pixelColor, param_5 + rowIndex,
+          param_6 + columnIndex);
+    end;
+end;

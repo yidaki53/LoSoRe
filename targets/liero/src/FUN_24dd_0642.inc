@@ -1,9 +1,8 @@
-{ liero::FUN_24dd_0642 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_0642.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_0642.s (INCLUDE_ASM residue).
+{ liero::FUN_24dd_0642 — reviewed Pascal reconstruction (oracle: host-test).
+  Host behavior passed; original-binary parity remains unverified.
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
+// --- reference: Ghidra decompiler C ---
 // 
 // void __cdecl16near FUN_24dd_0642(void)
 // 
@@ -29,7 +28,18 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_0642;
+var
+  sourceOffset: Word;
+  destinationOffset: Word;
+  byteIndex: Integer;
 begin
-  { TODO: translate from asm/FUN_24dd_0642.s — UNMATCHED until an oracle passes }
+  destinationOffset := (StackPointerD8 - 12) and $FFFF;
+  StackPointerD8 := destinationOffset;
+  for byteIndex := 0 to 11 do
+  begin
+    sourceOffset := (RegisterSI + byteIndex) and $FFFF;
+    destinationOffset := (StackPointerD8 + byteIndex) and $FFFF;
+    DosMemory[destinationOffset] := CodeMemory[sourceOffset];
+  end;
+  RegisterCX := 0;
 end;
-

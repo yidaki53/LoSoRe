@@ -30,7 +30,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3bde;
+procedure FUN_24dd_3bde(param_1: Pointer);
 begin
   { TODO: translate from asm/FUN_24dd_3bde.s — UNMATCHED until an oracle passes }
 end;

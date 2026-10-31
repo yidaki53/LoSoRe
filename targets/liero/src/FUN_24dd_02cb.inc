@@ -22,8 +22,19 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_02cb;
+procedure FUN_24dd_02cb(param_1: Pointer);
+type
+  PFarPointerValue = ^TFarPointerValue;
+  TFarPointerValue = packed record
+    Offset: Word;
+    Segment: Word;
+  end;
+var
+  farPointerValue: PFarPointerValue;
 begin
-  { TODO: translate from asm/FUN_24dd_02cb.s — UNMATCHED until an oracle passes }
+  farPointerValue := PFarPointerValue(param_1);
+  PointerOffset63EE := farPointerValue^.Offset;
+  PointerSegment63F0 := farPointerValue^.Segment;
+  PointerOffset63F6 := farPointerValue^.Offset;
+  PointerSegment63F8 := farPointerValue^.Segment;
 end;
-

@@ -20,7 +20,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3930;
+procedure FUN_24dd_3930(param_1: Longint);
 begin
   { TODO: translate from asm/FUN_24dd_3930.s — UNMATCHED until an oracle passes }
 end;

@@ -359,7 +359,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_9f45;
+procedure FUN_1000_9f45(param_1: Byte);
 begin
   { TODO: translate from asm/FUN_1000_9f45.s — UNMATCHED until an oracle passes }
 end;

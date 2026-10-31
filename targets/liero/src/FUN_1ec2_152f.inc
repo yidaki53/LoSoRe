@@ -22,8 +22,12 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_152f;
+procedure FUN_1ec2_152f(param_1, param_2, param_3, param_4: Pointer);
+var
+  paletteIndex: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_152f.s — UNMATCHED until an oracle passes }
+  paletteIndex := PByte(param_4)^;
+  PByte(param_3)^ := VideoPalette[paletteIndex].Blue;
+  PByte(param_2)^ := VideoPalette[paletteIndex].Green;
+  PByte(param_1)^ := VideoPalette[paletteIndex].Red;
 end;
-

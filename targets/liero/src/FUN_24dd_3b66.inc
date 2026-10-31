@@ -42,7 +42,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3b66;
+procedure FUN_24dd_3b66(param_1: Word; param_2: Pointer);
 begin
   { TODO: translate from asm/FUN_24dd_3b66.s — UNMATCHED until an oracle passes }
 end;

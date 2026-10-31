@@ -25,8 +25,39 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_24ba;
+function FUN_24dd_24ba: Longint;
+var
+  originalAX: Word;
+  originalCX: Word;
+  inputValue: Word;
+  hundreds: Word;
+  remainder: Word;
+  hundredsPacked: Byte;
+  remainderPacked: Byte;
+  physicalAddress: Longint;
+  returnedBits: LongWord;
 begin
-  { TODO: translate from asm/FUN_24dd_24ba.s — UNMATCHED until an oracle passes }
+  originalAX := RegisterAX;
+  originalCX := RegisterCX;
+  inputValue := RegisterDX;
+  hundreds := inputValue div 100;
+  remainder := inputValue mod 100;
+  if hundreds > 255 then
+  begin
+    RunError(200);
+    Exit;
+  end;
+  hundredsPacked := Byte(((hundreds div 10) shl 4) or (hundreds mod 10));
+  remainderPacked := Byte(((remainder div 10) shl 4) or (remainder mod 10));
+  physicalAddress := ((Longint(RegisterES) shl 4) + RegisterDI) and $FFFFF;
+  RealModeMemory[physicalAddress] := remainderPacked;
+  RealModeMemory[(physicalAddress + 1) and $FFFFF] := hundredsPacked;
+  Inc(RegisterDI, 2);
+  RegisterDX := (Word(hundredsPacked) shl 8) or Word(hundreds mod 10);
+  RegisterAX := originalAX;
+  RegisterCX := originalCX;
+  RegisterCarryFlag := False;
+  RegisterZeroFlag := remainderPacked = 0;
+  returnedBits := (LongWord(RegisterDX) shl 16) or RegisterAX;
+  FUN_24dd_24ba := Longint(returnedBits);
 end;
-

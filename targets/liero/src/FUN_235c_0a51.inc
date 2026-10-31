@@ -39,7 +39,44 @@
 // 
 // --- end reference ---
 procedure FUN_235c_0a51;
+var
+  recordIndex: Byte;
+  recordOffset: Word;
+  objectOffset: Word;
+  objectSegment: Word;
+  objectAddress: Longint;
+  objectLow: Word;
+  objectHigh: Word;
+  thresholdLow: Word;
+  thresholdHigh: Word;
 begin
-  { TODO: translate from asm/FUN_235c_0a51.s — UNMATCHED until an oracle passes }
-end;
+  for recordIndex := 0 to 7 do
+  begin
+    if DosMemory[$67FC + recordIndex] <> 0 then
+    begin
+      recordOffset := $6804 + Word(recordIndex) * 10;
+      objectOffset := DosMemory[recordOffset] +
+        Word(DosMemory[recordOffset + 1]) shl 8;
+      objectSegment := DosMemory[recordOffset + 2] +
+        Word(DosMemory[recordOffset + 3]) shl 8;
+      objectAddress := (Longint(objectSegment) shl 4) + objectOffset;
+      objectAddress := objectAddress and $FFFFF;
+      objectLow := RealModeMemory[objectAddress + 6] +
+        Word(RealModeMemory[objectAddress + 7]) shl 8;
+      objectHigh := RealModeMemory[objectAddress + 8] +
+        Word(RealModeMemory[objectAddress + 9]) shl 8;
+      thresholdLow := DosMemory[recordOffset + 5] +
+        Word(DosMemory[recordOffset + 6]) shl 8;
+      thresholdHigh := DosMemory[recordOffset + 7] +
+        Word(DosMemory[recordOffset + 8]) shl 8;
 
+      if (SmallInt(thresholdHigh) > SmallInt(objectHigh)) or
+         ((thresholdHigh = objectHigh) and
+          (thresholdLow >= objectLow)) then
+      begin
+        FUN_235c_091d(recordIndex);
+        Dec(DosMemory[$67CE]);
+      end;
+    end;
+  end;
+end;

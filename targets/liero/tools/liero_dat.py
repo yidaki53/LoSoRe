@@ -4,19 +4,25 @@ Spec: liero.nl/lierohack/docformats/liero-dat.html (offsets 0000h-009Bh).
 
 This is a REAL oracle, not a stub:
   * parse_dat(bytes)    -> structured model of the documented fields
-  * serialize_dat(model)-> bytes rebuilt from the model alone (zero-filled buffer)
+  * serialize_dat(model)-> bytes with typed edits and preserved opaque bytes
   * selftest()          -> builds a synthetic DAT with DISTINCTIVE values at every
                            documented offset, then asserts parse->serialize
                            reproduces them. Fails if any offset drifts (a genuine
                            regression guard, runs in CI with no BYOD).
-  * round_trip(bytes)   -> (ok, coverage, notes): parse->serialize the REAL BYOD
-                           file and report how many bytes are modeled vs unknown.
+  * round_trip(bytes)   -> (ok, coverage, notes): exact parse->serialize equality
+                           plus the fraction of bytes with known field semantics.
 
 dat-parity (engine/verify.py) runs selftest() always and round_trip() when BYOD
 is present. Disc-gated: no BYOD -> selftest only (still a real check).
 """
 from __future__ import annotations
-import argparse, json, pathlib, struct, sys
+
+import argparse
+import json
+import pathlib
+import struct
+import sys
+from typing import Any
 
 DAT_LEN = 0x9B
 
@@ -34,10 +40,16 @@ FIELDS = [
 ]
 
 
-def parse_dat(b: bytes) -> dict:
+class DatModel(dict[str, Any]):
+    def __init__(self, values: dict[str, Any], raw_bytes: bytes):
+        super().__init__(values)
+        self.raw_bytes = raw_bytes
+
+
+def parse_dat(b: bytes) -> DatModel:
     if len(b) < DAT_LEN:
         raise ValueError(f"short DAT: {len(b)} (need >= {DAT_LEN})")
-    m = {}
+    m = DatModel({}, b)
     for key, off, kind in FIELDS:
         if kind == "u8":
             m[key] = b[off]
@@ -58,9 +70,11 @@ def _modeled_bytes() -> set[int]:
     return offs
 
 
-def serialize_dat(m: dict, length: int = DAT_LEN) -> bytes:
-    """Rebuild a DAT buffer from the model alone (unknown bytes stay zero)."""
-    out = bytearray(length)
+def serialize_dat(m: dict, length: int | None = None) -> bytes:
+    """Write known fields while retaining unknown bytes from a parsed model."""
+    raw = getattr(m, "raw_bytes", b"")
+    output_length = length if length is not None else len(raw) or DAT_LEN
+    out = bytearray(raw[:output_length].ljust(output_length, b"\0"))
     for key, off, kind in FIELDS:
         v = m[key]
         if kind == "u8":
@@ -75,19 +89,28 @@ def serialize_dat(m: dict, length: int = DAT_LEN) -> bytes:
 
 
 def round_trip(orig: bytes) -> tuple[bool, float, list[str]]:
-    """parse->serialize the real file; check documented offsets reproduce, report coverage."""
+    """Check exact byte preservation and report semantic field coverage."""
     model = parse_dat(orig)
-    rebuilt = serialize_dat(model, len(orig))
+    rebuilt = serialize_dat(model)
     modeled = _modeled_bytes()
-    notes: list[str] = []
-    ok = True
-    for off in sorted(modeled):
-        if orig[off] != rebuilt[off]:
-            ok = False
-            notes.append(f"offset 0x{off:02x}: orig={orig[off]:#04x} rebuilt={rebuilt[off]:#04x}")
     coverage = len(modeled) / len(orig)
-    notes.insert(0, f"modeled {len(modeled)}/{len(orig)} bytes ({coverage:.0%})")
-    return ok, coverage, notes
+    notes = [
+        f"known semantics: {len(modeled)}/{len(orig)} bytes ({coverage:.0%})",
+        f"opaque bytes preserved: {len(orig) - len(modeled)}",
+    ]
+    if rebuilt == orig:
+        notes.append("full parse/serialize byte-for-byte match")
+        return True, coverage, notes
+
+    mismatches = [
+        offset for offset, (before, after) in enumerate(zip(orig, rebuilt))
+        if before != after
+    ]
+    notes.append(
+        f"round-trip mismatch at {len(mismatches)} byte(s): "
+        + ", ".join(f"0x{offset:02x}" for offset in mismatches[:10])
+    )
+    return False, coverage, notes
 
 
 def selftest() -> tuple[bool, str]:

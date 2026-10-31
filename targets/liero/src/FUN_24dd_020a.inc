@@ -20,8 +20,22 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_020a;
+function FUN_24dd_020a: Word;
+var
+  divisor: Byte;
+  dividend: Byte;
+  quotient: Byte;
+  remainder: Byte;
+  outputWord: Word;
+  resultWord: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_020a.s — UNMATCHED until an oracle passes }
+  divisor := Byte(RegisterCX);
+  dividend := Byte(RegisterAX);
+  quotient := dividend div divisor;
+  remainder := dividend mod divisor;
+  outputWord := (Word(remainder) shl 8) or Word((quotient + Ord('0')) and $FF);
+  FUN_24dd_0232(outputWord);
+  resultWord := (Word(remainder) shl 8) or remainder;
+  FUN_24dd_020a := resultWord;
+  RegisterAX := resultWord;
 end;
-

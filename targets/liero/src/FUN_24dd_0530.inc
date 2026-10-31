@@ -21,7 +21,28 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_0530;
+var
+  requestedStack: Word;
+  availableStack: Word;
+  minimumStack: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_0530.s — UNMATCHED until an oracle passes }
+  if RegisterAX > $FDFF then
+  begin
+    RunError(202);
+    Exit;
+  end;
+  requestedStack := RegisterAX + $0200;
+  if requestedStack >= RegisterSP then
+  begin
+    RunError(202);
+    Exit;
+  end;
+  availableStack := RegisterSP - requestedStack;
+  minimumStack := Word(DosMemory[$640E]) or
+    (Word(DosMemory[$640F]) shl 8);
+  if availableStack < minimumStack then
+  begin
+    RunError(202);
+    Exit;
+  end;
 end;
-

@@ -57,8 +57,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_0b0e;
+function FUN_202c_0b0e(param_1: Word; param_2: Pointer): Word;
 begin
-  { TODO: translate from asm/FUN_202c_0b0e.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The retained routine performs open/read/close
+    operations through 2000:88f2/892d/8a18/89ae and calls the DOS error
+    handler at 52c4; exact file and interrupt behavior is unavailable. }
 end;
-

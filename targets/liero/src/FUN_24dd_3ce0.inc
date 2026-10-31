@@ -63,8 +63,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3ce0;
+function FUN_24dd_3ce0(param_1: Integer; param_2: Pointer): Word;
 begin
-  { TODO: translate from asm/FUN_24dd_3ce0.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The routine queries DOS version and follows the PSP
+    environment pointer; the DOS interrupt and process model are unavailable. }
 end;
-

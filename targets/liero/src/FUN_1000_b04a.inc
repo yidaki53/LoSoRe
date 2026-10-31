@@ -97,7 +97,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_b04a;
+procedure FUN_1000_b04a(param_1: Integer; param_2: Pointer; param_3, param_4, param_5: Integer; param_6: Longint);
 begin
   { TODO: translate from asm/FUN_1000_b04a.s — UNMATCHED until an oracle passes }
 end;

@@ -1,7 +1,7 @@
-{ liero::FUN_1e7d_0082 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1e7d_0082.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_1e7d_0082.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_1e7d_0082 — unrecovered configuration-string parser.
+  Assembly reviewed: asm/FUN_1e7d_0082.s; Ghidra reference is embedded below.
+  Its segmented local-buffer/search/edit helpers are not host-pointer
+  compatible, and their data-segment constants are unavailable.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -76,8 +76,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1e7d_0082;
+function FUN_1e7d_0082(param_1: Char; param_2: Byte; param_3: Pointer): Word;
 begin
-  { TODO: translate from asm/FUN_1e7d_0082.s — UNMATCHED until an oracle passes }
+  { TODO: model the original SS:offset string buffers and 24DD string helpers
+    before implementing the parser; do not substitute a host string parser. }
 end;
-

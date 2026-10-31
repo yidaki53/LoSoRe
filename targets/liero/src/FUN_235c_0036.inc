@@ -22,8 +22,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0036;
+function FUN_235c_0036: Boolean;
 begin
-  { TODO: translate from asm/FUN_235c_0036.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The assembly toggles the port at DS:$67d0, invokes
+    a timing delay, then polls the hardware data port up to 100 times for
+    byte $AA. Exact port and timing semantics are unavailable. }
 end;
-

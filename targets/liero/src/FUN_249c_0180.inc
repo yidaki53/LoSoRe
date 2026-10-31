@@ -22,8 +22,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_249c_0180;
+function FUN_249c_0180: Word;
 begin
-  { TODO: translate from asm/FUN_249c_0180.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. INT 21h AH=0Bh reads live DOS keyboard status, which
+    the host runtime does not model; no synthetic result is assigned. }
 end;
-

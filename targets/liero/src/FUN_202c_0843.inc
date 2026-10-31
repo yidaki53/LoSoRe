@@ -43,8 +43,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_0843;
+function FUN_202c_0843(param_1: Pointer): Byte;
 begin
-  { TODO: translate from asm/FUN_202c_0843.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The captured body opens, reads, and closes through
+    2000:88f2/892d/89ae and consumes the DOS error state via 52bd; those
+    filesystem and error-handler semantics are unavailable. }
 end;
-

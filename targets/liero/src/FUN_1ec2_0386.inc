@@ -163,8 +163,56 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0386;
+procedure FUN_1ec2_0386(param_1, param_2: Char; param_3: Longint; param_4: Pointer; param_5, param_6: Integer);
+var
+  bitmap: array[0..255] of Byte;
+  source: ^Byte;
+  rowIndex: Integer;
+  columnIndex: Integer;
+  pixelColor: Byte;
+  minimumColor: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_0386.s — UNMATCHED until an oracle passes }
-end;
+  source := param_4;
+  for rowIndex := 0 to 255 do
+  begin
+    bitmap[rowIndex] := source^;
+    Inc(source);
+  end;
+  if (param_1 = #0) then
+    minimumColor := $75
+  else if param_1 = #1 then
+    minimumColor := $73
+  else
+    minimumColor := $71;
 
+  for rowIndex := 0 to 15 do
+    for columnIndex := 2 to 13 do
+    begin
+      pixelColor := bitmap[rowIndex * 16 + columnIndex];
+      if param_1 = #0 then
+      begin
+        if pixelColor <= minimumColor then
+          Continue;
+        Dec(pixelColor, 5);
+      end
+      else if param_1 = #1 then
+      begin
+        if pixelColor <= minimumColor then
+          Continue;
+        Dec(pixelColor, 3);
+      end
+      else if param_1 = #2 then
+      begin
+        if pixelColor <= minimumColor then
+          Continue;
+        Dec(pixelColor, 1);
+      end;
+
+      if param_2 = #0 then
+        FUN_1ec2_0dc8(param_3, Char(pixelColor), param_5 + rowIndex,
+          (14 - columnIndex) + param_6)
+      else
+        FUN_1ec2_0dc8(param_3, Char(pixelColor), param_5 + rowIndex,
+          param_6 + columnIndex);
+    end;
+end;

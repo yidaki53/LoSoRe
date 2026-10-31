@@ -26,8 +26,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_489c;
+function FUN_24dd_489c(param_1, param_2: Word; param_3: Longint): Word;
 begin
-  { TODO: translate from asm/FUN_24dd_489c.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The routine uses INT 21h file-position services and
+    DOS handle semantics, which are not modeled by the host runtime. }
 end;
-

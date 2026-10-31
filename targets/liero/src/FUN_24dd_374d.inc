@@ -1,28 +1,23 @@
-{ liero::FUN_24dd_374d — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_374d.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_374d.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __cdecl16near FUN_24dd_374d(void)
-// 
-// {
-//   int iVar1;
-//   int in_BX;
-//   int unaff_DI;
-//   undefined2 unaff_DS;
-//   
-//   iVar1 = (*(code *)*(undefined2 *)(in_BX + unaff_DI))(0x24dd);
-//   if (iVar1 != 0) {
-//     *(int *)0x6410 = iVar1;
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_374d;
-begin
-  { TODO: translate from asm/FUN_24dd_374d.s — UNMATCHED until an oracle passes }
-end;
+{ Oracle: isolated original-vs-host Pascal dispatch composition.
+  The callback resolves a far method and object explicitly; it is not TP7 ABI.
+  Unknown methods must be rejected by the resolver, never treated as success. }
+type
+  TLieroDispatchMethod = function(slotOffset, objectSegment, objectOffset: Word): Word;
+var
+  LieroDispatchMethod: TLieroDispatchMethod;
 
+procedure FUN_24dd_374d;
+var
+  savedSegment, savedOffset: Word;
+begin
+  if not Assigned(LieroDispatchMethod) then
+    RunError(211);
+  savedSegment := RegisterES;
+  savedOffset := RegisterDI;
+  RegisterAX := LieroDispatchMethod(RegisterBX, savedSegment, savedOffset);
+  RegisterZeroFlag := RegisterAX = 0;
+  if RegisterAX <> 0 then
+    GlobalWord6410 := RegisterAX;
+  RegisterDI := savedOffset;
+  RegisterES := savedSegment;
+end;

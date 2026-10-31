@@ -64,8 +64,28 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0734;
+procedure FUN_1ec2_0734(param_1: Char; param_2: Longint; param_3: Pointer; param_4, param_5: Integer);
+var
+  bitmap: array[0..255] of Byte;
+  source: ^Byte;
+  rowIndex: Integer;
+  columnIndex: Integer;
 begin
-  { TODO: translate from asm/FUN_1ec2_0734.s — UNMATCHED until an oracle passes }
+  source := param_3;
+  for rowIndex := 0 to 255 do
+  begin
+    bitmap[rowIndex] := source^;
+    Inc(source);
+  end;
+  for rowIndex := 0 to 8 do
+    for columnIndex := 2 to 11 do
+      if bitmap[rowIndex * 16 + columnIndex] <> 0 then
+      begin
+        if param_1 = #0 then
+          FUN_1ec2_0e4a(param_2, param_4 + rowIndex,
+            (14 - columnIndex) + param_5)
+        else
+          FUN_1ec2_0e4a(param_2, param_4 + rowIndex,
+            param_5 + columnIndex);
+      end;
 end;
-

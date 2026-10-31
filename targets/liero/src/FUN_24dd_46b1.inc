@@ -31,7 +31,44 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_46b1;
+var
+  stateLow: Word;
+  stateHigh: Word;
+  multiplier: Word;
+  product: LongWord;
+  foldedState: Word;
+  nextLow: Word;
+  nextHigh: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_46b1.s — UNMATCHED until an oracle passes }
-end;
+  stateLow := Word(DosMemory[$6412]) or (Word(DosMemory[$6413]) shl 8);
+  stateHigh := Word(DosMemory[$6414]) or (Word(DosMemory[$6415]) shl 8);
+  multiplier := Word(CodeMemory[$46E7]) or (Word(CodeMemory[$46E8]) shl 8);
 
+  product := LongWord(stateLow) * LongWord(multiplier);
+  nextHigh := Word(product shr 16);
+  foldedState := Word((stateLow shl 3) and $FFFF);
+  foldedState := (foldedState and $00FF) or
+    (Word(Byte((foldedState shr 8) + (foldedState and $00FF))) shl 8);
+  nextHigh := Word(nextHigh + foldedState);
+  nextHigh := Word(nextHigh + stateHigh);
+  stateHigh := Word(stateHigh shl 2);
+  nextHigh := Word(nextHigh + stateHigh);
+  nextHigh := (nextHigh and $00FF) or
+    (Word(Byte((nextHigh shr 8) + (stateHigh and $00FF))) shl 8);
+  stateHigh := Word(stateHigh shl 5);
+  nextHigh := (nextHigh and $00FF) or
+    (Word(Byte((nextHigh shr 8) + (stateHigh and $00FF))) shl 8);
+
+  nextLow := Word(Word(DosMemory[$6412]) or
+    (Word(DosMemory[$6413]) shl 8));
+  Inc(nextLow);
+  if nextLow = 0 then
+    Inc(nextHigh);
+
+  DosMemory[$6412] := Byte(nextLow);
+  DosMemory[$6413] := Byte(nextLow shr 8);
+  DosMemory[$6414] := Byte(nextHigh);
+  DosMemory[$6415] := Byte(nextHigh shr 8);
+  RegisterAX := nextLow;
+  RegisterDX := nextHigh;
+end;

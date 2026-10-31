@@ -1,18 +1,18 @@
-{ liero::FUN_24dd_3ed3 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3ed3.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3ed3.s (INCLUDE_ASM residue).
+{ liero::FUN_24dd_3ed3 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host pointer tests).
+  Original assembly retained in asm/FUN_24dd_3ed3.s.
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
-// 
+//
 // void __stdcall16far FUN_24dd_3ed3(uint param_1,uint param_2,byte *param_3,byte *param_4)
-// 
+//
 // {
 //   byte *pbVar1;
 //   uint uVar2;
 //   byte *pbVar3;
 //   byte *pbVar4;
-//   
+//
 //   pbVar4 = (byte *)param_4;
 //   if ((int)param_2 < 1) {
 //     param_2 = 1;
@@ -38,10 +38,53 @@
 //   }
 //   return;
 // }
-// 
+//
 // --- end reference ---
-procedure FUN_24dd_3ed3;
+procedure FUN_24dd_3ed3(param_1, param_2: Word; param_3, param_4: Pointer);
+var
+  sourceByte: PByte;
+  destinationByte: PByte;
+  sourceLength: Byte;
+  startPosition: Word;
+  sourceOffset: Word;
+  maxBytes: Word;
+  availableBytes: Word;
+  remainingBytes: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_3ed3.s — UNMATCHED until an oracle passes }
-end;
+  sourceByte := PByte(param_3);
+  destinationByte := PByte(param_4);
+  sourceLength := sourceByte^;
 
+  if SmallInt(param_2) < 1 then
+    startPosition := 1
+  else
+    startPosition := param_2;
+  sourceOffset := startPosition;
+  while sourceOffset <> 0 do
+  begin
+    Inc(sourceByte);
+    Dec(sourceOffset);
+  end;
+
+  if SmallInt(param_1) < 0 then
+    maxBytes := 0
+  else
+    maxBytes := param_1;
+
+  availableBytes := 0;
+  if startPosition <= sourceLength then
+    availableBytes := sourceLength - startPosition + 1;
+  if availableBytes > maxBytes then
+    availableBytes := maxBytes;
+
+  remainingBytes := Byte(availableBytes);
+  destinationByte^ := remainingBytes;
+  Inc(destinationByte);
+  while remainingBytes <> 0 do
+  begin
+    destinationByte^ := sourceByte^;
+    Inc(sourceByte);
+    Inc(destinationByte);
+    Dec(remainingBytes);
+  end;
+end;

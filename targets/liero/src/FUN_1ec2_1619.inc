@@ -45,7 +45,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_1619;
+procedure FUN_1ec2_1619(param_1, param_2: Byte);
 begin
   { TODO: translate from asm/FUN_1ec2_1619.s — UNMATCHED until an oracle passes }
 end;

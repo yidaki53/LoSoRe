@@ -38,7 +38,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0018;
+procedure FUN_1ec2_0018(param_1: Word; param_2: Longint);
 begin
   { TODO: translate from asm/FUN_1ec2_0018.s — UNMATCHED until an oracle passes }
 end;

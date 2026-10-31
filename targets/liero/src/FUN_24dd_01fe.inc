@@ -20,8 +20,15 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_01fe;
+function FUN_24dd_01fe: Word;
+var
+  resultWord: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_01fe.s — UNMATCHED until an oracle passes }
+  RegisterCX := (RegisterCX and $FF00) or 100;
+  FUN_24dd_020a;
+  RegisterCX := (RegisterCX and $FF00) or 10;
+  resultWord := FUN_24dd_020a;
+  FUN_24dd_01fe := resultWord;
+  FUN_24dd_0232((resultWord and $FF00) or
+    Word((Byte(resultWord) + Ord('0')) and $FF));
 end;
-

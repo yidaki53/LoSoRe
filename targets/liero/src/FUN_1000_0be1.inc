@@ -36,7 +36,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_0be1;
+procedure FUN_1000_0be1(param_1, param_2, param_3, param_4, param_5, param_6: Word);
 begin
   { TODO: translate from asm/FUN_1000_0be1.s — UNMATCHED until an oracle passes }
 end;

@@ -91,7 +91,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_bcca;
+procedure FUN_1000_bcca(param_1: Integer);
 begin
   { TODO: translate from asm/FUN_1000_bcca.s — UNMATCHED until an oracle passes }
 end;

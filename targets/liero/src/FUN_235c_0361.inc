@@ -15,8 +15,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0361;
+function FUN_235c_0361: Word;
 begin
-  { TODO: translate from asm/FUN_235c_0361.s — UNMATCHED until an oracle passes }
+  FUN_235c_0361 := FUN_2494_001e;
+  RegisterAX := FUN_235c_0361;
 end;
-

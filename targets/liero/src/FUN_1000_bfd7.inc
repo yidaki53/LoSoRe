@@ -428,7 +428,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_bfd7;
+procedure FUN_1000_bfd7(param_1: Integer; param_2: Char);
 begin
   { TODO: translate from asm/FUN_1000_bfd7.s — UNMATCHED until an oracle passes }
 end;

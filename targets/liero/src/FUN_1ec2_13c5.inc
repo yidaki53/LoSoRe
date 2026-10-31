@@ -21,7 +21,13 @@
 // 
 // --- end reference ---
 procedure FUN_1ec2_13c5;
+var
+  status: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_13c5.s — UNMATCHED until an oracle passes }
+  repeat
+    status := ReadVideoStatusPort;
+  until (status and $08) = 0;
+  repeat
+    status := ReadVideoStatusPort;
+  until (status and $08) <> 0;
 end;
-

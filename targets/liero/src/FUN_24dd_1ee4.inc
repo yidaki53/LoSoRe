@@ -18,7 +18,15 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_1ee4;
+var
+  memoryOffset: Word;
+  borrow: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_1ee4.s — UNMATCHED until an oracle passes }
+  memoryOffset := RegisterBX + $5E;
+  if RegisterCarryFlag then
+    borrow := 1
+  else
+    borrow := 0;
+  DosMemory[memoryOffset] :=
+    Byte(DosMemory[memoryOffset] - Byte(RegisterBX) - borrow);
 end;
-

@@ -68,8 +68,40 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_1008;
+procedure FUN_1ec2_1008(param_1: Pointer; param_2: Longint; param_3, param_4: Byte; param_5: Integer; param_6: Word; param_7, param_8: Integer);
+var
+  source: PByte;
+  rowCount: Byte;
+  columnCount: Byte;
+  rowIndex: Integer;
+  columnIndex: Integer;
+  y: Integer;
+  x: Integer;
+  destinationAddress: Longint;
+  destinationValue: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_1008.s — UNMATCHED until an oracle passes }
-end;
+  source := PByte(param_1);
+  rowCount := Byte(param_5);
+  columnCount := Byte(param_6);
+  y := param_7;
 
+  for rowIndex := 0 to Integer(rowCount) - 1 do
+  begin
+    x := param_8;
+    for columnIndex := 0 to Integer(columnCount) - 1 do
+    begin
+      if (y >= 0) and (y < $9E) and
+         (x >= 0) and (x < $9E) and (source^ <> 0) then
+      begin
+        destinationAddress := (param_2 + Longint(y) * $140 + x) and $FFFFF;
+        destinationValue := RealModeMemory[destinationAddress];
+        if (destinationValue < 7) or
+           ((destinationValue >= param_4) and (destinationValue <= param_3)) then
+          RealModeMemory[destinationAddress] := source^;
+      end;
+      Inc(source);
+      Inc(x);
+    end;
+    Inc(y);
+  end;
+end;

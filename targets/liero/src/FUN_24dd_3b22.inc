@@ -1,9 +1,9 @@
-{ liero::FUN_24dd_3b22 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3b22.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3b22.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_24dd_3b22 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host far-pointer memory tests).
+  Original assembly retained in asm/FUN_24dd_3b22.s.
+  The Ghidra decompiler reference is embedded below.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
+// --- reference: Ghidra decompiler C ---
 // 
 // void __stdcall16far FUN_24dd_3b22(byte *param_1,undefined2 *param_2)
 // 
@@ -42,8 +42,72 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3b22;
+procedure FUN_24dd_3b22(param_1, param_2: Longint);
+var
+  sourceOffset: Word;
+  sourceSegment: Word;
+  destinationOffset: Word;
+  destinationSegment: Word;
+  sourceLength: Byte;
+  remaining: Byte;
+  sourceAddress: Longint;
+  destinationAddress: Longint;
+  byteIndex: Integer;
+  currentByte: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_3b22.s — UNMATCHED until an oracle passes }
-end;
+  sourceOffset := Word(param_1);
+  sourceSegment := Word(param_1 shr 16);
+  destinationOffset := Word(param_2);
+  destinationSegment := Word(param_2 shr 16);
+  destinationAddress := ((Longint(destinationSegment) shl 4) +
+    destinationOffset) and $FFFFF;
+  RealModeMemory[destinationAddress] := 0;
+  Inc(destinationOffset);
+  destinationAddress := ((Longint(destinationSegment) shl 4) +
+    destinationOffset) and $FFFFF;
+  RealModeMemory[destinationAddress] := 0;
+  Inc(destinationOffset);
+  destinationAddress := ((Longint(destinationSegment) shl 4) +
+    destinationOffset) and $FFFFF;
+  RealModeMemory[destinationAddress] := $B0;
+  Inc(destinationOffset);
+  destinationAddress := ((Longint(destinationSegment) shl 4) +
+    destinationOffset) and $FFFFF;
+  RealModeMemory[destinationAddress] := $D7;
+  Inc(destinationOffset);
 
+  for byteIndex := 4 to 47 do
+  begin
+    destinationAddress := ((Longint(destinationSegment) shl 4) +
+      Word(Word(param_2) + byteIndex)) and $FFFFF;
+    RealModeMemory[destinationAddress] := 0;
+  end;
+  Inc(destinationOffset, 44);
+
+  sourceAddress := ((Longint(sourceSegment) shl 4) + sourceOffset) and $FFFFF;
+  sourceLength := RealModeMemory[sourceAddress];
+  if sourceLength < 79 then
+    remaining := sourceLength
+  else
+    remaining := 79;
+  Inc(sourceOffset);
+
+  while remaining <> 0 do
+  begin
+    sourceAddress := ((Longint(sourceSegment) shl 4) + sourceOffset) and
+      $FFFFF;
+    currentByte := RealModeMemory[sourceAddress];
+    if currentByte = 0 then
+      Break;
+    destinationAddress := ((Longint(destinationSegment) shl 4) +
+      destinationOffset) and $FFFFF;
+    RealModeMemory[destinationAddress] := currentByte;
+    Inc(sourceOffset);
+    Inc(destinationOffset);
+    Dec(remaining);
+  end;
+
+  destinationAddress := ((Longint(destinationSegment) shl 4) +
+    destinationOffset) and $FFFFF;
+  RealModeMemory[destinationAddress] := 0;
+end;

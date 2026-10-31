@@ -1,9 +1,9 @@
-{ liero::FUN_24dd_3d36 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3d36.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3d36.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_24dd_3d36 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host command-line memory tests).
+  Original assembly retained in asm/FUN_24dd_3d36.s.
+  The Ghidra decompiler reference is embedded below.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
+// --- reference: Ghidra decompiler C ---
 // 
 // void __cdecl16near FUN_24dd_3d36(void)
 // 
@@ -31,7 +31,71 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_3d36;
+var
+  commandLineSegment: Word;
+  remaining: Word;
+  startOffset: Word;
+  address: Longint;
+  commandLineLength: Byte;
+  currentByte: Byte;
+  tokenLength: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_3d36.s — UNMATCHED until an oracle passes }
-end;
+  commandLineSegment :=
+    Word(DosMemory[$640C]) or (Word(DosMemory[$640D]) shl 8);
+  RegisterES := commandLineSegment;
+  RegisterBX := 0;
+  RegisterDI := $80;
+  address := ((Longint(commandLineSegment) shl 4) + RegisterDI) and $FFFFF;
+  commandLineLength := RealModeMemory[address];
+  remaining := commandLineLength;
+  Inc(RegisterDI);
+  tokenLength := 0;
 
+  while remaining <> 0 do
+  begin
+    address := ((Longint(commandLineSegment) shl 4) + RegisterDI) and $FFFFF;
+    currentByte := RealModeMemory[address];
+    while (remaining <> 0) and (currentByte <= $20) do
+    begin
+      Dec(remaining);
+      Inc(RegisterDI);
+      if remaining <> 0 then
+      begin
+        address := ((Longint(commandLineSegment) shl 4) + RegisterDI) and
+          $FFFFF;
+        currentByte := RealModeMemory[address];
+      end;
+    end;
+    RegisterCX := remaining;
+    if remaining = 0 then
+      Break;
+
+    startOffset := RegisterDI;
+    RegisterSI := startOffset;
+    while remaining <> 0 do
+    begin
+      address := ((Longint(commandLineSegment) shl 4) + RegisterDI) and
+        $FFFFF;
+      currentByte := RealModeMemory[address];
+      if currentByte <= $20 then
+        Break;
+      Dec(remaining);
+      Inc(RegisterDI);
+    end;
+    tokenLength := Word(RegisterDI - startOffset);
+    RegisterAX := tokenLength;
+    Inc(RegisterBX);
+    Dec(RegisterDX);
+    RegisterCX := remaining;
+    if RegisterDX = 0 then
+      Break;
+
+    if remaining <> 0 then
+    begin
+      Inc(RegisterDI);
+      Dec(remaining);
+    end;
+  end;
+  RegisterCX := remaining;
+  RegisterAX := tokenLength;
+end;

@@ -22,8 +22,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_045d;
+function FUN_235c_045d: Byte;
 begin
-  { TODO: translate from asm/FUN_235c_045d.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The routine calls an unresolved delay/port helper and
+    executes OUT DX,AL; this runtime has no I/O-port model. Do not synthesize AL. }
 end;
-

@@ -3,4 +3,7 @@
 - Worm sprites, level tiles, weapon sprites: byte-planar bitmaps; exact layout TODO after BYOD ingest
 - Parity test: extract CHR via tools/liero_chr.py → PNG; compare vs openliero tctool output (format parity, not byte match)
 # LIERO.SND format: raw samples + index; lierolibre provides replacements; original SND stays BYOD-only
-# LIERO.DAT settings format: fully documented at liero.nl/lierohack/docformats/liero-dat.html (offsets 0000h-009Bh)
+# LIERO.DAT settings format: the file is 155 bytes (0000h-009Ah; 009Bh is
+# the exclusive end offset). The current parser models 20 documented bytes;
+# the remaining 135 bytes are preserved opaquely. Byte-exact round-trip proves
+# preservation only, not that those opaque bytes' semantics are understood.

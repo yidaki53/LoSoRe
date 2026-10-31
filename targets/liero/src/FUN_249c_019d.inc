@@ -22,8 +22,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_249c_019d;
+function FUN_249c_019d: Char;
 begin
-  { TODO: translate from asm/FUN_249c_019d.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. INT 21h AH=07h reads the DOS console, and INT 23h
+    performs the Ctrl-C handler transfer; neither interrupt is modeled here. }
 end;
-

@@ -1,21 +1,27 @@
-{ liero::FUN_24dd_3988 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3988.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3988.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __stdcall16far FUN_24dd_3988(undefined2 param_1,undefined1 *param_2)
-// 
-// {
-//   FUN_24dd_37ec();
-//   *param_2 = 0;
-//   return;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_3988;
+{ Oracle: original-byte/Pascal reader-wrapper parity through the checked buffer.
+  Host pointers replace far-pointer parameters; they do not prove TP7 ABI.
+  The caller-owned four-byte object argument remains for FUN_24dd_38f0. }
+procedure FUN_24dd_3988(count: Word; destination, objectPointer: Pointer);
+type
+  TObjectWords = array[0..127] of Word;
+  PObjectWords = ^TObjectWords;
+var
+  words: PObjectWords;
+  stringLength: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_3988.s — UNMATCHED until an oracle passes }
+  if (objectPointer = nil) or (destination = nil) or
+     (objectPointer <> LieroBufferObject) then
+    RunError(211);
+  words := objectPointer;
+  if words^[1] <> $D7B1 then
+    RunError(211);
+  RegisterAX := $39AB;
+  RegisterCX := count;
+  RegisterDI := 1;
+  RegisterSI := words^[4];
+  LieroBufferDestination := destination;
+  FUN_24dd_37ec;
+  stringLength := RegisterDI - 1;
+  PByte(destination)^ := Byte(stringLength and $FF);
+  RegisterAX := stringLength;
 end;
-

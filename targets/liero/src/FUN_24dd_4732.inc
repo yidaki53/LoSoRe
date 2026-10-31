@@ -105,8 +105,74 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_4732;
+function FUN_24dd_4732: Longint;
+var
+  accumulator: QWord;
+  digitValue: Byte;
+  remaining: Word;
+  address: Longint;
+  characterValue: Byte;
+  radix: Byte;
+  isNegative: Boolean;
+  resultValue: Longint;
 begin
-  { TODO: translate from asm/FUN_24dd_4732.s — UNMATCHED until an oracle passes }
-end;
+  accumulator := 0;
+  remaining := RegisterCX;
+  isNegative := False;
 
+  if remaining <> 0 then
+  begin
+    address := ((Longint(RegisterES) shl 4) + RegisterDI) and $FFFFF;
+    characterValue := DosMemory[address];
+    if (characterValue = Ord('+')) or (characterValue = Ord('-')) then
+    begin
+      isNegative := characterValue = Ord('-');
+      Inc(RegisterDI);
+      Dec(remaining);
+    end;
+  end;
+
+  radix := 10;
+  if remaining <> 0 then
+  begin
+    address := ((Longint(RegisterES) shl 4) + RegisterDI) and $FFFFF;
+    if DosMemory[address] = Ord('$') then
+    begin
+      radix := 16;
+      Inc(RegisterDI);
+      Dec(remaining);
+    end;
+  end;
+
+  while remaining <> 0 do
+  begin
+    address := ((Longint(RegisterES) shl 4) + RegisterDI) and $FFFFF;
+    characterValue := DosMemory[address];
+    if (characterValue >= Ord('0')) and (characterValue <= Ord('9')) then
+      digitValue := characterValue - Ord('0')
+    else if (radix = 16) and (characterValue >= Ord('A')) and
+      (characterValue <= Ord('F')) then
+      digitValue := characterValue - Ord('A') + 10
+    else if (radix = 16) and (characterValue >= Ord('a')) and
+      (characterValue <= Ord('f')) then
+      digitValue := characterValue - Ord('a') + 10
+    else
+      Break;
+
+    if digitValue >= radix then
+      Break;
+    if accumulator > ($FFFFFFFF - digitValue) div radix then
+      Break;
+    accumulator := accumulator * radix + digitValue;
+    Inc(RegisterDI);
+    Dec(remaining);
+  end;
+
+  RegisterCX := remaining;
+  if isNegative then
+    accumulator := (not accumulator + 1) and $FFFFFFFF;
+  RegisterAX := Word(accumulator);
+  RegisterDX := Word(accumulator shr 16);
+  Move(Longword(accumulator), resultValue, SizeOf(resultValue));
+  FUN_24dd_4732 := resultValue;
+end;

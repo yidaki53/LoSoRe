@@ -17,8 +17,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_1380;
+function FUN_235c_1380: Boolean;
 begin
-  { TODO: translate from asm/FUN_235c_1380.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. INT 2Fh AX=4300h availability semantics are not
+    provided by the host runtime; no synthetic result is assigned. }
 end;
-

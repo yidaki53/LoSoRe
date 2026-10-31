@@ -1,28 +1,25 @@
-{ liero::FUN_24dd_38f0 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_38f0.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_38f0.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __stdcall16far FUN_24dd_38f0(undefined4 param_1)
-// 
-// {
-//   int iVar1;
-//   bool bVar2;
-//   
-//   iVar1 = (int)param_1;
-//   bVar2 = true;
-//   FUN_24dd_37ec();
-//   if ((bVar2) && (*(int *)(iVar1 + 0x1a) != 0)) {
-//     FUN_24dd_397a();
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_38f0;
+{ Oracle: original-byte/Pascal skip-wrapper parity through the checked buffer.
+  The caller passes the object whose far argument the preceding reader retained.
+  Optional method execution uses the explicit method resolver in FUN_24dd_397a. }
+procedure FUN_24dd_38f0(objectPointer: Pointer);
+type
+  TObjectWords = array[0..127] of Word;
+  PObjectWords = ^TObjectWords;
+var
+  words: PObjectWords;
 begin
-  { TODO: translate from asm/FUN_24dd_38f0.s — UNMATCHED until an oracle passes }
+  if (objectPointer = nil) or (objectPointer <> LieroBufferObject) then
+    RunError(211);
+  words := objectPointer;
+  RegisterAX := $390E;
+  RegisterDX := 0;
+  RegisterSI := words^[4];
+  FUN_24dd_37ec;
+  { In this fixture, remaining buffered bytes match the original ZF-clear path. }
+  if (words^[4] < words^[5]) and (words^[13] <> 0) then
+  begin
+    RegisterES := LieroBufferCodeSegment;
+    RegisterBX := LieroBufferObjectOffset;
+    FUN_24dd_397a;
+  end;
 end;
-

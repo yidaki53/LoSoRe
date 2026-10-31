@@ -16,7 +16,9 @@
 // 
 // --- end reference ---
 procedure FUN_235c_0aeb;
+var
+  offset: Word;
 begin
-  { TODO: translate from asm/FUN_235c_0aeb.s — UNMATCHED until an oracle passes }
+  for offset := $6A58 to $6E57 do
+    DosMemory[offset] := 0;
 end;
-

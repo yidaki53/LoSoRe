@@ -30,7 +30,17 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_0673;
+var
+  sourceOffset: Word;
+  destinationOffset: Word;
+  byteIndex: Integer;
 begin
-  { TODO: translate from asm/FUN_24dd_0673.s — UNMATCHED until an oracle passes }
+  sourceOffset := StackPointerD8;
+  destinationOffset := (sourceOffset - 12) and $FFFF;
+  StackPointerD8 := destinationOffset;
+  for byteIndex := 0 to 11 do
+  begin
+    DosMemory[(destinationOffset + byteIndex) and $FFFF] :=
+      DosMemory[(sourceOffset + byteIndex) and $FFFF];
+  end;
 end;
-

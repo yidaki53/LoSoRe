@@ -52,7 +52,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_b28f;
+procedure FUN_1000_b28f(param_1: Integer);
 begin
   { TODO: translate from asm/FUN_1000_b28f.s — UNMATCHED until an oracle passes }
 end;

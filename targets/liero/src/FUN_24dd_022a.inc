@@ -17,7 +17,11 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_022a;
+var
+  digit: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_022a.s — UNMATCHED until an oracle passes }
+  digit := Byte(RegisterAX) + Ord('0');
+  if digit >= Ord(':') then
+    Inc(digit, 7);
+  FUN_24dd_0232(digit);
 end;
-

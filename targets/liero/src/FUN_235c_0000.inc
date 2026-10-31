@@ -19,8 +19,10 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0000;
+function FUN_235c_0000(param_1: Byte): Byte;
 begin
-  { TODO: translate from asm/FUN_235c_0000.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. Assembly busy-waits on the device status at
+    DS:$67d4 and writes to the port held there. This runtime has no port-I/O
+    model for that device, so the wait and its observable register state
+    cannot be emulated faithfully. }
 end;
-

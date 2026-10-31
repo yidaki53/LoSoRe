@@ -58,7 +58,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_a8f7;
+procedure FUN_1000_a8f7(param_1: Word; param_2, param_3: Pointer);
 begin
   { TODO: translate from asm/FUN_1000_a8f7.s — UNMATCHED until an oracle passes }
 end;

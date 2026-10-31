@@ -35,7 +35,28 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_4712;
+var
+  value: QWord;
+  radix: Word;
+  digitValue: Word;
+  address: Longint;
 begin
-  { TODO: translate from asm/FUN_24dd_4712.s — UNMATCHED until an oracle passes }
-end;
+  value := (QWord(RegisterBX) shl 16) or RegisterAX;
+  radix := RegisterSI;
 
+  repeat
+    digitValue := value mod radix;
+    value := value div radix;
+    if digitValue < 10 then
+      digitValue := digitValue + Ord('0')
+    else
+      digitValue := digitValue + Ord('A') - 10;
+
+    Dec(RegisterDI);
+    address := ((Longint(RegisterES) shl 4) + RegisterDI) and $FFFFF;
+    DosMemory[address] := Byte(digitValue);
+  until value = 0;
+
+  RegisterAX := 0;
+  RegisterBX := 0;
+end;

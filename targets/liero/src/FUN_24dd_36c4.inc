@@ -1,44 +1,30 @@
-{ liero::FUN_24dd_36c4 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_36c4.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_36c4.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __stdcall16far FUN_24dd_36c4(undefined4 param_1)
-// 
-// {
-//   int iVar1;
-//   undefined2 in_DX;
-//   int iVar2;
-//   undefined2 uVar3;
-//   undefined2 unaff_DS;
-//   bool bVar4;
-//   
-//   uVar3 = (undefined2)((ulong)param_1 >> 0x10);
-//   iVar2 = (int)param_1;
-//   iVar1 = *(int *)(iVar2 + 2);
-//   if ((iVar1 == -0x284f) || (iVar1 == -0x284e)) {
-//     FUN_24dd_3711(iVar2,uVar3);
-//   }
-//   else if (iVar1 != -0x2850) {
-//     *(undefined2 *)0x6410 = 0x66;
-//     return;
-//   }
-//   bVar4 = true;
-//   *(undefined2 *)(iVar2 + 2) = in_DX;
-//   *(undefined2 *)(iVar2 + 8) = 0;
-//   *(undefined2 *)(iVar2 + 10) = 0;
-//   FUN_24dd_374d();
-//   if (!bVar4) {
-//     *(undefined2 *)(iVar2 + 2) = 0xd7b0;
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_36c4;
+{ Oracle: input-only original-vs-host Pascal open/reopen composition.
+  Host pointer resolves the object; RegisterES:DI must mirror its logical address.
+  Output-mode transitions remain unresolved and abort before side effects. }
+procedure FUN_24dd_36c4(objectPointer: Pointer);
+var
+  modePointer, positionPointer: ^Word;
+  requestedMode: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_36c4.s — UNMATCHED until an oracle passes }
+  requestedMode := RegisterDX;
+  modePointer := PWord(PByte(objectPointer) + 2);
+  if (requestedMode <> $D7B1) or (modePointer^ = $D7B2) then
+    RunError(211);
+  if modePointer^ = $D7B1 then
+    FUN_24dd_3711(objectPointer)
+  else if modePointer^ <> $D7B0 then
+  begin
+    GlobalWord6410 := $66;
+    Exit;
+  end;
+  RegisterDX := requestedMode;
+  modePointer^ := requestedMode;
+  positionPointer := PWord(PByte(objectPointer) + 8);
+  positionPointer^ := 0;
+  Inc(positionPointer);
+  positionPointer^ := 0;
+  RegisterBX := $10;
+  FUN_24dd_374d;
+  if not RegisterZeroFlag then
+    modePointer^ := $D7B0;
 end;
-

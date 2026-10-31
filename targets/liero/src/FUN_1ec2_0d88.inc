@@ -39,8 +39,44 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0d88;
+procedure FUN_1ec2_0d88(param_1: Byte; param_2, param_3: Integer; param_4: Pointer);
+var
+  destination: PByte;
+  remaining: Integer;
+  remainingRows: Integer;
 begin
-  { TODO: translate from asm/FUN_1ec2_0d88.s — UNMATCHED until an oracle passes }
-end;
+  if (param_2 < 3) or (param_3 < 2) or (param_3 > 320) then
+    Exit;
 
+  destination := PByte(param_4);
+  remaining := param_3 - 2;
+  while remaining <> 0 do
+  begin
+    Inc(destination);
+    destination^ := param_1;
+    Dec(remaining);
+  end;
+  Inc(destination, 322 - param_3);
+
+  remainingRows := param_2 - 2;
+  while remainingRows <> 0 do
+  begin
+    remaining := param_3;
+    while remaining <> 0 do
+    begin
+      destination^ := param_1;
+      Inc(destination);
+      Dec(remaining);
+    end;
+    Inc(destination, 320 - param_3);
+    Dec(remainingRows);
+  end;
+
+  remaining := param_3 - 2;
+  while remaining <> 0 do
+  begin
+    Inc(destination);
+    destination^ := param_1;
+    Dec(remaining);
+  end;
+end;

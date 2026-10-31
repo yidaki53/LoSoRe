@@ -432,7 +432,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_3d39;
+procedure FUN_1000_3d39(param_1: Integer);
 begin
   { TODO: translate from asm/FUN_1000_3d39.s — UNMATCHED until an oracle passes }
 end;

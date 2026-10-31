@@ -1,6 +1,6 @@
-{ liero::FUN_24dd_4919 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_4919.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_4919.s (INCLUDE_ASM residue).
+{ liero::FUN_24dd_4919 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; exhaustive host behavior test).
+  Original assembly retained in asm/FUN_24dd_4919.s.
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
@@ -15,8 +15,10 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_4919;
+function FUN_24dd_4919(param_1: Byte): Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_4919.s — UNMATCHED until an oracle passes }
+  if (param_1 >= $61) and (param_1 <= $7A) then
+    FUN_24dd_4919 := param_1 - $20
+  else
+    FUN_24dd_4919 := param_1;
 end;
-

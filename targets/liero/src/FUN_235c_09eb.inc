@@ -24,8 +24,18 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_09eb;
+procedure FUN_235c_09eb(param_1: Char);
+var
+  recordIndex: Byte;
+  entryOffset: Word;
 begin
-  { TODO: translate from asm/FUN_235c_09eb.s — UNMATCHED until an oracle passes }
+  for recordIndex := 0 to 7 do
+  begin
+    entryOffset := $6808 + Word(recordIndex) * 10;
+    if DosMemory[entryOffset] = Byte(param_1) then
+    begin
+      FUN_235c_091d(recordIndex);
+      Dec(DosMemory[$67CE]);
+    end;
+  end;
 end;
-

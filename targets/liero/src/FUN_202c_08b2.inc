@@ -38,7 +38,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_08b2;
+procedure FUN_202c_08b2(param_1: Pointer);
 begin
   { TODO: translate from asm/FUN_202c_08b2.s — UNMATCHED until an oracle passes }
 end;

@@ -1,7 +1,7 @@
-{ liero::FUN_1000_cfb7 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1000_cfb7.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_1000_cfb7.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_1000_cfb7 — unrecovered interactive game/menu routine.
+  Assembly reviewed: asm/FUN_1000_cfb7.s; Ghidra reference is embedded below.
+  Exact behavior depends on unavailable keyboard interrupt and graphics/runtime
+  helpers; no synthetic result is supplied.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -285,8 +285,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_cfb7;
+function FUN_1000_cfb7(param_1: Byte): Integer;
 begin
-  { TODO: translate from asm/FUN_1000_cfb7.s — UNMATCHED until an oracle passes }
+  { TODO: recover the input-driven menu/game flow and its graphics helper
+    side effects before translating. }
 end;
-

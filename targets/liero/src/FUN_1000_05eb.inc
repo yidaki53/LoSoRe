@@ -69,7 +69,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_05eb;
+procedure FUN_1000_05eb(param_1: Byte);
 begin
   { TODO: translate from asm/FUN_1000_05eb.s — UNMATCHED until an oracle passes }
 end;

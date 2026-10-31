@@ -29,8 +29,23 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_155e;
+procedure FUN_1ec2_155e(param_1: Pointer);
+var
+  paletteData: ^Byte;
+  paletteIndex: Word;
+  red: Byte;
+  green: Byte;
+  blue: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_155e.s — UNMATCHED until an oracle passes }
+  paletteData := param_1;
+  for paletteIndex := 0 to 255 do
+  begin
+    red := paletteData^;
+    Inc(paletteData);
+    green := paletteData^;
+    Inc(paletteData);
+    blue := paletteData^;
+    Inc(paletteData);
+    FUN_1ec2_10cf(blue, green, red, Byte(paletteIndex));
+  end;
 end;
-

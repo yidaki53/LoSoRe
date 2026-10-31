@@ -1,6 +1,6 @@
-{ liero::FUN_24dd_40d6 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_40d6.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_40d6.s (INCLUDE_ASM residue).
+{ liero::FUN_24dd_40d6 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host behavior test).
+  Original assembly retained in asm/FUN_24dd_40d6.s.
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
@@ -20,8 +20,19 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_40d6;
+procedure FUN_24dd_40d6(param_1: Word; param_2: Pointer);
+var
+  destination: ^Word;
+  remaining: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_40d6.s — UNMATCHED until an oracle passes }
+  destination := param_2;
+  destination^ := param_1;
+  Inc(destination);
+  remaining := 15;
+  while remaining <> 0 do
+  begin
+    destination^ := 0;
+    Inc(destination);
+    Dec(remaining);
+  end;
 end;
-

@@ -29,7 +29,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3cb0;
+procedure FUN_24dd_3cb0(param_1: Word; param_2: Integer; param_3: Longint);
 begin
   { TODO: translate from asm/FUN_24dd_3cb0.s — UNMATCHED until an oracle passes }
 end;

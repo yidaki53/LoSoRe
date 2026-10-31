@@ -21,8 +21,26 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_23c0;
+function FUN_24dd_23c0: Longint;
+var
+  packedValue: Word;
+  highByte: Byte;
+  lowByte: Byte;
+  decimalValue: Word;
+  returnedBits: LongWord;
 begin
-  { TODO: translate from asm/FUN_24dd_23c0.s — UNMATCHED until an oracle passes }
+  packedValue := Word(RealModeMemory[
+    ((Longint(RegisterES) shl 4) + RegisterSI) and $FFFFF]) or
+    (Word(RealModeMemory[
+      ((Longint(RegisterES) shl 4) + Word(RegisterSI + 1)) and $FFFFF]) shl 8);
+  highByte := Byte(packedValue shr 8);
+  lowByte := Byte(packedValue);
+  decimalValue := Word(((highByte shr 4) * 10 + (highByte and $0F)) * 10 +
+    ((lowByte shr 4) and $0F));
+  decimalValue := Word(decimalValue * 10 + (lowByte and $0F));
+  RegisterAX := decimalValue;
+  RegisterZeroFlag := RegisterAX = 0;
+  RegisterCarryFlag := False;
+  returnedBits := (LongWord(RegisterDX) shl 16) or RegisterAX;
+  FUN_24dd_23c0 := Longint(returnedBits);
 end;
-

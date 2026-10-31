@@ -52,8 +52,44 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3639;
+procedure FUN_24dd_3639(param_1, param_2: Pointer);
+var
+  nameBytes: PByte;
+  destinationBytes: PByte;
+  declaredNameLength: Byte;
+  maximumNameLength: Word;
+  copiedNameLength: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_3639.s — UNMATCHED until an oracle passes }
-end;
+  nameBytes := PByte(param_1);
+  destinationBytes := PByte(param_2);
+  declaredNameLength := nameBytes^;
+  Inc(nameBytes);
 
+  WriteWordLE(destinationBytes, 0, 0);
+  WriteWordLE(destinationBytes, 2, $D7B0);
+  WriteWordLE(destinationBytes, 4, $0080);
+  WriteWordLE(destinationBytes, 6, 0);
+  WriteWordLE(destinationBytes, 8, 0);
+  WriteWordLE(destinationBytes, 10, 0);
+  WriteWordLE(destinationBytes, 12, (RegisterDI + 128) and $FFFF);
+  WriteWordLE(destinationBytes, 14, RegisterES);
+  WriteWordLE(destinationBytes, 16, $420C);
+  WriteWordLE(destinationBytes, 18, $24DD);
+
+  for copiedNameLength := 0 to 13 do
+    WriteWordLE(destinationBytes, 20 + copiedNameLength * 2, 0);
+
+  if declaredNameLength > 78 then
+    maximumNameLength := 79
+  else
+    maximumNameLength := declaredNameLength;
+
+  copiedNameLength := 0;
+  while (copiedNameLength < maximumNameLength) and (nameBytes^ <> 0) do
+  begin
+    destinationBytes[48 + copiedNameLength] := nameBytes^;
+    Inc(nameBytes);
+    Inc(copiedNameLength);
+  end;
+  destinationBytes[48 + copiedNameLength] := 0;
+end;

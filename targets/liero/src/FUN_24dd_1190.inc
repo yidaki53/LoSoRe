@@ -137,8 +137,102 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_1190;
+function FUN_24dd_1190: Longint;
+var
+  baseOffset: Word;
+  fieldAddress: Word;
+  fields: array[0..9] of Word;
+  fieldIndex: Word;
+  flagsAt3: Byte;
+  flagsAtF: Byte;
+  accumulator: QWord;
+  addition: LongWord;
+  lowWord: Word;
+  middleWord: Word;
+  upperWord: Word;
+  carryWord: Word;
+  preFinal: QWord;
+  finalProduct: LongWord;
+  secondSum: LongWord;
+  thirdSum: LongWord;
+  returnedBits: LongWord;
 begin
-  { TODO: translate from asm/FUN_24dd_1190.s — UNMATCHED until an oracle passes }
-end;
+  baseOffset := StackPointerD8;
+  for fieldIndex := 0 to 9 do
+  begin
+    fieldAddress := Word(baseOffset + fieldIndex * 2);
+    fields[fieldIndex] := Word(DosMemory[fieldAddress]) or
+      (Word(DosMemory[Word(fieldAddress + 1)]) shl 8);
+  end;
+  flagsAt3 := DosMemory[Word(baseOffset + 3)];
+  flagsAtF := DosMemory[Word(baseOffset + $0F)];
 
+  accumulator := 0;
+  if (flagsAtF and $80) <> 0 then
+    accumulator := (QWord(fields[1]) shl 16) or fields[0];
+  if (flagsAt3 and $80) <> 0 then
+  begin
+    lowWord := Word(accumulator);
+    middleWord := Word(accumulator shr 16);
+    upperWord := Word(accumulator shr 32);
+    addition := LongWord(lowWord) + fields[6];
+    lowWord := Word(addition);
+    carryWord := Word(addition shr 16);
+    addition := LongWord(middleWord) + fields[7] + carryWord;
+    middleWord := Word(addition);
+    carryWord := Word(addition shr 16);
+    upperWord := Word(LongWord(upperWord) * 2 + carryWord);
+    if (flagsAtF and $80) <> 0 then
+      Dec(upperWord);
+    accumulator := (QWord(upperWord) shl 32) or
+      (QWord(middleWord) shl 16) or lowWord;
+  end;
+
+  accumulator := accumulator + QWord(fields[6]) * fields[2];
+  if fields[8] <> 0 then
+    accumulator := accumulator + QWord(fields[8]) * fields[0];
+  if fields[8] <> 0 then
+    accumulator := accumulator + ((QWord(fields[8]) * fields[1]) shl 16);
+  accumulator := accumulator + ((QWord(fields[6]) * fields[3]) shl 16);
+  accumulator := accumulator + ((QWord(fields[7]) * fields[2]) shl 16);
+  if fields[9] <> 0 then
+    accumulator := accumulator + ((QWord(fields[9]) * fields[0]) shl 16);
+
+  accumulator := accumulator shr 32;
+  accumulator := accumulator + QWord(fields[7]) * fields[3];
+  if fields[8] <> 0 then
+  begin
+    accumulator := accumulator + QWord(fields[8]) * fields[2];
+    accumulator := accumulator + ((QWord(fields[8]) * fields[3]) shl 16);
+  end;
+  if fields[9] <> 0 then
+  begin
+    accumulator := accumulator + QWord(fields[9]) * fields[1];
+    accumulator := accumulator + ((QWord(fields[9]) * fields[2]) shl 16);
+    accumulator := accumulator + ((QWord(fields[9]) * fields[3]) shl 32);
+  end;
+
+  RegisterAX := Word(accumulator);
+  RegisterBX := Word(accumulator shr 16);
+  RegisterCX := Word(accumulator shr 32);
+  RegisterDX := Word(accumulator shr 48);
+
+  if fields[9] <> 0 then
+  begin
+    preFinal := accumulator - ((QWord(fields[9]) * fields[3]) shl 32);
+    finalProduct := LongWord(fields[9]) * fields[3];
+    secondSum := LongWord(Word(preFinal shr 32)) + Word(finalProduct);
+    thirdSum := LongWord(Word(preFinal shr 48)) +
+      Word(finalProduct shr 16) + Word(secondSum shr 16);
+    RegisterZeroFlag := Word(thirdSum) = 0;
+    RegisterCarryFlag := thirdSum > $FFFF;
+  end
+  else
+  begin
+    RegisterZeroFlag := True;
+    RegisterCarryFlag := False;
+  end;
+
+  returnedBits := (LongWord(RegisterDX) shl 16) or RegisterAX;
+  FUN_24dd_1190 := Longint(returnedBits);
+end;

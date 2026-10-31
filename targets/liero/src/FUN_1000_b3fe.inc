@@ -1,7 +1,6 @@
-{ liero::FUN_1000_b3fe — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1000_b3fe.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_1000_b3fe.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_1000_b3fe — partial assembly-reviewed Pascal reconstruction
+  (oracle: raw assembly review; host tests not run; keyboard ISR not modeled).
+  Source: asm/FUN_1000_b3fe.s; Ghidra reference is embedded below.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -38,8 +37,62 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_b3fe;
+function FUN_1000_b3fe: Word;
+var
+  keyIndex: Word;
+  pending: Boolean;
+  resultAssigned: Boolean;
+  resultValue: Byte;
 begin
-  { TODO: translate from asm/FUN_1000_b3fe.s — UNMATCHED until an oracle passes }
-end;
+  { TODO: the original input interrupt which populates this queue is outside
+    the host model; this routine blocks until that external state arrives. }
+  keyIndex := 1;
+  repeat
+    DosMemory[Word($783B + keyIndex)] := 0;
+    if keyIndex = $00AB then
+      Break;
+    keyIndex := Word(keyIndex + 1);
+  until False;
 
+  { The called polling helper scans these interrupt-populated flags from AB
+    down to 1 and returns one as soon as any key flag is set. }
+  repeat
+    pending := False;
+    keyIndex := $00AB;
+    while keyIndex <> 0 do
+    begin
+      if DosMemory[Word($783B + keyIndex)] <> 0 then
+      begin
+        pending := True;
+        Break;
+      end;
+      keyIndex := Word(keyIndex - 1);
+    end;
+  until pending;
+  RegisterAX := (RegisterAX and $FF00) or 1;
+
+  resultAssigned := False;
+  keyIndex := 1;
+  repeat
+    if DosMemory[Word($783B + keyIndex)] <> 0 then
+    begin
+      resultValue := Byte(keyIndex);
+      resultAssigned := True;
+      DosMemory[Word($783B + keyIndex)] := 0;
+    end;
+    if keyIndex = $00AB then
+      Break;
+    keyIndex := Word(keyIndex + 1);
+  until False;
+
+  if resultAssigned then
+  begin
+    RegisterAX := (RegisterAX and $FF00) or resultValue;
+    FUN_1000_b3fe := RegisterAX;
+  end
+  else
+    { A concurrent interrupt could clear the flag after the polling call and
+      before the sweep; in that race the assembly returns an uninitialized
+      local byte. Do not synthesize a default result. }
+    Exit;
+end;

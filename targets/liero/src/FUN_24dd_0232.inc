@@ -16,8 +16,10 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_0232;
+procedure FUN_24dd_0232(param_1: Word);
 begin
-  { TODO: translate from asm/FUN_24dd_0232.s — UNMATCHED until an oracle passes }
+  DosOutputBuffer[DosOutputCount] := Byte(param_1);
+  Inc(DosOutputCount);
+  RegisterDX := (RegisterDX and $FF00) or Byte(param_1);
+  RegisterAX := $0600 or Byte(param_1);
 end;
-

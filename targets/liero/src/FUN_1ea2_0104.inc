@@ -1,7 +1,7 @@
-{ liero::FUN_1ea2_0104 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1ea2_0104.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_1ea2_0104.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_1ea2_0104 — unrecovered segmented allocator cleanup routine.
+  Assembly reviewed: asm/FUN_1ea2_0104.s; Ghidra reference is embedded below.
+  The called low-level deallocator and far-pointer ownership model are
+  unavailable in the host runtime.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -45,8 +45,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ea2_0104;
+function FUN_1ea2_0104(param_1: Pointer): Word;
 begin
-  { TODO: translate from asm/FUN_1ea2_0104.s — UNMATCHED until an oracle passes }
+  { TODO: recover the allocation/deallocation helper semantics before
+    translating the pointer walk and its return-register behavior. }
 end;
-

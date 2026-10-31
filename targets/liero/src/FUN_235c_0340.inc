@@ -18,8 +18,16 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0340;
+function FUN_235c_0340: Boolean;
+var
+  detected: Boolean;
 begin
-  { TODO: translate from asm/FUN_235c_0340.s — UNMATCHED until an oracle passes }
+  detected := FUN_235c_1380;
+  if detected then
+    FUN_2494_0010;
+  FUN_235c_0340 := detected;
+  if detected then
+    RegisterAX := (RegisterAX and $FF00) or 1
+  else
+    RegisterAX := RegisterAX and $FF00;
 end;
-

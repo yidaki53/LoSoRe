@@ -46,8 +46,10 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_079e;
+function FUN_202c_079e(param_1, param_2: Word; param_3: Longint; param_4: Pointer): Word;
 begin
-  { TODO: translate from asm/FUN_202c_079e.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The retained body performs DOS file operations via
+    2000:88f2/892d/8a80/8a18/89ae, with error handling through 52c4.
+    The relevant interrupt and helper effects are not available in this
+    host runtime. }
 end;
-

@@ -17,7 +17,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_076d;
+procedure FUN_202c_076d(param_1, param_2: Word; param_3: Longint);
 begin
   { TODO: translate from asm/FUN_202c_076d.s — UNMATCHED until an oracle passes }
 end;

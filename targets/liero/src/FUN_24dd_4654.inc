@@ -18,8 +18,14 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_4654;
+function FUN_24dd_4654(param_1: Word): Integer;
+var
+  lowProduct: LongWord;
+  highProduct: LongWord;
 begin
-  { TODO: translate from asm/FUN_24dd_4654.s — UNMATCHED until an oracle passes }
+  FUN_24dd_46b1;
+  lowProduct := LongWord(RegisterAX) * LongWord(param_1);
+  highProduct := LongWord(RegisterDX) * LongWord(param_1);
+  FUN_24dd_4654 := Integer(
+    Word((highProduct + (lowProduct shr 16)) shr 16));
 end;
-

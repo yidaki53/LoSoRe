@@ -87,8 +87,38 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3dbd;
+function FUN_24dd_3dbd: LongInt;
+var
+  dividend: LongInt;
+  divisor: LongInt;
+  quotient: LongInt;
+  remainder: LongInt;
+  quotientBits: LongWord;
+  remainderBits: LongWord;
 begin
-  { TODO: translate from asm/FUN_24dd_3dbd.s — UNMATCHED until an oracle passes }
-end;
+  dividend := LongInt((LongWord(RegisterDX) shl 16) or RegisterAX);
+  divisor := LongInt((LongWord(RegisterBX) shl 16) or RegisterCX);
+  if divisor = 0 then
+  begin
+    RunError(200);
+    FUN_24dd_3dbd := 0;
+    Exit;
+  end;
 
+  if (dividend = Low(LongInt)) and (divisor = -1) then
+  begin
+    RunError(200);
+    FUN_24dd_3dbd := 0;
+    Exit;
+  end;
+
+  quotient := dividend div divisor;
+  remainder := dividend mod divisor;
+  FUN_24dd_3dbd := quotient;
+  quotientBits := LongWord(quotient);
+  remainderBits := LongWord(remainder);
+  RegisterAX := Word(quotientBits);
+  RegisterDX := Word(quotientBits shr 16);
+  RegisterCX := Word(remainderBits);
+  RegisterBX := Word(remainderBits shr 16);
+end;

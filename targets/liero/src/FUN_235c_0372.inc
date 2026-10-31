@@ -17,8 +17,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0372;
+function FUN_235c_0372: Longint;
 begin
-  { TODO: translate from asm/FUN_235c_0372.s — UNMATCHED until an oracle passes }
+  { TODO: translate from asm/FUN_235c_0372.s — UNMATCHED; placeholder result only }
+  FUN_235c_0372 := 0;
 end;
-

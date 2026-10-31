@@ -88,7 +88,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_056f;
+procedure FUN_235c_056f(param_1: Pointer);
 begin
   { TODO: translate from asm/FUN_235c_056f.s — UNMATCHED until an oracle passes }
 end;

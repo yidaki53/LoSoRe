@@ -1,9 +1,8 @@
-{ liero::FUN_235c_135f — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_235c_135f.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_235c_135f.s (INCLUDE_ASM residue).
+{ liero::FUN_235c_135f — reviewed Pascal reconstruction (oracle: host-test).
+  Host behavior passed; original-binary parity remains unverified.
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
+// --- reference: Ghidra decompiler C ---
 // 
 // void __cdecl16far FUN_235c_135f(void)
 // 
@@ -19,6 +18,7 @@
 // --- end reference ---
 procedure FUN_235c_135f;
 begin
-  { TODO: translate from asm/FUN_235c_135f.s — UNMATCHED until an oracle passes }
+  DosMemory[$67FA] := 0;
+  DosMemory[$7688] := 0;
+  DosMemory[$7690] := 0;
 end;
-

@@ -17,8 +17,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_2000_87bf;
+function FUN_2000_87bf: Word;
 begin
-  { TODO: translate from asm/FUN_2000_87bf.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The retained 55-byte body branches into uncaptured
+    blocks at 2000:87e8..87f2 and calls uncaptured routines at 2000:85bc and
+    2000:9502; their effects and all return paths cannot be established. }
 end;
-

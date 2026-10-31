@@ -31,8 +31,20 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0810;
+procedure FUN_1ec2_0810(param_1: Byte; param_2: Pointer);
+var
+  paletteData: array[0..767] of Byte;
+  source: ^Byte;
+  index: Word;
+  entryOffset: Word;
 begin
-  { TODO: translate from asm/FUN_1ec2_0810.s — UNMATCHED until an oracle passes }
+  source := param_2;
+  for index := 0 to 767 do
+  begin
+    paletteData[index] := source^;
+    Inc(source);
+  end;
+  entryOffset := Word(param_1) * 3;
+  FUN_1ec2_10cf(paletteData[entryOffset + 2],
+    paletteData[entryOffset + 1], paletteData[entryOffset], param_1);
 end;
-

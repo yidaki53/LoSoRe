@@ -1,9 +1,9 @@
-{ liero::FUN_24dd_3d2f — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3d2f.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3d2f.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_24dd_3d2f — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host command-line memory tests).
+  Original assembly retained in asm/FUN_24dd_3d2f.s.
+  The Ghidra decompiler reference is embedded below.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
+// --- reference: Ghidra decompiler C ---
 // 
 // undefined2 __cdecl16far FUN_24dd_3d2f(void)
 // 
@@ -15,8 +15,14 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3d2f;
+function FUN_24dd_3d2f: Word;
+var
+  previousAX: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_3d2f.s — UNMATCHED until an oracle passes }
+  RegisterDX := 0;
+  FUN_24dd_3d36;
+  previousAX := RegisterAX;
+  RegisterAX := RegisterBX;
+  RegisterBX := previousAX;
+  FUN_24dd_3d2f := RegisterAX;
 end;
-

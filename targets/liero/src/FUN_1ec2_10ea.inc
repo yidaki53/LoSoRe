@@ -54,8 +54,30 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_10ea;
+procedure FUN_1ec2_10ea(param_1: Integer; param_2: Pointer);
+var
+  source: PByte;
+  paletteData: array[0..767] of Byte;
+  index: Integer;
+  redValue: Longint;
+  greenValue: Longint;
+  blueValue: Longint;
 begin
-  { TODO: translate from asm/FUN_1ec2_10ea.s — UNMATCHED until an oracle passes }
-end;
+  source := PByte(param_2);
+  for index := 0 to 767 do
+  begin
+    paletteData[index] := source^;
+    Inc(source);
+  end;
 
+  for index := 0 to 255 do
+  begin
+    redValue := (Longint(paletteData[index * 3]) * param_1) shr 5;
+    greenValue := (Longint(paletteData[index * 3 + 1]) * param_1) shr 5;
+    blueValue := (Longint(paletteData[index * 3 + 2]) * param_1) shr 5;
+    if redValue > $3F then redValue := $3F;
+    if greenValue > $3F then greenValue := $3F;
+    if blueValue > $3F then blueValue := $3F;
+    FUN_1ec2_10cf(Byte(blueValue), Byte(greenValue), Byte(redValue), Byte(index));
+  end;
+end;

@@ -1,28 +1,23 @@
-{ liero::FUN_24dd_350e — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_350e.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_350e.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_24dd_350e — assembly-derived stack character read
+  (oracle: raw assembly review; host segmented-stack tests).
+  Original assembly retained in asm/FUN_24dd_350e.s.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// char __cdecl16near FUN_24dd_350e(void)
-// 
-// {
-//   char cVar1;
-//   int unaff_BP;
-//   int unaff_SI;
-//   undefined2 unaff_SS;
-//   
-//   cVar1 = *(char *)(unaff_BP + unaff_SI + -0x28);
-//   if (cVar1 == '\0') {
-//     cVar1 = '0';
-//   }
-//   return cVar1;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_350e;
+function FUN_24dd_350e: Char;
+var
+  stackOffset: Word;
+  characterValue: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_350e.s — UNMATCHED until an oracle passes }
+  stackOffset := Word(Word(RegisterBP + RegisterSI) - $0028);
+  characterValue := ReadStackByte(stackOffset);
+  RegisterCarryFlag := False;
+  RegisterZeroFlag := characterValue = 0;
+  Inc(RegisterSI);
+  if characterValue = 0 then
+  begin
+    characterValue := Ord('0');
+    Dec(RegisterSI);
+    RegisterZeroFlag := RegisterSI = 0;
+  end;
+  RegisterAX := (RegisterAX and $FF00) or characterValue;
+  FUN_24dd_350e := Chr(characterValue);
 end;
-

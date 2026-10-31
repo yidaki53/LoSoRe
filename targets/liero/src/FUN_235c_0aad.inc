@@ -19,8 +19,14 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0aad;
+procedure FUN_235c_0aad(param_1: Byte);
+var
+  tableOffset: Word;
 begin
-  { TODO: translate from asm/FUN_235c_0aad.s — UNMATCHED until an oracle passes }
+  DosMemory[$6854] := param_1;
+  tableOffset := $6E60 + Word(param_1) * 4;
+  DosMemory[$6E6C] := DosMemory[tableOffset];
+  DosMemory[$6E6D] := DosMemory[tableOffset + 1];
+  DosMemory[$6E6E] := DosMemory[tableOffset + 2];
+  DosMemory[$6E6F] := DosMemory[tableOffset + 3];
 end;
-

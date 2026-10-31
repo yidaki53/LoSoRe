@@ -28,8 +28,26 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0d5d;
+procedure FUN_1ec2_0d5d(param_1: Byte; param_2: Integer; param_3: Word; param_4: Pointer);
+var
+  destination: PByte;
+  remainingRows: Word;
+  remainingBytes: Word;
+  rowSkip: Word;
 begin
-  { TODO: translate from asm/FUN_1ec2_0d5d.s — UNMATCHED until an oracle passes }
+  destination := PByte(param_4);
+  remainingRows := Word(param_2);
+  rowSkip := Word(320 - param_3);
+  while remainingRows <> 0 do
+  begin
+    remainingBytes := param_3;
+    while remainingBytes <> 0 do
+    begin
+      destination^ := param_1;
+      Inc(destination);
+      Dec(remainingBytes);
+    end;
+    Inc(destination, rowSkip);
+    Dec(remainingRows);
+  end;
 end;
-

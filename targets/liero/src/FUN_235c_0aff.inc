@@ -17,8 +17,28 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0aff;
+function FUN_235c_0aff(param_1: Longint): Longint;
+var
+  farPointer: LongWord;
+  offsetValue: Word;
+  segmentValue: Word;
+  linearSegment: LongWord;
+  resultBits: LongWord;
 begin
-  { TODO: translate from asm/FUN_235c_0aff.s — UNMATCHED until an oracle passes }
-end;
+  farPointer := LongWord(param_1);
+  offsetValue := Word(farPointer);
+  segmentValue := Word(farPointer shr 16);
+  linearSegment := LongWord(segmentValue) shl 4;
 
+  RegisterAX := Word(linearSegment);
+  RegisterDX := Word(linearSegment shr 16);
+  RegisterCX := RegisterAX;
+  RegisterBX := RegisterDX;
+  resultBits := LongWord(offsetValue) + RegisterCX;
+  RegisterAX := Word(resultBits);
+  RegisterDX := Word(RegisterBX + Word(resultBits shr 16));
+  RegisterCarryFlag := False;
+  RegisterZeroFlag := RegisterDX = 0;
+  resultBits := (LongWord(RegisterDX) shl 16) or RegisterAX;
+  FUN_235c_0aff := Longint(resultBits);
+end;

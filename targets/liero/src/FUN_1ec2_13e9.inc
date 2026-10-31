@@ -78,7 +78,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_13e9;
+procedure FUN_1ec2_13e9(param_1, param_2: Longint; param_3: Byte; param_4: Pointer; param_5, param_6: Integer);
 begin
   { TODO: translate from asm/FUN_1ec2_13e9.s — UNMATCHED until an oracle passes }
 end;

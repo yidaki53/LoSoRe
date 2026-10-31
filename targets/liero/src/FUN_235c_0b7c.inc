@@ -30,7 +30,18 @@
 // 
 // --- end reference ---
 procedure FUN_235c_0b7c;
+var
+  tableIndex: Word;
+  tableValue: Integer;
 begin
-  { TODO: translate from asm/FUN_235c_0b7c.s — UNMATCHED until an oracle passes }
+  tableIndex := $FC00;
+  repeat
+    Inc(tableIndex);
+    tableValue := SmallInt(tableIndex);
+    if tableValue < -128 then
+      tableValue := -128
+    else if tableValue > 127 then
+      tableValue := 127;
+    DosMemory[Word($7286 + tableIndex)] := Byte(tableValue + $80);
+  until tableIndex = $0400;
 end;
-

@@ -17,8 +17,10 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_10cf;
+function FUN_1ec2_10cf(param_1, param_2, param_3, param_4: Byte): Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_10cf.s — UNMATCHED until an oracle passes }
+  VideoPalette[param_4].Red := param_3;
+  VideoPalette[param_4].Green := param_2;
+  VideoPalette[param_4].Blue := param_1;
+  FUN_1ec2_10cf := param_1;
 end;
-

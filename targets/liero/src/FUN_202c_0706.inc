@@ -36,8 +36,10 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_0706;
+function FUN_202c_0706(param_1: Pointer): Longint;
 begin
-  { TODO: translate from asm/FUN_202c_0706.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The captured routine delegates conversion to
+    2000:95f4 and error-state handling to 2000:94b9. Those callees' assembly
+    is not retained here, so their 32-bit return and memory effects are not
+    safely reproducible from the decompiler comment alone. }
 end;
-

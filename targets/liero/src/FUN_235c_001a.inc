@@ -20,8 +20,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_001a;
+function FUN_235c_001a: Byte;
 begin
-  { TODO: translate from asm/FUN_235c_001a.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. Assembly busy-waits for bit 7 at DS:$67d6 before
+    reading the device data port at DS:$67d2; the hardware port values are
+    not modeled by this runtime. }
 end;
-

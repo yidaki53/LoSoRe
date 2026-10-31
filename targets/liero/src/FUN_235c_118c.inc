@@ -31,7 +31,28 @@
 // 
 // --- end reference ---
 procedure FUN_235c_118c;
+var
+  itemIndex: Word;
+  sourceOffset: Word;
+  destinationOffset: Word;
+  destinationSegment: Word;
+  sourceValue: Word;
+  destinationAddress: Longint;
 begin
-  { TODO: translate from asm/FUN_235c_118c.s — UNMATCHED until an oracle passes }
+  destinationOffset := DosMemory[$6E6C] +
+    (Word(DosMemory[$6E6D]) shl 8);
+  destinationSegment := DosMemory[$6E6E] +
+    (Word(DosMemory[$6E6F]) shl 8);
+  for itemIndex := 0 to $01FF do
+  begin
+    sourceOffset := $6A58 + itemIndex * 2;
+    sourceValue := DosMemory[sourceOffset] +
+      (Word(DosMemory[sourceOffset + 1]) shl 8);
+    sourceValue := sourceValue shl 5;
+    destinationAddress := (Longint(destinationSegment) shl 4) +
+      Word(destinationOffset + itemIndex * 2);
+    destinationAddress := destinationAddress and $FFFFF;
+    RealModeMemory[destinationAddress] := Byte(sourceValue);
+    RealModeMemory[destinationAddress + 1] := Byte(sourceValue shr 8);
+  end;
 end;
-

@@ -26,6 +26,7 @@
 <!-- BEGIN AUTO (tools/provenance.py) -->
 - files: 12
 - detected toolchain: turbo-pascal-7 (high), language=pascal, platform=dos
+- recommended oracle: dat-parity
 - LIEROENG.TXT: sha1=d1d5ecba8d18f36c compiler~borland-rtl
 - LIERO.TXT: sha1=87bfe42023f455b9 compiler~borland-rtl
 - WINXP.BAT: sha1=8adb05de9c5ca8d6 compiler~unknown

@@ -23,8 +23,23 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24ba_00d8;
+function FUN_24ba_00d8: Byte;
+var
+  index: Word;
 begin
-  { TODO: translate from asm/FUN_24ba_00d8.s — UNMATCHED until an oracle passes }
+  for index := $AA downto 1 do
+  begin
+    if DosMemory[$783B + index] <> 0 then
+    begin
+      RegisterAX := (RegisterAX and $FF00) or 1;
+      RegisterZeroFlag := False;
+      RegisterCarryFlag := False;
+      FUN_24ba_00d8 := 1;
+      Exit;
+    end;
+  end;
+  RegisterAX := RegisterAX and $FF00;
+  RegisterZeroFlag := True;
+  RegisterCarryFlag := False;
+  FUN_24ba_00d8 := 0;
 end;
-

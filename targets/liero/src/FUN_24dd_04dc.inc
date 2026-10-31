@@ -1,21 +1,21 @@
-{ liero::FUN_24dd_04dc — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_04dc.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_04dc.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// ulong __cdecl16near FUN_24dd_04dc(void)
-// 
-// {
-//   uint in_AX;
-//   
-//   return CONCAT22((uint)(CONCAT12(0xfff8 < in_AX,in_AX + 7) >> 1) >> 3,in_AX + 7) & 0xffff0008;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_04dc;
+{ liero::FUN_24dd_04dc — 16-bit AX/DX arithmetic helper.
+  Oracle: exhaustive host test against the 16-bit instruction sequence. }
+function FUN_24dd_04dc: Longint;
+var
+  originalAX: Word;
+  adjustedAX: Word;
+  highWord: Word;
+  carryOut: Boolean;
 begin
-  { TODO: translate from asm/FUN_24dd_04dc.s — UNMATCHED until an oracle passes }
+  originalAX := RegisterAX;
+  carryOut := originalAX > $FFF8;
+  adjustedAX := originalAX + 7;
+  highWord := adjustedAX shr 4;
+  if carryOut then
+    highWord := highWord or $1000;
+  RegisterAX := adjustedAX and $0008;
+  RegisterDX := highWord;
+  RegisterCarryFlag := False;
+  RegisterZeroFlag := RegisterAX = 0;
+  FUN_24dd_04dc := (Longint(RegisterDX) shl 16) + RegisterAX;
 end;
-

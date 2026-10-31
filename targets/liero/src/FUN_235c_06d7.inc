@@ -23,8 +23,21 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_06d7;
+function FUN_235c_06d7(param_1: Word; param_2: Integer; param_3: Word; param_4: Integer): Longint;
+var
+  resultLow: Word;
+  resultHigh: Integer;
 begin
-  { TODO: translate from asm/FUN_235c_06d7.s — UNMATCHED until an oracle passes }
+  if (param_4 < param_2) or
+     ((param_4 = param_2) and (param_3 < param_1)) then
+  begin
+    resultLow := param_3;
+    resultHigh := param_4;
+  end
+  else
+  begin
+    resultLow := param_1;
+    resultHigh := param_2;
+  end;
+  FUN_235c_06d7 := Longint(resultHigh) * 65536 + resultLow;
 end;
-

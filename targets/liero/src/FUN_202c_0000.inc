@@ -32,8 +32,33 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_0000;
+function FUN_202c_0000(param_1: Word; param_2: Integer; param_3: Word; param_4: Integer; param_5: Word; param_6: Integer; param_7: Word; param_8: Integer): Longint;
+var
+  firstProductLow: Word;
+  firstProductHigh: Word;
 begin
-  { TODO: translate from asm/FUN_202c_0000.s — UNMATCHED until an oracle passes }
-end;
+  { The first two 32-bit differences and products are directly visible in
+    the retained instructions. The following INT 37h supplies state used by
+    the return path, so that part remains explicitly unrecovered. }
+  RegisterAX := Word(param_5 - param_1);
+  RegisterDX := Word(Word(param_6) - Word(param_2) -
+    Ord(Word(param_5) < Word(param_1)));
+  RegisterCX := RegisterAX;
+  RegisterBX := RegisterDX;
+  FUN_24dd_3d80;
+  firstProductLow := RegisterAX;
+  firstProductHigh := RegisterDX;
 
+  RegisterAX := Word(param_7 - param_3);
+  RegisterDX := Word(Word(param_8) - Word(param_4) -
+    Ord(Word(param_7) < Word(param_3)));
+  RegisterCX := RegisterAX;
+  RegisterBX := RegisterDX;
+  FUN_24dd_3d80;
+
+  RegisterAX := RegisterAX + firstProductLow;
+  RegisterDX := RegisterDX + firstProductHigh +
+    Ord(RegisterAX < firstProductLow);
+  { TODO: not recovered past INT 37h. Its effect on AX:DX (and subsequent
+    helper calls) is unavailable, so no return value is fabricated. }
+end;

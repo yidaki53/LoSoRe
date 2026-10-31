@@ -20,8 +20,17 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0e06;
+procedure FUN_1ec2_0e06(param_1: Longint; param_2: Byte; param_3, param_4: Integer);
+var
+  pixelAddress: Longint;
+  pixelValue: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_0e06.s — UNMATCHED until an oracle passes }
+  if (param_2 = 0) or (param_3 < 0) or (param_3 >= $9E) or
+     (param_4 < 0) or (param_4 >= $9E) then
+    Exit;
+  pixelValue := param_2;
+  if pixelValue < $27 then
+    Inc(pixelValue, 9);
+  pixelAddress := (param_1 + Longint(param_3) * $140 + param_4) and $FFFFF;
+  RealModeMemory[pixelAddress] := pixelValue;
 end;
-

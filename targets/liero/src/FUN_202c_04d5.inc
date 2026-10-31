@@ -74,7 +74,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_04d5;
+procedure FUN_202c_04d5(param_1: Char; param_2: Longint; param_3, param_4: Integer);
 begin
   { TODO: translate from asm/FUN_202c_04d5.s — UNMATCHED until an oracle passes }
 end;

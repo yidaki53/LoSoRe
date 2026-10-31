@@ -15,8 +15,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_0303;
+function FUN_24dd_0303: Integer;
 begin
-  { TODO: translate from asm/FUN_24dd_0303.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The routine calls the code pointer at 2000:031C,
+    whose result and memory effects are unavailable in the retained sources. }
 end;
-

@@ -22,6 +22,8 @@
 // --- end reference ---
 procedure FUN_235c_0ad3;
 begin
-  { TODO: translate from asm/FUN_235c_0ad3.s — UNMATCHED until an oracle passes }
+  if DosMemory[$6854] = 1 then
+    FUN_235c_0aad(2)
+  else
+    FUN_235c_0aad(1);
 end;
-

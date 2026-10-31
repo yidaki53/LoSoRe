@@ -43,8 +43,25 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_12ad;
+procedure FUN_1ec2_12ad(param_1: Longint; param_2: Byte; param_3: Integer; param_4: Word; param_5: Integer);
+var
+  rowIndex: Byte;
+  remainingBytes: Word;
+  byteIndex: Word;
+  pixelAddress: Longint;
 begin
-  { TODO: translate from asm/FUN_1ec2_12ad.s — UNMATCHED until an oracle passes }
+  pixelAddress := (param_1 + Longint(Word(param_3)) * $140 +
+    Word(param_5)) and $FFFFF;
+  for rowIndex := 0 to 1 do
+  begin
+    remainingBytes := param_4;
+    byteIndex := 0;
+    while remainingBytes <> 0 do
+    begin
+      RealModeMemory[(pixelAddress + byteIndex) and $FFFFF] := param_2;
+      Inc(byteIndex);
+      Dec(remainingBytes);
+    end;
+    pixelAddress := (pixelAddress + $140) and $FFFFF;
+  end;
 end;
-

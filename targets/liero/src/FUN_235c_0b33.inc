@@ -20,8 +20,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0b33;
+function FUN_235c_0b33(param_1, param_2: Word): Longint;
 begin
-  { TODO: translate from asm/FUN_235c_0b33.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The call enters the middle of FUN_24dd_40ac, so its
+    buffer effects depend on incoming ES:DI, DS:SI, BX and stack state; the
+    skipped CLD also makes REP direction depend on an unmodeled direction flag. }
 end;
-

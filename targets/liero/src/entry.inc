@@ -405,8 +405,8 @@
 // }
 // 
 // --- end reference ---
-procedure entry;
+function entry: Char;
 begin
-  { TODO: translate from asm/entry.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. Startup performs DOS calls, writes video memory,
+    polls device state and calls unresolved runtime helpers. }
 end;
-

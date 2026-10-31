@@ -1456,8 +1456,442 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_5e66;
+procedure FUN_1000_5e66_UpdateCameraOffsets;
+var
+  playerIndex: Integer;
+  playerAddress: Longint;
+  entityAddress: Longint;
+  playersAddress: Longint;
+  entitiesAddress: Longint;
+  playerHealth: SmallInt;
+  playerTargetX: SmallInt;
+  playerTargetY: SmallInt;
+  cameraShakeAmount: SmallInt;
+  shakeAdjustment: Integer;
+  playerWeaponIndex: Word;
+  playerWeaponType: Word;
+  playerOwnerFlag: Byte;
+  entityFlags: Byte;
+  cameraX: SmallInt;
+  cameraY: SmallInt;
+  matchingEntities: Longint;
+  positionSumX: Longint;
+  positionSumY: Longint;
+  chaseStep: Integer;
+  cameraXAddress: Word;
+  cameraYAddress: Word;
+  entityIndex: Integer;
+
+  function ReadWordAt(address: Longint): Word;
+  var
+    physicalAddress: Longint;
+  begin
+    physicalAddress := address and $FFFFF;
+    ReadWordAt := Word(RealModeMemory[physicalAddress]) or
+      (Word(RealModeMemory[(physicalAddress + 1) and $FFFFF]) shl 8);
+  end;
+
+  function ReadSignedWordAt(address: Longint): SmallInt;
+  begin
+    ReadSignedWordAt := SmallInt(ReadWordAt(address));
+  end;
+
+  function ReadGlobalWord(offset: Word): Word;
+  begin
+    ReadGlobalWord := Word(DosMemory[offset]) or
+      (Word(DosMemory[Word(offset + 1)]) shl 8);
+  end;
+
+  function ReadGlobalFarAddress(offset: Word): Longint;
+  var
+    pointerOffset: Word;
+    pointerSegment: Word;
+  begin
+    pointerOffset := ReadGlobalWord(offset);
+    pointerSegment := ReadGlobalWord(Word(offset + 2));
+    ReadGlobalFarAddress :=
+      ((Longint(pointerSegment) shl 4) + pointerOffset) and $FFFFF;
+  end;
+
+  procedure WriteGlobalWord(offset: Word; value: Word);
+  begin
+    DosMemory[offset] := Byte(value);
+    DosMemory[Word(offset + 1)] := Byte(value shr 8);
+  end;
+
+  procedure MoveToward(var currentValue: SmallInt; targetValue: SmallInt);
+  begin
+    if currentValue < targetValue then
+      Inc(currentValue)
+    else if currentValue > targetValue then
+      Dec(currentValue);
+  end;
+
+  procedure ClampCameraOffsets;
+  var
+    cameraX: SmallInt;
+    cameraY: SmallInt;
+  begin
+    cameraX := SmallInt(ReadGlobalWord(cameraXAddress));
+    cameraY := SmallInt(ReadGlobalWord(cameraYAddress));
+    if cameraX < 0 then
+      cameraX := 0
+    else if cameraX > $15A then
+      cameraX := $15A;
+    if cameraY < 0 then
+      cameraY := 0
+    else if cameraY > $C0 then
+      cameraY := $C0;
+    WriteGlobalWord(cameraXAddress, Word(cameraX));
+    WriteGlobalWord(cameraYAddress, Word(cameraY));
+  end;
+
 begin
-  { TODO: translate from asm/FUN_1000_5e66.s — UNMATCHED until an oracle passes }
+  playersAddress := ReadGlobalFarAddress($6670);
+  for playerIndex := 0 to 1 do
+  begin
+    playerAddress := (playersAddress + playerIndex * $AA) and $FFFFF;
+    cameraXAddress := $67B0 + playerIndex * 2;
+    cameraYAddress := $67B4 + playerIndex * 2;
+    playerHealth := ReadSignedWordAt(playerAddress + $4C);
+    playerTargetX := ReadSignedWordAt(playerAddress + $06) - $50;
+    playerTargetY := ReadSignedWordAt(playerAddress + $0A) - $50;
+
+    if playerHealth <= 0 then
+    begin
+      if RealModeMemory[(playerAddress + $9A) and $FFFFF] = 0 then
+      begin
+        cameraX := SmallInt(ReadGlobalWord(cameraXAddress));
+        cameraY := SmallInt(ReadGlobalWord(cameraYAddress));
+        for chaseStep := 0 to 3 do
+        begin
+          MoveToward(cameraX, playerTargetX);
+          MoveToward(cameraY, playerTargetY);
+        end;
+        WriteGlobalWord(cameraXAddress, Word(cameraX));
+        WriteGlobalWord(cameraYAddress, Word(cameraY));
+      end
+      else
+      begin
+        WriteGlobalWord(cameraXAddress, Word(playerTargetX));
+        WriteGlobalWord(cameraYAddress, Word(playerTargetY));
+        playerWeaponIndex := ReadWordAt(playerAddress + $4E);
+        playerWeaponType :=
+          ReadWordAt(playerAddress + $73 + Longint(playerWeaponIndex) * 2);
+        if DosMemory[Word($11A5 + playerWeaponType)] = 2 then
+        begin
+          playerOwnerFlag := RealModeMemory[(playerAddress + $6C) and $FFFFF];
+          entitiesAddress := ReadGlobalFarAddress($6688);
+          matchingEntities := 0;
+          positionSumX := 0;
+          positionSumY := 0;
+          for entityIndex := 0 to $258 do
+          begin
+            entityAddress := (entitiesAddress + entityIndex * $14) and $FFFFF;
+            entityFlags := RealModeMemory[(entityAddress + $10) and $FFFFF];
+            if ((entityFlags and $7F) = playerWeaponType) and
+               ((entityFlags and $80) = playerOwnerFlag) then
+            begin
+              Inc(matchingEntities);
+              Inc(positionSumX, ReadSignedWordAt(entityAddress + 2) - $50);
+              Inc(positionSumY, ReadSignedWordAt(entityAddress + 6) - $50);
+            end;
+          end;
+          if matchingEntities > 0 then
+          begin
+            WriteGlobalWord(cameraXAddress,
+              Word(SmallInt(positionSumX div matchingEntities)));
+            WriteGlobalWord(cameraYAddress,
+              Word(SmallInt(positionSumY div matchingEntities)));
+          end;
+        end;
+      end;
+    end
+    else if ReadSignedWordAt(playerAddress + $50) <= 0 then
+    begin
+      WriteGlobalWord(cameraXAddress, Word(playerTargetX));
+      WriteGlobalWord(cameraYAddress, Word(playerTargetY));
+    end;
+
+    ClampCameraOffsets;
+    cameraShakeAmount :=
+      SmallInt(ReadGlobalWord($67BA + playerIndex * 4));
+    if cameraShakeAmount > 0 then
+    begin
+      cameraY := SmallInt(ReadGlobalWord(cameraYAddress));
+      shakeAdjustment := FUN_24dd_4654(Word(cameraShakeAmount * 2)) -
+        cameraShakeAmount;
+      cameraY := SmallInt(Word(LongInt(cameraY) + shakeAdjustment));
+      WriteGlobalWord(cameraYAddress, Word(cameraY));
+
+      cameraX := SmallInt(ReadGlobalWord(cameraXAddress));
+      shakeAdjustment := FUN_24dd_4654(Word(cameraShakeAmount * 2)) -
+        cameraShakeAmount;
+      cameraX := SmallInt(Word(LongInt(cameraX) + shakeAdjustment));
+      WriteGlobalWord(cameraXAddress, Word(cameraX));
+      ClampCameraOffsets;
+    end;
+  end;
 end;
 
+procedure FUN_1000_5e66_CopyBackground(playerIndex: Integer);
+var
+  cameraX: Word;
+  cameraY: Word;
+  screenX: Word;
+  screenY: Word;
+  sourceTablePhysical: Longint;
+  sourceRowPhysical: Longint;
+  destinationPhysical: Longint;
+
+  function ReadGlobalWord(offset: Word): Word;
+  begin
+    ReadGlobalWord := Word(DosMemory[offset]) or
+      (Word(DosMemory[Word(offset + 1)]) shl 8);
+  end;
+
+  function PhysicalFromFarPointer(pointerOffset, pointerSegment: Word;
+    byteDelta: Longint): Longint;
+  begin
+    pointerOffset := Word(Longint(pointerOffset) + byteDelta);
+    PhysicalFromFarPointer :=
+      ((Longint(pointerSegment) shl 4) + pointerOffset) and $FFFFF;
+  end;
+
+  function GlobalFarPointerPhysical(offset: Word;
+    byteDelta: Longint): Longint;
+  var
+    pointerOffset: Word;
+    pointerSegment: Word;
+  begin
+    pointerOffset := ReadGlobalWord(offset);
+    pointerSegment := ReadGlobalWord(Word(offset + 2));
+    GlobalFarPointerPhysical :=
+      PhysicalFromFarPointer(pointerOffset, pointerSegment, byteDelta);
+  end;
+
+  function ReadMemoryWord(address: Longint): Word;
+  begin
+    address := address and $FFFFF;
+    ReadMemoryWord := Word(RealModeMemory[address]) or
+      (Word(RealModeMemory[(address + 1) and $FFFFF]) shl 8);
+  end;
+
+  function ReadBackgroundRowAddress(row: Word): Longint;
+  var
+    rowEntryAddress: Longint;
+    rowOffset: Word;
+    rowSegment: Word;
+  begin
+    rowEntryAddress := (sourceTablePhysical + Longint(row) * 4) and $FFFFF;
+    rowOffset := ReadMemoryWord(rowEntryAddress);
+    rowSegment := ReadMemoryWord((rowEntryAddress + 2) and $FFFFF);
+    ReadBackgroundRowAddress :=
+      PhysicalFromFarPointer(rowOffset, rowSegment, cameraX);
+  end;
+
+begin
+  cameraX := ReadGlobalWord($67B0 + playerIndex * 2);
+  cameraY := ReadGlobalWord($67B4 + playerIndex * 2);
+  screenX := ReadGlobalWord($10 + playerIndex * 4);
+  screenY := ReadGlobalWord($12 + playerIndex * 4);
+  sourceTablePhysical := GlobalFarPointerPhysical($6674, 0);
+  sourceRowPhysical := ReadBackgroundRowAddress(cameraY);
+  destinationPhysical := GlobalFarPointerPhysical($6684,
+    Longint(screenY) * $0140 + screenX);
+  FUN_1ea2_01a8(Pointer(@RealModeMemory[destinationPhysical]), 100,
+    $009E, $01F8, Pointer(@RealModeMemory[sourceRowPhysical]));
+
+  sourceRowPhysical := ReadBackgroundRowAddress(Word(cameraY + 100));
+  destinationPhysical := GlobalFarPointerPhysical($6684,
+    Longint(screenY + 100) * $0140 + screenX);
+  FUN_1ea2_01a8(Pointer(@RealModeMemory[destinationPhysical]), $003A,
+    $009E, $01F8, Pointer(@RealModeMemory[sourceRowPhysical]));
+end;
+
+procedure FUN_1000_5e66_DrawHealthBar(playerIndex: Integer);
+var
+  playerOffset: Word;
+  playerSegment: Word;
+  frameOffset: Word;
+  frameSegment: Word;
+  playerPhysical: Longint;
+  framePhysical: Longint;
+  playerHealth: SmallInt;
+  healthBarWidth: Longint;
+  playerColor: Byte;
+begin
+  playerOffset := Word(DosMemory[$6670]) or
+    (Word(DosMemory[$6671]) shl 8);
+  playerSegment := Word(DosMemory[$6672]) or
+    (Word(DosMemory[$6673]) shl 8);
+  playerOffset := Word(Longint(playerOffset) + playerIndex * $AA);
+  playerPhysical :=
+    ((Longint(playerSegment) shl 4) + playerOffset) and $FFFFF;
+  if RealModeMemory[(playerPhysical + $9A) and $FFFFF] <> 0 then
+    Exit;
+
+  playerHealth := SmallInt(
+    Word(RealModeMemory[(playerPhysical + $4C) and $FFFFF]) or
+    (Word(RealModeMemory[(playerPhysical + $4D) and $FFFFF]) shl 8));
+  healthBarWidth := 100 - (Longint(playerHealth) * $19) div $25;
+  if healthBarWidth <= 0 then
+    Exit;
+  if healthBarWidth > 100 then
+    healthBarWidth := 100;
+
+  playerColor := RealModeMemory[(playerPhysical + $18) and $FFFFF];
+  frameOffset := Word(DosMemory[$6684]) or
+    (Word(DosMemory[$6685]) shl 8);
+  frameSegment := Word(DosMemory[$6686]) or
+    (Word(DosMemory[$6687]) shl 8);
+  framePhysical :=
+    ((Longint(frameSegment) shl 4) + frameOffset) and $FFFFF;
+  FUN_1ec2_12ad(framePhysical, playerColor, $00A1,
+    Word(healthBarWidth), $00EA + healthBarWidth div 10);
+end;
+
+procedure FUN_1000_5e66_DrawWeaponBar(playerIndex: Integer);
+var
+  playerOffset: Word;
+  playerSegment: Word;
+  frameOffset: Word;
+  frameSegment: Word;
+  playerPhysical: Longint;
+  framePhysical: Longint;
+  selectedWeapon: Word;
+  selectedWeaponType: Word;
+  weaponReloadActive: Byte;
+  weaponValue: SmallInt;
+  weaponMaximum: Byte;
+  barWidth: Longint;
+  playerColor: Byte;
+  chargeAddress: Longint;
+  rateAddress: Word;
+  weaponCharge: Longint;
+  weaponReloadRate: Longint;
+  scaledCharge: Longint;
+  chargeProduct: QWord;
+begin
+  playerOffset := Word(DosMemory[$6670]) or
+    (Word(DosMemory[$6671]) shl 8);
+  playerSegment := Word(DosMemory[$6672]) or
+    (Word(DosMemory[$6673]) shl 8);
+  playerOffset := Word(Longint(playerOffset) + playerIndex * $AA);
+  playerPhysical :=
+    ((Longint(playerSegment) shl 4) + playerOffset) and $FFFFF;
+  selectedWeapon := Word(
+    RealModeMemory[(playerPhysical + $4E) and $FFFFF]) or
+    (Word(RealModeMemory[(playerPhysical + $4F) and $FFFFF]) shl 8);
+  weaponReloadActive :=
+    RealModeMemory[(playerPhysical + $6F + selectedWeapon) and $FFFFF];
+  selectedWeaponType := Word(
+    RealModeMemory[(playerPhysical + $73 + Longint(selectedWeapon) * 2) and $FFFFF]) or
+    (Word(RealModeMemory[(playerPhysical + $74 + Longint(selectedWeapon) * 2) and $FFFFF]) shl 8);
+  if weaponReloadActive <> 0 then
+  begin
+    weaponValue := SmallInt(
+      Word(RealModeMemory[(playerPhysical + $7D + Longint(selectedWeapon) * 2) and $FFFFF]) or
+      (Word(RealModeMemory[(playerPhysical + $7E + Longint(selectedWeapon) * 2) and $FFFFF]) shl 8));
+    if weaponValue <= 0 then
+      Exit;
+
+    weaponMaximum := DosMemory[Word($0E0D + selectedWeaponType)];
+    if weaponMaximum = 0 then
+    begin
+      RunError(200);
+      Exit;
+    end;
+    barWidth := (Longint(weaponValue) * 100) div weaponMaximum;
+  end
+  else
+  begin
+    chargeAddress :=
+      (playerPhysical + $58 + Longint(selectedWeapon) * 4) and $FFFFF;
+    weaponCharge := LongInt(
+      (LongWord(RealModeMemory[chargeAddress]) or
+       (LongWord(RealModeMemory[(chargeAddress + 1) and $FFFFF]) shl 8)) or
+      ((LongWord(RealModeMemory[(chargeAddress + 2) and $FFFFF]) or
+        (LongWord(RealModeMemory[(chargeAddress + 3) and $FFFFF]) shl 8)) shl 16));
+    rateAddress := Word($6478 + Longint(selectedWeaponType) * 4);
+    weaponReloadRate := LongInt(
+      (LongWord(DosMemory[rateAddress]) or
+       (LongWord(DosMemory[Word(rateAddress + 1)]) shl 8)) or
+      ((LongWord(DosMemory[Word(rateAddress + 2)]) or
+        (LongWord(DosMemory[Word(rateAddress + 3)]) shl 8)) shl 16));
+    if weaponReloadRate = 0 then
+    begin
+      RunError(200);
+      Exit;
+    end;
+    chargeProduct := QWord(LongWord(weaponCharge)) * 100;
+    scaledCharge := LongInt(LongWord(chargeProduct));
+    barWidth := 100 - (scaledCharge div weaponReloadRate);
+    if barWidth > 100 then
+      barWidth := 100;
+  end;
+  if barWidth <= 0 then
+    Exit;
+
+  playerColor := RealModeMemory[(playerPhysical + $18) and $FFFFF];
+  frameOffset := Word(DosMemory[$6684]) or
+    (Word(DosMemory[$6685]) shl 8);
+  frameSegment := Word(DosMemory[$6686]) or
+    (Word(DosMemory[$6687]) shl 8);
+  framePhysical :=
+    ((Longint(frameSegment) shl 4) + frameOffset) and $FFFFF;
+  FUN_1ec2_12ad(framePhysical, playerColor, $00A6,
+    Word(barWidth), $00F5 + barWidth div 10);
+end;
+
+{ Oracle: assembly-reviewed timer remainder; host tests cover divisible ticks. }
+function FUN_1000_5e66_IsRenderTick: Boolean;
+var
+  divisor: Word;
+begin
+  divisor := Word(DosMemory[$0002]) or (Word(DosMemory[$0003]) shl 8);
+  RegisterAX := Word(DosMemory[$6520]) or (Word(DosMemory[$6521]) shl 8);
+  RegisterDX := 0;
+  if SmallInt(divisor) < 0 then
+    RegisterBX := $FFFF
+  else
+    RegisterBX := 0;
+  RegisterCX := divisor;
+  FUN_24dd_3dbd;
+  FUN_1000_5e66_IsRenderTick :=
+    (RegisterBX = 0) and (RegisterCX = 0);
+end;
+
+procedure FUN_1000_5e66;
+var
+  originalStackPointer: Word;
+  playerIndex: Integer;
+  frameOffset: Word;
+  frameSegment: Word;
+  framePhysical: Longint;
+begin
+  originalStackPointer := RegisterSP;
+  RegisterSP := Word(RegisterSP - 6);
+  RegisterAX := $0338;
+  FUN_24dd_0530;
+  RegisterSP := originalStackPointer;
+  if FUN_1000_5e66_IsRenderTick then
+  begin
+    frameOffset := Word(DosMemory[$6684]) or
+      (Word(DosMemory[$6685]) shl 8);
+    frameSegment := Word(DosMemory[$6686]) or
+      (Word(DosMemory[$6687]) shl 8);
+    framePhysical :=
+      ((Longint(frameSegment) shl 4) + frameOffset) and $FFFFF;
+    FUN_1ec2_13d3(Pointer(@RealModeMemory[framePhysical]));
+  end;
+  FUN_1000_5e66_UpdateCameraOffsets;
+  if FUN_1000_5e66_IsRenderTick then
+    for playerIndex := 0 to 1 do
+    begin
+      FUN_1000_5e66_CopyBackground(playerIndex);
+      FUN_1000_5e66_DrawHealthBar(playerIndex);
+      FUN_1000_5e66_DrawWeaponBar(playerIndex);
+    end;
+  { TODO: translate the remaining gameplay, HUD, and draw logic. }
+end;

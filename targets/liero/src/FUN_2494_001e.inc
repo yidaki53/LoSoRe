@@ -16,8 +16,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_2494_001e;
+function FUN_2494_001e: Word;
 begin
-  { TODO: translate from asm/FUN_2494_001e.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The routine invokes the DOS input service through the
+    interrupt vector at DS:7838; no DOS interrupt/vector model is available. }
 end;
-

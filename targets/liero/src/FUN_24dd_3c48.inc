@@ -57,7 +57,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3c48;
+procedure FUN_24dd_3c48(param_1: Pointer; param_2, param_3, param_4: Word; param_5: Longint);
 begin
   { TODO: translate from asm/FUN_24dd_3c48.s — UNMATCHED until an oracle passes }
 end;

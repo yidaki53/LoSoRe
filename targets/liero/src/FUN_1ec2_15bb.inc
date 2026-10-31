@@ -26,8 +26,19 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_15bb;
+procedure FUN_1ec2_15bb(param_1: Pointer);
+var
+  paletteData: ^Byte;
+  paletteIndex: Word;
 begin
-  { TODO: translate from asm/FUN_1ec2_15bb.s — UNMATCHED until an oracle passes }
+  paletteData := param_1;
+  for paletteIndex := 0 to 255 do
+  begin
+    paletteData^ := VideoPalette[paletteIndex].Blue;
+    Inc(paletteData);
+    paletteData^ := VideoPalette[paletteIndex].Green;
+    Inc(paletteData);
+    paletteData^ := VideoPalette[paletteIndex].Red;
+    Inc(paletteData);
+  end;
 end;
-

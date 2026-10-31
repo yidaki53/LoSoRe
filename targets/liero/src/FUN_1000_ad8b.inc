@@ -1,7 +1,7 @@
-{ liero::FUN_1000_ad8b — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1000_ad8b.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_1000_ad8b.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_1000_ad8b — unrecovered interactive input routine.
+  Assembly reviewed: asm/FUN_1000_ad8b.s; Ghidra reference is embedded below.
+  Exact behavior depends on unavailable keyboard, DOS-console, and display
+  helper/interrupt semantics; no synthetic return value is supplied.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -118,8 +118,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_ad8b;
+function FUN_1000_ad8b(param_1, param_2: Integer; param_3, param_4: Word; param_5, param_6: Integer): Word;
 begin
-  { TODO: translate from asm/FUN_1000_ad8b.s — UNMATCHED until an oracle passes }
+  { TODO: recover the DOS-console/keyboard editing path and helper side effects
+    before translating. The assembly's return is the selected numeric value. }
 end;
-

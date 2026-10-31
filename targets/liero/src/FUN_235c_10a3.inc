@@ -53,7 +53,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_10a3;
+procedure FUN_235c_10a3(param_1: Byte);
 begin
   { TODO: translate from asm/FUN_235c_10a3.s — UNMATCHED until an oracle passes }
 end;

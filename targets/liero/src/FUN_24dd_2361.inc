@@ -46,8 +46,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_2361;
+function FUN_24dd_2361: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_2361.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. This is an interrupt-handler path: it queries INT 21h,
+    rewrites the saved interrupt frame and performs a far transfer. }
 end;
-

@@ -1,7 +1,6 @@
-{ liero::FUN_1000_9e7a — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1000_9e7a.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_1000_9e7a.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_1000_9e7a — partial assembly-reviewed Pascal reconstruction
+  (oracle: raw assembly review; host tests not run; unsupported modes remain unknown).
+  Source: asm/FUN_1000_9e7a.s; Ghidra reference is embedded below.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -86,8 +85,101 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1000_9e7a;
-begin
-  { TODO: translate from asm/FUN_1000_9e7a.s — UNMATCHED until an oracle passes }
-end;
+function FUN_1000_9e7a: Word;
+var
+  modeValue: Byte;
+  resultValue: Byte;
+  returnHighByte: Word;
+  currentPosition: Longint;
+  firstBound: Longint;
+  secondBound: Longint;
+  firstPlayerValue: Longint;
+  secondPlayerValue: Longint;
+  playerOffset: Word;
+  playerSegment: Word;
 
+  function ReadDosWord(address: Word): Word;
+  begin
+    ReadDosWord := Word(DosMemory[address]) or
+      (Word(DosMemory[Word(address + 1)]) shl 8);
+  end;
+
+  function ReadDosLong(address: Word): Longint;
+  var
+    rawValue: LongWord;
+  begin
+    rawValue := LongWord(ReadDosWord(address)) or
+      (LongWord(ReadDosWord(Word(address + 2))) shl 16);
+    ReadDosLong := Longint(rawValue);
+  end;
+
+  function ReadFarWord(segment, offset: Word): Word;
+  var
+    firstAddress: Longint;
+    secondAddress: Longint;
+  begin
+    firstAddress := ((Longint(segment) shl 4) + offset) and $FFFFF;
+    secondAddress := ((Longint(segment) shl 4) + Word(offset + 1)) and
+      $FFFFF;
+    ReadFarWord := Word(RealModeMemory[firstAddress]) or
+      (Word(RealModeMemory[secondAddress]) shl 8);
+  end;
+
+  function ReadPlayerLong(fieldOffset: Word): Longint;
+  var
+    rawValue: LongWord;
+    lowWord: Word;
+    highWord: Word;
+  begin
+    lowWord := ReadFarWord(playerSegment,
+      Word(playerOffset + fieldOffset));
+    highWord := ReadFarWord(playerSegment,
+      Word(playerOffset + fieldOffset + 2));
+    rawValue := LongWord(lowWord) or (LongWord(highWord) shl 16);
+    ReadPlayerLong := Longint(rawValue);
+  end;
+
+begin
+  modeValue := DosMemory[$66AC];
+  returnHighByte := RegisterAX and $FF00;
+  resultValue := 0;
+  playerOffset := ReadDosWord($6670);
+  playerSegment := ReadDosWord($6672);
+
+  case modeValue of
+    0:
+      begin
+        firstPlayerValue := ReadPlayerLong($0038);
+        secondPlayerValue := ReadPlayerLong($00E2);
+        if (firstPlayerValue < 1) or (secondPlayerValue < 1) then
+          resultValue := 1;
+      end;
+    1:
+      begin
+        currentPosition := ReadDosLong($66A1);
+        returnHighByte := Word(DosMemory[$66A2]) shl 8;
+        firstBound := ReadPlayerLong($0044);
+        secondBound := ReadPlayerLong($00EE);
+        if (currentPosition <= firstBound) or
+           (currentPosition <= secondBound) then
+          resultValue := 1;
+      end;
+    2, 3:
+      begin
+        currentPosition := ReadDosLong($66A3);
+        returnHighByte := Word(DosMemory[$66A4]) shl 8;
+        firstBound := ReadPlayerLong($0040);
+        secondBound := ReadPlayerLong($00EA);
+        if (currentPosition <= firstBound) or
+           (currentPosition <= secondBound) then
+          resultValue := 1;
+      end;
+  else
+    { The assembly reads an uninitialized stack byte for modes outside 0..3;
+      the Ghidra initializer is not present in the machine code. }
+    Exit;
+  end;
+
+  RegisterAX := returnHighByte or resultValue;
+  FUN_1000_9e7a := RegisterAX;
+end;

@@ -30,8 +30,49 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_4824;
+function FUN_24dd_4824(param_1, param_2: Pointer): Word;
+var
+  source: PByte;
+  consumedOutput: PByte;
+  stringLength: Byte;
+  skippedSpaces: Word;
+  copiedIndex: Word;
+  parsedValue: Longint;
+  consumedCharacters: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_4824.s — UNMATCHED until an oracle passes }
-end;
+  source := PByte(param_2);
+  consumedOutput := PByte(param_1);
+  stringLength := source^;
+  Inc(source);
 
+  if stringLength <> 0 then
+    for copiedIndex := 0 to stringLength - 1 do
+    begin
+      DosMemory[$7001 + copiedIndex] := source^;
+      Inc(source);
+    end;
+
+  skippedSpaces := 0;
+  while (skippedSpaces < stringLength) and
+    (DosMemory[$7001 + skippedSpaces] = Ord(' ')) do
+    Inc(skippedSpaces);
+
+  RegisterES := 0;
+  RegisterDI := $7001 + skippedSpaces;
+  RegisterCX := stringLength - skippedSpaces;
+  parsedValue := FUN_24dd_4732;
+  if RegisterCX = 0 then
+  begin
+    consumedCharacters := 0;
+    FUN_24dd_4824 := Word(parsedValue);
+  end
+  else
+  begin
+    consumedCharacters := 1 + skippedSpaces +
+      (stringLength - skippedSpaces - RegisterCX);
+    FUN_24dd_4824 := 0;
+  end;
+  consumedOutput^ := Byte(consumedCharacters);
+  Inc(consumedOutput);
+  consumedOutput^ := Byte(consumedCharacters shr 8);
+end;

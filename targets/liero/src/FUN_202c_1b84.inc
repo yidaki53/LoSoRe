@@ -848,7 +848,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_1b84;
+procedure FUN_202c_1b84(param_1: Word; param_2, param_3: Integer; param_4: Byte);
 begin
   { TODO: translate from asm/FUN_202c_1b84.s — UNMATCHED until an oracle passes }
 end;

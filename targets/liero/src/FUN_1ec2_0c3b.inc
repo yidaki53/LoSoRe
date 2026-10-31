@@ -72,8 +72,63 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0c3b;
+procedure FUN_1ec2_0c3b(param_1: Longint; param_2, param_3, param_4, param_5: Integer);
+var
+  deltaX: Integer;
+  deltaY: Integer;
+  stepX: Integer;
+  stepY: Integer;
+  majorDistance: Integer;
+  minorDistance: Integer;
+  errorValue: Integer;
+  x: Integer;
+  y: Integer;
+  patternColor: Byte;
 begin
-  { TODO: translate from asm/FUN_1ec2_0c3b.s — UNMATCHED until an oracle passes }
-end;
+  deltaX := param_3 - param_5;
+  deltaY := param_2 - param_4;
+  stepX := SmallInt(FUN_1ec2_0c11(0, deltaX));
+  stepY := SmallInt(FUN_1ec2_0c11(0, deltaY));
+  majorDistance := Abs(deltaX);
+  minorDistance := Abs(deltaY);
+  x := param_5;
+  y := param_4;
+  patternColor := $3E;
 
+  if minorDistance < majorDistance then
+  begin
+    errorValue := -(majorDistance div 2);
+    while x <> param_3 do
+    begin
+      Inc(errorValue, minorDistance);
+      Inc(x, stepX);
+      if errorValue > 0 then
+      begin
+        Inc(y, stepY);
+        Dec(errorValue, majorDistance);
+      end;
+      Inc(patternColor);
+      if patternColor = $40 then
+        patternColor := $3E;
+      FUN_1ec2_0dc8(param_1, Char(patternColor), y, x);
+    end;
+  end
+  else
+  begin
+    errorValue := -(minorDistance div 2);
+    while y <> param_2 do
+    begin
+      Inc(errorValue, majorDistance);
+      Inc(y, stepY);
+      if errorValue > 0 then
+      begin
+        Inc(x, stepX);
+        Dec(errorValue, minorDistance);
+      end;
+      Inc(patternColor);
+      if patternColor = $40 then
+        patternColor := $3E;
+      FUN_1ec2_0dc8(param_1, Char(patternColor), y, x);
+    end;
+  end;
+end;

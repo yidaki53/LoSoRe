@@ -57,8 +57,55 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_09e7;
+procedure FUN_1ec2_09e7(param_1: Longint; param_2, param_3, param_4, param_5: Integer);
+var
+  deltaY: Integer;
+  deltaX: Integer;
+  stepY: Integer;
+  stepX: Integer;
+  majorDistance: Integer;
+  minorDistance: Integer;
+  errorValue: Integer;
+  x: Integer;
+  y: Integer;
 begin
-  { TODO: translate from asm/FUN_1ec2_09e7.s — UNMATCHED until an oracle passes }
-end;
+  deltaY := param_3 - param_5;
+  deltaX := param_2 - param_4;
+  stepY := SmallInt(FUN_1ec2_09bd(0, deltaY));
+  stepX := SmallInt(FUN_1ec2_09bd(0, deltaX));
+  majorDistance := Abs(deltaX);
+  minorDistance := Abs(deltaY);
+  x := param_4;
+  y := param_5;
 
+  if majorDistance < minorDistance then
+  begin
+    errorValue := -(minorDistance div 2);
+    while y <> param_3 do
+    begin
+      Inc(errorValue, majorDistance);
+      Inc(y, stepY);
+      if errorValue > 0 then
+      begin
+        Inc(x, stepX);
+        Dec(errorValue, minorDistance);
+      end;
+      FUN_1ec2_0e4a(param_1, y, x);
+    end;
+  end
+  else
+  begin
+    errorValue := -(majorDistance div 2);
+    while x <> param_2 do
+    begin
+      Inc(errorValue, minorDistance);
+      Inc(x, stepX);
+      if errorValue > 0 then
+      begin
+        Inc(y, stepY);
+        Dec(errorValue, majorDistance);
+      end;
+      FUN_1ec2_0e4a(param_1, y, x);
+    end;
+  end;
+end;

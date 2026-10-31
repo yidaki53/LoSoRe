@@ -22,8 +22,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_486c;
+function FUN_24dd_486c: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_486c.s — UNMATCHED until an oracle passes }
+  { TODO: Not recovered. The result depends on the unresolved helper at
+    2000:966C and on its carry/register outputs. }
 end;
-

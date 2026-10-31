@@ -1,9 +1,9 @@
-{ liero::FUN_24dd_3d80 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3d80.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3d80.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_24dd_3d80 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host register tests).
+  Original assembly retained in asm/FUN_24dd_3d80.s.
+  The Ghidra decompiler reference is embedded below.
 }
-// --- reference: Ghidra decompiler C (unmatched) ---
+// --- reference: Ghidra decompiler C ---
 // 
 // int __cdecl16far FUN_24dd_3d80(void)
 // 
@@ -19,8 +19,16 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3d80;
+function FUN_24dd_3d80: Integer;
+var
+  leftValue: QWord;
+  rightValue: QWord;
+  product: QWord;
 begin
-  { TODO: translate from asm/FUN_24dd_3d80.s — UNMATCHED until an oracle passes }
+  leftValue := (QWord(RegisterDX) shl 16) or RegisterAX;
+  rightValue := (QWord(RegisterBX) shl 16) or RegisterCX;
+  product := leftValue * rightValue;
+  RegisterAX := Word(product);
+  RegisterDX := Word(product shr 16);
+  FUN_24dd_3d80 := Integer(RegisterAX);
 end;
-

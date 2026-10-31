@@ -63,8 +63,33 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_0502;
+function FUN_235c_0502(param_1, param_2: Pointer): Byte;
+var
+  firstByte: PByte;
+  secondByte: PByte;
+  index: Word;
+  equal: Boolean;
 begin
-  { TODO: translate from asm/FUN_235c_0502.s — UNMATCHED until an oracle passes }
+  { TODO: SS/BP scratch-register effects from the stack-local far-pointer
+    helpers are not exposed; the compared bytes, AL return and return flags are. }
+  firstByte := PByte(param_1);
+  secondByte := PByte(param_2);
+  equal := True;
+  for index := 0 to 7 do
+  begin
+    if firstByte^ <> secondByte^ then
+      equal := False;
+    Inc(firstByte);
+    Inc(secondByte);
+  end;
+  RegisterAX := $0800;
+  RegisterZeroFlag := True;
+  RegisterCarryFlag := False;
+  if equal then
+  begin
+    RegisterAX := RegisterAX or 1;
+    FUN_235c_0502 := 1
+  end
+  else
+    FUN_235c_0502 := 0;
 end;
-

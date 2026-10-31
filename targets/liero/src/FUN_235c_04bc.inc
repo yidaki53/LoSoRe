@@ -31,8 +31,22 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_235c_04bc;
+procedure FUN_235c_04bc(param_1: Pointer);
+var
+  source: PByte;
+  localString: array[0..255] of Byte;
+  index: Integer;
+  stringLength: Byte;
 begin
-  { TODO: translate from asm/FUN_235c_04bc.s — UNMATCHED until an oracle passes }
+  source := PByte(param_1);
+  stringLength := source^;
+  localString[0] := stringLength;
+  Inc(source);
+  for index := 1 to Integer(stringLength) do
+  begin
+    localString[index] := source^;
+    Inc(source);
+  end;
+  DosMemory[$7690] := 1;
+  FUN_24dd_3eaf($FF, @DosMemory[$7692], @localString[0]);
 end;
-

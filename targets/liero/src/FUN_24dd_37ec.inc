@@ -1,51 +1,58 @@
-{ liero::FUN_24dd_37ec — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_37ec.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_37ec.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __cdecl16near FUN_24dd_37ec(void)
-// 
-// {
-//   undefined4 uVar1;
-//   code *in_AX;
-//   undefined2 in_CX;
-//   undefined2 in_DX;
-//   int in_BX;
-//   int iVar2;
-//   undefined2 unaff_DI;
-//   undefined2 unaff_ES;
-//   undefined2 unaff_DS;
-//   code *pcVar3;
-//   
-//   if (*(int *)0x6410 == 0) {
-//     if (*(int *)(in_BX + 2) != -0x284f) {
-//       *(undefined2 *)0x6410 = 0x68;
-//       return;
-//     }
-//     iVar2 = *(int *)(in_BX + 8);
-//     if (iVar2 == *(int *)(in_BX + 10)) goto LAB_24dd_3830;
-//     while( true ) {
-//       uVar1 = *(undefined4 *)(in_BX + 0xc);
-//       pcVar3 = (code *)(*in_AX)(in_BX,unaff_ES,unaff_DS);
-//       in_AX = (code *)pcVar3;
-//       *(int *)(in_BX + 8) = (iVar2 + (int)uVar1) - (int)((ulong)pcVar3 >> 0x10);
-//       if (in_AX == (code *)0x0) break;
-// LAB_24dd_3830:
-//       FUN_24dd_396c(in_BX,unaff_ES,unaff_DI,in_DX,in_CX);
-//       iVar2 = *(int *)(in_BX + 8);
-//       if (iVar2 == *(int *)(in_BX + 10)) {
-//         return;
-//       }
-//     }
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
+{ Oracle: scoped original-byte/Pascal input buffer dispatcher composition.
+  Logical SI/DI are buffer-relative offsets; resolved bindings come from 396C.
+  Supported callbacks are 39AB/390E/3923; unknown callbacks abort explicitly.
+  INCLUDE_ASM residue remains; register mirrors are not TP7 code generation. }
 procedure FUN_24dd_37ec;
+type
+  TObjectWords = array[0..127] of Word;
+  PObjectWords = ^TObjectWords;
+var
+  words: PObjectWords;
+  savedCallback, savedCount, savedDestination: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_37ec.s — UNMATCHED until an oracle passes }
+  RegisterZeroFlag := GlobalWord6410 = 0;
+  if GlobalWord6410 <> 0 then
+    Exit;
+  if LieroBufferObject = nil then
+    RunError(211);
+  words := LieroBufferObject;
+  RegisterZeroFlag := words^[1] = $D7B1;
+  if not RegisterZeroFlag then
+  begin
+    GlobalWord6410 := $68;
+    Exit;
+  end;
+  repeat
+    RegisterSI := words^[4];
+    if (RegisterSI > words^[5]) or (words^[5] > 128) then
+      RunError(211);
+    if RegisterSI <> words^[5] then
+    begin
+      case RegisterAX of
+        $39AB:
+          RegisterAX := FUN_24dd_39ab(LieroBufferSource, LieroBufferDestination,
+                                     RegisterSI, RegisterDI, RegisterCX, words^[5]);
+        $390E:
+          RegisterAX := FUN_24dd_390e(LieroBufferSource, RegisterSI, words^[5]);
+        $3923:
+          RegisterAX := FUN_24dd_3923(LieroBufferSource, RegisterSI, words^[5]);
+      else
+        RunError(211);
+      end;
+      RegisterDirectionFlag := False;
+      words^[4] := RegisterSI;
+      RegisterZeroFlag := RegisterAX = 0;
+      if RegisterZeroFlag then
+        Exit;
+    end;
+    savedCallback := RegisterAX;
+    savedCount := RegisterCX;
+    savedDestination := RegisterDI;
+    FUN_24dd_396c;
+    RegisterAX := savedCallback;
+    RegisterCX := savedCount;
+    RegisterDI := savedDestination;
+    RegisterSI := words^[4];
+    RegisterZeroFlag := RegisterSI = words^[5];
+  until RegisterZeroFlag;
 end;
-

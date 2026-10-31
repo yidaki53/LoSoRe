@@ -21,6 +21,7 @@
 // --- end reference ---
 procedure FUN_24dd_3c03;
 begin
-  { TODO: translate from asm/FUN_24dd_3c03.s — UNMATCHED until an oracle passes }
+  RegisterZeroFlag := RegisterWordESDIPlus2 = $D7B3;
+  if not RegisterZeroFlag then
+    GlobalWord6410 := $0067;
 end;
-

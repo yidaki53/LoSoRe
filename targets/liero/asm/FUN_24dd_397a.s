@@ -1,7 +1,7 @@
 ; FUN_24dd_397a  entry=24dd:397a size=14
 24dd:397a  PUSH ES
 24dd:397b  PUSH BX
-24dd:397c  CALLF [BX + 0x18]
+24dd:397c  CALLF ES:[BX + 0x18]
 24dd:3980  OR AX,AX
 24dd:3982  JZ 0x2000:8757
 24dd:3984  MOV [0x6410],AX

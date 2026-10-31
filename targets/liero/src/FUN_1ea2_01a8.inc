@@ -62,8 +62,25 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ea2_01a8;
+procedure FUN_1ea2_01a8(param_1: Pointer; param_2: Integer; param_3: Word; param_4: Integer; param_5: Pointer);
+var
+  destinationBytes: PByte;
+  sourceBytes: PByte;
+  rowCount: Word;
+  byteIndex: Word;
 begin
-  { TODO: translate from asm/FUN_1ea2_01a8.s — UNMATCHED until an oracle passes }
+  destinationBytes := PByte(param_1);
+  sourceBytes := PByte(param_5);
+  rowCount := Word(param_2);
+  repeat
+    for byteIndex := 1 to param_3 do
+    begin
+      destinationBytes^ := sourceBytes^;
+      Inc(destinationBytes);
+      Inc(sourceBytes);
+    end;
+    Inc(destinationBytes, $0140 - param_3);
+    Inc(sourceBytes, param_4 - param_3);
+    Dec(rowCount);
+  until rowCount = 0;
 end;
-

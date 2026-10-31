@@ -18,7 +18,12 @@
 // 
 // --- end reference ---
 procedure FUN_24dd_021f;
+var
+  originalAX: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_021f.s — UNMATCHED until an oracle passes }
+  originalAX := RegisterAX;
+  RegisterAX := (originalAX and $FF00) or ((originalAX and $00FF) shr 4);
+  FUN_24dd_022a;
+  RegisterAX := (originalAX and $FF00) or (originalAX and $000F);
+  FUN_24dd_022a;
 end;
-

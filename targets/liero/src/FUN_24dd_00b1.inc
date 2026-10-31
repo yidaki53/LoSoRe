@@ -17,6 +17,5 @@
 // --- end reference ---
 procedure FUN_24dd_00b1;
 begin
-  { TODO: translate from asm/FUN_24dd_00b1.s — UNMATCHED until an oracle passes }
+  DosMemory[$6420] := 2;
 end;
-

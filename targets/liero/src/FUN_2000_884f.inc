@@ -32,8 +32,9 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_2000_884f;
+function FUN_2000_884f: Word;
 begin
-  { TODO: translate from asm/FUN_2000_884f.s — UNMATCHED until an oracle passes }
+  { TODO: not recovered. The assembly enters DOS interrupts 39h, 35h, and
+    3Dh and performs OUT DX,AL between them; their interrupt/device results
+    determine the return registers and cannot be modeled by this runtime. }
 end;
-

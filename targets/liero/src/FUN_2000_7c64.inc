@@ -1,7 +1,7 @@
-{ liero::FUN_2000_7c64 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_2000_7c64.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_2000_7c64.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+{ liero::FUN_2000_7c64 — unrecovered interrupt handler.
+  Assembly reviewed: asm/FUN_2000_7c64.s; Ghidra reference is embedded below.
+  STI/IRET, interrupt-stack mutation, and self-modifying handler behavior
+  cannot be represented faithfully by the current host runtime.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
 // 
@@ -38,8 +38,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_2000_7c64;
+function FUN_2000_7c64: Word;
 begin
-  { TODO: translate from asm/FUN_2000_7c64.s — UNMATCHED until an oracle passes }
+  { TODO: implement only with an interrupt-context model that preserves the
+    original stack frame, flags, and IRET semantics. }
 end;
-

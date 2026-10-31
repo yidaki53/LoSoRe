@@ -40,8 +40,51 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_202c_0673;
+function FUN_202c_0673(param_1: Pointer): Integer;
+var
+  sourceText: PByte;
+  localText: array[0..257] of Byte;
+  textLength: Byte;
+  position: Word;
+  glyphIndex: Word;
+  glyphWidth: Byte;
+  accumulatedWidth: Word;
 begin
-  { TODO: translate from asm/FUN_202c_0673.s — UNMATCHED until an oracle passes }
-end;
+  { Assembly copies the Pascal string to its stack frame before walking it. }
+  sourceText := PByte(param_1);
+  textLength := sourceText^;
+  localText[0] := textLength;
+  Inc(sourceText);
+  position := 1;
+  while position <= textLength do
+  begin
+    localText[position] := sourceText^;
+    Inc(sourceText);
+    Inc(position);
+  end;
 
+  accumulatedWidth := 1;
+  if textLength <> 0 then
+  begin
+    position := 1;
+    while True do
+    begin
+      if localText[position] = $FF then
+        Inc(position, 2);
+
+      glyphIndex := Word(localText[position]);
+      Dec(glyphIndex);
+      Dec(glyphIndex);
+      glyphWidth := CodeMemory[Word($19E5 + Word(glyphIndex shl 6))];
+      accumulatedWidth := Word(accumulatedWidth + glyphWidth);
+
+      if position = textLength then
+        Break;
+      Inc(position);
+    end;
+  end;
+
+  accumulatedWidth := Word(accumulatedWidth + 2);
+  RegisterAX := accumulatedWidth;
+  FUN_202c_0673 := SmallInt(accumulatedWidth);
+end;

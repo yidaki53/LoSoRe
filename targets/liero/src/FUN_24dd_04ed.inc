@@ -1,26 +1,7 @@
-{ liero::FUN_24dd_04ed — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_04ed.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_04ed.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// undefined2 __cdecl16far FUN_24dd_04ed(void)
-// 
-// {
-//   undefined2 uVar1;
-//   undefined2 unaff_DS;
-//   
-//   LOCK();
-//   uVar1 = *(undefined2 *)0x6410;
-//   *(undefined2 *)0x6410 = 0;
-//   UNLOCK();
-//   return uVar1;
-// }
-// 
-// --- end reference ---
-procedure FUN_24dd_04ed;
+{ liero::FUN_24dd_04ed — modeled XCHG at DS:$6410
+  (oracle: none; behavior is not yet verified against the original executable). }
+function FUN_24dd_04ed: Word;
 begin
-  { TODO: translate from asm/FUN_24dd_04ed.s — UNMATCHED until an oracle passes }
+  FUN_24dd_04ed := GlobalWord6410;
+  GlobalWord6410 := 0;
 end;
-

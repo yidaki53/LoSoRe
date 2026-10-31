@@ -140,7 +140,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_18d9;
+procedure FUN_24dd_18d9(param_1: Integer; param_2: Byte);
 begin
   { TODO: translate from asm/FUN_24dd_18d9.s — UNMATCHED until an oracle passes }
 end;

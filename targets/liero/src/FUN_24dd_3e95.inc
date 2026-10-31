@@ -1,18 +1,18 @@
-{ liero::FUN_24dd_3e95 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3e95.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3e95.s (INCLUDE_ASM residue).
+{ liero::FUN_24dd_3e95 — assembly-derived Pascal reconstruction
+  (oracle: raw assembly review; host pointer tests).
+  Original assembly retained in asm/FUN_24dd_3e95.s.
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
 // --- reference: Ghidra decompiler C (unmatched) ---
-// 
+//
 // void __stdcall16far FUN_24dd_3e95(byte *param_1,byte *param_2)
-// 
+//
 // {
 //   byte bVar1;
 //   uint uVar2;
 //   byte *pbVar3;
 //   byte *pbVar4;
-//   
+//
 //   pbVar4 = (byte *)param_2;
 //   pbVar3 = (byte *)param_1;
 //   bVar1 = *param_1;
@@ -27,10 +27,25 @@
 //   }
 //   return;
 // }
-// 
+//
 // --- end reference ---
-procedure FUN_24dd_3e95;
+procedure FUN_24dd_3e95(param_1, param_2: Pointer);
+var
+  sourceByte: PByte;
+  destinationByte: PByte;
+  remainingBytes: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_3e95.s — UNMATCHED until an oracle passes }
+  sourceByte := PByte(param_1);
+  destinationByte := PByte(param_2);
+  remainingBytes := sourceByte^;
+  destinationByte^ := remainingBytes;
+  Inc(sourceByte);
+  Inc(destinationByte);
+  while remainingBytes <> 0 do
+  begin
+    destinationByte^ := sourceByte^;
+    Inc(sourceByte);
+    Inc(destinationByte);
+    Dec(remainingBytes);
+  end;
 end;
-

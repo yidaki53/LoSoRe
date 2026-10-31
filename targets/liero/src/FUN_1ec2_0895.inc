@@ -72,7 +72,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_0895;
+procedure FUN_1ec2_0895(param_1: Longint; param_2, param_3, param_4, param_5: Integer);
 begin
   { TODO: translate from asm/FUN_1ec2_0895.s — UNMATCHED until an oracle passes }
 end;

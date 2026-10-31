@@ -81,7 +81,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24cb_00a7;
+procedure FUN_24cb_00a7(param_1, param_2: Pointer);
 begin
   { TODO: translate from asm/FUN_24cb_00a7.s — UNMATCHED until an oracle passes }
 end;

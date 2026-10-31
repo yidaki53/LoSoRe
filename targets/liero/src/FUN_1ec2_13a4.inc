@@ -16,8 +16,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_13a4;
+procedure FUN_1ec2_13a4(param_1: Word);
 begin
-  { TODO: translate from asm/FUN_1ec2_13a4.s — UNMATCHED until an oracle passes }
+  if (param_1 shr 8) = 0 then
+    BIOSVideoMode := Byte(param_1);
 end;
-
