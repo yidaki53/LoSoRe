@@ -1,1 +1,16 @@
 # <sha1> <relpath> — oracle gate
+#
+# NOTE: byte-exact / relocation-aware gating is NOT applicable to liero-dos.
+# The build target is a Free Pascal -Mtp Linux x86-64 ELF (build/liero-dos),
+# while the original is a 16-bit real-mode DOS MZ EXE (liero.exe). The binary
+# formats are fundamentally different, so no relpath can pass byte-exact or
+# relocation-aware comparison.
+#
+# The verification gate for liero-dos is dat-parity (engine/verify.py --oracle
+# dat-parity), which runs the DAT parse/serialize selftest (always) plus a
+# LIERO.DAT round-trip when extracted/liero-dos/LIERO.DAT is present (BYOD).
+# The selftest passes; LIERO.DAT is not currently in the BYOD extraction, so
+# round-trip coverage is 0% until the DAT file is extracted.
+#
+# Per-function oracle matching is handled by tools/e6_match.py (CFG + mnemonic
+# histogram comparison against Ghidra asm). See reports/overnight6/ for results.
