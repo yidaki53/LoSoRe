@@ -4,21 +4,30 @@
     "rows": [
       {
         "compile_ok": false,
-        "error": "und \"uint\"\nFUN_1000_5e66_cand.pas(1284,18) Error: Error in type definition\nFUN_1000_5e66_cand.pas(1285,14) Error: Identifier not found \"int\"\nFUN_1000_5e66_cand.pas(1285,17) Error: Error in type definition\nFUN_1000_5e66_cand.pas(1286,14) Error: Identifier not found \"uint\"\nFUN_1000_5e66_cand.pas(1286,18) Error: Error in type definition\nFUN_1000_5e66_cand.pas(1286,18) Fatal: There were 50 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1000_5e66_cand.pas\nFUN_1000_5e66_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 42.6
+        "seconds": 28.5
       },
       {
         "compile_ok": false,
-        "error": "und \"uint\"\nFUN_1000_5e66_cand.pas(1284,18) Error: Error in type definition\nFUN_1000_5e66_cand.pas(1285,14) Error: Identifier not found \"int\"\nFUN_1000_5e66_cand.pas(1285,17) Error: Error in type definition\nFUN_1000_5e66_cand.pas(1286,14) Error: Identifier not found \"uint\"\nFUN_1000_5e66_cand.pas(1286,18) Error: Error in type definition\nFUN_1000_5e66_cand.pas(1286,18) Fatal: There were 50 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1000_5e66_cand.pas\nFUN_1000_5e66_cand.pas(1261,1) Error: Identifier not found \"register\"\nFUN_1000_5e66_cand.pas(1261,10) Fatal: Syntax error, \";\" expected but \"identifier INTEGER\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 41.7
+        "seconds": 24.5
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1000_5e66_cand.pas\nFUN_1000_5e66_cand.pas(1261,1) Error: Identifier not found \"register\"\nFUN_1000_5e66_cand.pas(1261,10) Fatal: Syntax error, \";\" expected but \"identifier INTEGER\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 24.3
       }
     ],
     "best": 0.0
@@ -28,21 +37,30 @@
     "rows": [
       {
         "compile_ok": false,
-        "error": "36) Warning: Local variable \"local_104\" does not seem to be initialized\nFUN_1e7d_018a_cand.pas(1267,52) Error: Incompatible types: got \"Char\" expected \"QWord\"\nFUN_1e7d_018a_cand.pas(1268,13) Error: Incompatible types: got \"untyped\" expected \"QWord\"\nFUN_1e7d_018a_cand.pas(1270,13) Error: Incompatible types: got \"untyped\" expected \"QWord\"\nFUN_1e7d_018a_cand.pas(1277) Fatal: There were 13 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1e7d_018a_cand.pas\nFUN_1e7d_018a_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 21.4
+        "seconds": 23.5
       },
       {
         "compile_ok": false,
-        "error": " Error: Incompatible types: got \"untyped\" expected \"QWord\"\nFUN_1e7d_018a_cand.pas(1269,36) Warning: Local variable \"local_104\" does not seem to be initialized\nFUN_1e7d_018a_cand.pas(1270,13) Error: Incompatible types: got \"untyped\" expected \"Int64\"\nFUN_1e7d_018a_cand.pas(1272,13) Error: Incompatible types: got \"untyped\" expected \"Int64\"\nFUN_1e7d_018a_cand.pas(1279) Fatal: There were 12 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1e7d_018a_cand.pas\nFUN_1e7d_018a_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 18.2
+        "seconds": 22.6
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1e7d_018a_cand.pas\nFUN_1e7d_018a_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 22.9
       }
     ],
     "best": 0.0
@@ -52,21 +70,30 @@
     "rows": [
       {
         "compile_ok": false,
-        "error": "ameters specified for call to \"FUN_24dd_3eaf\"\nFUN_1ec2_00d0_cand.pas(1142,11) Error: Found declaration: FUN_24dd_3eaf(Byte;Pointer;Pointer);\nFUN_1ec2_00d0_cand.pas(1285,3) Error: Wrong number of parameters specified for call to \"FUN_24dd_3eaf\"\nFUN_1ec2_00d0_cand.pas(1142,11) Error: Found declaration: FUN_24dd_3eaf(Byte;Pointer;Pointer);\nFUN_1ec2_00d0_cand.pas(1290) Fatal: There were 21 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_00d0_cand.pas\nFUN_1ec2_00d0_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 30.9
+        "seconds": 13.0
       },
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_00d0_cand.pas\nFUN_1ec2_00d0_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_00d0_cand.pas\nFUN_1ec2_00d0_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 2.8
+        "seconds": 11.6
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_00d0_cand.pas\nFUN_1ec2_00d0_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 11.4
       }
     ],
     "best": 0.0
@@ -75,46 +102,64 @@
     "fn": "FUN_1ec2_0d5d",
     "rows": [
       {
-        "compile_ok": true,
-        "error": "g: Conversion between ordinals and pointers is not portable\nFUN_1ec2_0d5d_cand.pas(1263,11) Warning: Conversion between ordinals and pointers is not portable\nFUN_1ec2_0d5d_cand.pas(1265,9) Warning: Conversion between ordinals and pointers is not portable\nFUN_1ec2_0d5d_cand.pas(3,5) Note: Local variable \"MemW\" not used\nFUN_1ec2_0d5d_cand.pas(4,5) Note: Local variable \"Mem\" is assigned but never used\nLinking /src/FUN_1ec2_0d5d_cand\n1270 lines compiled, 0.1 sec\n3 warning(s) issued\n2 note(s) issued\n",
-        "cfg_sim": 0.34,
-        "hist_overlap": 0.797,
-        "match_pct": 67.5,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_0d5d_cand.pas\nFUN_1ec2_0d5d_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 11.6
+        "seconds": 4.2
       },
       {
-        "compile_ok": true,
-        "error": "g: Conversion between ordinals and pointers is not portable\nFUN_1ec2_0d5d_cand.pas(1263,11) Warning: Conversion between ordinals and pointers is not portable\nFUN_1ec2_0d5d_cand.pas(1265,9) Warning: Conversion between ordinals and pointers is not portable\nFUN_1ec2_0d5d_cand.pas(3,5) Note: Local variable \"MemW\" not used\nFUN_1ec2_0d5d_cand.pas(4,5) Note: Local variable \"Mem\" is assigned but never used\nLinking /src/FUN_1ec2_0d5d_cand\n1270 lines compiled, 0.0 sec\n3 warning(s) issued\n2 note(s) issued\n",
-        "cfg_sim": 0.34,
-        "hist_overlap": 0.797,
-        "match_pct": 67.5,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_0d5d_cand.pas\nFUN_1ec2_0d5d_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 7.5
+        "seconds": 3.7
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_1ec2_0d5d_cand.pas\nFUN_1ec2_0d5d_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 3.6
       }
     ],
-    "best": 67.5
+    "best": 0.0
   },
   {
     "fn": "FUN_249c_0180",
     "rows": [
       {
         "compile_ok": false,
-        "error": "nce syntax\nFUN_249c_0180_cand.pas(1256,13) Error: No size specified and unable to determine the size of the operands\nFUN_249c_0180_cand.pas(1257,9) Error: Invalid reference syntax\nFUN_249c_0180_cand.pas(1258,17) Error: Unknown identifier \"AL\"\nFUN_249c_0180_cand.pas(1258,17) Warning: Size suffix and destination or source size do not match\nFUN_249c_0180_cand.pas(1268) Fatal: There were 5 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_249c_0180_cand.pas\nFUN_249c_0180_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier YOU\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 8.5
+        "seconds": 6.2
       },
       {
         "compile_ok": false,
-        "error": "86-64\nCompiling /src/FUN_249c_0180_cand.pas\nFUN_249c_0180_cand.pas(1258,11) Error: Unknown identifier \"AH\"\nFUN_249c_0180_cand.pas(1258,13) Error: Invalid reference syntax\nFUN_249c_0180_cand.pas(1258,13) Error: No size specified and unable to determine the size of the operands\nFUN_249c_0180_cand.pas(1259,9) Error: Invalid reference syntax\nFUN_249c_0180_cand.pas(1270) Fatal: There were 4 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_249c_0180_cand.pas\nFUN_249c_0180_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 5.3
+        "seconds": 4.1
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_249c_0180_cand.pas\nFUN_249c_0180_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 4.1
       }
     ],
     "best": 0.0
@@ -124,21 +169,30 @@
     "rows": [
       {
         "compile_ok": true,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_0548_cand.pas\nFUN_24dd_0548_cand.pas(3,5) Note: Local variable \"MemW\" is assigned but never used\nFUN_24dd_0548_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_0548_cand\n1266 lines compiled, 0.0 sec\n2 note(s) issued\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_0548_cand.pas\nFUN_24dd_0548_cand.pas(3,5) Note: Local variable \"MemW\" is assigned but never used\nFUN_24dd_0548_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_0548_cand\n1271 lines compiled, 0.1 sec\n2 note(s) issued\n",
         "cfg_sim": 0.352,
         "hist_overlap": 0.853,
         "match_pct": 69.7,
         "attempt": 0,
-        "seconds": 5.8
+        "seconds": 3.1
       },
       {
         "compile_ok": true,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_0548_cand.pas\nFUN_24dd_0548_cand.pas(3,5) Note: Local variable \"MemW\" is assigned but never used\nFUN_24dd_0548_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_0548_cand\n1266 lines compiled, 0.0 sec\n2 note(s) issued\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_0548_cand.pas\nFUN_24dd_0548_cand.pas(3,5) Note: Local variable \"MemW\" is assigned but never used\nFUN_24dd_0548_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_0548_cand\n1271 lines compiled, 0.0 sec\n2 note(s) issued\n",
         "cfg_sim": 0.352,
         "hist_overlap": 0.853,
         "match_pct": 69.7,
         "attempt": 1,
-        "seconds": 4.6
+        "seconds": 2.5
+      },
+      {
+        "compile_ok": true,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_0548_cand.pas\nFUN_24dd_0548_cand.pas(3,5) Note: Local variable \"MemW\" is assigned but never used\nFUN_24dd_0548_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_0548_cand\n1271 lines compiled, 0.1 sec\n2 note(s) issued\n",
+        "cfg_sim": 0.352,
+        "hist_overlap": 0.853,
+        "match_pct": 69.7,
+        "attempt": 2,
+        "seconds": 2.5
       }
     ],
     "best": 69.7
@@ -147,46 +201,64 @@
     "fn": "FUN_24dd_2e94",
     "rows": [
       {
-        "compile_ok": true,
-        "error": "_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_2e94_cand.pas\nFUN_24dd_2e94_cand.pas(1262,17) Warning: Local variable \"in_stack_00000000\" does not seem to be initialized\nFUN_24dd_2e94_cand.pas(1256,3) Note: Local variable \"uVar3\" is assigned but never used\nFUN_24dd_2e94_cand.pas(4,5) Note: Local variable \"Mem\" is assigned but never used\nLinking /src/FUN_24dd_2e94_cand\n1284 lines compiled, 0.0 sec\n1 warning(s) issued\n2 note(s) issued\n",
-        "cfg_sim": 0.369,
-        "hist_overlap": 0.752,
-        "match_pct": 67.3,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_2e94_cand.pas\nFUN_24dd_2e94_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 17.2
+        "seconds": 23.2
       },
       {
-        "compile_ok": true,
-        "error": "_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_2e94_cand.pas\nFUN_24dd_2e94_cand.pas(1262,17) Warning: Local variable \"in_stack_00000000\" does not seem to be initialized\nFUN_24dd_2e94_cand.pas(1256,3) Note: Local variable \"uVar3\" is assigned but never used\nFUN_24dd_2e94_cand.pas(4,5) Note: Local variable \"Mem\" is assigned but never used\nLinking /src/FUN_24dd_2e94_cand\n1284 lines compiled, 0.1 sec\n1 warning(s) issued\n2 note(s) issued\n",
-        "cfg_sim": 0.369,
-        "hist_overlap": 0.752,
-        "match_pct": 67.3,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_2e94_cand.pas\nFUN_24dd_2e94_cand.pas(1258,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 14.3
+        "seconds": 23.1
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_2e94_cand.pas\nFUN_24dd_2e94_cand.pas(1260,1) Error: Identifier not found \"register\"\nFUN_24dd_2e94_cand.pas(1260,10) Fatal: Syntax error, \";\" expected but \"identifier WORD\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 22.9
       }
     ],
-    "best": 67.3
+    "best": 0.0
   },
   {
     "fn": "FUN_24dd_3360",
     "rows": [
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3360_cand.pas\nFUN_24dd_3360_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3360_cand.pas\nFUN_24dd_3360_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier YOU\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 6.8
+        "seconds": 21.6
       },
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3360_cand.pas\nFUN_24dd_3360_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3360_cand.pas\nFUN_24dd_3360_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 1.7
+        "seconds": 25.1
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3360_cand.pas\nFUN_24dd_3360_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 25.2
       }
     ],
     "best": 0.0
@@ -195,70 +267,97 @@
     "fn": "FUN_24dd_3711",
     "rows": [
       {
-        "compile_ok": true,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3711_cand.pas\nFUN_24dd_3711_cand.pas(1256,3) Note: Local variable \"uVar2\" is assigned but never used\nFUN_24dd_3711_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_3711_cand\n1275 lines compiled, 0.1 sec\n2 note(s) issued\n",
-        "cfg_sim": 0.344,
-        "hist_overlap": 0.78,
-        "match_pct": 67.2,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3711_cand.pas\nFUN_24dd_3711_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 11.1
+        "seconds": 23.1
       },
       {
-        "compile_ok": true,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3711_cand.pas\nFUN_24dd_3711_cand.pas(1256,3) Note: Local variable \"uVar2\" is assigned but never used\nFUN_24dd_3711_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_3711_cand\n1275 lines compiled, 0.0 sec\n2 note(s) issued\n",
-        "cfg_sim": 0.344,
-        "hist_overlap": 0.78,
-        "match_pct": 67.2,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3711_cand.pas\nFUN_24dd_3711_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 8.1
+        "seconds": 23.1
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3711_cand.pas\nFUN_24dd_3711_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 22.9
       }
     ],
-    "best": 67.2
+    "best": 0.0
   },
   {
     "fn": "FUN_24dd_3ed3",
     "rows": [
       {
-        "compile_ok": true,
-        "error": "to signed integers may result in wrong comparison results and range errors, use an unsigned type instead.\nFUN_24dd_3ed3_cand.pas(1279,23) Warning: Converting pointers to signed integers may result in wrong comparison results and range errors, use an unsigned type instead.\nFUN_24dd_3ed3_cand.pas(3,5) Note: Local variable \"MemW\" not used\nFUN_24dd_3ed3_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_3ed3_cand\n1284 lines compiled, 0.1 sec\n8 warning(s) issued\n2 note(s) issued\n",
-        "cfg_sim": 0.39,
-        "hist_overlap": 0.836,
-        "match_pct": 70.7,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3ed3_cand.pas\nFUN_24dd_3ed3_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 13.5
+        "seconds": 5.4
       },
       {
-        "compile_ok": true,
-        "error": "to signed integers may result in wrong comparison results and range errors, use an unsigned type instead.\nFUN_24dd_3ed3_cand.pas(1279,23) Warning: Converting pointers to signed integers may result in wrong comparison results and range errors, use an unsigned type instead.\nFUN_24dd_3ed3_cand.pas(3,5) Note: Local variable \"MemW\" not used\nFUN_24dd_3ed3_cand.pas(4,5) Note: Local variable \"Mem\" not used\nLinking /src/FUN_24dd_3ed3_cand\n1284 lines compiled, 0.0 sec\n8 warning(s) issued\n2 note(s) issued\n",
-        "cfg_sim": 0.39,
-        "hist_overlap": 0.836,
-        "match_pct": 70.7,
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3ed3_cand.pas\nFUN_24dd_3ed3_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 12.6
+        "seconds": 23.0
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_3ed3_cand.pas\nFUN_24dd_3ed3_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 23.3
       }
     ],
-    "best": 70.7
+    "best": 0.0
   },
   {
     "fn": "FUN_24dd_4905",
     "rows": [
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_4905_cand.pas\nFUN_24dd_4905_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_4905_cand.pas\nFUN_24dd_4905_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 0,
-        "seconds": 2.3
+        "seconds": 1.9
       },
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_4905_cand.pas\nFUN_24dd_4905_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_4905_cand.pas\nFUN_24dd_4905_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 2.6
+        "seconds": 1.7
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_24dd_4905_cand.pas\nFUN_24dd_4905_cand.pas(1259,1) Fatal: Syntax error, \"BEGIN\" expected but \"identifier VOID\" found\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 2.0
       }
     ],
     "best": 0.0
@@ -268,7 +367,7 @@
     "rows": [
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_2971_65df_cand.pas\nFUN_2971_65df_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_2971_65df_cand.pas\nFUN_2971_65df_cand.pas(1261,1) Error: Identifier not found \"halt_baddata\"\nFUN_2971_65df_cand.pas(1266) Fatal: There were 1 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
@@ -277,12 +376,21 @@
       },
       {
         "compile_ok": false,
-        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_2971_65df_cand.pas\nFUN_2971_65df_cand.pas(1253,1) Fatal: illegal character \"'`'\" ($60)\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_2971_65df_cand.pas\nFUN_2971_65df_cand.pas(1261,1) Error: Identifier not found \"halt_baddata\"\nFUN_2971_65df_cand.pas(1266) Fatal: There were 1 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
         "cfg_sim": 0.0,
         "hist_overlap": 0.0,
         "match_pct": 0.0,
         "attempt": 1,
-        "seconds": 2.0
+        "seconds": 1.2
+      },
+      {
+        "compile_ok": false,
+        "error": "Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/FUN_2971_65df_cand.pas\nFUN_2971_65df_cand.pas(1261,1) Error: Identifier not found \"halt_baddata\"\nFUN_2971_65df_cand.pas(1266) Fatal: There were 1 errors compiling module, stopping\nFatal: Compilation aborted\nError: /usr/bin/ppcx64 returned an error exitcode\n",
+        "cfg_sim": 0.0,
+        "hist_overlap": 0.0,
+        "match_pct": 0.0,
+        "attempt": 2,
+        "seconds": 1.3
       }
     ],
     "best": 0.0

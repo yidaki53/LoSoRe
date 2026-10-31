@@ -1,9 +1,14 @@
 {
   "targets": {
     "driver": {
-      "kind": "game",
+      "kind": "driver",
       "functions": 0,
-      "drafted": 1,
+      "generated": 0,
+      "drafted": 0,
+      "recovery_ledger": "missing",
+      "source_recovered": null,
+      "evidence_accounted_percent": null,
+      "stale_source_recoveries": null,
       "toolchain": null,
       "verified": 0,
       "oracle": "none"
@@ -11,7 +16,14 @@
     "liero": {
       "kind": "game",
       "functions": 295,
-      "drafted": 296,
+      "generated": 295,
+      "drafted": 121,
+      "recovery_ledger": "present",
+      "source_recovered": 26,
+      "evidence_accounted_percent": 8.81,
+      "stale_source_recoveries": 0,
+      "scoped_differential_routines_passed": 1,
+      "scoped_differential_reports_invalid": 2,
       "toolchain": "turbo-pascal-7",
       "verified": 0,
       "oracle": "none"
@@ -19,17 +31,36 @@
     "liero-dos": {
       "kind": "game",
       "functions": 295,
-      "drafted": 296,
+      "generated": 295,
+      "drafted": 18,
+      "recovery_ledger": "missing",
+      "source_recovered": null,
+      "evidence_accounted_percent": null,
+      "stale_source_recoveries": null,
+      "toolchain": "turbo-pascal-7",
+      "verified": 0,
+      "oracle": "none"
+    },
+    "stickman": {
+      "kind": "game",
+      "functions": 284,
+      "generated": 283,
+      "drafted": 4,
+      "recovery_ledger": "missing",
+      "source_recovered": null,
+      "evidence_accounted_percent": null,
+      "stale_source_recoveries": null,
       "toolchain": "turbo-pascal-7",
       "verified": 0,
       "oracle": "none"
     }
   },
   "totals": {
-    "functions_ingested": 590,
-    "drafted": 593,
-    "targets_seen": 2,
+    "functions_ingested": 874,
+    "generated": 873,
+    "drafted": 143,
+    "targets_seen": 3,
     "toolchains_seen": 1,
-    "examples_total": 5
+    "examples_total": 6
   }
 }

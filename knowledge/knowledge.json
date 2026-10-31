@@ -2,15 +2,15 @@
   "compilers": {
     "turbo-pascal-7": {
       "calling_conventions": {
-        "__cdecl16far": 344,
-        "__cdecl16near": 616,
-        "__stdcall16far": 920,
-        "__stdcall16near": 384,
-        "unknown": 96
+        "__cdecl16far": 616,
+        "__cdecl16near": 1118,
+        "__stdcall16far": 1574,
+        "__stdcall16near": 640,
+        "unknown": 281
       },
       "compiler": "turbo-pascal-7",
       "compiler_confidence": "high",
-      "functions_seen": 2360,
+      "functions_seen": 4229,
       "image_bases": [
         "0000:0000"
       ],
@@ -18,90 +18,106 @@
       "platform": "dos",
       "targets": [
         "liero-dos",
-        "liero"
+        "liero",
+        "stickman"
       ],
       "top_bigrams": {
-        "ADD MOV": 5576,
-        "ADD PUSH": 3280,
-        "CALLF MOV": 4672,
-        "CMP JNZ": 3856,
-        "CMP JZ": 3488,
-        "JMP MOV": 2904,
-        "LES ADD": 6712,
-        "LES MOV": 4256,
-        "MOV ADD": 2520,
-        "MOV CMP": 4952,
-        "MOV JMP": 3440,
-        "MOV MOV": 25336,
-        "MOV PUSH": 5472,
-        "MOV SHL": 5520,
-        "MOV SUB": 3096,
-        "MOV XOR": 8160,
-        "PUSH CALLF": 7536,
-        "PUSH MOV": 6432,
-        "PUSH PUSH": 19672,
-        "XOR MOV": 5816
+        "ADD MOV": 8520,
+        "ADD PUSH": 5048,
+        "CALLF MOV": 8396,
+        "CMP JNZ": 6454,
+        "CMP JZ": 5588,
+        "JMP MOV": 4662,
+        "LES ADD": 10094,
+        "LES MOV": 6580,
+        "MOV ADD": 4008,
+        "MOV CMP": 7861,
+        "MOV JMP": 5515,
+        "MOV MOV": 40837,
+        "MOV PUSH": 11605,
+        "MOV SHL": 8384,
+        "MOV SUB": 4777,
+        "MOV XOR": 12753,
+        "PUSH CALLF": 14127,
+        "PUSH MOV": 12346,
+        "PUSH PUSH": 33776,
+        "XOR MOV": 9019
       },
       "top_mnemonics": {
-        "ADC": 2648,
-        "ADD": 16440,
-        "CALL": 2768,
-        "CALLF": 11856,
-        "CMP": 16256,
-        "CWD": 2096,
-        "IMUL": 3664,
-        "INC": 3984,
-        "JLE": 1992,
-        "JMP": 9512,
-        "JNZ": 5408,
-        "JZ": 5072,
-        "LEA": 2696,
-        "LES": 14192,
-        "MOV": 74296,
-        "POP": 2504,
-        "PUSH": 39264,
-        "SHL": 7024,
-        "SUB": 5696,
-        "XOR": 11184
+        "ADC": 4172,
+        "ADD": 25358,
+        "CALL": 5378,
+        "CALLF": 21786,
+        "CMP": 26261,
+        "CWD": 3206,
+        "IMUL": 5515,
+        "INC": 6724,
+        "JLE": 3062,
+        "JMP": 15495,
+        "JNZ": 9072,
+        "JZ": 8154,
+        "LEA": 6021,
+        "LES": 21935,
+        "MOV": 122300,
+        "POP": 4722,
+        "PUSH": 70519,
+        "SHL": 10675,
+        "SUB": 9103,
+        "XOR": 17738
+      }
+    }
+  },
+  "example_quality": {
+    "turbo-pascal-7": {
+      "FUN_TEST": {
+        "failure_count": 1,
+        "last_used": "2026-10-27",
+        "success_count": 1
       }
     }
   },
   "examples": {
     "turbo-pascal-7": [
       {
-        "asm_head": "; FUN_2971_65df  entry=2971:65df size=1",
-        "c": "\n/* WARNING: Control flow encountered bad instruction data */\n\nvoid FUN_2971_65df(void)\n\n{\n                    /* WARNING: Bad instruction - Truncating control flow here */\n  halt_baddata();\n}\n\n",
-        "calling_convention": "unknown",
-        "fn": "FUN_2971_65df",
-        "target": "liero-dos"
+        "asm_head": "; dat-parity verified format",
+        "c": "/* verified LIERO.DAT format oracle */",
+        "fn": "LIERO.DAT",
+        "target": "liero"
       },
       {
-        "asm_head": "; FUN_24dd_05fd  entry=24dd:05fd size=18\n24dd:05fd  PUSH DI\n24dd:05fe  PUSH AX\n24dd:05ff  SUB AX,AX\n24dd:0601  CLD\n24dd:0602  STOSW ES:DI\n24dd:0603  STOSW ES:DI\n24dd:0604  STOSW ES:DI\n24dd:0605  STOSW ES:DI\n24dd:0606  POP AX\n24dd:0607  STOSW ES:DI\n24dd:0608  MOV AL,CL\n24dd:060a  MOV AH,0x0\n24dd:060c  STOSW ES:DI\n24dd:060d  POP DI\n24dd:060e  RET",
-        "c": "\nvoid __cdecl16near FUN_24dd_05fd(void)\n\n{\n  undefined2 in_AX;\n  byte in_CL;\n  undefined2 *unaff_DI;\n  undefined2 unaff_ES;\n  \n  *unaff_DI = 0;\n  unaff_DI[1] = 0;\n  unaff_DI[2] = 0;\n  unaff_DI[3] = 0;\n  unaff_DI[4] = in_AX;\n  unaff_DI[5] = (uint)in_CL;\n  return;\n}\n\n",
-        "calling_convention": "__cdecl16near",
-        "fn": "FUN_24dd_05fd",
-        "target": "liero-dos"
+        "asm_head": "; FUN_410e_028f  entry=410e:028f size=6\n410e:028f  OR byte ptr [0xeb08],0x8\n410e:0294  RETF",
+        "c": "\nvoid __cdecl16far FUN_410e_028f(void)\n\n{\n  undefined2 unaff_DS;\n  \n  *(byte *)0xeb08 = *(byte *)0xeb08 | 8;\n  return;\n}\n\n",
+        "calling_convention": "__cdecl16far",
+        "fn": "FUN_410e_028f",
+        "target": "stickman"
       },
       {
-        "asm_head": "; FUN_1ec2_12ad  entry=1ec2:12ad size=57\n1ec2:12ad  PUSH BP\n1ec2:12ae  MOV BP,SP\n1ec2:12b0  LES DI,[BP + 0x6]\n1ec2:12b3  MOV BX,word ptr [BP + 0xc]\n1ec2:12b6  SHL BX,0x6\n1ec2:12b9  ADD DI,BX\n1ec2:12bb  SHL BX,0x2\n1ec2:12be  ADD DI,BX\n1ec2:12c0  ADD DI,word ptr [BP + 0x10]\n1ec2:12c3  MOV CX,word ptr [BP + 0xe]\n1ec2:12c6  MOV AL,byte ptr [BP + 0xa]\n1ec2:12c9  MOV AH,AL\n1ec2:12cb  SHR CX,0x1\n1ec2:12cd  JNC 0x1000:fef0\n1ec2:12cf  STOSB ES:DI\n1ec2:12d0  STOSW.REP ES:DI\n1ec2:12d2  ADD DI,0x140\n1ec2:12d6  ADD CX,word ptr [BP + 0xe]\n1ec2:12d9  SUB DI,CX\n1ec2:12db  SHR CX,0x1\n1ec2:12dd  JNC 0x1000:ff00\n1ec2:12df  STOSB ES:DI\n1ec2:12e0  STOSW.REP ES:DI",
-        "c": "\nvoid __stdcall16far\nFUN_1ec2_12ad(undefined4 param_1,undefined1 param_2,int param_3,uint param_4,int param_5)\n\n{\n  undefined2 *puVar1;\n  uint uVar2;\n  undefined2 *puVar3;\n  undefined2 uVar4;\n  \n  uVar4 = (undefined2)((ulong)param_1 >> 0x10);\n  puVar3 = (undefined2 *)((int)param_1 + param_3 * 0x140 + param_5);\n  uVar2 = param_4 >> 1;\n  if ((param_4 & 1) != 0) {\n    puVar1 = puVar3;\n    puVar3 = (undefined2 *)((int)puVar3 + 1);\n    *(undefined1 *)puVar1 = param_2;\n  }\n  for (; uVar2 != 0; uVar2 = uVar2 - 1) {\n    puVar1 = puVar3;\n    puVar3 = puVar3 + 1;\n    *puVar1 = CONCAT11(param_2,param_2);\n  }\n  puVar3 = (undefined2 *)((int)puVar3 + (0x140 - param_4));\n  uVar2 = param_4 >> 1;\n  if ((param_4 & 1) != 0) {\n    puVar1 = puVar3;\n    puVar3 = (undefined2 *)((int)puVar3 + 1);\n    *(undefined1 *)puVar1 = param_2;\n  }\n  for (; uVar2 != 0; uVar2 = uVar2 - 1) {\n    puVar1 = puVar3;\n    puVar3 = puVar3 + 1;\n    *puVar1 = CONCAT11(param_2,param_2);\n  }\n  return;\n}\n\n",
+        "asm_head": "; FUN_42b5_05bf  entry=42b5:05bf size=60\n42b5:05bf  MOV AL,0x1\n42b5:05c1  PUSH BP\n42b5:05c2  MOV BP,SP\n42b5:05c4  LES DI,[BP + 0x6]\n42b5:05c7  CMP word ptr ES:[DI + 0x2],0xd7b1\n42b5:05cd  JZ 0x4000:3137\n42b5:05cf  CMP word ptr ES:[DI + 0x2],0xd7b2\n42b5:05d5  JZ 0x4000:312f\n42b5:05d7  MOV word ptr [0x39c],0x67\n42b5:05dd  JMP 0x4000:3147\n42b5:05df  PUSH AX\n42b5:05e0  MOV BX,0x14\n42b5:05e3  CALL 0x4000:314b\n42b5:05e6  POP AX\n42b5:05e7  OR AL,AL\n42b5:05e9  JZ 0x4000:3147\n42b5:05eb  MOV BX,0x1c\n42b5:05ee  CALL 0x4000:314b\n42b5:05f1  MOV word ptr ES:[DI + 0x2],0xd7b0\n42b5:05f7  POP BP\n42b5:05f8  RETF 0x4",
+        "c": "\nvoid __stdcall16far FUN_42b5_05bf(undefined4 param_1)\n\n{\n  int iVar1;\n  undefined2 uVar2;\n  undefined2 unaff_DS;\n  \n  uVar2 = (undefined2)((ulong)param_1 >> 0x10);\n  iVar1 = (int)param_1;\n  if (*(int *)(iVar1 + 2) != -0x284f) {\n    if (*(int *)(iVar1 + 2) != -0x284e) {\n      *(undefined2 *)0x39c = 0x67;\n      return;\n    }\n    FUN_42b5_05fb();\n  }\n  FUN_42b5_05fb();\n  *(undefined2 *)(iVar1 + 2) = 0xd7b0;\n  return;\n}\n\n",
         "calling_convention": "__stdcall16far",
-        "fn": "FUN_1ec2_12ad",
-        "target": "liero-dos"
+        "fn": "FUN_42b5_05bf",
+        "target": "stickman"
       },
       {
-        "asm_head": "; FUN_24dd_35d4  entry=24dd:35d4 size=100\n24dd:35d4  CMP AX,0x1000\n24dd:35d7  JLE 0x2000:83b5\n24dd:35d9  INT 0x3c\n24dd:35db  WAIT\n24dd:35dc  INC AX\n24dd:35de  XOR CX,BP\n24dd:35e0  CMP CL,CL\n24dd:35e2  SUB AX,0x1000\n24dd:35e5  CMP AX,0xf000\n24dd:35e8  JGE 0x2000:83c6\n24dd:35ea  INT 0x3c\n24dd:35ec  WAIT\n24dd:35ed  INC AX\n24dd:35ef  XOR CX,BP\n24dd:35f1  CMP BH,CL\n24dd:35f3  ADD AX,0x1000\n24dd:35f6  MOV BX,AX\n24dd:35f8  OR AX,AX\n24dd:35fa  JZ 0x2000:8407\n24dd:35fc  JNS 0x2000:83d0\n24dd:35fe  NEG AX\n24dd:3600  MOV SI,AX\n24dd:3602  AND SI,0x7",
-        "c": "\nvoid __cdecl16near FUN_24dd_35d4(void)\n\n{\n  code *pcVar1;\n  uint uVar2;\n  int in_AX;\n  int iVar3;\n  uint uVar4;\n  undefined2 uVar5;\n  \n  if (0x1000 < in_AX) {\n    pcVar1 = (code *)swi(0x3c);\n    iVar3 = (*pcVar1)();\n    in_AX = iVar3 + -0xfff;\n  }\n  if (in_AX < -0x1000) {\n    pcVar1 = (code *)swi(0x3c);\n    iVar3 = (*pcVar1)();\n    in_AX = iVar3 + 0x1001;\n  }\n  if (in_AX != 0) {\n    pcVar1 = (code *)swi(0x3c);\n    (*pcVar1)();\n    uVar4 = FUN_24dd_1ee4();\n    uVar4 = uVar4 >> 1;\n    while (uVar4 != 0) {\n      uVar2 = uVar4 & 1;\n      uVar4 = uVar4 >> 1;\n      if (uVar2 != 0) {\n        pcVar1 = (code *)swi(0x3c);\n        uVar5 = (*pcVar1)();\n        uVar4 = CONCAT11((char)((uint)uVar5 >> 8),(char)uVar5 + '3');\n      }\n    }\n    if (-1 < in_AX) {\n      pcVar1 = (code *)swi(0x3a);\n      (*pcVar1)();\n      return;\n    }\n    pcVar1 = (code *)swi(0x3a);\n    (*pcVar1)();\n  }\n  return;\n}\n\n",
+        "asm_head": "; FUN_4170_00c3  entry=4170:00c3 size=94\n4170:00c3  PUSH BP\n4170:00c4  MOV BP,SP\n4170:00c6  MOV AX,0x4\n4170:00c9  CALLF 0x4000:302f\n4170:00ce  SUB SP,0x4\n4170:00d1  LES DI,[BP + 0x6]\n4170:00d4  CMP byte ptr ES:[DI],0x0\n4170:00d8  JZ 0x4000:181b\n4170:00da  LES DI,[BP + 0x6]\n4170:00dd  MOV AL,byte ptr ES:[DI]\n4170:00e0  XOR AH,AH\n4170:00e2  MOV word ptr [BP + -0x4],AX\n4170:00e5  MOV AX,0x1\n4170:00e8  CMP AX,word ptr [BP + -0x4]\n4170:00eb  JG 0x4000:181b\n4170:00ed  MOV word ptr [BP + -0x2],AX\n4170:00f0  JMP 0x4000:17f5\n4170:00f2  INC word ptr [BP + -0x2]\n4170:00f5  MOV AX,word ptr [BP + -0x2]\n4170:00f8  LES DI,[BP + 0x6]\n4170:00fb  ADD DI,AX\n4170:00fd  MOV AL,byte ptr ES:[DI]\n4170:0100  PUSH AX",
+        "c": "\nvoid __stdcall16far FUN_4170_00c3(byte *param_1)\n\n{\n  byte bVar1;\n  byte bVar2;\n  undefined2 uVar3;\n  uint local_4;\n  \n  FUN_42b5_04df();\n  if ((*param_1 != 0) && (bVar1 = *param_1, bVar1 != 0)) {\n    local_4 = 1;\n    while( true ) {\n      uVar3 = (undefined2)((ulong)param_1 >> 0x10);\n      bVar2 = FUN_42b5_1bc4(CONCAT11((char)(local_4 >> 8),((byte *)param_1)[local_4]));\n      ((byte *)param_1)[local_4] = bVar2;\n      if (local_4 == bVar1) break;\n      local_4 = local_4 + 1;\n    }\n  }\n  return;\n}\n\n",
+        "calling_convention": "__stdcall16far",
+        "fn": "FUN_4170_00c3",
+        "target": "stickman"
+      },
+      {
+        "asm_head": "; FUN_1000_4bf5  entry=1000:4bf5 size=125\n1000:4bf5  PUSH BP\n1000:4bf6  MOV BP,SP\n1000:4bf8  XOR AX,AX\n1000:4bfa  CALLF 0x4000:302f\n1000:4bff  MOV DI,0x4be6\n1000:4c02  PUSH CS\n1000:4c03  PUSH DI\n1000:4c04  CALLF 0x3000:de5d\n1000:4c09  CMP byte ptr [0x594],0x0\n1000:4c0e  JZ 0x1000:4c24\n1000:4c10  MOV AX,0x11\n1000:4c13  PUSH AX\n1000:4c14  MOV AX,0xc\n1000:4c17  PUSH AX\n1000:4c18  MOV DI,0x4bf1\n1000:4c1b  PUSH CS\n1000:4c1c  PUSH DI\n1000:4c1d  CALLF 0x3000:ea1a\n1000:4c22  JMP 0x1000:4c36\n1000:4c24  MOV AX,0x1c\n1000:4c27  PUSH AX\n1000:4c28  MOV AX,0xc\n1000:4c2b  PUSH AX",
+        "c": "\nvoid __cdecl16near FUN_1000_4bf5(void)\n\n{\n  undefined2 unaff_DS;\n  \n  FUN_42b5_04df();\n  FUN_3de3_002d(0x4be6,0x42b5);\n  if (*(char *)0x594 == '\\0') {\n    FUN_3de3_0bea(0x4bf1,0x3de3,0xc,0x1c);\n  }\n  else {\n    FUN_3de3_0bea(0x4bf1,0x3de3,0xc,0x11);\n  }\n  *(bool *)0x594 = *(char *)0x594 == '\\0';\n  if (*(char *)0x594 == '\\0') {\n    FUN_3de3_0bea(0x4bf3,0x3de3,0xc,0x1c);\n  }\n  else {\n    FUN_3de3_0bea(0x4bf3,0x3de3,0xc,0x11);\n  }\n  return;\n}\n\n",
         "calling_convention": "__cdecl16near",
-        "fn": "FUN_24dd_35d4",
-        "target": "liero-dos"
+        "fn": "FUN_1000_4bf5",
+        "target": "stickman"
       },
       {
-        "asm_head": "; FUN_1000_5e66  entry=1000:5e66 size=11677\n1000:5e66  PUSH BP\n1000:5e67  MOV BP,SP\n1000:5e69  MOV AX,0x338\n1000:5e6c  CALLF 0x2000:5300\n1000:5e71  SUB SP,0x338\n1000:5e75  MOV AX,[0x2]\n1000:5e78  CWD\n1000:5e79  MOV CX,AX\n1000:5e7b  MOV BX,DX\n1000:5e7d  MOV AX,[0x6520]\n1000:5e80  XOR DX,DX\n1000:5e82  CALLF 0x2000:8b8d\n1000:5e87  MOV AX,CX\n1000:5e89  MOV DX,BX\n1000:5e8b  OR AX,DX\n1000:5e8d  JNZ 0x1000:5e9a\n1000:5e8f  LES DI,[0x6684]\n1000:5e93  PUSH ES\n1000:5e94  PUSH DI\n1000:5e95  CALLF 0x1000:fff3\n1000:5e9a  XOR AX,AX\n1000:5e9c  MOV word ptr [BP + -0x2],AX\n1000:5e9f  JMP 0x1000:5ea4",
-        "c": "\n/* WARNING: Removing unreachable block (ram,0x000175ba) */\n\nvoid FUN_1000_5e66(void)\n\n{\n  uint *puVar1;\n  int *piVar2;\n  uint uVar3;\n  undefined4 uVar4;\n  char cVar5;\n  char cVar6;\n  byte bVar7;\n  int *piVar8;\n  uint uVar9;\n  uint uVar10;\n  int iVar11;\n  int iVar12;\n  int iVar13;\n  int iVar14;\n  undefined2 uVar15;\n  undefined2 uVar16;\n  undefined2 unaff_SS;\n  undefined2 unaff_DS;\n  bool bVar17;\n  undefined1 *puVar18;\n  undefined1 *puVar19;\n  undefined2 uVar20;\n  undefined2 uVar21;\n  undefined2 uVar22;\n  undefined1 local_33a [256];\n  undefined1 local_23a [252];\n  int *local_13e;\n  int *local_13c;\n  int *piStack_13a;\n  uint uStack_138;\n  uint local_136;\n  int local_134;\n  uint local_132;\n  int local_130;\n  int *local_12e;\n  int local_12c;\n  undefined1 local_129;\n  byte local_128;\n  byte local_122 [264];\n  uint auStack_1a [5];\n  undefined2 local_10;\n  undefined2 local_c;\n  int local_a;\n  int local_8;\n  int *local_6;\n  uint local_4;\n  \n  local_4 = 0x1000;\n  local_6 = (int *)0x5e71;\n  FUN_24dd_0530();\n  iVar14 = *(int *)0x2;\n  iVar11 = iVar14 >> 0xf;\n  FUN_24dd_3dbd();\n  if (iVar14 == 0 && iVar11 == 0) {\n    FUN_1ec2_13d3((int)*(undefined4 *)0x6684,(int)((ulong)*(undefined4 *)0x6684 >> 0x10));\n  }\n  local_4 = 0;\n  while( true ) {\n    uStack_138 = (uint)((ulong)*(undefined4 *)0x6670 >> 0x10);\n    piStack_13a = (int *)((int)*(undefined4 *)0x6670 + local_4 * 0xaa);\n    if (*(int *)((int)piStack_13a + 0x4c) < 1) {\n      if (*(char *)((int)piStack_13a + 0x9a) == '\\0') {\n        local_12e = (int *)0x0;\n        local_12c = 0;\n        while( true ) {\n          if (*(int *)(local_4 * 2 + 0x67b0) < *(int *)((int)piStack_13a + 6) + -0x50) {\n            piVar2 = (int *)(local_4 * 2 + 0x67b0);\n            *piVar2 = *piVar2 + 1;\n          }\n          if (*(int *)((int)piStack_13a + 6) + -0x50 < *(int *)(local_4 * 2 + 0x67b0)) {\n            piVar2 = (int *)(local_4 * 2 + 0x67b0);\n            *piVar2 = *piVar2 + -1;\n          }\n          if (*(int *)(local_4 * 2 + 0x67b4) < *(int *)((int)piStack_13a + 10) + -0x50) {\n            piVar2 = (int *)(local_4 * 2 + 0x67b4);\n            *piVar2 = *piVar2 + 1;\n          }\n          if (*(int *)((int)piStack_13a + 10) + -0x50 < *(int *)(local_4 * 2 + 0x67b4)) {\n            piVar2 = (int *)(local_4 * 2 + 0x67b4);\n            *piVar2 = *piVar2 + -1;\n          }\n          if ((local_12c == 0) && (local_12e == (int *)0x3)) break;\n          bVar17 = (int *)0xfffe < local_12e;\n          local_12e = (int *)((int)local_12e + 1);\n          local_12c = local_12c + (uint)bVar17;\n        }\n      }\n      else {\n        *(int *)(local_4 * 2 + 0x67b0) = *(int *)((int)piStack_13a + 6) + -0x50;\n        *(int *)(local_4 * 2 + 0x67b4) = *(int *)((int)piStack_13a + 10) + -0x50;\n        local_12e = (int *)0x0;\n        local_12c = 0;\n        local_132 = 0;\n        local_130 = 0;\n        local_136 = 0;\n        local_134 = 0;\n        if (*(char *)(*(int *)((int)piStack_13a + *(int *)((int)piStack_13a + 0x4e) * 2 + 0x73) +\n                     0x11a5) == '\\x02') {\n          local_6 = (int *)0x0;\n          while( true ) {\n            local_128 = *(byte *)((int)*(undefined4 *)0x6688 + (int)local_6 * 0x14 + 0x10) & 0x7f;\n            if (((uint)local_128 ==\n                 *(uint *)((int)piStack_13a + *(int *)((int)piStack_13a + 0x4e) * 2 + 0x73)) &&\n               ((*(byte *)((int)*(undefined4 *)0x6688 + (int)local_6 * 0x14 + 0x10) & 0x80) ==\n                *(byte *)(local_4 + 0x6c))) {\n              bVar17 = (int *)0xfffe < local_12e;\n              local_12e = (int *)((int)local_12e + 1);\n              local_12c = local_12c + (uint)bVar17;\n              uVar9 = *(int *)((int)*(undefined4 *)0x6688 + (int)local_6 * 0x14 + 2) - 0x50;\n              bVar17 = CARRY2(local_132,uVar9);\n              local_132 = local_132 + uVar9;\n              local_130 = local_130 + ((int)uVar9 >> 0xf) + (uint)bVar17;\n              uVar9 = *(int *)((int)*(undefined4 *)0x6688 + (int)local_6 * 0x14 + 6) - 0x50;\n              bVar17 = CARRY2(local_136,uVar9",
-        "calling_convention": "unknown",
-        "fn": "FUN_1000_5e66",
-        "target": "liero-dos"
+        "asm_head": "; FUN_40a5_0098  entry=40a5:0098 size=1322\n40a5:0098  PUSH BP\n40a5:0099  MOV BP,SP\n40a5:009b  MOV AX,0x316\n40a5:009e  CALLF 0x4000:302f\n40a5:00a3  SUB SP,0x316\n40a5:00a7  CMP byte ptr [0x163],0x1b\n40a5:00ac  JNZ 0x4000:0b0c\n40a5:00ae  CMP byte ptr [0x164],0x5b\n40a5:00b3  JNZ 0x4000:0b0c\n40a5:00b5  CMP byte ptr [0x162],0x3\n40a5:00ba  JNC 0x4000:0b14\n40a5:00bc  MOV byte ptr [0x162],0x0\n40a5:00c1  JMP 0x4000:100e\n40a5:00c4  MOV DI,0x162\n40a5:00c7  PUSH DS\n40a5:00c8  PUSH DI\n40a5:00c9  MOV AX,0x1\n40a5:00cc  PUSH AX\n40a5:00cd  MOV AX,0x2\n40a5:00d0  PUSH AX\n40a5:00d1  CALLF 0x4000:38c5\n40a5:00d6  XOR AX,AX\n40a5:00d8  MOV word ptr [BP + -0xc],AX",
+        "c": "\nvoid __cdecl16near FUN_40a5_0098(void)\n\n{\n  byte bVar1;\n  char cVar2;\n  undefined1 extraout_AH;\n  undefined1 extraout_AH_00;\n  undefined2 uVar3;\n  undefined1 extraout_AH_01;\n  undefined1 uVar8;\n  undefined2 uVar4;\n  byte bVar9;\n  byte extraout_AH_02;\n  undefined1 extraout_AH_03;\n  uint uVar5;\n  uint uVar6;\n  int iVar7;\n  undefined2 unaff_SS;\n  undefined2 unaff_DS;\n  bool bVar10;\n  undefined1 *puVar11;\n  undefined1 *puVar12;\n  undefined1 local_318 [256];\n  undefined1 local_218 [254];\n  undefined2 local_11a;\n  byte local_118 [8];\n  undefined1 local_110 [256];\n  int local_10;\n  int local_e;\n  uint local_c;\n  uint local_a;\n  uint local_8;\n  int local_6;\n  undefined1 uStack_4;\n  undefined1 local_3;\n  \n  uStack_4 = 0xa5;\n  local_3 = 0x40;\n  local_6 = 0xaf3;\n  FUN_42b5_04df();\n  if (((*(char *)0x163 == '\\x1b') && (*(char *)0x164 == '[')) && (2 < *(byte *)0x162)) {\n    FUN_42b5_0d75(2,1,0x162,unaff_DS);\n    local_e = 0;\n    bVar10 = true;\n    FUN_42b5_0e79(0x58,0x42b5,*(undefined1 *)(*(byte *)0x162 + 0x162));\n    if ((!bVar10) && (*(char *)0x163 == ';')) {\n      local_e = 1;\n      local_118[0] = 1;\n    }\n    if (*(char *)0x163 == '=') {\n      FUN_42b5_0d75(1,1,0x162,unaff_DS);\n    }\n    local_6 = 0;\n    while (((1 < *(byte *)0x162 && (local_e < 7)) && (local_6 < 10))) {\n      if (*(char *)0x163 == ';') {\n        FUN_42b5_0d75(1,1,0x162,unaff_DS);\n      }\n      else {\n        local_110[0] = 0;\n        while ((bVar10 = *(byte *)0x162 == 1, 1 < *(byte *)0x162 &&\n               (FUN_42b5_0e79(0x78,0x42b5,*(undefined1 *)0x163), !bVar10))) {\n          puVar12 = local_318;\n          uVar4 = unaff_SS;\n          FUN_42b5_0bc4(local_110,unaff_SS);\n          puVar11 = local_218;\n          uVar3 = unaff_SS;\n          FUN_42b5_0cf4(CONCAT11(extraout_AH,*(undefined1 *)0x163));\n          FUN_42b5_0c51(puVar11,uVar3);\n          FUN_42b5_0bde(0xff,local_110,unaff_SS,puVar12,uVar4);\n          FUN_42b5_0d75(1,1,0x162,unaff_DS);\n        }\n        bVar1 = FUN_42b5_17b1(&local_10,unaff_SS,local_110,unaff_SS);\n        local_118[local_e] = bVar1;\n        if (local_10 == 0) {\n          local_e = local_e + 1;\n        }\n        else {\n          local_6 = local_6 + 1;\n        }\n      }\n    }\n    cVar2 = *(char *)(*(byte *)0x162 + 0x162);\n    if ((cVar2 == 'f') || (cVar2 == 'H')) {\n      FUN_410e_0213(1,1);\n      uVar8 = extraout_AH_00;\n      if (0 < local_e) {\n        uVar3 = FUN_410e_023f();\n        FUN_410e_0213(local_118[0],uVar3);\n        uVar8 = extraout_AH_01;\n      }\n      if (1 < local_e) {\n        uVar3 = CONCAT11(uVar8,local_118[1]);\n        uVar4 = FUN_410e_024b(uVar3);\n        FUN_410e_0213(uVar4,uVar3);\n      }\n    }\n    else if (cVar2 == 'K') {\n      local_8 = FUN_410e_023f();\n      local_8 = local_8 & 0xff;\n      local_a = FUN_410e_024b();\n      local_a = local_a & 0xff;\n      do {\n        uVar4 = 0xec16;\n        uVar3 = unaff_DS;\n        FUN_42b5_08b5(0,0x20);\n        FUN_42b5_086c(uVar4,uVar3);\n        FUN_42b5_04a9();\n        cVar2 = FUN_410e_023f();\n      } while (cVar2 != '\\x01');\n      FUN_410e_0213(local_a & 0xff,local_8 & 0xff);\n    }\n    else if (cVar2 == 'm') {\n      if (0 < local_e) {\n        local_11a = local_e;\n        uVar5 = 0;\n        if (0 < local_e) {\n          local_c = 1;\n          while( true ) {\n            bVar1 = local_118[local_c + -1];\n            bVar9 = (byte)(uVar5 >> 8);\n            if (bVar1 == 0) {\n              *(undefined1 *)0x15b = 0;\n              *(undefined1 *)0x15a = 0;\n              FUN_40a5_0000(CONCAT11(bVar9,7));\n              FUN_40a5_003b((uint)extraout_AH_02 << 8);\n            }\n            else if (bVar1 == 1) {\n              *(undefined1 *)0x15b = 1;\n              FUN_40a5_0000(CONCAT11(bVar9,*(undefined1 *)0x15c));\n            }\n            else if (bVar1 == 5) {\n              *(undefined1 *)0x15a = 1;\n              FUN_40a5_0000(CONCAT11(bVar9,*(undefined1 *)0x15c));\n            }\n            else if (bVar1 == 7) {\n              local_3 = *(undefined1 *)0x15c;\n              FUN_40a5_0000(CONCAT11(",
+        "calling_convention": "__cdecl16near",
+        "fn": "FUN_40a5_0098",
+        "target": "stickman"
       }
     ]
   },
@@ -129,8 +145,18 @@
       "language": "pascal",
       "platform": "dos",
       "toolchain": "turbo-pascal-7"
+    },
+    "stickman": {
+      "compiler": "turbo-pascal-7",
+      "compiler_confidence": "high",
+      "examples_added": 5,
+      "functions": 284,
+      "language": "pascal",
+      "platform": "dos",
+      "toolchain": "turbo-pascal-7"
     }
   },
-  "updated": "2026-10-11",
-  "version": 1
+  "updated": "2026-10-27",
+  "verified_pascal_examples": {},
+  "version": 2
 }
