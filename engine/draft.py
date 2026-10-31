@@ -15,10 +15,23 @@ for pascal/c). Unknown/ambiguous language -> SKIP (do not emit the wrong languag
 Disc-gated: SKIP without asm/. Hit-rate monitored by engine/scheduler.py.
 """
 from __future__ import annotations
-import argparse, pathlib, re, shutil, subprocess, sys
+
+import argparse
+import hashlib
+import json
+import pathlib
+import re
+import shutil
+import subprocess
+import sys
+
+DEFAULT_LOCAL_ENDPOINT = "http://localhost:11434"
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-import knowledge  # noqa: E402
+import model_training
+import routine_contract
+
+import knowledge
 
 C_TEMPLATE = """/* {slug}::{fn} — {kind} candidate (oracle: {oracle}).
  * Drafted from asm/{fn}.s via {backend}; UNMATCHED until verify passes.
@@ -44,6 +57,7 @@ PAS_PROGRAM = """{{ {slug} — playable-parity rebuild (Turbo Pascal 7 / Free Pa
 {{$MODE TP}}
 {{$ASMMODE INTEL}}
 program {prog};
+{uses}
 {{$INCLUDE _forward.inc}}
 {includes}
 begin
@@ -102,10 +116,32 @@ def detect_language(target: str) -> tuple[str, str, str]:
     return language, conf, compiler
 
 
+def usable_decomp_seed(source: str) -> bool:
+    """Reject Ghidra output that only reports an undecodable instruction."""
+    return not re.search(
+        r"halt_baddata|bad instruction|truncating control flow",
+        source,
+        re.IGNORECASE,
+    )
+
+
 def read_decomp_seed(root: pathlib.Path, fn: str) -> str | None:
     p = root / "decomp" / f"{fn}.c"
     if p.exists() and p.stat().st_size > 0:
-        return p.read_text(errors="replace")
+        source = p.read_text(errors="replace")
+        if usable_decomp_seed(source):
+            return source
+    return None
+
+
+def _function_calling_convention(root: pathlib.Path, fn: str) -> str | None:
+    metadata = root / "functions.json"
+    if not metadata.exists():
+        return None
+    functions = json.loads(metadata.read_text(errors="replace")).get("functions", [])
+    for function in functions:
+        if function.get("name") == fn:
+            return function.get("calling_convention")
     return None
 
 
@@ -214,9 +250,12 @@ def _decl_for(root: pathlib.Path, fn: str,
     Forward header, skeleton bodies, the compile-gate revert, the LLM prompt's
     forced signature and sibling call tables must agree EXACTLY — FPC rejects a
     parameterless forward solved by a parameterized definition ("forward
-    declaration not solved"). Prefers the recon-corpus C the LLM actually sees,
-    then the Ghidra decomp, then a parameterless procedure.
+    declaration not solved"). A checked routine contract takes precedence over
+    recon-corpus and Ghidra C, which are hypotheses rather than ABI authority.
     """
+    contract = routine_contract.load_contract(root, fn)
+    if contract is not None:
+        return str(contract["declaration"])
     seed = read_decomp_seed(root, fn)
     if recon is not None:
         rcode, _rwhy = read_recon_seed(recon, fn, allowed or set())
@@ -236,7 +275,7 @@ def _force_decl(clean: str, decl: str) -> str:
     return clean
 
 
-def _sanitize_pascal(text: str) -> str:
+def _sanitize_pascal_with_reason(text: str) -> tuple[str, str | None]:
     """Strip markdown fences / prose so LLM output is compilable Pascal.
 
     The model is instructed to start with the declaration, but in practice it
@@ -247,7 +286,7 @@ def _sanitize_pascal(text: str) -> str:
     body that still will not compile is reverted to a skeleton.
     """
     if not text:
-        return ""
+        return "", "empty-completion"
     t = text.strip()
 
     # markdown fences -> keep the largest fenced chunk
@@ -265,6 +304,8 @@ def _sanitize_pascal(text: str) -> str:
         if re.match(r"\s*(procedure|function)\s+[A-Za-z_]\w*", ln, re.I):
             start = i
             break
+    else:
+        return "", "missing-routine-declaration"
     t = "\n".join(lines[start:]).strip()
 
     # strip leftover `...; forward;` declarations (siblings are already declared)
@@ -273,35 +314,214 @@ def _sanitize_pascal(text: str) -> str:
     # last complete routine block: declaration ... closing ``end`` (``end;`` / ``end.``)
     decl = re.search(r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*", t)
     if not decl:
-        return ""                                 # no routine at all
+        return "", "missing-routine-declaration"
     body = t[decl.start():].strip()
     ends = list(re.finditer(r"(?im)^\s*end\s*;?\s*$", body))
     if not ends:
-        return ""                                 # no closing 'end'
+        return "", "incomplete-routine"
     end_m = ends[-1]
     body = body[:end_m.end()].strip()
 
     # TP7 validity gate on the body only (skip the reference comment block)
     if re.search(r"\bDAT_\w+|\bPCode\b|\bPop\b|\b(unaff|out)_[A-Za-z]\w*|\b(AX|BX|CX|DX|SI|DI|SP|BP|ES|DS|CS|SS)\b|\b0x[0-9a-fA-F]+\b|\*\(|-\>", body):
+        return "", "unsupported-assembly-artifact"
+    return body, None
+
+
+def _sanitize_pascal(text: str) -> str:
+    return _sanitize_pascal_with_reason(text)[0]
+
+
+def _sanitize_pascal_region_with_reason(text: str) -> tuple[str, str | None]:
+    if not text.strip():
+        return "", "empty-completion"
+    fenced = re.fullmatch(
+        r"\s*```(?:pascal|pas)?\s*(.*?)\s*```\s*",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if "```" in text and not fenced:
+        return "", "malformed-code-fence"
+    region = fenced.group(1).strip() if fenced else text.strip()
+    if re.search(r"(?im)^\s*(?:procedure|function)\s+\w+", region):
+        return "", "routine-declaration-in-region"
+    if re.search(r"(?im)^\s*(?:var|const|type)\b", region):
+        return "", "declaration-section-in-region"
+    if not region:
+        return "", "empty-completion"
+    return region, None
+
+
+def _split_localized_region(
+    source: str, region: dict[str, str]
+) -> tuple[str, str, str]:
+    lines = source.splitlines(keepends=True)
+    start_matches = [
+        index
+        for index, line in enumerate(lines)
+        if line.strip() == region["start"]
+    ]
+    end_matches = [
+        index
+        for index, line in enumerate(lines)
+        if line.strip() == region["end"]
+    ]
+    if len(start_matches) != 1:
+        raise ValueError("localized repair start anchor must occur exactly once")
+    if len(end_matches) != 1:
+        raise ValueError("localized repair end anchor must occur exactly once")
+    start, end = start_matches[0], end_matches[0]
+    if end < start:
+        raise ValueError("localized repair end anchor precedes its start anchor")
+    return (
+        "".join(lines[:start]),
+        "".join(lines[start : end + 1]),
+        "".join(lines[end + 1 :]),
+    )
+
+
+def _replace_localized_region(
+    source: str, region: dict[str, str], replacement: str
+) -> str:
+    if not replacement.strip():
+        raise ValueError("localized repair replacement is empty")
+    prefix, selected, suffix = _split_localized_region(source, region)
+    newline = "\r\n" if "\r\n" in selected else "\n"
+    replacement = replacement.strip("\r\n")
+    if not replacement.endswith(("\n", "\r")):
+        replacement += newline
+    patched = prefix + replacement + suffix
+    if not patched.startswith(prefix) or not patched.endswith(suffix):
+        raise ValueError("localized repair changed code outside the selected region")
+    return patched
+
+
+def _write_generation_capture(
+    capture_dir: pathlib.Path,
+    function_name: str,
+    prompt: str,
+    completion: str,
+    candidate: str,
+    rejection_reason: str | None,
+    repair_mode: str = "full-routine",
+) -> None:
+    capture_dir.mkdir(parents=True, exist_ok=True)
+    (capture_dir / "prompt.txt").write_text(prompt)
+    (capture_dir / "completion.txt").write_text(completion)
+    if candidate:
+        (capture_dir / "candidate.pas").write_text(candidate + "\n")
+    metadata = {
+        "function": function_name,
+        "sanitizer_accepted": rejection_reason is None,
+        "rejection_reason": rejection_reason,
+        "repair_mode": repair_mode,
+        "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+        "completion_sha256": hashlib.sha256(completion.encode()).hexdigest(),
+        "candidate_sha256": (
+            hashlib.sha256(candidate.encode()).hexdigest() if candidate else None
+        ),
+    }
+    (capture_dir / "capture.json").write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n"
+    )
+
+
+def fewshot_context(target: str, compiler: str, platform: str,
+                    anti_patterns: bool = True, query_asm: str = "",
+                    calling_convention: str | None = None,
+                    verified_pascal: bool = False,
+                    include_learned_context: bool = True) -> str:
+    """Build a toolchain-specific prompt prefix from examples and failures."""
+    if not include_learned_context:
         return ""
-    return body
-
-
-def fewshot_context(target: str, compiler: str, platform: str) -> str:
-    """Prompt prefix of same-toolchain few-shot examples (asm -> decompiled C)."""
     data = knowledge.load()
-    exs = knowledge.examples_for(data, compiler, platform, limit=3,
-                                 min_confidence="medium")
-    priors = knowledge.prior_targets_with(data, compiler, platform)
-    if not exs:
+    priors = [name for name in knowledge.prior_targets_with(
+        data, compiler, platform
+    ) if name != target]
+    parts: list[str] = []
+    if verified_pascal:
+        exs = knowledge.verified_pascal_examples_for(
+            data, compiler, platform, query_asm,
+            exclude_target=target,
+            calling_convention=calling_convention,
+            limit=3,
+        )
+    else:
+        exs = knowledge.examples_for(data, compiler, platform, limit=3,
+                                     min_confidence="medium")
+    if exs:
+        parts.append(f"Prior same-toolchain examples for {compiler}/{platform} "
+                     f"(learned from: {', '.join(priors) or 'this toolchain'}):")
+        for e in exs:
+            if verified_pascal:
+                parts.append(
+                    f"--- {e['target']}::{e['fn']} "
+                    f"(verified by {e['oracle']}) ---"
+                )
+                parts.append("ORIGINAL ASSEMBLY:\n" + e["asm"][:1600])
+                if e.get("decomp_c"):
+                    parts.append(
+                        "LOSSY DECOMPILER REFERENCE:\n" + e["decomp_c"][:900]
+                    )
+                parts.append("ORACLE-VERIFIED PASCAL:\n" + e["pascal"][:1800])
+            else:
+                parts.append(f"--- {e['fn']} ({e.get('calling_convention','?')}) ---")
+                parts.append("ASM:\n" + e["asm_head"])
+                parts.append("C:\n" + e["c"][:1200])
+    if anti_patterns:
+        ap = knowledge.get_anti_patterns(data, knowledge.compiler_key(compiler, platform), limit=6)
+        if ap:
+            parts.append("Known failure patterns to AVOID (from prior verify failures):")
+            for p in ap:
+                parts.append(f"  - {p['category']} (seen {p['count']}x): "
+                             f"{p.get('example_asm','')[:200]}")
+    return "\n".join(parts) + "\n\n" if parts else ""
+
+
+def _assembly_evidence(asm_text: str) -> str:
+    """Summarize control-flow and data anchors without replacing assembly."""
+    instructions = re.findall(
+        r"(?m)^\s*[0-9a-fA-F:]+\s+([A-Za-z][A-Za-z0-9.]*)\s*(.*)$",
+        asm_text,
+    )
+    if not instructions:
         return ""
-    parts = [f"Prior reference translations for {compiler}/{platform} "
-             f"(learned from: {', '.join(priors) or 'this toolchain'}):"]
-    for e in exs:
-        parts.append(f"--- {e['fn']} ({e.get('calling_convention','?')}) ---")
-        parts.append("ASM:\n" + e["asm_head"])
-        parts.append("C:\n" + e["c"][:1200])
-    return "\n".join(parts) + "\n\n"
+    branch_instructions = [
+        (mnemonic.upper(), operands.strip())
+        for mnemonic, operands in instructions
+        if mnemonic.upper().startswith("J")
+        or mnemonic.lower() in {"loop", "loope", "loopne", "jcxz", "jecxz"}
+    ]
+    conditional = [
+        item for item in branch_instructions
+        if item[0] not in {"JMP", "LJMP"}
+    ]
+    branch_targets = sorted({
+        operands.split(",", 1)[0].strip()
+        for _, operands in branch_instructions
+        if operands.strip()
+    })
+    calls = [
+        operands.strip() for mnemonic, operands in instructions
+        if mnemonic.upper().startswith("CALL") and operands.strip()
+    ]
+    constants = sorted(set(re.findall(
+        r"\b(?:0x[0-9a-fA-F]+|[0-9a-fA-F]+:[0-9a-fA-F]+)\b", asm_text
+    )))
+    return (
+        "ASSEMBLY EVIDENCE (raw instructions remain authoritative):\n"
+        f"- instruction count: {len(instructions)}\n"
+        f"- control-flow skeleton: {len(conditional)} conditional, "
+        f"{len(branch_instructions) - len(conditional)} unconditional "
+        f"branches, {len(calls)} calls\n"
+        f"- direct branch targets: {', '.join(branch_targets[:24]) or 'none'}\n"
+        f"- call operands: {', '.join(calls[:12]) or 'none'}\n"
+        f"- constants/addresses: {', '.join(constants[:24]) or 'none'}\n"
+        "- Reconstruct basic blocks, branch edges, loop bounds, and joins "
+        "before translating the behavior into Pascal.\n"
+        "- Treat decompiler pseudocode as a hypothesis; resolve conflicts "
+        "against assembly and these anchors.\n\n"
+    )
 
 
 def run_m2c(asm_file: pathlib.Path, target_yaml: pathlib.Path) -> str | None:
@@ -317,7 +537,10 @@ def run_m2c(asm_file: pathlib.Path, target_yaml: pathlib.Path) -> str | None:
     return None
 
 
-def run_llm(prompt: str, model: str | None, endpoint: str | None) -> str | None:
+def run_llm(prompt: str, model: str | None, endpoint: str | None,
+            adapter: dict[str, str] | None = None,
+            temperature: float = 0.0,
+            max_tokens: int = 768) -> str | None:
     """Local-first: endpoint server via OpenAI chat API (falls back to llama.cpp
     raw /completion), else `llm` CLI; hosted only if LSR_ALLOW_HOSTED=1.
 
@@ -325,7 +548,29 @@ def run_llm(prompt: str, model: str | None, endpoint: str | None) -> str | None:
     template is never applied, so the chat route (llama.cpp --jinja, vLLM) is
     tried first; raw /completion stays for servers that only expose it.
     """
-    import json, os, urllib.request
+    import json
+    import os
+    import urllib.request
+    endpoint = (
+        endpoint
+        or os.environ.get("LSR_LLM_ENDPOINT")
+        or DEFAULT_LOCAL_ENDPOINT
+    )
+    if adapter:
+        try:
+            from model_adapter import generate_with_adapter
+            result = generate_with_adapter(
+                prompt,
+                adapter["base_model_path"],
+                adapter["adapter_path"],
+                max_new_tokens=max_tokens,
+                temperature=temperature,
+            )
+            if result.strip():
+                return result
+            print("[llm-adapter] model returned an empty completion; trying endpoint")
+        except Exception as exc:
+            print(f"[llm-adapter] inference failed; trying configured endpoint: {exc}")
     if endpoint:
         base = endpoint.rstrip("/")
         for suf in ("/v1/chat/completions", "/chat/completions"):
@@ -335,7 +580,7 @@ def run_llm(prompt: str, model: str | None, endpoint: str | None) -> str | None:
         try:
             payload = {"model": model or "local",
                        "messages": [{"role": "user", "content": prompt}],
-                       "temperature": 0.0, "max_tokens": 768}
+                       "temperature": temperature, "max_tokens": max_tokens}
             req = urllib.request.Request(base + "/v1/chat/completions",
                                          data=json.dumps(payload).encode(),
                                          headers={"Content-Type": "application/json"})
@@ -346,7 +591,11 @@ def run_llm(prompt: str, model: str | None, endpoint: str | None) -> str | None:
         except Exception as e:
             print(f"[llm-chat] {e}")
         try:
-            data = json.dumps({"prompt": prompt, "n_predict": 768}).encode()
+            data = json.dumps({
+                "prompt": prompt,
+                "n_predict": max_tokens,
+                "temperature": temperature,
+            }).encode()
             req = urllib.request.Request(base + "/completion", data=data,
                                          headers={"Content-Type": "application/json"})
             with urllib.request.urlopen(req, timeout=300) as resp:
@@ -385,6 +634,12 @@ def _write_program(root: pathlib.Path, slug: str, fns: list[str],
     # parameterized definition, and stale drafts with different param counts
     # would desync the header.
     all_fns = sorted(p.stem for p in (root / "asm").glob("*.s"))
+    program_path = root / "src" / f"{slug}.pas"
+    existing_program = (
+        program_path.read_text(errors="replace") if program_path.is_file() else ""
+    )
+    uses_match = re.search(r"(?im)^\s*uses\s+[^;]+;", existing_program)
+    uses_clause = uses_match.group(0).strip() if uses_match else ""
     for fn in all_fns:
         ip = root / "src" / f"{fn}.inc"
         if not ip.exists():
@@ -399,8 +654,9 @@ def _write_program(root: pathlib.Path, slug: str, fns: list[str],
     (root / "src" / "_forward.inc").write_text(
         "{ forward declarations for every routine (generated) }\n" + fwd + "\n")
     incs = "\n".join(f"{{$INCLUDE {f}.inc}}" for f in fns)
-    (root / "src" / f"{slug}.pas").write_text(
-        PAS_PROGRAM.format(slug=slug, prog=prog, includes=incs))
+    program_path.write_text(
+        PAS_PROGRAM.format(slug=slug, prog=prog, uses=uses_clause, includes=incs)
+    )
 
 
 MAX_REPAIR_ROUNDS = 3
@@ -463,7 +719,11 @@ def _repair_stem(root: pathlib.Path, target: str, src: pathlib.Path,
                  recon: pathlib.Path | None,
                  allowed: set[str] | None,
                  model: str | None, endpoint: str | None,
-                 fs_prefix: str, use_llm: bool) -> bool:
+                 fs_prefix: str, use_llm: bool,
+                 adapter: dict[str, str] | None = None,
+                 temperature: float = 0.0,
+                 max_tokens: int = 768,
+                 prompt_profile: str = "learned-context") -> bool:
     """Ask the LLM to fix `stem` using the compiler error as feedback.
 
     Returns True if a plausible repair was written back to the .inc.
@@ -485,10 +745,27 @@ def _repair_stem(root: pathlib.Path, target: str, src: pathlib.Path,
     # error lines specific to this stem, falling back to all of them
     mine = [ln for ln in why_lines if f"{stem}.inc(" in ln] or list(why_lines)
     repair_note = "\n".join(mine[:10])
-    prompt = fs_prefix + _build_pascal_prompt(root, target, stem, asm_text,
-                                              seed_c, ref_source, decl, allowed,
-                                              recon, repair_note=repair_note)
-    llm_out = run_llm(prompt, model, endpoint)
+    _, _, compiler = detect_language(target)
+    platform = _yaml_kv(root / "config" / "toolchain.yaml", "platform",
+                        _yaml_kv(root / "config" / "target.yaml", "platform"))
+    prior_context = fewshot_context(
+        target, compiler, platform, query_asm=asm_text,
+        calling_convention=_function_calling_convention(root, stem),
+        verified_pascal=True,
+        include_learned_context=prompt_profile == "learned-context",
+    )
+    prompt = prior_context + _build_pascal_prompt(
+        root, target, stem, asm_text, seed_c, ref_source, decl, allowed,
+        recon, repair_note=repair_note,
+    )
+    llm_out = run_llm(
+        prompt,
+        model,
+        endpoint,
+        adapter,
+        temperature=temperature,
+        max_tokens=max_tokens,
+    )
     clean = _sanitize_pascal(llm_out) if llm_out else ""
     if not clean:
         return False
@@ -510,7 +787,11 @@ def _compile_gate(root: pathlib.Path, target: str,
                   model: str | None = None,
                   endpoint: str | None = None,
                   fs_prefix: str = "",
-                  use_llm: bool = False) -> int:
+                  use_llm: bool = False,
+                  adapter: dict[str, str] | None = None,
+                  temperature: float = 0.0,
+                  max_tokens: int = 768,
+                  prompt_profile: str = "learned-context") -> int:
     """Revert/repair any .inc that breaks the FPC whole-program build.
 
     Rather than shipping a broken build, first attempt to *repair* each failing
@@ -534,7 +815,8 @@ def _compile_gate(root: pathlib.Path, target: str,
                 if stem.startswith("_"):
                     continue
                 if _repair_stem(root, target, src, stem, why, recon, allowed,
-                                model, endpoint, fs_prefix, use_llm):
+                                model, endpoint, fs_prefix, use_llm, adapter,
+                                temperature, max_tokens, prompt_profile):
                     repaired += 1
             # The compiler — not the repair attempt — decides what is still
             # bad: _repair_stem "succeeding" only means plausible text was
@@ -576,12 +858,13 @@ def _compile_gate(root: pathlib.Path, target: str,
 
 
 def _build_pascal_prompt(root, target, fn, asm_text, seed_c, ref_source, decl, allowed,
-                         recon=None, repair_note: str = "") -> str:
+                         recon=None, repair_note: str = "",
+                         previous_attempt: str = "",
+                         localized_repair_region: str | None = None) -> str:
     """Build the Turbo Pascal 7 LLM prompt for `fn` (no few-shot prefix).
 
-    `repair_note` (optional) is prepended when the previous attempt failed to
-    compile: it feeds the compiler error back to the model so it can fix the
-    specific defect instead of regressing to a skeleton.
+    `repair_note` carries compiler or oracle feedback; localized repairs receive
+    the previous routine as a sketch and return only the selected source span.
     """
     sib_txt = ""
     if seed_c:
@@ -592,46 +875,170 @@ def _build_pascal_prompt(root, target, fn, asm_text, seed_c, ref_source, decl, a
             sib_txt = ("Called routines are forward-declared with EXACTLY these "
                        "signatures — match arity and argument types when calling:\n"
                        + rows + "\n")
-    ps = (
-        "You are reconstructing the ORIGINAL Turbo Pascal 7 (16-bit real-mode "
-        "DOS) source of a function. Given the disassembly and a C reference, "
-        "output the Pascal it most likely came from.\n"
-        "RULES:\n"
-        "- Output ONLY Turbo Pascal 7 source: a single `procedure Name;` (or "
-        "a `function`) with a `begin ... end;` body. No markdown, no prose, no "
-        "comments except brief ones.\n"
+    contract = routine_contract.load_contract(root, fn)
+    contract_prompt = ""
+    if contract is not None:
+        contract_details = [f"Checked declaration: {contract['declaration']}"]
+        if contract.get("arguments"):
+            contract_details.append(
+                "Arguments:\n"
+                + "\n".join(
+                    f"- {argument['name']} ({argument['role']}): "
+                    f"{argument['representation']}"
+                    for argument in contract["arguments"]
+                )
+            )
+        if contract.get("memory_model"):
+            contract_details.append(f"Memory model: {contract['memory_model']}")
+        if contract.get("observed_outputs"):
+            contract_details.append(
+                "Observed outputs: " + ", ".join(contract["observed_outputs"])
+            )
+        if contract.get("instruction_semantics"):
+            contract_details.append(
+                "Instruction-level semantics:\n"
+                + contract["instruction_semantics"]
+            )
+        if contract.get("fixture_flag_table"):
+            contract_details.append(
+                "Original trace flag table:\n" + contract["fixture_flag_table"]
+            )
+        contract_prompt = (
+            "CHECKED ROUTINE CONTRACT (overrides generic pointer guidance):\n"
+            + "\n".join(contract_details)
+            + "\n"
+            f"{contract['prompt']}\n\n"
+        )
+    type_guidance = (
         "- It must compile standalone under {$MODE TP} with no undeclared "
         "identifiers. Use only standard TP7 types (Byte, Word, Integer, "
         "Boolean, Char, Pointer, String). For pointers use local declarations "
         "(`p: ^Word;`) or the TP7 predefined PChar; WordPtr/CharPtr/BytePtr/"
         "PByte/PWord do NOT exist and will not compile.\n"
+    )
+    memory_guidance = (
+        "- For raw/absolute memory without a checked modeled memory space, "
+        "use typed pointers; do not use Seg()/Ofs().\n"
+    )
+    if contract and contract.get("memory_model") == (
+        "Read bytes from RealModeMemory at ((segment << 4) + offset) & 0xFFFFF."
+    ):
+        type_guidance = (
+            "- It must compile standalone under {$MODE TP} with no undeclared "
+            "identifiers. Use standard TP7 scalar types (Byte, Word, Integer, "
+            "Boolean, Char, Longint, String); do not declare any pointer types "
+            "for this routine.\n"
+        )
+        memory_guidance = (
+            "- This routine uses the checked real-mode memory model, not host "
+            "pointers. `RealModeMemory[address]` has type Byte. Decode each "
+            "packed argument with `segment := "
+            "Word(param_n shr 16)` and `offset := Word(param_n)`, compute "
+            "`address := ((Longint(segment) shl 4) + offset) and $FFFFF`, "
+            "then read `RealModeMemory[address]`.\n"
+            "- Do NOT declare or use `Pointer`, `^Byte`, `PChar`, `Ptr`, or "
+            "any host-pointer cast for either argument. Do not copy pointer "
+            "examples from generic guidance.\n"
+        )
+    output_instruction = (
+        "Return only replacement Pascal statements for the selected region. "
+        "Do not output a procedure/function header or variable declarations."
+        if localized_repair_region is not None
+        else "Output ONLY Turbo Pascal 7 source: a single `procedure Name;` "
+        "(or a `function`) with a `begin ... end;` body. No markdown, no prose, "
+        "no comments except brief ones."
+    )
+    declaration_instruction = (
+        f"- The checked declaration `{decl}` is context only; do not repeat it "
+        "or change the routine signature.\n"
+        if localized_repair_region is not None
+        else f"- The routine is named `{fn}`. Its first line MUST be exactly:\n"
+        f"    {decl}\n"
+        "  Do not add, drop or rename parameters; read argument values only "
+        "through these parameter names.\n"
+    )
+    ps = (
+        "You are reconstructing the ORIGINAL Turbo Pascal 7 (16-bit real-mode "
+        "DOS) source of a function. Given the disassembly and a C reference, "
+        "output a behaviorally faithful Pascal reconstruction. Use both raw "
+        "assembly and decompiler pseudocode, but treat the pseudocode as a "
+        "lossy hypothesis rather than ground truth.\n"
+        "RULES:\n"
+        f"- {output_instruction}\n"
+        f"{type_guidance}"
         "- The C uses fake identifiers (FUN_xxxx, DAT_xxxx, uVarN) - replace "
         "them with plain Pascal locals/params; do not invent globals.\n"
         "- Preserve control flow and arithmetic exactly. If a construct has no "
         "clean Pascal form (e.g. a far call to another routine), call "
         "that routine by name; every sibling routine is ALREADY forward-declared, "
         "so DO NOT declare or define any other procedure/function.\n"
-        "- Raw/absolute memory: declare typed pointer variables (`p: ^Byte;`) "
-        "and use `p^`, Inc(p, n); do not use Seg()/Ofs() and do not cast "
-        "comparisons (Byte(x = 0) is invalid Pascal - write an `if`).\n"
+        "- Recover callees before callers when possible. Use only reviewed, "
+        "resolved callee behavior as semantic evidence; do not infer missing "
+        "callee behavior from its name or decompiler text. Preserve unresolved "
+        "calls and do not claim the caller is recovered until its dependencies "
+        "are resolved.\n"
+        f"{memory_guidance}"
+        "- Do not use Seg()/Ofs() and do not cast comparisons (Byte(x = 0) "
+        "is invalid Pascal - write an `if`).\n"
         "- You may NOT dereference an expression: (p + n)^ and p^[i] on a "
         "non-array are ILLEGAL. Do q := p; Inc(q, n); first, then q^.\n"
         "- Keep value types exact: never assign Word/Integer to Char or vice "
         "versa - convert with Chr(n)/Ord(c)/Byte(x)/Word(x). The sibling "
         "signature table is authoritative for return types.\n"
-        f"- The routine is named `{fn}`. Its first line MUST be exactly:\n"
-        f"    {decl}\n"
-        "  Do not add, drop or rename parameters; read argument values only "
-        "through these parameter names.\n"
+        f"{declaration_instruction}"
+        f"{contract_prompt}"
         f"{sib_txt}"
+        f"{_assembly_evidence(asm_text)}"
         f"ASSEMBLY:\n{asm_text}\n\nREFERENCE C ({ref_source}, "
         f"for meaning only):\n{seed_c}\n")
-    if repair_note:
-        ps = ("PREVIOUS ATTEMPT FAILED to compile under {$MODE TP}. The compiler "
-              "error(s) you must fix:\n\n" + repair_note + "\n\nUse the SAME "
-              "signature above. Output only a single valid Turbo Pascal 7 routine. "
-              "Do NOT emit markdown fences, prose, or a `forward` declaration.\n\n"
-              + ps)
+    if localized_repair_region is not None:
+        ps = (
+            "LOCALIZED COUNTEREXAMPLE REPAIR:\n"
+            "The previous Pascal candidate compiled but failed the original "
+            "routine oracle. Change only the selected source region; all "
+            "candidate code outside it will be preserved byte-for-byte. "
+            "Use the measured failures and the checked assembly semantics; "
+            "do not weaken or specialize behavior only to the listed fixtures.\n\n"
+            "Measured oracle feedback:\n"
+            + repair_note.removeprefix("ORIGINAL-ORACLE FAILURE:").strip()[:4000]
+            + "\n\nExact selected region:\n"
+            + localized_repair_region
+            + "\n\nPrevious complete candidate:\n"
+            + previous_attempt[:12000]
+            + "\n\n"
+            + ps
+        )
+    elif repair_note.startswith("ORIGINAL-ORACLE FAILURE:"):
+        ps = (
+            "The previous Pascal candidate compiled but FAILED the "
+            "routine-specific original-executable oracle. Correct the measured "
+            "behavior without weakening the oracle:\n\n"
+            + repair_note.removeprefix("ORIGINAL-ORACLE FAILURE:").strip()[:4000]
+            + "\n\n"
+            + (
+                "Previous Pascal candidate:\n"
+                + previous_attempt[:4000]
+                + "\n\n"
+                if previous_attempt else ""
+            )
+            + "Use the SAME checked signature above. Output only a complete "
+            "valid Turbo Pascal 7 routine.\n\n"
+            + ps
+        )
+    elif repair_note:
+        previous = (
+            "Previous Pascal candidate:\n"
+            + previous_attempt[:4000]
+            + "\n\n"
+            if previous_attempt else ""
+        )
+        ps = (
+            "PREVIOUS ATTEMPT FAILED to compile under {$MODE TP}. The compiler "
+            "error(s) you must fix:\n\n" + repair_note[:4000] + "\n\n"
+            + previous + "Use the SAME signature above. Output only a single "
+            "valid Turbo Pascal 7 routine. Do NOT emit markdown fences, prose, "
+            "or a `forward` declaration.\n\n" + ps
+        )
     return ps
 
 
@@ -639,7 +1046,43 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
           use_llm: bool = False, model: str | None = None,
           endpoint: str | None = None, limit: int | None = None,
           recon_dir: str | None = None,
-          recon_verdicts: str = "real") -> int:
+          recon_verdicts: str = "real",
+          retry_existing: bool = False,
+          repair_note: str = "",
+          run_compile_gate: bool = True,
+          temperature: float = 0.0,
+          max_tokens: int = 768,
+          prompt_profile: str = "learned-context",
+          capture_dir: pathlib.Path | None = None,
+          disable_adapter: bool = False,
+          diagnostic_only: bool = False,
+          function_only: bool = False,
+          localized_repair: bool = False) -> int:
+    if retry_existing and not fn:
+        raise ValueError("--retry-existing requires --fn")
+    if function_only and not fn:
+        raise ValueError("--function-only requires --fn")
+    if localized_repair and (
+        not fn
+        or not function_only
+        or not retry_existing
+        or not use_llm
+        or not repair_note.startswith("ORIGINAL-ORACLE FAILURE:")
+    ):
+        raise ValueError(
+            "localized repair requires --fn, --function-only, "
+            "--retry-existing, and original-oracle failure feedback"
+        )
+    if not 0.0 <= temperature <= 2.0:
+        raise ValueError("temperature must be between 0.0 and 2.0")
+    if max_tokens < 1:
+        raise ValueError("max_tokens must be positive")
+    if prompt_profile not in {"learned-context", "base-prompt"}:
+        raise ValueError(f"unsupported prompt profile: {prompt_profile}")
+    if diagnostic_only and (not fn or not use_llm or capture_dir is None):
+        raise ValueError(
+            "diagnostic-only mode requires --fn, --llm, and --capture-dir"
+        )
     root = pathlib.Path("targets") / target
     asm = root / "asm"
     if not asm.exists() or not any(asm.glob("*.s")):
@@ -659,18 +1102,27 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
               f"refusing to emit {language} from an unconfirmed detection")
         return 0
 
-    (root / "src").mkdir(parents=True, exist_ok=True)
+    if not diagnostic_only:
+        (root / "src").mkdir(parents=True, exist_ok=True)
     kind = _yaml_kv(root / "config" / "target.yaml", "kind", "game")
     platform = _yaml_kv(root / "config" / "target.yaml", "platform",
                         _yaml_kv(root / "config" / "toolchain.yaml", "platform", "unknown"))
+    active_adapter = (
+        None
+        if disable_adapter
+        else model_training.active_adapter_for(
+            knowledge.compiler_key(compiler, platform)
+        )
+    )
     ext = LANG_EXT[language]
     fns = [p.stem for p in sorted(asm.glob("*.s"))]
+    if (diagnostic_only or function_only) and fn not in fns:
+        raise ValueError(f"function has no assembly input: {fn}")
     # `batch` = the subset to actively LLM-translate this run (None = all).
     # Every function in `fns` still gets an .inc + forward-declaration so that
     # cross-routine calls resolve; non-batch functions get a skeleton body.
-    # `fn` (single-fn mode) restricts the LLM batch only — the other routines
-    # must still exist as .inc or their forward declarations never solve and
-    # the whole module fails to build.
+    # Legacy `--fn` mode still refreshes the full target. Function-only mode
+    # writes just the selected include for isolated candidate evaluation.
     batch: set[str] | None = {fn} if fn else None
     if limit and not fn:
         # validate on the smallest REAL functions first (skip degenerate
@@ -679,24 +1131,42 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
             c = root / "decomp" / f"{s}.c"
             if not c.exists():
                 return True
-            t = c.read_text(errors="replace")
-            return not re.search(r"halt_baddata|Bad instruction|Truncating control flow", t)
+            return read_decomp_seed(root, s) is not None
         real = [s for s in fns if _real(s)]
         batch = set(sorted(real, key=lambda s: (asm / f"{s}.s").stat().st_size)[:limit])
-    fs_prefix = fewshot_context(target, compiler, platform)
+    fs_prefix = (
+        fewshot_context(
+            target,
+            compiler,
+            platform,
+            include_learned_context=prompt_profile == "learned-context",
+        )
+        if language == "c"
+        else ""
+    )
 
     # prune stale drafts (idempotent re-ingest / language switch)
     src_dir = root / "src"
     want = set(fns)
-    for old in list(src_dir.glob("*.c")) + list(src_dir.glob("*.inc")):
-        if old.stem not in want:
-            old.unlink()
+    if not diagnostic_only and not function_only:
+        for old in list(src_dir.glob("*.c")) + list(src_dir.glob("*.inc")):
+            if old.stem not in want:
+                old.unlink()
 
     n_seeded = 0
-    for f in fns:
-        out = src_dir / f"{f}{ext}"
-        if out.exists():
+    n_fewshot = 0
+    output_fns = [fn] if function_only and fn else fns
+    for f in output_fns:
+        if diagnostic_only and f != fn:
             continue
+        out = src_dir / f"{f}{ext}"
+        if out.exists() and not (retry_existing and f == fn) and not diagnostic_only:
+            continue
+        previous_attempt = (
+            out.read_text(errors="replace")
+            if retry_existing and f == fn and out.exists()
+            else ""
+        )
         seed_c = read_decomp_seed(root, f)
         backend = "skeleton"
         if language == "c":
@@ -708,8 +1178,13 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
                 if m2c_out:
                     body, backend = m2c_out, "m2c"
             if use_llm:
-                llm_out = run_llm(fs_prefix + f"Rewrite to match original {kind} {f}:\n{body}",
-                                  model, endpoint)
+                llm_out = run_llm(
+                    fs_prefix + f"Rewrite to match original {kind} {f}:\n{body}",
+                    model,
+                    endpoint,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
                 if llm_out:
                     body, backend = llm_out, f"ghidra-decomp+llm({model or endpoint})"
             out.write_text(C_TEMPLATE.format(slug=target, fn=f, kind=kind,
@@ -726,29 +1201,143 @@ def draft(target: str, fn: str | None = None, oracle: str = "none",
             decl = _decl_for(root, f, recon, allowed)
             sig = _pascal_fn_skeleton(f, decl)
             backend = "skeleton"
+            localized_region = None
+            localized_region_spec = None
+            localized_prefix = None
+            localized_suffix = None
             if seed_c:
                 n_seeded += 1
-                if use_llm and (batch is None or f in batch):
-                    asm_text = (asm / f"{f}.s").read_text(errors="replace")[:3000]
-                    prompt = _build_pascal_prompt(root, target, f, asm_text, seed_c,
-                                                  ref_source, decl, allowed, recon)
-                    llm_out = run_llm(prompt, model, endpoint)
-                    clean = _sanitize_pascal(llm_out) if llm_out else ""
-                    if clean:
+            if use_llm and (batch is None or f in batch):
+                asm_text = (asm / f"{f}.s").read_text(errors="replace")[:3000]
+                prior_context = fewshot_context(
+                    target, compiler, platform, query_asm=asm_text,
+                    calling_convention=_function_calling_convention(root, f),
+                    verified_pascal=True,
+                    include_learned_context=(
+                        prompt_profile == "learned-context"
+                    ),
+                )
+                n_fewshot += bool(prior_context)
+                if localized_repair:
+                    contract = routine_contract.load_contract(root, f)
+                    localized_region_spec = (
+                        contract.get("localized_repair_region")
+                        if contract is not None
+                        else None
+                    )
+                    if localized_region_spec is None:
+                        raise ValueError(
+                            f"{f}: checked localized repair region is unavailable"
+                        )
+                    (
+                        localized_prefix,
+                        localized_region,
+                        localized_suffix,
+                    ) = _split_localized_region(
+                        previous_attempt, localized_region_spec
+                    )
+                prompt = prior_context + _build_pascal_prompt(
+                    root, target, f, asm_text, seed_c or "", ref_source, decl,
+                    allowed, recon, repair_note=repair_note,
+                    previous_attempt=previous_attempt,
+                    localized_repair_region=localized_region,
+                )
+                llm_out = run_llm(
+                    prompt,
+                    model,
+                    endpoint,
+                    active_adapter,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
+                if localized_repair:
+                    replacement, rejection_reason = (
+                        _sanitize_pascal_region_with_reason(llm_out or "")
+                    )
+                    clean = ""
+                    if replacement and localized_region_spec is not None:
+                        clean = _replace_localized_region(
+                            previous_attempt,
+                            localized_region_spec,
+                            replacement,
+                        )
+                        if (
+                            localized_prefix is None
+                            or localized_suffix is None
+                            or not clean.startswith(localized_prefix)
+                            or not clean.endswith(localized_suffix)
+                        ):
+                            clean = ""
+                            rejection_reason = (
+                                "localized-repair-changed-code-outside-region"
+                            )
+                else:
+                    clean, rejection_reason = _sanitize_pascal_with_reason(
+                        llm_out or ""
+                    )
+                if not llm_out:
+                    print(f"[draft:{target}] LLM returned no completion for {f}")
+                elif rejection_reason:
+                    print(
+                        f"[draft:{target}] LLM output rejected for {f}: "
+                        f"{rejection_reason}"
+                    )
+                if clean:
+                    if not localized_repair:
                         clean = _force_decl(clean, decl)
-                        sig, backend = clean, f"c->pascal+llm({model or endpoint},{ref_source})"
-            out.write_text(PAS_TEMPLATE.format(slug=target, fn=f, kind=kind,
-                                               oracle=oracle, backend=backend,
-                                               ref=ref, sig=sig))
-    if language == "pascal":
+                    sig, backend = clean, f"asm->pascal+llm({model or endpoint},{ref_source})"
+                if capture_dir is not None:
+                    _write_generation_capture(
+                        capture_dir / f,
+                        f,
+                        prompt,
+                        llm_out or "",
+                        clean,
+                        rejection_reason,
+                        repair_mode=(
+                            "localized-region"
+                            if localized_repair
+                            else "full-routine"
+                        ),
+                    )
+                if diagnostic_only:
+                    disposition = (
+                        f"rejected: {rejection_reason}"
+                        if rejection_reason
+                        else "accepted by sanitizer"
+                    )
+                    print(
+                        f"[draft:{target}] diagnostic capture for {f}: "
+                        f"{disposition}"
+                    )
+                    return 0
+                if localized_repair and rejection_reason:
+                    return 2
+            if localized_repair:
+                out.write_text(sig)
+            else:
+                out.write_text(PAS_TEMPLATE.format(
+                    slug=target,
+                    fn=f,
+                    kind=kind,
+                    oracle=oracle,
+                    backend=backend,
+                    ref=ref,
+                    sig=sig,
+                ))
+    if language == "pascal" and not function_only:
         _write_program(root, target, fns, recon, allowed)
-        if use_llm:
+        if use_llm and run_compile_gate:
             _compile_gate(root, target, recon, allowed,
                           model=model, endpoint=endpoint,
-                          fs_prefix=fs_prefix, use_llm=True)
-    if fs_prefix:
-        print(f"[draft:{target}] few-shot {compiler}/{platform} context applied "
-              f"(learned from prior targets)")
+                          fs_prefix=fs_prefix, use_llm=True,
+                          adapter=active_adapter,
+                          temperature=temperature,
+                          max_tokens=max_tokens,
+                          prompt_profile=prompt_profile)
+    if fs_prefix or n_fewshot:
+        print(f"[draft:{target}] examples applied={n_fewshot} "
+              f"toolchain={compiler}/{platform}")
     print(f"[draft:{target}] {len(fns)} fns -> src/*{ext} "
           f"({n_seeded} decompiler-seeded, {n_recon} recon-seeded) "
           f"language={language} conf={conf}")
@@ -769,6 +1358,62 @@ if __name__ == "__main__":
                     help="judge-verified recon C corpus dir (seed instead of Ghidra decomp)")
     ap.add_argument("--recon-verdicts", default="real",
                     help="comma-separated verdicts to accept (default: real)")
+    ap.add_argument("--retry-existing", action="store_true",
+                    help="replace the existing Pascal draft for --fn")
+    ap.add_argument("--repair-note", default="",
+                    help="compiler diagnostics to use when retrying --fn")
+    ap.add_argument("--temperature", type=float, default=0.0)
+    ap.add_argument("--max-tokens", type=int, default=768)
+    ap.add_argument(
+        "--prompt-profile",
+        choices=("learned-context", "base-prompt"),
+        default="learned-context",
+    )
+    ap.add_argument("--capture-dir", type=pathlib.Path, default=None)
+    ap.add_argument(
+        "--diagnostic-only",
+        action="store_true",
+        help="capture one LLM completion and sanitizer result without changing target sources",
+    )
+    ap.add_argument(
+        "--function-only",
+        action="store_true",
+        help="write only the selected routine include; leave shared declarations and program unchanged",
+    )
+    ap.add_argument(
+        "--localized-repair",
+        action="store_true",
+        help="ask for and apply only the checked routine-contract repair region",
+    )
+    ap.add_argument(
+        "--disable-adapter",
+        action="store_true",
+        help="use the configured inference endpoint without a trained adapter",
+    )
+    ap.add_argument("--skip-compile-gate", action="store_true",
+                    help="leave whole-target compilation to the caller")
     a = ap.parse_args()
-    sys.exit(draft(a.target, a.fn, a.oracle, a.llm, a.model, a.endpoint, a.limit,
-                   a.recon_dir, a.recon_verdicts))
+    if a.retry_existing and not a.fn:
+        ap.error("--retry-existing requires --fn")
+    sys.exit(draft(
+        a.target,
+        a.fn,
+        a.oracle,
+        a.llm,
+        a.model,
+        a.endpoint,
+        a.limit,
+        a.recon_dir,
+        a.recon_verdicts,
+        a.retry_existing,
+        a.repair_note,
+        not a.skip_compile_gate,
+        a.temperature,
+        a.max_tokens,
+        a.prompt_profile,
+        a.capture_dir,
+        a.disable_adapter,
+        a.diagnostic_only,
+        a.function_only,
+        a.localized_repair,
+    ))
