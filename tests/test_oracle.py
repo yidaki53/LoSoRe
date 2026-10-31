@@ -4,12 +4,17 @@ These pin that (a) the format oracle is a genuine regression guard (fixture with
 distinctive values catches offset drift) and (b) verify never claims PASS when
 nothing was checked.
 """
+import hashlib
 import importlib.util
+import json
 import pathlib
 import subprocess
 import sys
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "engine"))
+
+import verify
 
 
 def _load_dat():
@@ -22,7 +27,8 @@ def _load_dat():
 
 def _run(script, *args, cwd=None):
     return subprocess.run([sys.executable, str(REPO / script), *args],
-                          capture_output=True, text=True, cwd=str(cwd or REPO))
+                          check=False, capture_output=True, text=True,
+                          cwd=str(cwd or REPO))
 
 
 def test_dat_selftest_passes():
@@ -55,6 +61,22 @@ def test_dat_round_trip_is_real_guard():
     assert rt_ok and cov > 0
 
 
+def test_dat_round_trip_preserves_opaque_bytes_when_editing_known_fields():
+    mod = _load_dat()
+    original = bytes((index * 37 + 11) % 256 for index in range(mod.DAT_LEN))
+
+    model = mod.parse_dat(original)
+    model["lives"] += 1
+    rebuilt = mod.serialize_dat(model)
+
+    assert rebuilt[0x03:0x05] != original[0x03:0x05]
+    assert all(
+        rebuilt[offset] == original[offset]
+        for offset in range(mod.DAT_LEN)
+        if offset not in mod._modeled_bytes()
+    )
+
+
 def test_dat_oracle_via_verify(tmp_path):
     # dat-parity runs the selftest even with no BYOD (real check, disc-gated otherwise)
     r = _run("engine/verify.py", "--target", "liero", "--oracle", "dat-parity",
@@ -74,3 +96,45 @@ def test_verify_no_vacuous_pass_on_empty_config(tmp_path):
              "--build", str(build), "--oracle", "byte-exact", cwd=work)
     assert r.returncode == 0
     assert "NOT verified" in r.stdout and "PASS" not in r.stdout
+
+
+def test_verify_promotes_only_matching_pascal_function(tmp_path, monkeypatch):
+    repo = tmp_path / "repo"
+    target = repo / "targets" / "sample"
+    config = target / "config"
+    src = target / "src"
+    asm = target / "asm"
+    for path in (config, src, asm):
+        path.mkdir(parents=True)
+    (config / "toolchain.yaml").write_text(
+        "compiler: turbo-pascal-7\nplatform: dos\nlanguage: pascal\n"
+        "compiler_confidence: high\n"
+    )
+    (asm / "FUN_1.s").write_text(
+        "0000:0000  PUSH BP\n0000:0001  MOV BP,SP\n0000:0002  RET\n"
+    )
+    (src / "FUN_1.inc").write_text(
+        "{ generated header }\nprocedure FUN_1;\nbegin\n  Inc(A);\nend;\n"
+    )
+    (target / "functions.json").write_text(json.dumps({
+        "functions": [{"name": "FUN_1", "calling_convention": "__cdecl16near"}]
+    }))
+    expected_file = tmp_path / "byod" / "build" / "FUN_1.bin"
+    actual_file = tmp_path / "build" / "build" / "FUN_1.bin"
+    expected_file.parent.mkdir(parents=True)
+    actual_file.parent.mkdir(parents=True)
+    expected_file.write_bytes(b"same")
+    actual_file.write_bytes(b"same")
+    digest = hashlib.sha1(expected_file.read_bytes()).hexdigest()
+    (config / "build.sha1").write_text(f"{digest} build/FUN_1.bin\n")
+
+    monkeypatch.chdir(repo)
+    result = verify.verify(
+        "sample", tmp_path / "byod", tmp_path / "build", "byte-exact"
+    )
+    assert result == 0
+    saved = json.loads(pathlib.Path("knowledge/knowledge.json").read_text())
+    examples = saved["verified_pascal_examples"]["turbo-pascal-7"]
+    assert len(examples) == 1
+    assert examples[0]["fn"] == "FUN_1"
+    assert examples[0]["pascal"] == "procedure FUN_1;\nbegin\n  Inc(A);\nend;"
