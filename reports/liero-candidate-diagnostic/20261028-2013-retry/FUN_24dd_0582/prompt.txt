@@ -1,0 +1,52 @@
+You are reconstructing the ORIGINAL Turbo Pascal 7 (16-bit real-mode DOS) source of a function. Given the disassembly and a C reference, output a behaviorally faithful Pascal reconstruction. Use both raw assembly and decompiler pseudocode, but treat the pseudocode as a lossy hypothesis rather than ground truth.
+RULES:
+- Output ONLY Turbo Pascal 7 source: a single `procedure Name;` (or a `function`) with a `begin ... end;` body. No markdown, no prose, no comments except brief ones.
+- It must compile standalone under {$MODE TP} with no undeclared identifiers. Use only standard TP7 types (Byte, Word, Integer, Boolean, Char, Pointer, String). For pointers use local declarations (`p: ^Word;`) or the TP7 predefined PChar; WordPtr/CharPtr/BytePtr/PByte/PWord do NOT exist and will not compile.
+- The C uses fake identifiers (FUN_xxxx, DAT_xxxx, uVarN) - replace them with plain Pascal locals/params; do not invent globals.
+- Preserve control flow and arithmetic exactly. If a construct has no clean Pascal form (e.g. a far call to another routine), call that routine by name; every sibling routine is ALREADY forward-declared, so DO NOT declare or define any other procedure/function.
+- Recover callees before callers when possible. Use only reviewed, resolved callee behavior as semantic evidence; do not infer missing callee behavior from its name or decompiler text. Preserve unresolved calls and do not claim the caller is recovered until its dependencies are resolved.
+- Raw/absolute memory: declare typed pointer variables (`p: ^Byte;`) and use `p^`, Inc(p, n); do not use Seg()/Ofs() and do not cast comparisons (Byte(x = 0) is invalid Pascal - write an `if`).
+- You may NOT dereference an expression: (p + n)^ and p^[i] on a non-array are ILLEGAL. Do q := p; Inc(q, n); first, then q^.
+- Keep value types exact: never assign Word/Integer to Char or vice versa - convert with Chr(n)/Ord(c)/Byte(x)/Word(x). The sibling signature table is authoritative for return types.
+- The routine is named `FUN_24dd_0582`. Its first line MUST be exactly:
+    procedure FUN_24dd_0582;
+  Do not add, drop or rename parameters; read argument values only through these parameter names.
+ASSEMBLY EVIDENCE (raw instructions remain authoritative):
+- instruction count: 2
+- control-flow skeleton: 0 conditional, 1 unconditional branches, 0 calls
+- direct branch targets: 0x2000:53bb
+- call operands: none
+- constants/addresses: 0x2000, 0x576, 24dd:0582, 24dd:0585
+- Reconstruct basic blocks, branch edges, loop bounds, and joins before translating the behavior into Pascal.
+- Treat decompiler pseudocode as a hypothesis; resolve conflicts against assembly and these anchors.
+
+ASSEMBLY:
+; FUN_24dd_0582  entry=24dd:0582 size=5
+24dd:0582  MOV AX,0x576
+24dd:0585  JMP 0x2000:53bb
+
+
+REFERENCE C (Ghidra, for meaning only):
+
+undefined2 * __cdecl16near FUN_24dd_0582(void)
+
+{
+  undefined2 *puVar1;
+  undefined2 *puVar2;
+  int iVar3;
+  undefined2 *puVar4;
+  undefined2 *unaff_DI;
+  undefined2 unaff_ES;
+  
+  puVar4 = (undefined2 *)0x576;
+  for (iVar3 = 6; iVar3 != 0; iVar3 = iVar3 + -1) {
+    puVar2 = unaff_DI;
+    unaff_DI = unaff_DI + 1;
+    puVar1 = puVar4;
+    puVar4 = puVar4 + 1;
+    *puVar2 = *puVar1;
+  }
+  return puVar4;
+}
+
+

@@ -1,0 +1,65 @@
+{
+  "baseline_build_output": "docker build -f ../../compilers/Dockerfile.dos-tp7 -t rev:dos-tp7 ../../compilers/\nmkdir -p build\ndocker run --rm -v \"/home/robin/.cache/losore/experiments/liero-candidate-sweep-y0byywh9/workspace/targets/liero:/src\" -w /src rev:dos-tp7 fpc -Mtp -Fi/src/src -FE/src/build -FU/src/build /src/src/liero.pas\nFree Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for x86_64\nCopyright (c) 1993-2021 by Florian Klaempfl and others\nTarget OS: Linux for x86-64\nCompiling /src/src/liero.pas\nCompiling /src/src/LieroDat.pas\nCompiling /src/src/LieroRuntime.pas\nFUN_1000_0961.inc(62,10) Warning: Function result does not seem to be set\nFUN_1000_0c7f.inc(53,10) Warning: Function result does not seem to be set\nFUN_1000_0d70.inc(54,10) Warning: Function result does not seem to be set\nFUN_1000_9e7a.inc(89,10) Warning: Function result does not seem to be set\nFUN_1000_ad8b.inc(121,10) Warning: Function result does not seem to be set\nFUN_1000_b3fe.inc(41,10) Warning: Function result does not seem to be set\nFUN_1000_cfb7.inc(288,10) Warning: Function result does not seem to be set\nFUN_1e7d_0082.inc(79,10) Warning: Function result does not seem to be set\nFUN_1e7d_018a.inc(54,10) Warning: Function result does not seem to be set\nFUN_1ea2_0000.inc(61,10) Warning: Function result does not seem to be set\nFUN_1ea2_0104.inc(48,10) Warning: Function result does not seem to be set\nFUN_1ec2_10cf.inc(20,10) Warning: Function result does not seem to be set\nFUN_2000_7c64.inc(41,10) Warning: Function result does not seem to be set\nFUN_2000_87bf.inc(20,10) Warning: Function result does not seem to be set\nFUN_2000_884f.inc(35,10) Warning: Function result does not seem to be set\nFUN_202c_0000.inc(35,10) Warning: Function result does not seem to be set\nFUN_202c_0673.inc(43,10) Warning: Function result does not seem to be set\nFUN_202c_0706.inc(39,10) Warning: Function result does not seem to be set\nFUN_202c_079e.inc(49,10) Warning: Function result does not seem to be set\nFUN_202c_0843.inc(46,10) Warning: Function result does not seem to be set\nFUN_202c_0a74.inc(41,10) Warning: Function result does not seem to be set\nFUN_202c_0b0e.inc(60,10) Warning: Function result does not seem to be set\nFUN_235c_0000.inc(22,10) Warning: Function result does not seem to be set\nFUN_235c_001a.inc(23,10) Warning: Function result does not seem to be set\nFUN_235c_0036.inc(25,10) Warning: Function result does not seem to be set\nFUN_235c_0340.inc(21,10) Warning: Function result does not seem to be set\nFUN_235c_0361.inc(18,10) Warning: Function result does not seem to be set\nFUN_235c_0372.inc(20,10) Warning: Function result does not seem to be set\nFUN_235c_045d.inc(25,10) Warning: Function result does not seem to be set\nFUN_235c_0502.inc(66,10) Warning: Function result does not seem to be set\nFUN_235c_06d7.inc(26,10) Warning: Function result does not seem to be set\nFUN_235c_0a1e.inc(28,10) Warning: Function result does not seem to be set\nFUN_235c_0aff.inc(20,10) Warning: Function result does not seem to be set\nFUN_235c_0b33.inc(23,10) Warning: Function result does not seem to be set\nFUN_235c_1380.inc(20,10) Warning: Function result does not seem to be set\nFUN_2494_001e.inc(19,10) Warning: Function result does not seem to be set\nFUN_249c_0180.inc(25,10) Warning: Function result does not seem to be set\nFUN_249c_019d.inc(25,10) Warning: Function result does not seem to be set\nFUN_24ba_00d8.inc(26,10) Warning: Function result does not seem to be set\nFUN_24dd_01fe.inc(23,10) Warning: Function result does not seem to be set\nFUN_24dd_020a.inc(23,10) Warning: Function result does not seem to be set\nFUN_24dd_0303.inc(18,10) Warning: Function result does not seem to be set\nFUN_24dd_1190.inc(140,10) Warning: Function result does not seem to be set\nFUN_24dd_2361.inc(49,10) Warning: Function result does not seem to be set\nFUN_24dd_23c0.inc(24,10) Warning: Function result does not seem to be set\nFUN_24dd_24ba.inc(28,10) Warning: Function result does not seem to be set\nFUN_24dd_350e.inc(24,10) Warning: Function result does not seem to be set\nFUN_24dd_3ce0.inc(66,10) Warning: Function result does not seem to be set\nFUN_24dd_3d2f.inc(18,10) Warning: Function result does not seem to be set\nFUN_24dd_3d80.inc(22,10) Warning: Function result does not seem to be set\nFUN_24dd_3dbd.inc(90,10) Warning: Function result does not seem to be set\nFUN_24dd_3e63.inc(32,10) Warning: Function result does not seem to be set\nFUN_24dd_3e7c.inc(26,10) Warning: Function result does not seem to be set\nFUN_24dd_4161.inc(28,10) Warning: Function result does not seem to be set\nFUN_24dd_4654.inc(21,10) Warning: Function result does not seem to be set\nFUN_24dd_4732.inc(108,10) Warning: Function result does not seem to be set\nFUN_24dd_4824.inc(33,10) Warning: Function result does not seem to be set\nFUN_24dd_486c.inc(25,10) Warning: Function result does not seem to be set\nFUN_24dd_489c.inc(29,10) Warning: Function result does not seem to be set\nFUN_24dd_4919.inc(18,10) Warning: Function result does not seem to be set\nentry.inc(408,10) Warning: Function result does not seem to be set\nLinking /src/build/liero\n23059 lines compiled, 0.1 sec\n61 warning(s) issued\n#0 building with \"default\" instance using docker driver\n\n#1 [internal] load build definition from Dockerfile.dos-tp7\n#1 transferring dockerfile: 715B done\n#1 DONE 0.0s\n\n#2 [internal] load metadata for docker.io/library/ubuntu:22.04\n#2 DONE 0.4s\n\n#3 [internal] load .dockerignore\n#3 transferring context: 2B done\n#3 DONE 0.0s\n\n#4 [1/4] FROM docker.io/library/ubuntu:22.04@sha256:e0f80c829509ef4df9e76bd8944eb7b8ec25cbb379b112a7f9448b2c77a77c9b\n#4 resolve docker.io/library/ubuntu:22.04@sha256:e0f80c829509ef4df9e76bd8944eb7b8ec25cbb379b112a7f9448b2c77a77c9b 0.0s done\n#4 DONE 0.0s\n\n#5 [2/4] RUN apt-get update && apt-get install -y --no-install-recommends         make dosbox python3 fp-compiler     && rm -rf /var/lib/apt/lists/*\n#5 CACHED\n\n#6 [3/4] RUN fpc -iV || (echo \"FATAL: fp-compiler did not install\" && exit 1)\n#6 CACHED\n\n#7 [4/4] WORKDIR /src\n#7 CACHED\n\n#8 exporting to image\n#8 exporting layers done\n#8 exporting manifest sha256:f109fd0f57fd559a405bb3b02c4d736c20e13d9deff101507352e7540fddb96b done\n#8 exporting config sha256:3717fb84514ada0d47ab1624daef71575d708594a7397336da0c35ba2b22c615 done\n#8 exporting attestation manifest sha256:9fd81f9968a853a9650734f55c08e19bad828b83857fb3199b83e763708df3cf 0.0s done\n#8 exporting manifest list sha256:e15e12909fc6a788dfb93b88af02f0086912864ee1391677da8cf5bd2465174e\n#8 exporting manifest list sha256:e15e12909fc6a788dfb93b88af02f0086912864ee1391677da8cf5bd2465174e 0.0s done\n#8 naming to docker.io/library/rev:dos-tp7 done\n#8 unpacking to docker.io/library/rev:dos-tp7 done\n#8 DONE 0.1s\n",
+  "baseline_build_passed": true,
+  "baseline_build_return_code": 0,
+  "experiment_id": "1",
+  "functions": [
+    "FUN_1000_05a4"
+  ],
+  "output_dir": "/home/robin/OneDrive/University and such/LoSoRe/reports/liero-candidate-experiment/20261027-212145-131854571",
+  "settings_summary": [
+    {
+      "accepted": 1,
+      "accepted_and_build_passed": 0,
+      "candidate_build_attempted": 1,
+      "candidate_build_pass_rate": 0.0,
+      "candidate_build_passed": 0,
+      "candidate_changed": 1,
+      "model": "qwen2.5-coder:14b-instruct-q4_K_M",
+      "prompt_profile": "base-prompt",
+      "temperature": 0.3,
+      "total": 1
+    }
+  ],
+  "target": "liero",
+  "tracking_uri": "sqlite:////home/robin/OneDrive/University and such/LoSoRe/mlruns/mlflow.db",
+  "trials": [
+    {
+      "accepted": true,
+      "assembly_sha256": "0d792b6094227240a9f4949331d5f62a629020e539b71d958f3e011623ac9b3e",
+      "baseline_source_sha256": "25f916563f58542213dff0865ee21223cb319f21bae9359c005c4bb0548347eb",
+      "build_return_code": 2,
+      "build_seconds": 3.5322520860354416,
+      "candidate_build_attempted": true,
+      "candidate_build_attempts": 3,
+      "candidate_build_passed": false,
+      "candidate_build_status": "failed",
+      "candidate_changed": true,
+      "candidate_sha256": "820163acb56b8fd9f2d4d948e08d1eb9c08c626522064e570301238c93884c0d",
+      "compile_repair_attempts": 2,
+      "completion_sha256": "4b890edf2b19d3478d63a68abec876a41a079af067678709ba502238d98c1d6b",
+      "decomp_sha256": "9c8e899decabdbe5b0f7c43009556837203b7f1add2986c2592e10c4fdb9174d",
+      "duration_seconds": 62.16491903801216,
+      "function": "FUN_1000_05a4",
+      "generation_attempts": 3,
+      "generation_seconds": 58.63266695197672,
+      "generation_succeeded": true,
+      "initial_candidate_build_passed": false,
+      "llm_candidate_sha256": "f7c4776cc2130fd98853e6c52f4c8eefed364f95ac7bfc5cffb7594cecd4b842",
+      "mlflow_run_id": "c3ed44199b3d47cb8b113353ea781a02",
+      "model_digest": "9ec8897f747e246e970bc5cfdda85d22f1123dc2e3d34978a010a75968716849",
+      "oracle_type": "none",
+      "prompt_sha256": "2dbd15579030f2385c09365619c70146c21fb25da298d88e71ffbeb5f5be758b",
+      "rejection_reason": null,
+      "run_name": "FUN_1000_05a4-qwen2.5-coder-14b-instruct-q4_K_M-base-prompt-t0.3",
+      "settings": {
+        "max_tokens": 768,
+        "model": "qwen2.5-coder:14b-instruct-q4_K_M",
+        "prompt_profile": "base-prompt",
+        "temperature": 0.3
+      },
+      "target": "liero",
+      "target_input_sha256": "1b2d5081286284a32acae424ba549f1617ecaa266ffcd7f6fc31bd4746bf6571"
+    }
+  ]
+}

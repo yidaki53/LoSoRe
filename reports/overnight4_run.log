@@ -1,0 +1,19 @@
+nohup: ignoring input
+[n4 14:28:26] night-4 start: deadline=7h45m tough_n=40
+[n4 14:28:26] === p0 ===
+[n4 14:28:26] P0: baseline full recompile (Docker FPC -Mtp)
+[n4 14:28:28] P0: rc=0 green=True (2s)
+[n4 14:28:28] === p1 ===
+[n4 14:28:28] P1: 40 tough fns (<= 2200 decomp lines), 0 megafns deferred; top-5: FUN_1000_5e66, FUN_1000_10ec, FUN_202c_1b84, FUN_1000_4964, FUN_1000_bfd7
+[n4 16:53:27] P1 gen done: 80 candidates, 32 compile
+[n4 17:06:18] P1 judge done: {'real': 5, 'contested': 13, 'junk': 10, 'judge-error': 4}
+[n4 17:06:18] P1: wrote 25 recon; 4 real
+[n4 17:06:18] === p2 ===
+[n4 17:06:18] P2: promoting 4 real fns to Pascal (draft.py --llm qwen2.5-coder:14b)
+[n4 17:06:26] P2: BUILD GREEN — 0 promoted+proven
+[n4 17:06:26] === p3 ===
+[n4 17:06:26] P3: launching e4_finetune.py --budget-s 5400
+[n4 17:22:18] P3: exit=0 (952s)
+[n4 17:22:18] === p4 ===
+[n4 17:22:18] P4 -> reports/overnight4/REPORT4.md
+[n4 17:22:18] night-4 finished

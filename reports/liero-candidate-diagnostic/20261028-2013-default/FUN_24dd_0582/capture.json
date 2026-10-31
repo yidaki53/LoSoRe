@@ -1,0 +1,8 @@
+{
+  "candidate_sha256": null,
+  "completion_sha256": "5ded46f4c0408ab0b1afe0d02fab35cd8050877e89158ff81737329b1d0a8f0a",
+  "function": "FUN_24dd_0582",
+  "prompt_sha256": "a3fb5d711b5e8c81f21fc7d15193ae26fcbec6d73d55505ab95be5dec7d87bfe",
+  "rejection_reason": "unsupported-assembly-artifact",
+  "sanitizer_accepted": false
+}
