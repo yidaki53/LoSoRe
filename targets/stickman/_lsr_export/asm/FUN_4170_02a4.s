@@ -1,0 +1,34 @@
+; FUN_4170_02a4  entry=4170:02a4 size=88
+4170:02a4  PUSH BP
+4170:02a5  MOV BP,SP
+4170:02a7  MOV AX,0x16
+4170:02aa  CALLF 0x4000:302f
+4170:02af  SUB SP,0x16
+4170:02b2  MOV byte ptr [BP + -0x15],0x40
+4170:02b6  MOV AX,word ptr [BP + 0xc]
+4170:02b9  MOV word ptr [BP + -0x14],AX
+4170:02bc  MOV AX,word ptr [BP + 0x6]
+4170:02bf  MOV word ptr [BP + -0x12],AX
+4170:02c2  LES DI,[BP + 0x8]
+4170:02c5  MOV AX,DI
+4170:02c7  MOV word ptr [BP + -0x10],AX
+4170:02ca  LES DI,[BP + 0x8]
+4170:02cd  MOV AX,ES
+4170:02cf  MOV word ptr [BP + -0x8],AX
+4170:02d2  LEA DI,[BP + -0x16]
+4170:02d5  PUSH SS
+4170:02d6  PUSH DI
+4170:02d7  CALLF 0x4000:28f0
+4170:02dc  MOV AX,word ptr [BP + -0x4]
+4170:02df  AND AX,0x1
+4170:02e2  OR AX,AX
+4170:02e4  JNZ 0x4000:19ee
+4170:02e6  MOV AX,word ptr [BP + -0x16]
+4170:02e9  MOV word ptr [BP + -0x2],AX
+4170:02ec  JMP 0x4000:19f3
+4170:02ee  XOR AX,AX
+4170:02f0  MOV word ptr [BP + -0x2],AX
+4170:02f3  MOV AX,word ptr [BP + -0x2]
+4170:02f6  MOV SP,BP
+4170:02f8  POP BP
+4170:02f9  RETF 0x8

@@ -1,0 +1,21 @@
+; FUN_42b5_02b8  entry=42b5:02b8 size=53
+42b5:02b8  MOV BX,0x2d1
+42b5:02bb  JMP 0x4000:2e28
+42b5:02d8  MOV AX,[0x37e]
+42b5:02db  MOV DX,word ptr [0x380]
+42b5:02df  SUB AX,word ptr [0x37a]
+42b5:02e3  SBB DX,word ptr [0x37c]
+42b5:02e7  AND AX,0xf
+42b5:02ea  PUSH DS
+42b5:02eb  MOV DI,word ptr [0x37c]
+42b5:02ef  LDS SI,[0x382]
+42b5:02f3  CALL BX
+42b5:02f5  POP DS
+42b5:02f6  MOV CL,0x4
+42b5:02f8  ROL DX,CL
+42b5:02fa  MOV CX,DX
+42b5:02fc  AND CL,0xf0
+42b5:02ff  AND DX,0xf
+42b5:0302  ADD AX,CX
+42b5:0304  ADC DX,0x0
+42b5:0307  RETF

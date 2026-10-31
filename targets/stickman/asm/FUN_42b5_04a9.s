@@ -1,0 +1,6 @@
+; FUN_42b5_04a9  entry=42b5:04a9 size=14
+42b5:04a9  CMP word ptr [0x39c],0x0
+42b5:04ae  JNZ 0x4000:3001
+42b5:04b0  RETF
+42b5:04b1  MOV AX,[0x39c]
+42b5:04b4  JMP 0x4000:2c32

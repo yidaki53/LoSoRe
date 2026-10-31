@@ -1,0 +1,47 @@
+; FUN_4170_0e7d  entry=4170:0e7d size=129
+4170:0e7d  PUSH BP
+4170:0e7e  MOV BP,SP
+4170:0e80  MOV AX,0x104
+4170:0e83  CALLF 0x4000:302f
+4170:0e88  SUB SP,0x104
+4170:0e8c  LES DI,[BP + 0x6]
+4170:0e8f  PUSH ES
+4170:0e90  PUSH DI
+4170:0e91  LEA DI,[BP + 0xff00]
+4170:0e95  PUSH SS
+4170:0e96  PUSH DI
+4170:0e97  MOV AX,0xff
+4170:0e9a  PUSH AX
+4170:0e9b  CALLF 0x4000:372e
+4170:0ea0  CMP byte ptr [BP + 0xff00],0x0
+4170:0ea5  JZ 0x4000:25e4
+4170:0ea7  MOV AL,byte ptr [BP + 0xff00]
+4170:0eab  XOR AH,AH
+4170:0ead  MOV word ptr [BP + 0xfefc],AX
+4170:0eb1  MOV AX,0x1
+4170:0eb4  CMP AX,word ptr [BP + 0xfefc]
+4170:0eb8  JG 0x4000:25e4
+4170:0eba  MOV word ptr [BP + 0xfefe],AX
+4170:0ebe  JMP 0x4000:25c4
+4170:0ec0  INC word ptr [BP + 0xfefe]
+4170:0ec4  MOV DI,word ptr [BP + 0xfefe]
+4170:0ec8  MOV AL,byte ptr [BP + DI + 0xff00]
+4170:0ecc  PUSH AX
+4170:0ecd  CALLF 0x4000:4714
+4170:0ed2  MOV DI,word ptr [BP + 0xfefe]
+4170:0ed6  MOV byte ptr [BP + DI + 0xff00],AL
+4170:0eda  MOV AX,word ptr [BP + 0xfefe]
+4170:0ede  CMP AX,word ptr [BP + 0xfefc]
+4170:0ee2  JNZ 0x4000:25c0
+4170:0ee4  LEA DI,[BP + 0xff00]
+4170:0ee8  PUSH SS
+4170:0ee9  PUSH DI
+4170:0eea  LES DI,[BP + 0xa]
+4170:0eed  PUSH ES
+4170:0eee  PUSH DI
+4170:0eef  MOV AX,0xff
+4170:0ef2  PUSH AX
+4170:0ef3  CALLF 0x4000:372e
+4170:0ef8  MOV SP,BP
+4170:0efa  POP BP
+4170:0efb  RETF 0x4

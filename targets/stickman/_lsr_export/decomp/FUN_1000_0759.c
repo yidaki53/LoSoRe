@@ -1,0 +1,28 @@
+
+void __cdecl16near FUN_1000_0759(void)
+
+{
+  undefined2 unaff_SS;
+  undefined2 unaff_DS;
+  undefined1 *puVar1;
+  undefined2 uVar2;
+  undefined1 local_202 [256];
+  undefined1 local_102 [252];
+  undefined2 uStack_6;
+  undefined2 uStack_4;
+  
+  uStack_4 = 0x1000;
+  uStack_6 = 0x764;
+  FUN_42b5_04df();
+  FUN_3de3_0b67(0x16,0x20);
+  FUN_42b5_1766(0xff,local_102,unaff_SS,0,*(int *)0x3b2,*(int *)0x3b2 >> 0xf);
+  puVar1 = local_202;
+  uVar2 = unaff_SS;
+  FUN_42b5_0bc4(0x73f,0x42b5);
+  FUN_42b5_0c51(local_102,unaff_SS);
+  FUN_42b5_0c51(0x74a,0x42b5);
+  FUN_3de3_002d(puVar1,uVar2);
+  FUN_3de3_002d(0x754,0x3de3);
+  return;
+}
+

@@ -1,0 +1,4 @@
+; FUN_42b5_00e2  entry=42b5:00e2 size=4
+42b5:00e2  POP CX
+42b5:00e3  POP BX
+42b5:00e4  JMP 0x4000:2c3d

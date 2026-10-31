@@ -1,0 +1,8 @@
+; FUN_42b5_01a5  entry=42b5:01a5 size=14
+42b5:01a5  MOV AL,byte ptr CS:[BX]
+42b5:01a8  OR AL,AL
+42b5:01aa  JZ 0x4000:2d02
+42b5:01ac  CALL 0x4000:2d37
+42b5:01af  INC BX
+42b5:01b0  JMP 0x4000:2cf5
+42b5:01b2  RET

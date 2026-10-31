@@ -1,0 +1,9 @@
+; FUN_410e_02fb  entry=410e:02fb size=18
+410e:02fb  CMP byte ptr [0xeb13],0x0
+410e:0300  JNZ 0x4000:13ea
+410e:0302  MOV AH,0x1
+410e:0304  INT 0x16
+410e:0306  MOV AL,0x0
+410e:0308  JZ 0x4000:13ec
+410e:030a  MOV AL,0x1
+410e:030c  RETF

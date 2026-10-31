@@ -1,0 +1,213 @@
+{ stickman::FUN_3faf_0651 — game Pascal draft (oracle: none).
+  Drafted from asm/FUN_3faf_0651.s via skeleton; UNMATCHED until verify passes.
+  Original assembly retained in asm/FUN_3faf_0651.s (INCLUDE_ASM residue).
+  Reference: Ghidra decompiler C for this function is embedded below as a comment.
+}
+// --- reference: Ghidra decompiler C (unmatched) ---
+// 
+// uint __stdcall16far FUN_3faf_0651(undefined4 param_1)
+// 
+// {
+//   char cVar1;
+//   undefined1 uVar2;
+//   undefined2 uVar3;
+//   int iVar4;
+//   undefined2 extraout_DX;
+//   undefined2 uVar5;
+//   undefined2 unaff_SS;
+//   undefined2 unaff_DS;
+//   bool bVar6;
+//   undefined1 *puVar7;
+//   undefined1 local_410 [256];
+//   undefined1 local_310 [256];
+//   undefined1 local_210 [256];
+//   undefined2 uStack_110;
+//   undefined2 uStack_10c;
+//   undefined4 uStack_10a;
+//   int iStack_106;
+//   byte local_104 [254];
+//   undefined2 uStack_6;
+//   uint uStack_4;
+//   
+//   uStack_4 = 0x3faf;
+//   uStack_6 = 0x14c;
+//   FUN_42b5_04df();
+//   FUN_42b5_0bde(0xff,local_104,unaff_SS,(int)param_1,(int)((ulong)param_1 >> 0x10));
+//   cVar1 = FUN_4170_0002(local_104,unaff_SS);
+//   if (cVar1 == '\0') {
+//     if (local_104[0] != 0) {
+//       bVar6 = true;
+//       FUN_42b5_0e79(0x625,0x4170,local_104[local_104[0]]);
+//       if (bVar6) {
+//         puVar7 = local_410;
+//         uVar5 = unaff_SS;
+//         FUN_42b5_0bc4(local_104,unaff_SS);
+//         FUN_42b5_0c51(0x645,0x42b5);
+//         FUN_42b5_0bde(0xff,local_104,unaff_SS,puVar7,uVar5);
+//       }
+//     }
+//     puVar7 = local_410;
+//     uVar5 = unaff_SS;
+//     FUN_42b5_0bc4(local_104,unaff_SS);
+//     FUN_42b5_0c51(0x647,0x42b5);
+//     FUN_42b5_0bde(0xff,local_104,unaff_SS,puVar7,uVar5);
+//   }
+//   uStack_4 = uStack_4 & 0xff;
+//   FUN_42b5_04f5(local_104,unaff_SS,local_310,unaff_SS);
+//   FUN_42b5_0565(0x42b5,local_310);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,0xa9e8,unaff_DS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = extraout_DX;
+//   uVar3 = unaff_SS;
+//   uStack_110 = FUN_42b5_09f6();
+//   uStack_10c = uVar5;
+//   FUN_42b5_081a(puVar7,uVar3);
+//   uStack_110 = FUN_42b5_1245();
+//   uVar5 = uStack_10c;
+//   uVar3 = FUN_42b5_125f();
+//   *(undefined2 *)0xaae8 = uVar3;
+//   *(undefined2 *)0xaaea = uVar5;
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   uStack_10a = FUN_42b5_17b1(&iStack_106,unaff_SS,local_210,unaff_SS);
+//   if (iStack_106 == 0) {
+//     *(undefined2 *)0xa8e3 = 0x4b00;
+//     *(undefined2 *)0xa8e5 = 0;
+//   }
+//   else {
+//     *(undefined2 *)0xa8e3 = (int)uStack_10a;
+//     *(undefined2 *)0xa8e5 = (int)((ulong)uStack_10a >> 0x10);
+//   }
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   uVar2 = FUN_42b5_0955(puVar7);
+//   *(undefined1 *)0xa8e2 = uVar2;
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,local_210,unaff_SS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   puVar7 = local_310;
+//   uVar5 = unaff_SS;
+//   FUN_42b5_08df(0xff,0xa8e8,unaff_DS);
+//   FUN_42b5_081a(puVar7,uVar5);
+//   FUN_42b5_05bf(local_310,unaff_SS);
+//   iVar4 = FUN_42b5_04a2();
+//   if (iVar4 == 0) {
+//     uStack_4 = 0x100;
+//   }
+//   *(undefined1 *)0xa8e7 = 0xff;
+//   return uStack_4 >> 8;
+// }
+// 
+// --- end reference ---
+function FUN_3faf_0651(param_1: Longint): Word;
+begin
+  { TODO: translate from asm/FUN_3faf_0651.s — UNMATCHED until an oracle passes }
+end;
+

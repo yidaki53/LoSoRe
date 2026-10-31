@@ -1,0 +1,3 @@
+; FUN_42b5_0565  entry=42b5:0565 size=5
+42b5:0565  MOV DX,0xd7b1
+42b5:0568  JMP 0x4000:30c2

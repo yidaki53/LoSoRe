@@ -1,0 +1,13 @@
+; FUN_428f_00de  entry=428f:00de size=25
+428f:00de  PUSH BP
+428f:00df  MOV BP,SP
+428f:00e1  MOV DL,byte ptr [BP + 0x6]
+428f:00e4  MOV AH,0x36
+428f:00e6  INT 0x21
+428f:00e8  MOV DX,AX
+428f:00ea  CMP AX,0xffff
+428f:00ed  JZ 0x4000:29e3
+428f:00ef  MUL CX
+428f:00f1  MUL BX
+428f:00f3  POP BP
+428f:00f4  RETF 0x2

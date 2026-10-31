@@ -1,0 +1,5 @@
+; FUN_42b5_01cd  entry=42b5:01cd size=7
+42b5:01cd  PUSH AX
+42b5:01ce  MOV AL,AH
+42b5:01d0  CALL 0x4000:2d24
+42b5:01d3  POP AX

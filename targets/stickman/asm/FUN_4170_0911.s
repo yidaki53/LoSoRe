@@ -1,0 +1,54 @@
+; FUN_4170_0911  entry=4170:0911 size=174
+4170:0911  PUSH BP
+4170:0912  MOV BP,SP
+4170:0914  MOV AX,0x1c
+4170:0917  CALLF 0x4000:302f
+4170:091c  SUB SP,0x1c
+4170:091f  MOV DI,word ptr [BP + 0x4]
+4170:0922  PUSH word ptr SS:[DI + 0xfdf0]
+4170:0927  MOV DI,word ptr [BP + 0x4]
+4170:092a  PUSH word ptr SS:[DI + 0xfdfa]
+4170:092f  PUSH word ptr SS:[DI + 0xfdf8]
+4170:0934  MOV DI,word ptr [BP + 0x4]
+4170:0937  PUSH word ptr SS:[DI + 0xfdf4]
+4170:093c  PUSH CS
+4170:093d  CALL 0x4000:194c
+4170:0940  MOV DI,word ptr [BP + 0x4]
+4170:0943  MOV word ptr SS:[DI + 0xfdf6],AX
+4170:0948  MOV DI,word ptr [BP + 0x4]
+4170:094b  PUSH word ptr SS:[DI + 0xfdf2]
+4170:0950  MOV DI,word ptr [BP + 0x4]
+4170:0953  PUSH word ptr SS:[DI + 0xfdfa]
+4170:0958  PUSH word ptr SS:[DI + 0xfdf8]
+4170:095d  MOV DI,word ptr [BP + 0x4]
+4170:0960  PUSH word ptr SS:[DI + 0xfdf6]
+4170:0965  PUSH CS
+4170:0966  CALL 0x4000:19a4
+4170:0969  MOV DI,word ptr [BP + 0x4]
+4170:096c  MOV AX,word ptr SS:[DI + 0xfdf6]
+4170:0971  MOV DI,word ptr [BP + 0x4]
+4170:0974  CMP AX,word ptr SS:[DI + 0xfdf4]
+4170:0979  JZ 0x4000:201f
+4170:097b  MOV word ptr [BP + -0x1c],0x5700
+4170:0980  MOV DI,word ptr [BP + 0x4]
+4170:0983  MOV AX,word ptr SS:[DI + 0xfdf0]
+4170:0988  MOV word ptr [BP + -0x1a],AX
+4170:098b  LEA DI,[BP + -0x1c]
+4170:098e  PUSH SS
+4170:098f  PUSH DI
+4170:0990  CALLF 0x4000:28f0
+4170:0995  MOV AX,word ptr [BP + -0xa]
+4170:0998  AND AX,0x1
+4170:099b  OR AX,AX
+4170:099d  JNZ 0x4000:20b9
+4170:099f  MOV word ptr [BP + -0x1c],0x5701
+4170:09a4  MOV DI,word ptr [BP + 0x4]
+4170:09a7  MOV AX,word ptr SS:[DI + 0xfdf2]
+4170:09ac  MOV word ptr [BP + -0x1a],AX
+4170:09af  LEA DI,[BP + -0x1c]
+4170:09b2  PUSH SS
+4170:09b3  PUSH DI
+4170:09b4  CALLF 0x4000:28f0
+4170:09b9  MOV SP,BP
+4170:09bb  POP BP
+4170:09bc  RET 0x2

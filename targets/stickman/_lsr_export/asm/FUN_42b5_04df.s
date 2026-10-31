@@ -1,0 +1,10 @@
+; FUN_42b5_04df  entry=42b5:04df size=22
+42b5:04df  ADD AX,0x200
+42b5:04e2  SUB AX,SP
+42b5:04e4  JNC 0x4000:303f
+42b5:04e6  NEG AX
+42b5:04e8  CMP AX,word ptr [0x39a]
+42b5:04ec  JC 0x4000:303f
+42b5:04ee  RETF
+42b5:04ef  MOV AX,0xca
+42b5:04f2  JMP 0x4000:2c32

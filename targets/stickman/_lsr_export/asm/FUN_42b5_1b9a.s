@@ -1,0 +1,18 @@
+; FUN_42b5_1b9a  entry=42b5:1b9a size=27
+42b5:1b9a  PUSH DS
+42b5:1b9b  LDS SI,[BP + 0x6]
+42b5:1b9e  LEA DI,[BP + -0x80]
+42b5:1ba1  PUSH SS
+42b5:1ba2  POP ES
+42b5:1ba3  CLD
+42b5:1ba4  LODSB SI
+42b5:1ba5  CMP AL,0x7f
+42b5:1ba7  JC 0x4000:46fb
+42b5:1ba9  MOV AL,0x7f
+42b5:1bab  CBW
+42b5:1bac  MOV CX,AX
+42b5:1bae  MOVSB.REP ES:DI,SI
+42b5:1bb0  XOR AL,AL
+42b5:1bb2  STOSB ES:DI
+42b5:1bb3  POP DS
+42b5:1bb4  RET

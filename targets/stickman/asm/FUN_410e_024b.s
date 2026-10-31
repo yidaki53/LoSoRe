@@ -1,0 +1,6 @@
+; FUN_410e_024b  entry=410e:024b size=12
+410e:024b  CALL 0x4000:15d6
+410e:024e  MOV AL,DH
+410e:0250  SUB AL,byte ptr [0xeb0b]
+410e:0254  INC AL
+410e:0256  RETF

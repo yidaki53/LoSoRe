@@ -1,0 +1,16 @@
+; FUN_410e_0213  entry=410e:0213 size=44
+410e:0213  MOV BX,SP
+410e:0215  MOV DL,byte ptr SS:[BX + 0x6]
+410e:0219  MOV DH,byte ptr SS:[BX + 0x4]
+410e:021d  DEC DL
+410e:021f  ADD DL,byte ptr [0xeb0a]
+410e:0223  JC 0x4000:131c
+410e:0225  CMP DL,byte ptr [0xeb0c]
+410e:0229  JA 0x4000:131c
+410e:022b  DEC DH
+410e:022d  ADD DH,byte ptr [0xeb0b]
+410e:0231  JC 0x4000:131c
+410e:0233  CMP DH,byte ptr [0xeb0d]
+410e:0237  JA 0x4000:131c
+410e:0239  CALL 0x4000:15dd
+410e:023c  RETF 0x4

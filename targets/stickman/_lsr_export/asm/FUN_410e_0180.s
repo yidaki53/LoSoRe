@@ -1,0 +1,24 @@
+; FUN_410e_0180  entry=410e:0180 size=64
+410e:0180  MOV BX,SP
+410e:0182  MOV DL,byte ptr SS:[BX + 0xa]
+410e:0186  MOV DH,byte ptr SS:[BX + 0x8]
+410e:018a  MOV CL,byte ptr SS:[BX + 0x6]
+410e:018e  MOV CH,byte ptr SS:[BX + 0x4]
+410e:0192  CMP DL,CL
+410e:0194  JA 0x4000:129d
+410e:0196  CMP DH,CH
+410e:0198  JA 0x4000:129d
+410e:019a  DEC DL
+410e:019c  JS 0x4000:129d
+410e:019e  DEC DH
+410e:01a0  JS 0x4000:129d
+410e:01a2  DEC CL
+410e:01a4  CMP CL,byte ptr [0xeb10]
+410e:01a8  JA 0x4000:129d
+410e:01aa  DEC CH
+410e:01ac  CMP CH,byte ptr [0xeb11]
+410e:01b0  JA 0x4000:129d
+410e:01b2  MOV word ptr [0xeb0a],DX
+410e:01b6  MOV word ptr [0xeb0c],CX
+410e:01ba  CALL 0x4000:15dd
+410e:01bd  RETF 0x8

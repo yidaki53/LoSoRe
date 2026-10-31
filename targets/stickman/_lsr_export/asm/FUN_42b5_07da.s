@@ -1,0 +1,8 @@
+; FUN_42b5_07da  entry=42b5:07da size=15
+42b5:07da  MOV byte ptr ES:[BX + DI],AL
+42b5:07dd  INC BX
+42b5:07de  CMP BX,DX
+42b5:07e0  JZ 0x4000:3333
+42b5:07e2  RET
+42b5:07e3  MOV DI,SP
+42b5:07e5  LES DI,SS:[DI + 0x2]

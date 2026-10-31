@@ -1,0 +1,5 @@
+; FUN_42b5_01df  entry=42b5:01df size=8
+42b5:01df  ADD AL,0x30
+42b5:01e1  CMP AL,0x3a
+42b5:01e3  JC 0x4000:2d37
+42b5:01e5  ADD AL,0x7

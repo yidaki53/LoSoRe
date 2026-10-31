@@ -1,0 +1,157 @@
+; FUN_1000_0d44  entry=1000:0d44 size=443
+1000:0d44  PUSH BP
+1000:0d45  MOV BP,SP
+1000:0d47  MOV AX,0x212
+1000:0d4a  CALLF 0x4000:302f
+1000:0d4f  SUB SP,0x212
+1000:0d53  LES DI,[BP + 0x6]
+1000:0d56  PUSH ES
+1000:0d57  PUSH DI
+1000:0d58  LEA DI,[BP + 0xff00]
+1000:0d5c  PUSH SS
+1000:0d5d  PUSH DI
+1000:0d5e  MOV AX,0xff
+1000:0d61  PUSH AX
+1000:0d62  CALLF 0x4000:372e
+1000:0d67  LEA DI,[BP + 0xfdee]
+1000:0d6b  PUSH SS
+1000:0d6c  PUSH DI
+1000:0d6d  MOV AL,0x2e
+1000:0d6f  PUSH AX
+1000:0d70  LEA DI,[BP + 0xff00]
+1000:0d74  PUSH SS
+1000:0d75  PUSH DI
+1000:0d76  CALLF 0x4000:24f2
+1000:0d7b  LEA DI,[BP + 0xff00]
+1000:0d7f  PUSH SS
+1000:0d80  PUSH DI
+1000:0d81  MOV AX,0xff
+1000:0d84  PUSH AX
+1000:0d85  CALLF 0x4000:372e
+1000:0d8a  LEA DI,[BP + 0xff00]
+1000:0d8e  PUSH SS
+1000:0d8f  PUSH DI
+1000:0d90  LEA DI,[BP + 0xfefc]
+1000:0d94  PUSH SS
+1000:0d95  PUSH DI
+1000:0d96  CALLF 0x4000:4301
+1000:0d9b  MOV word ptr [BP + 0xfefe],AX
+1000:0d9f  CMP word ptr [BP + 0xfefc],0x0
+1000:0da4  JZ 0x1000:0dac
+1000:0da6  MOV word ptr [BP + 0xfefe],0xffff
+1000:0dac  MOV AX,word ptr [BP + 0xfefe]
+1000:0db0  CMP AX,0x1
+1000:0db3  JNZ 0x1000:0dc5
+1000:0db5  MOV AX,0x0
+1000:0db8  MOV DX,0x31cf
+1000:0dbb  MOV word ptr [BP + 0xfeee],AX
+1000:0dbf  MOV word ptr [BP + 0xfef0],DX
+1000:0dc3  JMP 0x1000:0e38
+1000:0dc5  CMP AX,0x2
+1000:0dc8  JNZ 0x1000:0dda
+1000:0dca  MOV AX,0x2034
+1000:0dcd  MOV DX,0x31cf
+1000:0dd0  MOV word ptr [BP + 0xfeee],AX
+1000:0dd4  MOV word ptr [BP + 0xfef0],DX
+1000:0dd8  JMP 0x1000:0e38
+1000:0dda  CMP AX,0x3
+1000:0ddd  JNZ 0x1000:0def
+1000:0ddf  MOV AX,0x4068
+1000:0de2  MOV DX,0x31cf
+1000:0de5  MOV word ptr [BP + 0xfeee],AX
+1000:0de9  MOV word ptr [BP + 0xfef0],DX
+1000:0ded  JMP 0x1000:0e38
+1000:0def  CMP AX,0x4
+1000:0df2  JNZ 0x1000:0e04
+1000:0df4  MOV AX,0x0
+1000:0df7  MOV DX,0x27be
+1000:0dfa  MOV word ptr [BP + 0xfeee],AX
+1000:0dfe  MOV word ptr [BP + 0xfef0],DX
+1000:0e02  JMP 0x1000:0e38
+1000:0e04  CMP AX,0x5
+1000:0e07  JNZ 0x1000:0e19
+1000:0e09  MOV AX,0x0
+1000:0e0c  MOV DX,0x15a0
+1000:0e0f  MOV word ptr [BP + 0xfeee],AX
+1000:0e13  MOV word ptr [BP + 0xfef0],DX
+1000:0e17  JMP 0x1000:0e38
+1000:0e19  CMP AX,0x6
+1000:0e1c  JNZ 0x1000:0e2e
+1000:0e1e  MOV AX,0x0
+1000:0e21  MOV DX,0x1fb1
+1000:0e24  MOV word ptr [BP + 0xfeee],AX
+1000:0e28  MOV word ptr [BP + 0xfef0],DX
+1000:0e2c  JMP 0x1000:0e38
+1000:0e2e  MOV DI,0xd2f
+1000:0e31  PUSH CS
+1000:0e32  PUSH DI
+1000:0e33  CALLF 0x3000:e0a8
+1000:0e38  CMP word ptr [BP + 0x4],0x1
+1000:0e3c  JLE 0x1000:0e66
+1000:0e3e  MOV AX,word ptr [BP + 0x4]
+1000:0e41  DEC AX
+1000:0e42  MOV DX,0x2034
+1000:0e45  MUL DX
+1000:0e47  CWD
+1000:0e48  MOV CX,AX
+1000:0e4a  MOV BX,DX
+1000:0e4c  LES DI,[BP + 0xfeee]
+1000:0e50  MOV AX,DI
+1000:0e52  XOR DX,DX
+1000:0e54  ADD AX,CX
+1000:0e56  ADC DX,BX
+1000:0e58  LES DI,[BP + 0xfeee]
+1000:0e5c  MOV DX,ES
+1000:0e5e  MOV word ptr [BP + 0xfeee],AX
+1000:0e62  MOV word ptr [BP + 0xfef0],DX
+1000:0e66  LES DI,[BP + 0xfeee]
+1000:0e6a  PUSH ES
+1000:0e6b  PUSH DI
+1000:0e6c  MOV DI,0x5cc
+1000:0e6f  PUSH DS
+1000:0e70  PUSH DI
+1000:0e71  MOV AX,0x2034
+1000:0e74  PUSH AX
+1000:0e75  CALLF 0x4000:456f
+1000:0e7a  MOV word ptr [BP + 0xfefa],0xabee
+1000:0e80  MOV word ptr [BP + 0xfef8],0xbfab
+1000:0e86  XOR AX,AX
+1000:0e88  MOV word ptr [BP + 0xfef2],AX
+1000:0e8c  MOV word ptr [BP + 0xfef4],AX
+1000:0e90  JMP 0x1000:0e9c
+1000:0e92  ADD word ptr [BP + 0xfef2],0x1
+1000:0e97  ADC word ptr [BP + 0xfef4],0x0
+1000:0e9c  MOV AX,word ptr [BP + 0xfef8]
+1000:0ea0  MOV word ptr [BP + 0xfef6],AX
+1000:0ea4  MOV AX,word ptr [BP + 0xfefa]
+1000:0ea8  ADD AX,word ptr [BP + 0xfef8]
+1000:0eac  MOV word ptr [BP + 0xfef8],AX
+1000:0eb0  MOV AX,word ptr [BP + 0xfef6]
+1000:0eb4  MOV word ptr [BP + 0xfefa],AX
+1000:0eb8  MOV AX,DS
+1000:0eba  PUSH AX
+1000:0ebb  MOV AX,0x5cc
+1000:0ebe  XOR DX,DX
+1000:0ec0  ADD AX,word ptr [BP + 0xfef2]
+1000:0ec4  ADC DX,word ptr [BP + 0xfef4]
+1000:0ec8  MOV DI,AX
+1000:0eca  POP ES
+1000:0ecb  MOV AL,byte ptr ES:[DI]
+1000:0ece  XOR AL,byte ptr [BP + 0xfef8]
+1000:0ed2  MOV CL,AL
+1000:0ed4  MOV AX,DS
+1000:0ed6  PUSH AX
+1000:0ed7  MOV AX,0x5cc
+1000:0eda  XOR DX,DX
+1000:0edc  ADD AX,word ptr [BP + 0xfef2]
+1000:0ee0  ADC DX,word ptr [BP + 0xfef4]
+1000:0ee4  MOV DI,AX
+1000:0ee6  POP ES
+1000:0ee7  MOV byte ptr ES:[DI],CL
+1000:0eea  CMP word ptr [BP + 0xfef4],0x0
+1000:0eef  JNZ 0x1000:0e92
+1000:0ef1  CMP word ptr [BP + 0xfef2],0x2033
+1000:0ef7  JNZ 0x1000:0e92
+1000:0ef9  MOV SP,BP
+1000:0efb  POP BP
+1000:0efc  RET 0x6

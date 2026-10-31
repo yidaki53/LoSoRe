@@ -1,0 +1,37 @@
+
+undefined2 __stdcall16far FUN_4170_01b8(undefined1 param_1,undefined4 param_2)
+
+{
+  undefined2 unaff_SS;
+  undefined1 *puVar1;
+  undefined2 uVar2;
+  undefined1 local_218 [256];
+  undefined2 local_118;
+  undefined1 *local_112;
+  uint local_106;
+  undefined1 local_104;
+  undefined1 local_103 [253];
+  undefined2 uStack_6;
+  undefined2 local_4;
+  
+  local_4 = 0x4170;
+  uStack_6 = 0x18c3;
+  FUN_42b5_04df();
+  FUN_42b5_0bde(0xff,&local_104,unaff_SS,(int)param_2,(int)((ulong)param_2 >> 0x10));
+  puVar1 = local_218;
+  uVar2 = unaff_SS;
+  FUN_42b5_0bc4(&local_104,unaff_SS);
+  FUN_42b5_0c51(0x1b6,0x42b5);
+  FUN_42b5_0bde(0xff,&local_104,unaff_SS,puVar1,uVar2);
+  local_118 = CONCAT11(0x3d,param_1);
+  local_112 = local_103;
+  FUN_428f_0000(0x42b5,&local_118);
+  if ((local_106 & 1) == 0) {
+    local_4 = local_118;
+  }
+  else {
+    local_4 = 0xffff;
+  }
+  return local_4;
+}
+

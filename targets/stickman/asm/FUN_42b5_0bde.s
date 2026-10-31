@@ -1,0 +1,17 @@
+; FUN_42b5_0bde  entry=42b5:0bde size=36
+42b5:0bde  CLD
+42b5:0bdf  MOV BX,SP
+42b5:0be1  MOV DX,DS
+42b5:0be3  LDS SI,SS:[BX + 0xa]
+42b5:0be7  LES DI,SS:[BX + 0x6]
+42b5:0beb  MOV CX,word ptr SS:[BX + 0x4]
+42b5:0bef  LODSB SI
+42b5:0bf0  CMP AL,CL
+42b5:0bf2  JBE 0x4000:3746
+42b5:0bf4  MOV AL,CL
+42b5:0bf6  STOSB ES:DI
+42b5:0bf7  MOV CL,AL
+42b5:0bf9  XOR CH,CH
+42b5:0bfb  MOVSB.REP ES:DI,SI
+42b5:0bfd  MOV DX,DS
+42b5:0bff  RETF 0xa

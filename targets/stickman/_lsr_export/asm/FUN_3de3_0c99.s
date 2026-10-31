@@ -1,0 +1,88 @@
+; FUN_3de3_0c99  entry=3de3:0c99 size=224
+3de3:0c99  PUSH BP
+3de3:0c9a  MOV BP,SP
+3de3:0c9c  MOV AX,0x400
+3de3:0c9f  CALLF 0x4000:302f
+3de3:0ca4  SUB SP,0x400
+3de3:0ca8  LES DI,[BP + 0x6]
+3de3:0cab  PUSH ES
+3de3:0cac  PUSH DI
+3de3:0cad  LEA DI,[BP + 0xff00]
+3de3:0cb1  PUSH SS
+3de3:0cb2  PUSH DI
+3de3:0cb3  MOV AX,0xff
+3de3:0cb6  PUSH AX
+3de3:0cb7  CALLF 0x4000:372e
+3de3:0cbc  LEA DI,[BP + 0xfd00]
+3de3:0cc0  PUSH SS
+3de3:0cc1  PUSH DI
+3de3:0cc2  LEA DI,[BP + 0xff00]
+3de3:0cc6  PUSH SS
+3de3:0cc7  PUSH DI
+3de3:0cc8  CALLF 0x4000:3045
+3de3:0ccd  LEA DI,[BP + 0xfd00]
+3de3:0cd1  PUSH SS
+3de3:0cd2  PUSH DI
+3de3:0cd3  CALLF 0x4000:30b5
+3de3:0cd8  CALLF 0x4000:2ff2
+3de3:0cdd  OR AX,AX
+3de3:0cdf  JZ 0x3000:eb32
+3de3:0ce1  LEA DI,[BP + 0xfc00]
+3de3:0ce5  PUSH SS
+3de3:0ce6  PUSH DI
+3de3:0ce7  MOV DI,0xc73
+3de3:0cea  PUSH CS
+3de3:0ceb  PUSH DI
+3de3:0cec  CALLF 0x4000:3714
+3de3:0cf1  LEA DI,[BP + 0xff00]
+3de3:0cf5  PUSH SS
+3de3:0cf6  PUSH DI
+3de3:0cf7  CALLF 0x4000:37a1
+3de3:0cfc  PUSH CS
+3de3:0cfd  CALL 0x3000:de5d
+3de3:0d00  JMP 0x3000:eba3
+3de3:0d02  LEA DI,[BP + 0xfd00]
+3de3:0d06  PUSH SS
+3de3:0d07  PUSH DI
+3de3:0d08  CALLF 0x4000:360d
+3de3:0d0d  CALLF 0x4000:2ff9
+3de3:0d12  OR AL,AL
+3de3:0d14  JNZ 0x3000:eb8e
+3de3:0d16  LEA DI,[BP + 0xfd00]
+3de3:0d1a  PUSH SS
+3de3:0d1b  PUSH DI
+3de3:0d1c  LEA DI,[BP + 0xfe00]
+3de3:0d20  PUSH SS
+3de3:0d21  PUSH DI
+3de3:0d22  MOV AX,0xff
+3de3:0d25  PUSH AX
+3de3:0d26  CALLF 0x4000:342f
+3de3:0d2b  CALLF 0x4000:336a
+3de3:0d30  CALLF 0x4000:2ff9
+3de3:0d35  LEA DI,[BP + 0xfe00]
+3de3:0d39  PUSH SS
+3de3:0d3a  PUSH DI
+3de3:0d3b  PUSH CS
+3de3:0d3c  CALL 0x3000:de5d
+3de3:0d3f  LEA DI,[BP + 0xfd00]
+3de3:0d43  PUSH SS
+3de3:0d44  PUSH DI
+3de3:0d45  CALLF 0x4000:360d
+3de3:0d4a  CALLF 0x4000:2ff9
+3de3:0d4f  OR AL,AL
+3de3:0d51  JNZ 0x3000:eb8c
+3de3:0d53  MOV DI,0xc96
+3de3:0d56  PUSH CS
+3de3:0d57  PUSH DI
+3de3:0d58  PUSH CS
+3de3:0d59  CALL 0x3000:de5d
+3de3:0d5c  JMP 0x3000:eb32
+3de3:0d5e  LEA DI,[BP + 0xfd00]
+3de3:0d62  PUSH SS
+3de3:0d63  PUSH DI
+3de3:0d64  CALLF 0x4000:310f
+3de3:0d69  CALLF 0x4000:2ff9
+3de3:0d6e  CALLF 0x4000:076d
+3de3:0d73  MOV SP,BP
+3de3:0d75  POP BP
+3de3:0d76  RETF 0x4

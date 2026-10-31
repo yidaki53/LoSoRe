@@ -1,0 +1,25 @@
+; FUN_42b5_1aac  entry=42b5:1aac size=50
+42b5:1aac  MOV ES,word ptr [0x398]
+42b5:1ab0  MOV DI,0x80
+42b5:1ab3  MOV CL,byte ptr ES:[DI]
+42b5:1ab6  XOR CH,CH
+42b5:1ab8  INC DI
+42b5:1ab9  XOR BX,BX
+42b5:1abb  JCXZ 0x4000:4616
+42b5:1abd  CMP byte ptr ES:[DI],0x20
+42b5:1ac1  JA 0x4000:4616
+42b5:1ac3  INC DI
+42b5:1ac4  LOOP 0x4000:460d
+42b5:1ac6  MOV SI,DI
+42b5:1ac8  JCXZ 0x4000:4623
+42b5:1aca  CMP byte ptr ES:[DI],0x20
+42b5:1ace  JBE 0x4000:4623
+42b5:1ad0  INC DI
+42b5:1ad1  LOOP 0x4000:461a
+42b5:1ad3  MOV AX,DI
+42b5:1ad5  SUB AX,SI
+42b5:1ad7  JZ 0x4000:462d
+42b5:1ad9  INC BX
+42b5:1ada  DEC DX
+42b5:1adb  JNZ 0x4000:460b
+42b5:1add  RET

@@ -1,0 +1,17 @@
+; FUN_3de3_0000  entry=3de3:0000 size=45
+3de3:0000  PUSH BP
+3de3:0001  MOV BP,SP
+3de3:0003  XOR AX,AX
+3de3:0005  CALLF 0x4000:302f
+3de3:000a  CMP byte ptr [BP + 0x6],0x7
+3de3:000e  JZ 0x3000:de49
+3de3:0010  MOV AL,byte ptr [BP + 0x6]
+3de3:0013  PUSH AX
+3de3:0014  CALLF 0x4000:1034
+3de3:0019  CMP word ptr [0xaaec],0x0
+3de3:001e  JZ 0x3000:de59
+3de3:0020  MOV AL,byte ptr [BP + 0x6]
+3de3:0023  PUSH AX
+3de3:0024  CALLF 0x4000:0711
+3de3:0029  POP BP
+3de3:002a  RETF 0x2

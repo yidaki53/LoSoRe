@@ -1,0 +1,28 @@
+; FUN_1000_1b9e  entry=1000:1b9e size=71
+1000:1b9e  PUSH BP
+1000:1b9f  MOV BP,SP
+1000:1ba1  MOV AX,0x2
+1000:1ba4  CALLF 0x4000:302f
+1000:1ba9  SUB SP,0x2
+1000:1bac  MOV byte ptr [BP + -0x1],0x0
+1000:1bb0  MOV CX,word ptr [BP + 0x6]
+1000:1bb3  MOV AX,0x50
+1000:1bb6  MUL word ptr [BP + 0x4]
+1000:1bb9  MOV DI,AX
+1000:1bbb  ADD DI,CX
+1000:1bbd  MOV AL,byte ptr [DI + 0x1f6f]
+1000:1bc1  PUSH AX
+1000:1bc2  MOV DI,0x1b7e
+1000:1bc5  PUSH CS
+1000:1bc6  PUSH DI
+1000:1bc7  CALLF 0x4000:39c9
+1000:1bcc  JZ 0x1000:1bd0
+1000:1bce  JMP 0x1000:1bdc
+1000:1bd0  PUSH word ptr [BP + 0x6]
+1000:1bd3  PUSH word ptr [BP + 0x4]
+1000:1bd6  CALL 0x1000:0c8f
+1000:1bd9  MOV byte ptr [BP + -0x1],AL
+1000:1bdc  MOV AL,byte ptr [BP + -0x1]
+1000:1bdf  MOV SP,BP
+1000:1be1  POP BP
+1000:1be2  RET 0x4

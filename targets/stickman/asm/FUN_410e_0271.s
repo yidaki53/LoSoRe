@@ -1,0 +1,9 @@
+; FUN_410e_0271  entry=410e:0271 size=24
+410e:0271  MOV BX,SP
+410e:0273  MOV AL,byte ptr SS:[BX + 0x4]
+410e:0277  AND AL,0x7
+410e:0279  MOV CL,0x4
+410e:027b  SHL AL,CL
+410e:027d  AND byte ptr [0xeb08],0x8f
+410e:0282  OR byte ptr [0xeb08],AL
+410e:0286  RETF 0x2

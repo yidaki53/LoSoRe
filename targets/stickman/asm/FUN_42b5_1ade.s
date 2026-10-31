@@ -1,0 +1,41 @@
+; FUN_42b5_1ade  entry=42b5:1ade size=81
+42b5:1ade  PUSH BP
+42b5:1adf  MOV BP,SP
+42b5:1ae1  SUB SP,0x80
+42b5:1ae5  PUSH DS
+42b5:1ae6  LEA SI,[BP + -0x80]
+42b5:1ae9  PUSH SS
+42b5:1aea  POP DS
+42b5:1aeb  MOV AL,byte ptr [BP + 0xc]
+42b5:1aee  OR AL,AL
+42b5:1af0  JNZ 0x4000:4648
+42b5:1af2  MOV AH,0x19
+42b5:1af4  INT 0x21
+42b5:1af6  INC AL
+42b5:1af8  MOV DL,AL
+42b5:1afa  ADD AL,0x40
+42b5:1afc  MOV byte ptr [SI],AL
+42b5:1afe  INC SI
+42b5:1aff  MOV word ptr [SI],0x5c3a
+42b5:1b03  INC SI
+42b5:1b04  INC SI
+42b5:1b05  MOV AH,0x47
+42b5:1b07  INT 0x21
+42b5:1b09  JNC 0x4000:465e
+42b5:1b0b  MOV byte ptr [SI],0x0
+42b5:1b0e  LEA SI,[BP + -0x80]
+42b5:1b11  LES DI,[BP + 0x8]
+42b5:1b14  MOV CX,word ptr [BP + 0x6]
+42b5:1b17  XOR BX,BX
+42b5:1b19  CLD
+42b5:1b1a  LODSB SI
+42b5:1b1b  OR AL,AL
+42b5:1b1d  JZ 0x4000:4675
+42b5:1b1f  INC BX
+42b5:1b20  MOV byte ptr ES:[BX + DI],AL
+42b5:1b23  LOOP 0x4000:466a
+42b5:1b25  MOV byte ptr ES:[DI],BL
+42b5:1b28  POP DS
+42b5:1b29  MOV SP,BP
+42b5:1b2b  POP BP
+42b5:1b2c  RETF 0x8

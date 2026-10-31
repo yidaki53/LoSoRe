@@ -1,0 +1,7 @@
+; FUN_42b5_0b9d  entry=42b5:0b9d size=12
+42b5:0b9d  AND CX,0x1f
+42b5:0ba0  JZ 0x4000:36f8
+42b5:0ba2  SHR DX,0x1
+42b5:0ba4  RCR AX,0x1
+42b5:0ba6  LOOP 0x4000:36f2
+42b5:0ba8  RETF

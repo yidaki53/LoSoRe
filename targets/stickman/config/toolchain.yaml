@@ -1,0 +1,11 @@
+slug: stickman
+compiler: turbo-pascal-7
+compiler_confidence: high
+language: pascal
+platform: dos
+detected: 2026-10-27
+evidence:
+  - STKMN_SW.EXE: "Runtime error" (strong)
+  - STKMN_SW.EXE: "Borland" (medium)
+  - (format) MZ executable (DOS real-mode)
+oracle: dat-parity

@@ -1,0 +1,5 @@
+; FUN_410e_02f4  entry=410e:02f4 size=7
+410e:02f4  IN AL,0x61
+410e:02f6  AND AL,0xfc
+410e:02f8  OUT 0x61,AL
+410e:02fa  RETF

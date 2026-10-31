@@ -1,0 +1,229 @@
+; FUN_3de3_18e2  entry=3de3:18e2 size=597
+3de3:18e2  PUSH BP
+3de3:18e3  MOV BP,SP
+3de3:18e5  MOV AX,0x404
+3de3:18e8  CALLF 0x4000:302f
+3de3:18ed  SUB SP,0x404
+3de3:18f1  CALLF 0x4000:1796
+3de3:18f6  MOV [0xa7d2],AX
+3de3:18f9  MOV word ptr [0xa7d4],DX
+3de3:18fd  LEA DI,[BP + 0xfbfc]
+3de3:1901  PUSH SS
+3de3:1902  PUSH DI
+3de3:1903  LEA DI,[BP + 0xfdfc]
+3de3:1907  PUSH SS
+3de3:1908  PUSH DI
+3de3:1909  MOV DI,0x187a
+3de3:190c  PUSH CS
+3de3:190d  PUSH DI
+3de3:190e  CALLF 0x4000:1cea
+3de3:1913  MOV DI,0x187c
+3de3:1916  PUSH CS
+3de3:1917  PUSH DI
+3de3:1918  CALLF 0x4000:37a1
+3de3:191d  LEA DI,[BP + 0xfcfc]
+3de3:1921  PUSH SS
+3de3:1922  PUSH DI
+3de3:1923  MOV DI,0x187e
+3de3:1926  PUSH CS
+3de3:1927  PUSH DI
+3de3:1928  CALLF 0x4000:1cea
+3de3:192d  CALLF 0x4000:37a1
+3de3:1932  CALLF 0x4000:257d
+3de3:1937  LEA DI,[BP + 0xfefc]
+3de3:193b  PUSH SS
+3de3:193c  PUSH DI
+3de3:193d  MOV AX,0xff
+3de3:1940  PUSH AX
+3de3:1941  CALLF 0x4000:372e
+3de3:1946  LEA DI,[BP + 0xfefc]
+3de3:194a  PUSH SS
+3de3:194b  PUSH DI
+3de3:194c  MOV DI,0x187c
+3de3:194f  PUSH CS
+3de3:1950  PUSH DI
+3de3:1951  CALLF 0x4000:3819
+3de3:1956  JNZ 0x3000:f79d
+3de3:1958  MOV DI,0x1880
+3de3:195b  PUSH CS
+3de3:195c  PUSH DI
+3de3:195d  MOV DI,0xa7d6
+3de3:1960  PUSH DS
+3de3:1961  PUSH DI
+3de3:1962  MOV AX,0xff
+3de3:1965  PUSH AX
+3de3:1966  CALLF 0x4000:372e
+3de3:196b  JMP 0x3000:f7b1
+3de3:196d  LEA DI,[BP + 0xfefc]
+3de3:1971  PUSH SS
+3de3:1972  PUSH DI
+3de3:1973  MOV DI,0xa7d6
+3de3:1976  PUSH DS
+3de3:1977  PUSH DI
+3de3:1978  MOV AX,0xff
+3de3:197b  PUSH AX
+3de3:197c  CALLF 0x4000:372e
+3de3:1981  CALLF 0x4000:3e50
+3de3:1986  MOV word ptr [0xa7ca],0xf
+3de3:198c  MOV word ptr [0xa7cc],0x0
+3de3:1992  MOV DI,0x188c
+3de3:1995  PUSH CS
+3de3:1996  PUSH DI
+3de3:1997  CALLF 0x4000:1e9f
+3de3:199c  MOV [0xaaec],AX
+3de3:199f  CMP word ptr [0xaaec],-0x1
+3de3:19a4  JZ 0x3000:f7d9
+3de3:19a6  JMP 0x3000:f893
+3de3:19a9  XOR AX,AX
+3de3:19ab  MOV [0xaaec],AX
+3de3:19ae  LEA DI,[BP + 0xfdfc]
+3de3:19b2  PUSH SS
+3de3:19b3  PUSH DI
+3de3:19b4  MOV DI,0x1891
+3de3:19b7  PUSH CS
+3de3:19b8  PUSH DI
+3de3:19b9  CALLF 0x4000:1cea
+3de3:19be  LEA DI,[BP + 0xfefc]
+3de3:19c2  PUSH SS
+3de3:19c3  PUSH DI
+3de3:19c4  MOV AX,0xff
+3de3:19c7  PUSH AX
+3de3:19c8  CALLF 0x4000:372e
+3de3:19cd  CMP byte ptr [BP + 0xfefc],0x0
+3de3:19d2  JZ 0x3000:f819
+3de3:19d4  LEA DI,[BP + 0xfefc]
+3de3:19d8  PUSH SS
+3de3:19d9  PUSH DI
+3de3:19da  CALLF 0x3000:fb1b
+3de3:19df  OR AL,AL
+3de3:19e1  JZ 0x3000:f819
+3de3:19e3  PUSH CS
+3de3:19e4  CALL 0x3000:ed5d
+3de3:19e7  JMP 0x3000:f893
+3de3:19e9  LEA DI,[BP + 0xfdfc]
+3de3:19ed  PUSH SS
+3de3:19ee  PUSH DI
+3de3:19ef  MOV DI,0x1896
+3de3:19f2  PUSH CS
+3de3:19f3  PUSH DI
+3de3:19f4  CALLF 0x4000:1cea
+3de3:19f9  LEA DI,[BP + 0xfefc]
+3de3:19fd  PUSH SS
+3de3:19fe  PUSH DI
+3de3:19ff  MOV AX,0xff
+3de3:1a02  PUSH AX
+3de3:1a03  CALLF 0x4000:372e
+3de3:1a08  CMP byte ptr [BP + 0xfefc],0x0
+3de3:1a0d  JZ 0x3000:f854
+3de3:1a0f  LEA DI,[BP + 0xfefc]
+3de3:1a13  PUSH SS
+3de3:1a14  PUSH DI
+3de3:1a15  CALLF 0x3000:fe2a
+3de3:1a1a  OR AL,AL
+3de3:1a1c  JZ 0x3000:f854
+3de3:1a1e  PUSH CS
+3de3:1a1f  CALL 0x3000:ed5d
+3de3:1a22  JMP 0x3000:f893
+3de3:1a24  LEA DI,[BP + 0xfdfc]
+3de3:1a28  PUSH SS
+3de3:1a29  PUSH DI
+3de3:1a2a  MOV DI,0x189a
+3de3:1a2d  PUSH CS
+3de3:1a2e  PUSH DI
+3de3:1a2f  CALLF 0x4000:1cea
+3de3:1a34  LEA DI,[BP + 0xfefc]
+3de3:1a38  PUSH SS
+3de3:1a39  PUSH DI
+3de3:1a3a  MOV AX,0xff
+3de3:1a3d  PUSH AX
+3de3:1a3e  CALLF 0x4000:372e
+3de3:1a43  CMP byte ptr [BP + 0xfefc],0x0
+3de3:1a48  JZ 0x3000:f88f
+3de3:1a4a  LEA DI,[BP + 0xfefc]
+3de3:1a4e  PUSH SS
+3de3:1a4f  PUSH DI
+3de3:1a50  CALLF 0x4000:0141
+3de3:1a55  OR AL,AL
+3de3:1a57  JZ 0x3000:f88f
+3de3:1a59  PUSH CS
+3de3:1a5a  CALL 0x3000:ed5d
+3de3:1a5d  JMP 0x3000:f893
+3de3:1a5f  PUSH CS
+3de3:1a60  CALL 0x3000:f477
+3de3:1a63  MOV DI,0x18a0
+3de3:1a66  PUSH CS
+3de3:1a67  PUSH DI
+3de3:1a68  CALLF 0x4000:1e9f
+3de3:1a6d  MOV word ptr [BP + -0x4],AX
+3de3:1a70  MOV word ptr [BP + -0x2],DX
+3de3:1a73  CMP word ptr [BP + -0x2],0x7fff
+3de3:1a78  JNZ 0x3000:f8b0
+3de3:1a7a  CMP word ptr [BP + -0x4],-0x1
+3de3:1a7e  JZ 0x3000:f8bd
+3de3:1a80  MOV AX,word ptr [BP + -0x4]
+3de3:1a83  MOV DX,word ptr [BP + -0x2]
+3de3:1a86  MOV [0xa7ca],AX
+3de3:1a89  MOV word ptr [0xa7cc],DX
+3de3:1a8d  PUSH CS
+3de3:1a8e  CALL 0x3000:ee59
+3de3:1a91  MOV DI,0x18a4
+3de3:1a94  PUSH CS
+3de3:1a95  PUSH DI
+3de3:1a96  CALLF 0x4000:1e9f
+3de3:1a9b  MOV word ptr [BP + -0x4],AX
+3de3:1a9e  MOV word ptr [BP + -0x2],DX
+3de3:1aa1  CMP word ptr [BP + -0x2],0x7fff
+3de3:1aa6  JNZ 0x3000:f8de
+3de3:1aa8  CMP word ptr [BP + -0x4],-0x1
+3de3:1aac  JZ 0x3000:f8eb
+3de3:1aae  MOV AX,word ptr [BP + -0x4]
+3de3:1ab1  MOV DX,word ptr [BP + -0x2]
+3de3:1ab4  MOV [0xa7ce],AX
+3de3:1ab7  MOV word ptr [0xa7d0],DX
+3de3:1abb  CMP word ptr [0xa7d0],0x0
+3de3:1ac0  JG 0x3000:f8fc
+3de3:1ac2  JL 0x3000:f908
+3de3:1ac4  CMP word ptr [0xa7ce],0x9600
+3de3:1aca  JBE 0x3000:f908
+3de3:1acc  MOV word ptr [0xa7ce],0x9600
+3de3:1ad2  MOV word ptr [0xa7d0],0x0
+3de3:1ad8  PUSH word ptr [0xa7ce]
+3de3:1adc  CALLF 0x4000:08dd
+3de3:1ae1  OR AL,AL
+3de3:1ae3  JNZ 0x3000:f91e
+3de3:1ae5  MOV DI,0x18a9
+3de3:1ae8  PUSH CS
+3de3:1ae9  PUSH DI
+3de3:1aea  PUSH CS
+3de3:1aeb  CALL 0x3000:ec8b
+3de3:1aee  PUSH CS
+3de3:1aef  CALL 0x3000:f086
+3de3:1af2  LEA DI,[BP + 0xfdfc]
+3de3:1af6  PUSH SS
+3de3:1af7  PUSH DI
+3de3:1af8  MOV DI,0x18cc
+3de3:1afb  PUSH CS
+3de3:1afc  PUSH DI
+3de3:1afd  CALLF 0x4000:3714
+3de3:1b02  MOV DI,0xa7d6
+3de3:1b05  PUSH DS
+3de3:1b06  PUSH DI
+3de3:1b07  CALLF 0x4000:37a1
+3de3:1b0c  MOV DI,0x18d9
+3de3:1b0f  PUSH CS
+3de3:1b10  PUSH DI
+3de3:1b11  CALLF 0x4000:37a1
+3de3:1b16  LEA DI,[BP + 0xfcfc]
+3de3:1b1a  PUSH SS
+3de3:1b1b  PUSH DI
+3de3:1b1c  MOV AL,[0xa8e7]
+3de3:1b1f  XOR AH,AH
+3de3:1b21  ADD AX,0x30
+3de3:1b24  PUSH AX
+3de3:1b25  CALLF 0x4000:3844
+3de3:1b2a  CALLF 0x4000:37a1
+3de3:1b2f  PUSH CS
+3de3:1b30  CALL 0x3000:df12
+3de3:1b33  MOV SP,BP
+3de3:1b35  POP BP
+3de3:1b36  RETF

@@ -1,0 +1,6 @@
+; FUN_42b5_1300  entry=42b5:1300 size=13
+42b5:1300  MOV AH,0x2c
+42b5:1302  INT 0x21
+42b5:1304  MOV word ptr [0x39e],CX
+42b5:1308  MOV word ptr [0x3a0],DX
+42b5:130c  RETF

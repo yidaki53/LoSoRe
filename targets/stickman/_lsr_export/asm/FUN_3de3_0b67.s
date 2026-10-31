@@ -1,0 +1,58 @@
+; FUN_3de3_0b67  entry=3de3:0b67 size=131
+3de3:0b67  PUSH BP
+3de3:0b68  MOV BP,SP
+3de3:0b6a  MOV AX,0x300
+3de3:0b6d  CALLF 0x4000:302f
+3de3:0b72  SUB SP,0x300
+3de3:0b76  MOV AX,word ptr [BP + 0x8]
+3de3:0b79  CWD
+3de3:0b7a  PUSH DX
+3de3:0b7b  PUSH AX
+3de3:0b7c  XOR AX,AX
+3de3:0b7e  PUSH AX
+3de3:0b7f  LEA DI,[BP + 0xff00]
+3de3:0b83  PUSH SS
+3de3:0b84  PUSH DI
+3de3:0b85  MOV AX,0xff
+3de3:0b88  PUSH AX
+3de3:0b89  CALLF 0x4000:42b6
+3de3:0b8e  MOV AX,word ptr [BP + 0x6]
+3de3:0b91  CWD
+3de3:0b92  PUSH DX
+3de3:0b93  PUSH AX
+3de3:0b94  XOR AX,AX
+3de3:0b96  PUSH AX
+3de3:0b97  LEA DI,[BP + 0xfe00]
+3de3:0b9b  PUSH SS
+3de3:0b9c  PUSH DI
+3de3:0b9d  MOV AX,0xff
+3de3:0ba0  PUSH AX
+3de3:0ba1  CALLF 0x4000:42b6
+3de3:0ba6  LEA DI,[BP + 0xfd00]
+3de3:0baa  PUSH SS
+3de3:0bab  PUSH DI
+3de3:0bac  MOV DI,0xb60
+3de3:0baf  PUSH CS
+3de3:0bb0  PUSH DI
+3de3:0bb1  CALLF 0x4000:3714
+3de3:0bb6  LEA DI,[BP + 0xfe00]
+3de3:0bba  PUSH SS
+3de3:0bbb  PUSH DI
+3de3:0bbc  CALLF 0x4000:37a1
+3de3:0bc1  MOV DI,0xb63
+3de3:0bc4  PUSH CS
+3de3:0bc5  PUSH DI
+3de3:0bc6  CALLF 0x4000:37a1
+3de3:0bcb  LEA DI,[BP + 0xff00]
+3de3:0bcf  PUSH SS
+3de3:0bd0  PUSH DI
+3de3:0bd1  CALLF 0x4000:37a1
+3de3:0bd6  MOV DI,0xb65
+3de3:0bd9  PUSH CS
+3de3:0bda  PUSH DI
+3de3:0bdb  CALLF 0x4000:37a1
+3de3:0be0  PUSH CS
+3de3:0be1  CALL 0x3000:de5d
+3de3:0be4  MOV SP,BP
+3de3:0be6  POP BP
+3de3:0be7  RETF 0x4

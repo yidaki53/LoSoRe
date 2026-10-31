@@ -1,0 +1,44 @@
+; FUN_4170_088d  entry=4170:088d size=132
+4170:088d  PUSH BP
+4170:088e  MOV BP,SP
+4170:0890  MOV AX,0x4
+4170:0893  CALLF 0x4000:302f
+4170:0898  SUB SP,0x4
+4170:089b  CALLF 0x4000:2e08
+4170:08a0  MOV word ptr [BP + -0x4],AX
+4170:08a3  MOV word ptr [BP + -0x2],DX
+4170:08a6  MOV AX,word ptr [BP + -0x4]
+4170:08a9  MOV DX,word ptr [BP + -0x2]
+4170:08ac  SUB AX,0x0
+4170:08af  SBB DX,0x0
+4170:08b2  MOV word ptr [BP + -0x4],AX
+4170:08b5  MOV word ptr [BP + -0x2],DX
+4170:08b8  CMP word ptr [BP + -0x2],0x0
+4170:08bc  JG 0x4000:1fc6
+4170:08be  JL 0x4000:1fd0
+4170:08c0  CMP word ptr [BP + -0x4],-0x10
+4170:08c4  JBE 0x4000:1fd0
+4170:08c6  MOV word ptr [BP + -0x4],0xfff0
+4170:08cb  MOV word ptr [BP + -0x2],0x0
+4170:08d0  MOV AX,word ptr [BP + -0x4]
+4170:08d3  LES DI,[BP + 0x6]
+4170:08d6  MOV word ptr ES:[DI],AX
+4170:08d9  CMP word ptr [BP + -0x2],0x0
+4170:08dd  JL 0x4000:1fe8
+4170:08df  JG 0x4000:1ff6
+4170:08e1  CMP word ptr [BP + -0x4],0x200
+4170:08e6  JNC 0x4000:1ff6
+4170:08e8  LES DI,[BP + 0xa]
+4170:08eb  XOR AX,AX
+4170:08ed  MOV word ptr ES:[DI],AX
+4170:08f0  MOV word ptr ES:[DI + 0x2],AX
+4170:08f4  JMP 0x4000:200b
+4170:08f6  LES DI,[BP + 0x6]
+4170:08f9  PUSH word ptr ES:[DI]
+4170:08fc  CALLF 0x4000:2d8f
+4170:0901  LES DI,[BP + 0xa]
+4170:0904  MOV word ptr ES:[DI],AX
+4170:0907  MOV word ptr ES:[DI + 0x2],DX
+4170:090b  MOV SP,BP
+4170:090d  POP BP
+4170:090e  RET 0xa

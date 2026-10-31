@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "functions": {
+    "FUN_24dd_3f86": {
+      "declaration": "procedure FUN_24dd_3f86(param_1, param_2: Longint);",
+      "oracle": "liero-compare-routine-probe",
+      "arguments": [
+        {
+          "name": "param_1",
+          "role": "destination",
+          "representation": "packed far pointer: segment in high word, offset in low word"
+        },
+        {
+          "name": "param_2",
+          "role": "source",
+          "representation": "packed far pointer: segment in high word, offset in low word"
+        }
+      ],
+      "memory_model": "Read bytes from RealModeMemory at ((segment << 4) + offset) & 0xFFFFF.",
+      "observed_outputs": [
+        "ZF",
+        "CF"
+      ],
+      "instruction_semantics": "At 24DD:3F9A, CMP CL,AH compares source length against destination length; JBE transfers sourceLen <= destLen to 2000:8D70. The original bytes at 2000:8D70 are 0A C9 74 06 32 ED F3 A6 75 02 3A C4 8E DA CA 08 00: OR CL,CL; JZ 8D7A; XOR CH,CH; REPE CMPSB; JNZ 8D7C; CMP AL,AH; MOV DX,DS; RETF 8. When sourceLen > destLen, 24DD:3F9E sets CL to destinationLen and reaches the same CMPSB path, or branches to 8D7A when that count is zero. A mismatch returns through 8D7C after MOV DS,DX; those instructions preserve the compare flags. If the common prefix matches, CMP AL,AH at 8D7A or 24DD:3FAA computes sourceLen - destLen. Original-trace outcomes establish: at the first differing byte, ZF=0 and CF=1 iff source byte < destination byte; after an equal common prefix, ZF=1 iff lengths are equal and CF=1 iff sourceLen < destLen.",
+      "fixture_flag_table": "ZF uses mask 0x0040; CF uses mask 0x0001. Original LIERO.EXE trace masks: both-empty=0x0040; equal=0x0040; dest-less=0x0000; dest-greater=0x0001; source-shorter=0x0001; dest-shorter=0x0000; embedded-zero=0x0000; equal-maximum-length=0x0040; late-mismatch=0x0000. These are scoped observations for the named comparator fixtures only.",
+      "localized_repair_region": {
+        "start": "if srcLen <= destLen then",
+        "end": "RegisterCarryFlag := (srcLen < destLen);"
+      },
+      "prompt": "The checked Pascal declaration is authoritative. Both Longint arguments encode a real-mode far pointer with the segment in the high word and offset in the low word. Access bytes through RealModeMemory using ((segment << 4) + offset) & $FFFFF; do not cast either argument to a host Pointer or dereference it as host memory. The runtime represents ZF with RegisterZeroFlag and CF with RegisterCarryFlag; set both globals according to the assembly's compare outcomes on every return path, because Pascal comparisons do not update these modeled CPU flags. The scoped comparator observes ZF, CF, stack balance, and tested-memory non-mutation only. Preserve that scope and do not claim universal routine equivalence from these fixtures."
+    }
+  }
+}

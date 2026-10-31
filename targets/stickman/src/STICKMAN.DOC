@@ -1,0 +1,549 @@
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³                           ® TSS Online Services ¯                          ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ ÚÄ¿ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿ ÚÄ¿ ³
+³ ³ ³ ³                                                                ³ ³ ³ ³
+³ ³ ³ ³ StickMan    v1.11       copyright 1995, Total System Support   ³ ³ ³ ³
+³ ³ ³ ³                                                                ³ ³ ³ ³
+³ ÀÄÙ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ ÀÄÙ ³
+³                                                                            ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+      _________ _____ _____
+      \___  __// ___// ___/    PRESENTS:
+         / /  / /   / /
+        / /  / /__ / /__
+        \ \ /__  //__  /       ÚÄÄÄÄ ÄÄÂÄÄ ÄÂÄ ÚÄÄ ³ ³ ÃÄÂÄ¿ ÚÄÄ¿ ÃÄ¿
+         \/   / /   / /        ³       ³    ³  ³   ³ ³ ³ ³ ³ ³  ³ ³ ³
+           /\/ /   / /         ³       ³    ³  ³   ³ÚÙ ³ ³ ³ ³  ³ ³ ³
+  O        \  /   / /          ÀÄÄÄ¿   ³    ³  ³   Ã´  ³ ³ ³ ÅÄÄ´ ³ ³
+ /³\        \/   / /               ³   ³    ³  ³   ³³  ³   ³ ³  ³ ³ ³
+ / \          /\/ /                ³   ³    ³  ³   ³À¿ ³   ³ ³  ³ ³ ³
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\  /ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³   ÄÁÄ ÀÄÄ ³ ³ ³   ³ ³  ³ ³ ³
+               \/
+
+
+=======================
+   Table of Contents
+=======================
+
+             Introduction
+                   What Is StickMan?
+                   Liability
+                   Copyright
+                   Shareware
+                   Distribution
+                   Registration
+                   Quick Start
+             Installation
+                   System Requirements
+                   Files
+                   Setup
+                   Bulletins
+                   Using Door.Sys
+                   Using DorInfo.Def
+                   Using Chain.Txt
+                   Using Command Line Parameters
+                   Locked BaudRate
+             Game Play
+                   StartUp
+                   Menus
+                   Levels
+                   Movement
+                   Objects
+                   High Scores
+             Tech Notes
+                   Hanging Up
+                   StickMan.Log
+                   Changing the Ansi Files
+                   Changing the StickMan.Lvs File
+                   Door.Sys Format
+                   DorInfo.Def Format
+                   Chain.Txt Format
+             Credits
+                   Beta Testers
+
+==================
+   Introduction
+==================
+
+                --- What is StickMan? ---
+
+         StickMan is a BBS Door. Unlike most doors, StickMan is an arcade-
+        style game. In StickMan, players walk, jump, climb & fall in an
+        effort to avoid dangerous monsters and grab bonus points, health
+        power-ups etc. StickMan comes with several levels built in.
+
+         Setup is simple, and StickMan is compatable with any BBS that uses a
+        fossil driver, and can generate a Door.Sys, DorInfo.Def, or Chain.Txt.
+        Parameters can also be passed on the command line.
+
+         High scores bulletins are generated in ANSI color and plain text.
+
+         The Registered version of StickMan loads external levels, and
+        comes with level & monster editors, so you can create your own
+        custom levels and monsters. Registered Sysops also receive several
+        extra levels.
+
+
+                --- Liability ---
+
+         This program is provided "as is" and is without warranty of any kind.
+        No liability shall be assumed by Total System Support for direct or
+        consequential damage caused by your use or misuse of this software.
+                              
+
+                --- Copyright ---
+
+         StickMan, and all contents thereof, including but not limited to
+        screens, monsters, menus, levels, documentation and software, are
+        copyright (c) 1995 by Total System Support. Unauthorized duplication,
+        distribution or use is illegal and will result in criminal prosecution
+        and/or civil litagation.
+
+
+                --- Shareware ---
+
+         Shareware offers a try before you buy approach to software marketing.
+        The user receives a "Demo" or shareware version of the software, which
+        they are free to try out for a limited time period. Often the share-
+        ware version is missing some features, or is limited in some other way.
+
+         If the user decides to purchase the software, they "Register" it.
+        That is, they pay the author, and they receive the "registered" version
+        of the software.
+
+
+                --- Distribution ---
+
+         You may distribute the shareware version of StickMan, provided that
+        this archive is not modified in any way, and that you do not charge
+        money for the software. Disk vendors may charge a nominal ($3 or less)
+        fee for the disk the software is distributed on. BBS Sysops may provide
+        the shareware version of StickMan for download.
+
+         You may NOT distribute the registered version of StickMan under ANY
+        circumstances.
+
+
+                --- Registration ---
+
+         After the one month trial period, if you wish to continue using
+        StickMan, you must register. Registration costs very little : $15.
+
+         Registered Sysops will receive the following:
+                - the latest registered version of StickMan
+                - the ability to load external levels
+                - the external level editor
+                - the monster editor
+                - priority tech support
+
+         Shareware StickMan will stop functioning after your one month trial
+        period expires.
+
+         For details on how to register, see "Order.Frm".
+
+
+                --- Quick Start ---
+
+         To try playing StickMan right away, use local mode via command line
+        parameters. The simplest way is to type "STKMN_SW /PORT:0". This
+        will let you play using the name "Annon. User". For name parameters
+        see the "Using Command Line Parameters" section below.
+
+
+                --- What's New? ---
+
+         StickMan ver 1.11 added "Terminal Type" to options screen. Users
+        should select "Type 2" if their keystrokes are delayed durring game-
+        play. This causes a periodic delay in data sent to the terminal, which
+        some terminals require before they will send the users keystrokes.
+
+
+         Added features in StickMan ver 1.1 include:
+                User can see time remaining in door.
+                Help screen accessable durring game play.
+                Changed colors in high scores.
+
+
+
+
+==================
+   Installation
+==================
+
+                --- System Requirements ---
+
+            - FOSSIL driver
+            - 275k Available Base Memory
+            - 300k Disk Space (approx.)
+            - Dos 5.0 or higher ( previous versions not tested )
+            - BBS Software capable of running a door, passing data via:
+                                  "Door.Sys" style dropfile
+                               or "DoorInfo.Def" style dropfile
+                               or "Chain.Txt" style dropfile
+                               or command line parameters
+
+
+                --- Files ---
+
+         This archive should contian the following files:
+
+               sm1.ans   Intro Screen
+               sm2.ans   Main Menu Screen
+               sm3.ans   Options Screen
+               sm4.ans   Choose Level Screen
+               sm5.ans   Top Ten Screen
+               sm6.ans   High Scores Screen
+               sm7.ans   User Scores Screen
+               sm8.ans   Instruction Menu Screen
+               sm9.ans   Instruction Screen
+              sm10.ans   Instruction Screen
+              sm11.ans   Instruction Screen
+              sm12.ans   Instruction Screen
+              sm13.ans   Instruction Screen
+              sm14.ans   Instruction Screen
+              sm15.ans   Instruction Screen
+              sm16.ans   Instruction Screen
+              sm17.ans   Instruction Screen
+              sm18.ans   Header for Scores Bulletin
+              sm18.txt   Header for Scores Bulletin
+             order.frm   Order Form
+          stickman.doc   This Documentation
+          stickman.lvs   Levels File
+          stkmn_sw.exe   The Program
+           file_id.diz   Description File
+
+
+         StickMan will also create the following files when used:
+
+          stickman.log   Record of user log-in/out, errors, etc.
+          stickman.usr   User Data (scores, options, etc.)
+            topten.scr   Top Ten Scores Data
+
+
+                --- Setup ---
+
+         Setup for StickMan consists of two parts, installing files and
+        setting up your BBS to recognize StickMan.
+
+         The first part is very easy. Just create a new directory, and copy
+        all the files from this archive into it. That's all!
+
+         The second part is going to depend on which BBS software you are
+        using. Consult the documentation for your BBS software on how to
+        set up a door. See also "Using Door.Sys", "Using DorInfo.Def",
+        "Using Chain.Txt", and/or "Using Command Line Parameters" below.
+
+
+                --- Bulletins ---
+
+         StickMan generates two bulletins every time a user exits the door.
+                        - SM_Scores.ANS  - color version top ten scores
+                        - SM_Scores.TXT  - mono version top ten scores
+
+         You may freely delete, move or copy these files. StickMan creates
+        these files but does not read, or rely on them.
+
+
+                --- Using Door.Sys ---
+
+         If your BBS software uses a "Door.Sys" dropfile to configure doors,
+        you can use the "/Drop:" parameter to tell StickMan where to find
+        this file.
+
+        Example: If the Door.Sys file will be located in "C:\BBS\NODE1", use
+
+           "STKMN_SW /DROP:C:\BBS\NODE1"
+                        or
+           "STKMN_SW /DROP:C:\BBS\NODE1\"
+                        or
+           "STKMN_SW /DROP:C:\BBS\NODE1\DOOR.SYS"
+
+         StickMan will get the fossil port, baudrate, user name and node number
+        from the Door.Sys file.
+
+
+                --- Using DorInfo.Def ---
+
+         If your BBS software uses a "DorInfo.Def" dropfile to configure doors,
+        you can use the "/DOR:" parameter to tell StickMan where to find this
+        file. Since DorInfo style dropfiles include the node number in the
+        filename, you must include the full filename.
+
+        Example: If the DoorInfo file will be named "DOORINFO1.DEF", and will
+        be located in "C:\BBS\DOORS" use:
+
+                "STKMN_SW /DOR:C:\BBS\DOORS\DORINFO1.DEF"
+
+         StickMan will get the fossil port, baudrate, and user name from the
+        DorInfo file.
+
+
+                --- Using Chain.Txt ---
+
+         If your BBS software uses a "Chain.Txt" dropfile to configure doors,
+        you can use the "/Chain:" parameter to tell StickMan where to find
+        this file.
+
+        Example: If the Chain.Txt file will be located in "C:\BBS\NODE1", use
+
+           "STKMN_SW /CHAIN:C:\BBS\NODE1"
+                        or
+           "STKMN_SW /CHAIN:C:\BBS\NODE1\"
+                        or
+           "STKMN_SW /CHAIN:C:\BBS\NODE1\CHAIN.TXT"
+
+         StickMan will get the fossil port, baudrate, and user name from the
+        Chain.Txt file.
+
+
+                --- Using Command Line Parameters ---
+
+         If your BBS software uses none of the above dropfile formats, or
+        you need to override settings in the drop file, command line parameters
+        can be used. StickMan supports the following parameters:
+
+                Param   Example         Meaning
+                -------------------------------------------------------------
+                /PORT:  /PORT:1         fossil port to use (1 based) 0 = local
+                /BAUD:  /BAUD:38400     baud rate to use (optional)
+                /MIN:   /MIN:30         time user has remaining (default = 15)
+                /F:     /F:Joe          user's first name
+                /L:     /L:Smith        user's last name
+
+         Parameters can come in any order. These parameters can be used along
+        with the dropfile parameters mentioned in previous paragraphs. If the
+        "/Port:" parameter is used, the dropfile will be ignored. If a dropfile
+        is used along with "/BAUD:" and/or "/MIN:" the command line will
+        override the dropfile. The "/F:" and "/L:" parameters only apply if
+        no dropfile is used.
+        
+
+                --- Locked BaudRate ---
+
+         If you are using a locked baudrate (above 38400), any baudrate passed
+        to StickMan will be ignored by the fossil driver. StickMan does not
+        touch the com port directly in any way.
+
+
+
+===============
+   Game Play
+===============
+
+                --- StartUp ---
+
+         When the user enters the door, a title screen (sm1.ans) is displayed.
+        This screen gives the user something to look at while StickMan gets
+        a few things set up. The setup delay is very brief (2-3 sec.), and the
+        user is then prompted to "press any key".
+
+
+                --- Menus ---
+
+         StickMan features several menus, but they all basicly work the same
+        way. The up & down arrows, or "8" for up, and "2" for down, are used
+        to move the twirling line. Once you have moved to the item you want,
+        press Enter to select it. Select "Instructions" from the main menu for
+        more info about specific menus.
+
+
+                --- Levels ---
+
+         The shareware version of StickMan comes with 6 levels. Some have only
+        one screen, some have 4-5 screens. Each level must be completed in
+        sequence. Once a user has completed several levels, they may use the
+        "Choose Level" item from the main menu to select a previous level.
+
+
+                --- Movement ---
+
+         Durring gameplay, the user may walk, climb, jump and shoot using the
+        following keys:
+
+                        4 or Left arrow  = Walk Left
+                        6 or Right arrow = Walk Right
+
+                        8 or Up arrow    = Climb Up
+                        2 or Down arrow  = Climb Down
+
+                        7 or Home key    = Jump Left
+                        9 or PgUp key    = Jump Right
+
+                        , or <           = Shoot Left
+                        . or >           = Shoot Right
+
+         For more detailed information, see "Moving Around"
+        in the "Instructions" menu.
+
+
+                --- Objects ---
+
+         You will find these objects in various StickMan Levels:
+
+                        › ...... Bonus (worth one point)
+
+                        ï ...... Ammo (three shots worth)
+
+                        + ...... First Aid Kit
+
+                        ^ ...... Spike (don't step on any of these!)
+
+                        ê ...... Exit (white omega)
+
+                        ê ...... Teleport (other color omegas)
+
+         For information on structures, monsters, etc. see the "Instructions"
+        menu.
+
+
+                --- High Scores ---
+
+         StickMan keeps track of each players total score, as well as how
+        many of each type of monster a player has killed. The Top Ten
+        bulletins are based entirely on the player's total score.
+
+
+================
+   Tech Notes
+================
+
+                --- Hanging Up ---
+
+         Pressing "Alt-H" localy will cause StickMan to hang up on the user.
+
+
+                --- StickMan.Log ---
+
+         StickMan.Log is a plain text file that is created or appended to.
+        User Logons, Logoffs and program crashes are noted in the log, along
+        with a date & time. StickMan does not read this file, so you can freely
+        delete, edit, or truncate this file.
+
+
+                --- Changing the ANSI Files ---
+
+         Please do not distribute modified versions of StickMan. But, if
+        you would like to customize your own installation, you may modify
+        the SM*.ans files. The "Files" section above shows which Ansi is which.
+
+        A few do's and don'ts:
+         do: Make sure each new file starts with an ansi clear screen (Esc[2J)
+         do: Include a "changed" notice, for example: "New Screen by Joe Sysop"
+         do: Make sure the new file makes sense.
+      don't: Use more than 23 lines.
+      don't: Plagarise (copy other people's work)
+      don't: Break any laws. (copyright, libel, obsecnity, etc.)
+      don't: Make false claims regarding copyright or origin of StickMan.
+      don't: Change or omit the name "StickMan", or "T.S.S." etc.
+      don't: Attempt to obscure or hide the copyright notice (see below).
+      don't: Do anything your mother wouldn't approve of.
+
+         The Ansi Screens will be overwritten with the menu twirler and the
+        copyright notice. The twirler is dark gray on light gray background.
+        The copyright notice is black on a light gray background. Anything
+        you put in a replacement ansi wil be overwritten by these items.
+
+
+                --- Changing the StickMan.Lvs File ---
+
+         The Levels file is a plain text file that defines what levels are
+        used, and in which order. Since the shareware version does not use
+        external map files, you should NOT change this file in any way.
+
+
+                --- Door.Sys Format ---
+
+         StickMan expects the Door.Sys file to be a
+        plain text file with the following information:
+
+                Line 1  : "COMn" n = fossil port (1 based), this number must
+                                 be the fourth character on this line, all
+                                 other characters on this line are ignored.
+
+                Line 2  : BaudRate, just the number, nothing else.
+
+                Line 4  : Node Number, "0" = local. This number is used in
+                          the log file, and on the status bar.
+
+                Line 10 : User's Name.
+
+                Line 19 : Time the user has left, in minuets.
+
+         The node number is not crucial, but all other items are.
+
+
+                --- DorInfo.Def Format ---
+
+         StickMan expects the DorInfo.Def file to be a
+        plain text file with the following information:
+
+                Line 4  : "COMn" n = fossil port (1 based), this number must
+                                 be the fourth character on this line, all
+                                 other characters on this line are ignored.
+
+                Line 5  : BaudRate, followed by a blank space, and anything
+                          else on this line is ignored.
+
+                Line 7  : User's First Name
+                Line 8  : User's Last Name
+
+                Line 12 : Time the user has left, in minuets.
+
+                Line 13 : Node Number, "0" = local. This number is used in
+                          the log file, and on the status bar.
+
+         The node number is not crucial, but all other items are.
+
+
+                --- Chain.Txt Format ---
+
+         StickMan expects the Chain.Txt file to be a
+        plain text file with the following information:
+
+                Line 3  : User's Name
+
+                Line 16 : Time the user has left, in seconds.
+
+                Line 20 : BaudRate, just the number, nothing else.
+
+                Line 21 : Fossil port (1 based), just the number.
+
+                Line 13 : Node Number, "0" = local. This number is used in
+                          the log file, and on the status bar.
+
+         The node number is not crucial, but all other items are.
+
+
+                --- Future Features ---
+
+         If StickMan is well received, future versions may be released.
+        Some features we may be adding include:
+                        - On-Line Level & Monster Editors
+                        - More types of Scores
+                        - Flying Monsters
+                        - Monsters that Shoot
+                        - Multi-Player Support ?
+                        - User-Base Editor
+                        - Scrolling Levels
+                        - Elevators
+                        - Not Require Fossil
+
+         If you have more features to suggest, bug reports, comments, etc.,
+        send e-mail to bill.reamy@tssol.com
+
+
+=============
+   Credits
+=============
+
+                --- Beta Testers ---
+
+         Special Thanks to our dedicated team of Beta Testers:
+
+                Sandra Hamilton  1:398/5
+                Derek Cosby      1:274/26
+
+
+

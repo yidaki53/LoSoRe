@@ -1,0 +1,14 @@
+; FUN_42b5_0e79  entry=42b5:0e79 size=33
+42b5:0e79  MOV BX,SP
+42b5:0e7b  LES DI,SS:[BX + 0x4]
+42b5:0e7f  MOV AL,byte ptr SS:[BX + 0x8]
+42b5:0e83  MOV BL,AL
+42b5:0e85  XOR BH,BH
+42b5:0e87  MOV CL,0x3
+42b5:0e89  SHR BX,CL
+42b5:0e8b  MOV CL,AL
+42b5:0e8d  AND CL,0x7
+42b5:0e90  MOV AL,0x1
+42b5:0e92  SHL AL,CL
+42b5:0e94  TEST byte ptr ES:[BX + DI],AL
+42b5:0e97  RETF 0x6

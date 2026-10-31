@@ -1,0 +1,10 @@
+; FUN_410e_0257  entry=410e:0257 size=26
+410e:0257  MOV BX,SP
+410e:0259  MOV AL,byte ptr SS:[BX + 0x4]
+410e:025d  TEST AL,0xf0
+410e:025f  JZ 0x4000:1345
+410e:0261  AND AL,0xf
+410e:0263  OR AL,0x80
+410e:0265  AND byte ptr [0xeb08],0x70
+410e:026a  OR byte ptr [0xeb08],AL
+410e:026e  RETF 0x2

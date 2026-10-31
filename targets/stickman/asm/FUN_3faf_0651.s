@@ -1,0 +1,158 @@
+; FUN_3faf_0651  entry=3faf:0651 size=400
+3faf:0651  PUSH BP
+3faf:0652  MOV BP,SP
+3faf:0654  MOV AX,0x40e
+3faf:0657  CALLF 0x4000:302f
+3faf:065c  SUB SP,0x40e
+3faf:0660  LES DI,[BP + 0x6]
+3faf:0663  PUSH ES
+3faf:0664  PUSH DI
+3faf:0665  LEA DI,[BP + 0xfefe]
+3faf:0669  PUSH SS
+3faf:066a  PUSH DI
+3faf:066b  MOV AX,0xff
+3faf:066e  PUSH AX
+3faf:066f  CALLF 0x4000:372e
+3faf:0674  LEA DI,[BP + 0xfefe]
+3faf:0678  PUSH SS
+3faf:0679  PUSH DI
+3faf:067a  CALLF 0x4000:1702
+3faf:067f  OR AL,AL
+3faf:0681  JNZ 0x4000:01e7
+3faf:0683  CMP byte ptr [BP + 0xfefe],0x0
+3faf:0688  JZ 0x4000:01bd
+3faf:068a  MOV AL,byte ptr [BP + 0xfefe]
+3faf:068e  XOR AH,AH
+3faf:0690  MOV DI,AX
+3faf:0692  MOV AL,byte ptr [BP + DI + 0xfefe]
+3faf:0696  PUSH AX
+3faf:0697  MOV DI,0x625
+3faf:069a  PUSH CS
+3faf:069b  PUSH DI
+3faf:069c  CALLF 0x4000:39c9
+3faf:06a1  JNZ 0x4000:01bd
+3faf:06a3  LEA DI,[BP + 0xfbf2]
+3faf:06a7  PUSH SS
+3faf:06a8  PUSH DI
+3faf:06a9  LEA DI,[BP + 0xfefe]
+3faf:06ad  PUSH SS
+3faf:06ae  PUSH DI
+3faf:06af  CALLF 0x4000:3714
+3faf:06b4  MOV DI,0x645
+3faf:06b7  PUSH CS
+3faf:06b8  PUSH DI
+3faf:06b9  CALLF 0x4000:37a1
+3faf:06be  LEA DI,[BP + 0xfefe]
+3faf:06c2  PUSH SS
+3faf:06c3  PUSH DI
+3faf:06c4  MOV AX,0xff
+3faf:06c7  PUSH AX
+3faf:06c8  CALLF 0x4000:372e
+3faf:06cd  LEA DI,[BP + 0xfbf2]
+3faf:06d1  PUSH SS
+3faf:06d2  PUSH DI
+3faf:06d3  LEA DI,[BP + 0xfefe]
+3faf:06d7  PUSH SS
+3faf:06d8  PUSH DI
+3faf:06d9  CALLF 0x4000:3714
+3faf:06de  MOV DI,0x647
+3faf:06e1  PUSH CS
+3faf:06e2  PUSH DI
+3faf:06e3  CALLF 0x4000:37a1
+3faf:06e8  LEA DI,[BP + 0xfefe]
+3faf:06ec  PUSH SS
+3faf:06ed  PUSH DI
+3faf:06ee  MOV AX,0xff
+3faf:06f1  PUSH AX
+3faf:06f2  CALLF 0x4000:372e
+3faf:06f7  MOV byte ptr [BP + -0x1],0x0
+3faf:06fb  LEA DI,[BP + 0xfcf2]
+3faf:06ff  PUSH SS
+3faf:0700  PUSH DI
+3faf:0701  LEA DI,[BP + 0xfefe]
+3faf:0705  PUSH SS
+3faf:0706  PUSH DI
+3faf:0707  CALLF 0x4000:3045
+3faf:070c  LEA DI,[BP + 0xfcf2]
+3faf:0710  PUSH SS
+3faf:0711  PUSH DI
+3faf:0712  CALLF 0x4000:30b5
+3faf:0717  LEA DI,[BP + 0xfcf2]
+3faf:071b  PUSH SS
+3faf:071c  PUSH DI
+3faf:071d  LEA DI,[BP + 0xfdf2]
+3faf:0721  PUSH SS
+3faf:0722  PUSH DI
+3faf:0723  MOV AX,0xff
+3faf:0726  PUSH AX
+3faf:0727  CALLF 0x4000:342f
+3faf:072c  CALLF 0x4000:336a
+3faf:0731  LEA DI,[BP + 0xfcf2]
+3faf:0735  PUSH SS
+3faf:0736  PUSH DI
+3faf:0737  LEA DI,[BP + 0xfdf2]
+3faf:073b  PUSH SS
+3faf:073c  PUSH DI
+3faf:073d  MOV AX,0xff
+3faf:0740  PUSH AX
+3faf:0741  CALLF 0x4000:342f
+3faf:0746  CALLF 0x4000:336a
+3faf:074b  LEA DI,[BP + 0xfcf2]
+3faf:074f  PUSH SS
+3faf:0750  PUSH DI
+3faf:0751  MOV DI,0xa9e8
+3faf:0754  PUSH DS
+3faf:0755  PUSH DI
+3faf:0756  MOV AX,0xff
+3faf:0759  PUSH AX
+3faf:075a  CALLF 0x4000:342f
+3faf:075f  CALLF 0x4000:336a
+3faf:0764  LEA DI,[BP + 0xfcf2]
+3faf:0768  PUSH SS
+3faf:0769  PUSH DI
+3faf:076a  LEA DI,[BP + 0xfdf2]
+3faf:076e  PUSH SS
+3faf:076f  PUSH DI
+3faf:0770  MOV AX,0xff
+3faf:0773  PUSH AX
+3faf:0774  CALLF 0x4000:342f
+3faf:0779  CALLF 0x4000:336a
+3faf:077e  LEA DI,[BP + 0xfcf2]
+3faf:0782  PUSH SS
+3faf:0783  PUSH DI
+3faf:0784  LEA DI,[BP + 0xfdf2]
+3faf:0788  PUSH SS
+3faf:0789  PUSH DI
+3faf:078a  MOV AX,0xff
+3faf:078d  PUSH AX
+3faf:078e  CALLF 0x4000:342f
+3faf:0793  CALLF 0x4000:336a
+3faf:0798  LEA DI,[BP + 0xfcf2]
+3faf:079c  PUSH SS
+3faf:079d  PUSH DI
+3faf:079e  LEA DI,[BP + 0xfdf2]
+3faf:07a2  PUSH SS
+3faf:07a3  PUSH DI
+3faf:07a4  MOV AX,0xff
+3faf:07a7  PUSH AX
+3faf:07a8  CALLF 0x4000:342f
+3faf:07ad  CALLF 0x4000:336a
+3faf:07b2  LEA DI,[BP + 0xfcf2]
+3faf:07b6  PUSH SS
+3faf:07b7  PUSH DI
+3faf:07b8  LEA DI,[BP + 0xfdf2]
+3faf:07bc  PUSH SS
+3faf:07bd  PUSH DI
+3faf:07be  MOV AX,0xff
+3faf:07c1  PUSH AX
+3faf:07c2  CALLF 0x4000:342f
+3faf:07c7  CALLF 0x4000:336a
+3faf:07cc  LEA DI,[BP + 0xfcf2]
+3faf:07d0  PUSH SS
+3faf:07d1  PUSH DI
+3faf:07d2  LEA DI,[BP + 0xfdf2]
+3faf:07d6  PUSH SS
+3faf:07d7  PUSH DI
+3faf:07d8  MOV AX,0xff
+3faf:07db  PUSH AX
+3faf:07dc  CALLF 0x4000:342f

@@ -1,0 +1,5 @@
+; FUN_42b5_01e7  entry=42b5:01e7 size=7
+42b5:01e7  MOV DL,AL
+42b5:01e9  MOV AH,0x6
+42b5:01eb  INT 0x21
+42b5:01ed  RET

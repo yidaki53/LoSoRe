@@ -1,0 +1,4 @@
+; FUN_410e_0475  entry=410e:0475 size=7
+410e:0475  MOV AL,0xd
+410e:0477  CALL 0x4000:155c
+410e:047a  MOV AL,0xa

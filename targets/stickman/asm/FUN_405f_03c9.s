@@ -1,0 +1,18 @@
+; FUN_405f_03c9  entry=405f:03c9 size=39
+405f:03c9  PUSH BP
+405f:03ca  MOV BP,SP
+405f:03cc  XOR AX,AX
+405f:03ce  CALLF 0x4000:302f
+405f:03d3  CMP word ptr [0xaaec],0x0
+405f:03d8  JNZ 0x4000:09cc
+405f:03da  JMP 0x4000:09de
+405f:03dc  MOV AH,0x8
+405f:03de  MOV DX,word ptr [0xaaec]
+405f:03e2  DEC DX
+405f:03e3  INT 0x14
+405f:03e5  MOV AH,0x5
+405f:03e7  MOV DX,word ptr [0xaaec]
+405f:03eb  DEC DX
+405f:03ec  INT 0x14
+405f:03ee  POP BP
+405f:03ef  RETF
