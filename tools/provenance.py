@@ -16,6 +16,10 @@ import hashlib
 import pathlib
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "engine"))
+import knowledge  # noqa: E402
+import oracle_recommender  # noqa: E402
+
 BEGIN = "<!-- BEGIN AUTO (tools/provenance.py) -->"
 END = "<!-- END AUTO -->"
 
@@ -155,9 +159,19 @@ def provenance(target: str, byod: pathlib.Path, platform: str | None = None) -> 
     tc = detect_toolchain(byod)
     tcyaml = _write_toolchain_yaml(target, tc, platform)
 
+    # Auto-recommend oracle type based on prior targets with same toolchain
+    data = knowledge.load()
+    recommended_oracle = oracle_recommender.recommend_oracle(
+        target, tc["compiler"], tc["platform"], data)
+    # Add recommendation to toolchain.yaml
+    tcyaml_text = tcyaml.read_text()
+    tcyaml.write_text(
+        tcyaml_text.rstrip() + f"\noracle: {recommended_oracle}\n")
+
     auto = [BEGIN, f"- files: {len(files)}",
             f"- detected toolchain: {tc['compiler']} ({tc['compiler_confidence']}), "
-            f"language={tc['language']}, platform={platform or tc['platform']}"]
+            f"language={tc['language']}, platform={platform or tc['platform']}",
+            f"- recommended oracle: {recommended_oracle}"]
     for p in files[:50]:
         blob = p.read_bytes()[:1 << 20]
         auto.append(f"- {p.name}: sha1={sha1(p)[:16]} compiler~{compiler_id(blob)}")

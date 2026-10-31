@@ -3,7 +3,7 @@ compiler: turbo-pascal-7
 compiler_confidence: high
 language: pascal
 platform: dos
-detected: 2026-10-11
+detected: 2026-10-27
 evidence:
   - LIEROENG.TXT: "Runtime error" (strong)
   - LIERO.TXT: "Runtime error" (strong)
@@ -14,3 +14,4 @@ evidence:
   - LIERO.EXE: "Runtime error" (strong)
   - LIERO.EXE: "Borland" (medium)
   - (format) MZ executable (DOS real-mode)
+oracle: dat-parity
