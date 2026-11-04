@@ -1,5 +1,8 @@
-{ liero::FUN_24dd_46b1 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_46b1.s via skeleton; UNMATCHED until verify passes.
+{ liero::FUN_24dd_46b1 - historical manual source, scoped state projection.
+  Oracle: complete original-byte review + actual-source state differential.
+  DosMemory must mirror a proven writable/nonaliasing DS state window;
+  CodeMemory[$46E7..$46E8] must contain original CS constant $8405.
+  CPU flags/register residue and actual caller DS provenance remain unresolved.
   Original assembly retained in asm/FUN_24dd_46b1.s (INCLUDE_ASM residue).
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
@@ -59,11 +62,9 @@ begin
   nextHigh := (nextHigh and $00FF) or
     (Word(Byte((nextHigh shr 8) + (stateHigh and $00FF))) shl 8);
 
-  nextLow := Word(Word(DosMemory[$6412]) or
-    (Word(DosMemory[$6413]) shl 8));
-  Inc(nextLow);
+  nextLow := Word((LongWord(Word(product)) + 1) and $FFFF);
   if nextLow = 0 then
-    Inc(nextHigh);
+    nextHigh := Word((LongWord(nextHigh) + 1) and $FFFF);
 
   DosMemory[$6412] := Byte(nextLow);
   DosMemory[$6413] := Byte(nextLow shr 8);

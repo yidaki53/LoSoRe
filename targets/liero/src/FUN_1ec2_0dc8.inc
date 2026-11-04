@@ -1,5 +1,8 @@
-{ liero::FUN_1ec2_0dc8 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1ec2_0dc8.s via skeleton; UNMATCHED until verify passes.
+{ liero::FUN_1ec2_0dc8 - historical manual Pascal, partially reviewed.
+  Oracle: original-byte/static review + scoped actual-source arena differential.
+  Linear base projection requires nonwrapping far offset and valid writable,
+  nonaliasing memory. Original offset wrapping and CPU/stack-write ABI remain
+  unsupported; no whole-routine recovery or caller provenance is claimed.
   Original assembly retained in asm/FUN_1ec2_0dc8.s (INCLUDE_ASM residue).
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }

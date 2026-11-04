@@ -1,6 +1,8 @@
-{ liero::FUN_1ec2_086b — signed comparison result (-1, 0, or 1).
-  Oracle: none; not compared with the DOS executable. }
-function FUN_1ec2_086b(param_1: Word; param_2: Integer): Word;
+{ liero::FUN_1ec2_086b — signed-word result ($FFFF, 0, or 1).
+  Oracle: complete original-byte source review and exhaustive signed-word
+  return differential. unusedWord is not read by the original near routine.
+  Valid SS frame/arguments required; host ABI and caller reachability differ. }
+function FUN_1ec2_086b(unusedWord: Word; value: Integer): Word;
 begin
-  FUN_1ec2_086b := SignWord(param_2);
+  FUN_1ec2_086b := SignWord(value);
 end;

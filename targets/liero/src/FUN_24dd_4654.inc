@@ -1,5 +1,8 @@
-{ liero::FUN_24dd_4654 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_4654.s via skeleton; UNMATCHED until verify passes.
+{ liero::FUN_24dd_4654 - historical manual source, scoped random scaling.
+  Oracle: original-byte review + actual-source state/return differential.
+  Requires the checked FUN_24dd_46b1 DS-state/CS-constant premises.
+  Result bits equal high32(nextState * unsigned bound); modeled CPU residue
+  and caller DS/buffer provenance remain unresolved.
   Original assembly retained in asm/FUN_24dd_4654.s (INCLUDE_ASM residue).
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
