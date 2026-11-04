@@ -4,6 +4,15 @@ procedure FUN_24dd_397a;
 var
   savedSegment, savedObjectOffset, returned: Word;
 begin
+  if LieroBufferObject = nil then
+    RunError(211);
+  if PWord(PByte(LieroBufferObject) + 24)^ = $37B3 then
+  begin
+    RegisterAX := LieroInvokeBufferWrite($18);
+    RegisterZeroFlag := RegisterAX = 0;
+    if RegisterAX <> 0 then GlobalWord6410 := RegisterAX;
+    Exit;
+  end;
   if not Assigned(LieroDispatchMethod) then
     RunError(211);
   if (RegisterBX <> LieroBufferObjectOffset) or

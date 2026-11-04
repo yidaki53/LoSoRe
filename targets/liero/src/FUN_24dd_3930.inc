@@ -1,27 +1,24 @@
-{ liero::FUN_24dd_3930 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_3930.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_3930.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __stdcall16far FUN_24dd_3930(undefined4 param_1)
-// 
-// {
-//   int iVar1;
-//   undefined1 in_ZF;
-//   
-//   iVar1 = (int)param_1;
-//   FUN_24dd_3899();
-//   if (((bool)in_ZF) && (*(int *)(iVar1 + 0x1a) != 0)) {
-//     FUN_24dd_397a();
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
+{ Oracle: original3930 CRLF source and checked3899/397a composition.
+  Longint retains original far-pointer bits, not a native host pointer. }
 procedure FUN_24dd_3930(param_1: Longint);
+var
+  bits, sourceAddress: LongInt;
 begin
-  { TODO: translate from asm/FUN_24dd_3930.s — UNMATCHED until an oracle passes }
+  bits := param_1;
+  RegisterBX := bits and $FFFF;
+  RegisterES := (bits shr 16) and $FFFF;
+  sourceAddress := LongInt(RegisterDS) * 16 + $6424;
+  if (RegisterDS <> LieroTextDataSegment) or
+     (sourceAddress + 2 > $100000) or
+     (RealModeMemory[sourceAddress] <> 13) or
+     (RealModeMemory[sourceAddress + 1] <> 10) then RunError(211);
+  RegisterAX := 2;
+  RegisterSI := $6424;
+  RegisterDX := RegisterDS;
+  FUN_24dd_3899;
+  if RegisterZeroFlag then begin
+    RegisterZeroFlag := PWord(PByte(LieroBufferObject) + 26)^ = 0;
+    if not RegisterZeroFlag then FUN_24dd_397a;
+  end;
+  RegisterSP := (LongInt(RegisterSP) + 8) and $FFFF;
 end;
-

@@ -2,6 +2,7 @@ program ProbeLieroBufferHandler;
 {$MODE TP}
 uses LieroRuntime;
 {$I FUN_24dd_375e.inc}
+{$I FUN_24dd_37b3.inc}
 {$I FUN_24dd_39ab.inc}
 {$I FUN_24dd_390e.inc}
 {$I FUN_24dd_3923.inc}

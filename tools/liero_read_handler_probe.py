@@ -958,6 +958,7 @@ def candidate_sources(root: pathlib.Path, handler: str) -> list[pathlib.Path]:
                 "LieroRuntime.pas",
                 "FUN_24dd_374d.inc",
                 "FUN_24dd_375e.inc",
+                "FUN_24dd_37b3.inc",
                 "FUN_24dd_37ec.inc",
                 "FUN_24dd_38f0.inc",
                 "FUN_24dd_390e.inc",
@@ -974,6 +975,7 @@ def candidate_sources(root: pathlib.Path, handler: str) -> list[pathlib.Path]:
             for name in (
                 "LieroRuntime.pas",
                 "FUN_24dd_375e.inc",
+                "FUN_24dd_37b3.inc",
                 "FUN_24dd_39ab.inc",
                 "FUN_24dd_390e.inc",
                 "FUN_24dd_3923.inc",

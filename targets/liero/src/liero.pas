@@ -164,7 +164,6 @@ uses LieroDat, LieroRuntime;
 {$INCLUDE FUN_2494_0060.inc}
 {$INCLUDE FUN_249c_0000.inc}
 {$INCLUDE FUN_249c_0013.inc}
-{$INCLUDE FUN_249c_0037.inc}
 {$INCLUDE FUN_249c_0159.inc}
 {$INCLUDE FUN_249c_0180.inc}
 {$INCLUDE FUN_249c_019d.inc}
@@ -180,7 +179,6 @@ uses LieroDat, LieroRuntime;
 {$INCLUDE FUN_24cb_00a7.inc}
 {$INCLUDE FUN_24dd_0000.inc}
 {$INCLUDE FUN_24dd_00b1.inc}
-{$INCLUDE FUN_24dd_010f.inc}
 {$INCLUDE FUN_24dd_0116.inc}
 {$INCLUDE FUN_24dd_01f0.inc}
 {$INCLUDE FUN_24dd_01fe.inc}
@@ -240,7 +238,9 @@ uses LieroDat, LieroRuntime;
 {$INCLUDE FUN_24dd_36c4.inc}
 {$INCLUDE FUN_24dd_3711.inc}
 {$INCLUDE FUN_24dd_374d.inc}
+{$INCLUDE FUN_24dd_010f.inc}
 {$INCLUDE FUN_24dd_375e.inc}
+{$INCLUDE FUN_24dd_37b3.inc}
 {$INCLUDE FUN_24dd_39ab.inc}
 {$INCLUDE FUN_24dd_390e.inc}
 {$INCLUDE FUN_24dd_3923.inc}
@@ -252,6 +252,7 @@ uses LieroDat, LieroRuntime;
 {$INCLUDE FUN_24dd_3930.inc}
 {$INCLUDE FUN_24dd_3951.inc}
 {$INCLUDE FUN_24dd_397a.inc}
+{$INCLUDE FUN_249c_0037.inc}
 {$INCLUDE FUN_24dd_3988.inc}
 {$INCLUDE FUN_24dd_39c3.inc}
 {$INCLUDE FUN_24dd_3a4b.inc}

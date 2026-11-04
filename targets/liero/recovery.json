@@ -1026,28 +1026,44 @@
       }
     },
     "FUN_1ec2_0000": {
-      "assembly_sha256": "",
+      "assembly_sha256": "ad0e0cd4cbe289682e641ceb733c369ab23d5dcd2178174d700032c1837bd020",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "Original 24-byte leaf has no calls; source delegates to reviewed forward dword helper in src/LieroRuntime.pas:72."
+        ],
+        "control_flow": [
+          "Original bytes at file 66448: 5589e51ec5760cc47e088b4e06c1e90266f3a51fc9ca0a00; SHR CX,2, REP MOVSD, POP DS, LEAVE, RETF10. tools/liero_dword_copy_contract.py checks the full shape and actual MZ relocation exclusions."
+        ],
+        "data_references": [
+          "Entry SP+10 source far pointer, SP+6 destination far pointer, SP+4 unsigned count. Valid disjoint nonwrapping buffers and stack/code separation are preconditions; no globals accessed by this leaf."
+        ],
+        "signature_and_abi": [
+          "src/FUN_1ec2_0000.inc maps Word byteCount and host source/destination pointers to memory effects only. Entry DF=0 required; original registers/flags/far-return ABI are not translated."
+        ],
+        "state_and_memory_effects": [
+          "CopyDWordsForward loads/stores one four-byte temporary per iteration, advances both host pointers by four and decrements the dword count. Helper SHA256 63541667390fec5715e2f1cdfdcdc036ef3a016e5dccdbeabb2d6e4508a3c379.",
+          "tests/test_liero_dword_copy_contract.py::test_original_bytes_vs_developer_pascal_projection additionally compiles the actual target include/helper and compares all 544 arena bytes in each of 774 original-byte cases (421056 bytes), not merely a separate generated projection."
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "Partial source review 2026-11-02: actual target Pascal/helper memory effects match original bytes for 774 fixed disjoint-buffer DF=0 cases, counts 0..257 and dirty seeds A5/5A/FF. Source parameter names clarified without changing the existing algorithm. Whole-routine/source recovery is not attested: entry DF=1, caller pointer/stack provenance, larger original inputs and full flags/register/return ABI remain unresolved. Immediate caller predecessor FUN_1000_5e66 is 11677 bytes with unresolved calls and remains deferred. Session files/liero-actual-copy-source-20261102 retain actual-source snapshots, precompile freeze and source-bound results. This review intentionally supersedes the earlier unreviewed ledger snapshot, not its historical evidence.",
+      "reviewer": "Copilot scoped source review",
       "source_file": "src/FUN_1ec2_0000.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "7f32122c696b1d4908cb3853fc8b36dff8a7f5bd743fe0aff462f3cc6dc25afa",
+      "status": "partially_recoverable",
       "unrecoverable_reason": "",
       "verification": {
         "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "host_test_references": [
+          "tests/test_liero_dword_copy_contract.py::test_original_bytes_vs_developer_pascal_projection"
+        ],
+        "host_test_status": "passed",
+        "notes": "Actual target source/helper passes 774 finite memory cases with fpc -Mtp -Cr. Full target compiles. Broader runtime suite stops before this leaf at unrelated Halt(97), or FUN_24dd_4161.inc:62 under -Cr; no whole-suite pass claimed.",
+        "original_binary_reason": "Scoped actual-source memory differential passes; full original routine/caller ABI and arbitrary input parity remain blocked.",
+        "original_binary_references": [
+          "tests/test_liero_dword_copy_contract.py::test_original_bytes_vs_developer_pascal_projection",
+          "tools/liero_dword_copy_caller.py"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_1ec2_0018": {
@@ -1226,28 +1242,45 @@
       }
     },
     "FUN_1ec2_086b": {
-      "assembly_sha256": "",
+      "assembly_sha256": "17e2396a925dacb4583d7a6fa544ce2ec420cc4356e259608ad9d8d88b265c8a",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "No original callees. Source calls the existing SignWord helper; all three signed comparison/result paths were inspected and match the original value partition."
+        ],
+        "control_flow": [
+          "Original image SHA256 e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1, file68603, exact42 bytes c8020000837e06007d07c746feffffeb12837e06007e07c746fe0100eb0531c08946fe8b46fec9c20400. Actual MZ table has no overlapping relocations.",
+          "Byte offsets8/15/21/28 branch to17/35/30/35 respectively. Signed CMP value,0 plus JGE selects negative -> local FFFFh; nonnegative CMP/JLE separates positive -> local1 and zero -> XOR AX,AX/local0. All paths join MOV AX,[BP-2], LEAVE, RET4. No other branch/call/entry path in this source contract."
+        ],
+        "data_references": [
+          "Frame BP+6 input, BP-2 local result, saved BP/near-return and two argument words only; no source access to BP+4 and no global/code data load. Host source has no state writes except function return. Helper SHA256 63541667390fec5715e2f1cdfdcdc036ef3a016e5dccdbeabb2d6e4508a3c379."
+        ],
+        "signature_and_abi": [
+          "Original near routine: ENTER2 creates BP frame; BP+6 is signed value (entry SP+4); BP+4 (entry SP+2) is unread. RET4 consumes two argument words. src/FUN_1ec2_086b.inc preserves the unusedWord/value interface with a Word result. Valid writable nonaliasing SS frame/arguments and unmodified code are required; host calling convention differs.",
+          "src/LieroRuntime.pas:157 SignWord uses signed Integer comparisons; the actual-source test requires SizeOf(Integer)=2 under fpc -Mtp -Cr."
+        ],
+        "state_and_memory_effects": [
+          "Only SS frame/return/argument accesses occur. Frame-local result is fully assigned before use; AX is FFFFh for negative,0 for zero,1 for positive. No globals/external services. ENTER/LEAVE restore BP and RET4 balances valid near-call stack.",
+          "tests/test_liero_sign_source.py::test_actual_signed_word_leaf_all_inputs snapshots the actual include/helper and freezes identities before execution. All65536 signed-word patterns agree with original and independent return specification; original-only BP1234h, SPFFFEh, alternating entry DF, DS/SS checked. Exhaustive value-domain evidence is not exhaustive machine-state or ABI equivalence."
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "2026-11-02 complete static/source review, not promotion from finite traces alone. Every original instruction and all signed branches mapped to the actual existing Pascal body/helper; frame-only storage abstracted to local/function result. The first argument is statically unread. The full signed-word return domain also matches original execution. This is a reviewed historical-manual source-level reconstruction under valid frame/argument/nonaliasing preconditions, not original textual source identity, learned recovery, full machine-state/host-DOS ABI equivalence or normal-program reachability. No caller/neighbor is automatically accepted. Persistent source/hash/trace evidence: session files/liero-sign-source-review-20261102/test_actual_signed_word_leaf_a0/.",
+      "reviewer": "Copilot complete source-level review",
       "source_file": "src/FUN_1ec2_086b.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "633678e49247d3efc7ce4926223a0d009cf629bd0ce2d0f3c84586f2f4bdf9ee",
+      "status": "source_recovered",
       "unrecoverable_reason": "",
       "verification": {
-        "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "has_external_effects": false,
+        "host_test_references": [
+          "tests/test_liero_sign_source.py::test_actual_signed_word_leaf_all_inputs"
+        ],
+        "host_test_status": "passed",
+        "notes": "Actual target source/helper compiled with fpc -Mtp -Cr; all65536 signed-word inputs return expected FFFFh/0/1. Ignored word varies as input XOR AAAAh; original DF alternates and is preserved. Static nonuse proves ignored-argument independence, not sampling alone. No model request, training-example promotion or unseen-transfer claim.",
+        "original_binary_reason": "Exhaustive signed-word return differential and original-only BP/SP/DF/DS/SS observations pass. Unmodified-program reachability and full machine-state/host-DOS ABI parity remain unverified; not a routine-wide original-binary ledger pass.",
+        "original_binary_references": [
+          "tests/test_liero_sign_source.py::test_actual_signed_word_leaf_all_inputs"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_1ec2_0895": {
@@ -1276,28 +1309,43 @@
       }
     },
     "FUN_1ec2_09bd": {
-      "assembly_sha256": "",
+      "assembly_sha256": "e57ce89ce04bec35aae2e10d882d64c67d507c7501699f1918b60c9d2eccd37d",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "No original callees. Actual source delegates to inspected SignWord signed Integer negative/positive/zero helper; TP Integer size2 checked."
+        ],
+        "control_flow": [
+          "Original42 bytes at file68941 independently checked against c8020000837e06007d07c746feffffeb12837e06007e07c746fe0100eb0531c08946fe8b46fec9c20400. Actual MZ table has no overlap. Relative branches8/15/21/28 ->17/35/30/35 checked at this entry. Negative assignsFFFFh, positive1, zero0; all join local result load/LEAVE/RET4. Complete paths reviewed, not inferred from sibling acceptance."
+        ],
+        "data_references": [
+          "Frame BP+6 input/BP-2 result/savedBP/near-return only; BP+4 statically unread for every input. No globals or code-data loads."
+        ],
+        "signature_and_abi": [
+          "Independent entry1EC2:09BD review: ENTER2 creates BP frame; BP+6 signed input, BP+4 unread; near RET4 consumes two argument words. Actual target FUN_1ec2_09bd(unusedWord:Word;value:Integer):Word and SignWord helper preserve value semantics. Valid nonaliasing writable frame/arguments/code required; host ABI differs."
+        ],
+        "state_and_memory_effects": [
+          "Only valid SS frame/arguments/return and local BP-2 are accessed; local assigned on every path; AX returnsFFFFh/0/1. No global access, external service or direction-changing instruction. tests/test_liero_sign_source.py::test_actual_signed_word_leaf_all_inputs[09bd] checks all65536 actual-source/original returns and original-only BP/SP/alternatingDF/DS/SS.",
+          "Actual helper SHA25663541667390fec5715e2f1cdfdcdc036ef3a016e5dccdbeabb2d6e4508a3c379; source/helper/method freeze and artifact hashes retained in session files/liero-sign-connected-20261102/test_actual_signed_word_leaf_a1/."
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "2026-11-02 independent complete byte/branch/source review of the historical manual sibling at original file68941. Every instruction/path mapped to actual include/helper; all65536 signed-word returns corroborate. Acceptance is not copied automatically from086b or based on tests alone. Valid writable nonaliasing SS frame/arguments/unmodified code are required. No original text identity, model improvement, arbitrary machine-state/host-DOS ABI parity or normal-program reachability claim. Other siblings and callers stay unresolved; no training promotion.",
+      "reviewer": "Copilot independent complete source-level review",
       "source_file": "src/FUN_1ec2_09bd.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "999d4e9996ceb00732377cf7656524aa7a426894623d1eccd9d0cbfb85215431",
+      "status": "source_recovered",
       "unrecoverable_reason": "",
       "verification": {
-        "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "has_external_effects": false,
+        "host_test_references": [
+          "tests/test_liero_sign_source.py::test_actual_signed_word_leaf_all_inputs[09bd]"
+        ],
+        "host_test_status": "passed",
+        "notes": "Actual source/helper snapshots compiled -Mtp -Cr at this entry. Ignored word varies as input XOR AAAAh; static nonuse proves independence. Exhaustive value-domain return check, no model request/holdout/training promotion.",
+        "original_binary_reason": "All signed-word returns and original-only BP/SP/DF/DS/SS pass; host/DOS ABI, all machine states and normal-program reachability remain unverified.",
+        "original_binary_references": [
+          "tests/test_liero_sign_source.py::test_actual_signed_word_leaf_all_inputs[09bd]"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_1ec2_09e7": {
@@ -1476,28 +1524,43 @@
       }
     },
     "FUN_1ec2_0dc8": {
-      "assembly_sha256": "",
+      "assembly_sha256": "08874d82e271b28684166b5f783230434bbeadb012e8791f5be82cc3ae2b4c81",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "Original62-byte leaf contains no calls; five conditional exits join LEAVE/RETF10 at slice58."
+        ],
+        "control_flow": [
+          "tests/test_liero_draw_source.py authenticates original file69976/all62 bytes/no overlapping actual MZ relocations. OR color,0; signed column/row bounds0..157; LES/SHL/ADD/store; all exits checked."
+        ],
+        "data_references": [
+          "BP+6 offset, BP+8 segment, BP+10 low color byte, BP+12 signed row, BP+14 signed column. OR [BP+10],0 is a same-value stack write, not a pure read. No DS/global access. Writable nonaliasing frame/code/arguments and destination are explicit premises."
+        ],
+        "signature_and_abi": [
+          "Existing Longint linear-base/Char/Integer host signature retained. Original computes (offset+row*320+column) mod65536 before segment addition. Linear projection agrees only without far-offset/physical wrap; flags/register/far-return and same-value stack-write ABI not translated."
+        ],
+        "state_and_memory_effects": [
+          "Actual target source and unchanged LieroRuntime tested with fpc -Mtp -Cr:53 scoped full-arena cases, three158x158 grids (74892 writes), colors0/1/127/128/255, signed coordinate boundaries and two dirty fills. Every65552-byte arena agrees, including16 guard bytes.",
+          "Excluded offset-wrap control at offset15139,row157,column157: original writes offset0; linear Pascal writes65536. This is a preserved counterexample, not a passing parity case. config/routine_contracts.json publishes the limited checked contract."
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "Partial source review2026-11-02 of historical manually reconstructed body, not generated recovery. Complete original-byte path review supports nonwrapping memory-effects projection. Max displacement50397; sufficient offset<=15138, physical base+50397<1MiB and proven writable nonaliasing bounds.53 scoped arena cases pass; one excluded far-offset-wrap counterexample demonstrates why full recovery is not attested. Original-only BP/SP/DF/DS/SS observations are not host ABI equivalence. Actual caller0895 buffer provenance/random-state contract remain blocked. Session files/liero-draw-reviewed-20261102/test_actual_draw_source_and_or0 retain exact source/method freezes and original/Pascal outputs.",
+      "reviewer": "Copilot scoped source review",
       "source_file": "src/FUN_1ec2_0dc8.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "5491e4c9572928dfd94ab4de6473f90d2c0fadcb25fe6e9d9e8416eb08685601",
+      "status": "partially_recoverable",
       "unrecoverable_reason": "",
       "verification": {
-        "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "has_external_effects": false,
+        "host_test_references": [
+          "tests/test_liero_draw_source.py::test_actual_draw_source_and_original_offset_wrap"
+        ],
+        "host_test_status": "passed",
+        "notes": "Historical actual Pascal body tested, not a generated candidate. All3474256 scoped arena bytes plus74892 grid writes checked. Original-only BP/SP/DF/DS/SS observations are not host ABI parity. One wrap mismatch is intentionally retained outside the accepted input scope.",
+        "original_binary_reason": "53 nonwrapping memory-effects cases pass; excluded far-offset-wrap counterexample and full CPU/stack-write ABI prevent whole-routine parity. Caller buffer provenance remains unknown.",
+        "original_binary_references": [
+          "tests/test_liero_draw_source.py::test_actual_draw_source_and_original_offset_wrap"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_1ec2_0e06": {
@@ -4792,28 +4855,52 @@
       }
     },
     "FUN_24dd_04ed": {
-      "assembly_sha256": "",
+      "assembly_sha256": "1b5f3ed8a3b6cab61f37933ac63cb0662d59aca5358f226ff7787565b40fe851",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "asm/FUN_24dd_04ed.s",
+          "docs/RECONSTRUCTION.md#source-closure-pending-error-take-and-clear04ed"
+        ],
+        "control_flow": [
+          "asm/FUN_24dd_04ed.s",
+          "docs/RECONSTRUCTION.md#source-closure-pending-error-take-and-clear04ed"
+        ],
+        "data_references": [
+          "asm/FUN_24dd_04ed.s",
+          "src/LieroRuntime.pas",
+          "docs/RECONSTRUCTION.md#source-closure-pending-error-take-and-clear04ed"
+        ],
+        "signature_and_abi": [
+          "asm/FUN_24dd_04ed.s",
+          "docs/RECONSTRUCTION.md#source-closure-pending-error-take-and-clear04ed",
+          "../../tests/test_liero_error_exchange_source.py"
+        ],
+        "state_and_memory_effects": [
+          "asm/FUN_24dd_04ed.s",
+          "docs/RECONSTRUCTION.md#source-closure-pending-error-take-and-clear04ed",
+          "../../tests/test_liero_error_exchange_source.py",
+          "/home/robin/.copilot/session-state/de43c392-1ece-4ca7-a005-27231113fe27/files/error-exchange-source-20261103/test_original_vs_actual_error_0/result.json"
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "Reviewed all seven original bytes at file92717 with no overlapping MZ relocation:33c087061064cb. XOR establishes AX0/CF0/ZF1/PF1/SF0/OF0; XCHG returns oldDS6410 and stores0 without changing flags; RETF consumes only far return. No calls, branches or further paths. Actual target include models AX and logical GlobalWord6410 plus available CF/ZF/DF; full65536-word repeated-call comparison corroborates it. Source acceptance is the existing sequential logical-global/register model with valid writable nonaliasing DS cell and stack, no concurrent/asynchronous cell mutation; native memory-XCHG atomicity and full ABI/caller provenance remain outside that model. Manual known-body repair, not unseen model recovery or training promotion.",
+      "reviewer": "Copilot complete original-byte and actual-source review",
       "source_file": "src/FUN_24dd_04ed.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "d6eb12c0c0584230d15ef73574ebeadbdd8027f639e8aefd24e891ed64a25fd2",
+      "status": "source_recovered",
       "unrecoverable_reason": "",
       "verification": {
-        "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "has_external_effects": false,
+        "host_test_references": [
+          "tests/test_liero_error_exchange_source.py::test_actual_error_exchange_all_words_and_modeled_flags",
+          "tests/test_liero_error_exchange_source.py::test_original_vs_actual_error_exchange_all_words"
+        ],
+        "host_test_status": "passed",
+        "notes": "All65536 pending words with a repeated invocation agree for returned words, GlobalWord6410 and modeled AX/CF/ZF/DF;131072 original calls additionally check32 surrounding global bytes, native flags/registers and stack guards. Full native binary status is deliberately not promoted.",
+        "original_binary_reason": "Original/actual-source exhaustive exchange/flag comparison passes, but full native ABI, memory-XCHG atomicity under concurrent mutation and actual caller DS/lifetime/aliasing are not represented by the sequential host mirror.",
+        "original_binary_references": [
+          "/home/robin/.copilot/session-state/de43c392-1ece-4ca7-a005-27231113fe27/files/error-exchange-source-20261103/test_original_vs_actual_error_0/result.json"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_24dd_04f4": {
@@ -7316,53 +7403,84 @@
       }
     },
     "FUN_24dd_4654": {
-      "assembly_sha256": "",
+      "assembly_sha256": "fabf883a47a66ecbdddd185f7a9ee72c89760b22bc0f515c310c85eb6fdb77d8",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "Original CALL at4654 displacement005a targets46b1; callee reviewed first under explicit DS-state/CS-constant premises. No guessed RNG service."
+        ],
+        "control_flow": [
+          "Complete29 original bytes at file109460, no overlapping actual MZ relocation: nearCALL, two unsigned MULs, ADD/ADC, MOV AX,DX, RETF2. tests/test_liero_random_source.py checks exact bytes."
+        ],
+        "data_references": [
+          "After callee nearRET, MOV BX,SP addresses unsigned bound at SS:SP+4. Valid nonaliasing writable state/code/stack/argument mapping inherited from46b1; actual0895 entry DS/seed provenance remains unproved."
+        ],
+        "signature_and_abi": [
+          "Existing Word bound/Integer return preserves16 result bits; values>=32768 are negative when interpreted as host signed Integer. Full AX/DX/BX/CX/flags/stack ABI residue is not implemented; model RegisterAX remains callee projection, not wrapper return."
+        ],
+        "state_and_memory_effects": [
+          "One state advance even for bound0. Two products compute floor(nextState*bound/2^32);0 for bound0, else0..bound-1. Actual Pascal return/state compared against original in1462 scaled cases including0/1/2/5/65535 and full32-bit rollover.",
+          "Actual0895 original PUSH5/PUSH2 and ADD AX,0053/PUSH AX bytes propagate conditional result0..4, then0..1 and color83/84; this is not caller execution/acceptance."
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "Partial source review2026-11-02, callee-first. Existing historical scaling arithmetic is unchanged; corrected callee low-product bug. Original29-byte wrapper plus54-byte generator/CS constant reviewed.1754 finite original/actual-source state+return cases pass under allocated writable nonaliasing DS, separate CS/SS and original8405 constant. No source_recovered claim: actual caller DS seed/initialization and full CPU/host ABI remain unknown/untranslated. Session files/liero-random-final-20261102/test_actual_random_source_and_0 contains final source-bound evidence.",
+      "reviewer": "Copilot scoped source review",
       "source_file": "src/FUN_24dd_4654.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "2c6931608550921858604261c1ebb6601772d8d3b0232c76de0097c341b5f25b",
+      "status": "partially_recoverable",
       "unrecoverable_reason": "",
       "verification": {
-        "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "has_external_effects": false,
+        "host_test_references": [
+          "tests/test_liero_random_source.py::test_actual_random_source_and_scaled_returns"
+        ],
+        "host_test_status": "passed",
+        "notes": "1754 finite original/actual-source cases (292 direct generator,1462 scaled), original8405 CS word, allocated writable nonaliasing64K DS; compare state/return/adjacent guards. Original-only BP/SP/DF/DS/SS/ES observations not host ABI. Complete original-byte review supports scoped recurrence/scaling; no source_recovered or training promotion.",
+        "original_binary_reason": "Scoped actual-source state/return differential only; actual caller DS seed/CS mapping, initialization and full register/flag/return ABI remain unresolved.",
+        "original_binary_references": [
+          "tests/test_liero_random_source.py::test_actual_random_source_and_scaled_returns"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_24dd_46b1": {
-      "assembly_sha256": "",
+      "assembly_sha256": "c0b41538abe768fdec624dd4807a9affdeeb9dd748db4df75582de0239997a6e",
       "evidence": {
-        "call_targets": [],
-        "control_flow": [],
-        "data_references": [],
-        "signature_and_abi": [],
-        "state_and_memory_effects": []
+        "call_targets": [
+          "Complete54-byte near leaf has no calls; original CS46e7 constant is read separately, not guessed from decompiler."
+        ],
+        "control_flow": [
+          "Original file109553, exact54 bytes and following word8405 at109607; actual MZ table has no overlapping relocations. Straight-line MUL/SHL/byteADD/ADD/ADC/store/nearRET, no unknown paths."
+        ],
+        "data_references": [
+          "Only DS6412..6415 state words written; CS46e7 word8405 read. AH48-allocated64K DS in test is disjoint from retained COM CS/SS/code/corpus; writable bounds and nonaliasing proved for fixture, not inferred for normal0895 entry.",
+          "Host DosMemory mirrors that DS and CodeMemory46e7..46e8 must be initialized from original CS. Entry DS is not assumed to be a source-language data segment."
+        ],
+        "signature_and_abi": [
+          "Existing no-argument Pascal procedure models new state and AX/DX low/high; DS/SS/BP/DF preserved by original instructions. Other register/flags/near-return machine effects are not fully represented by host Pascal."
+        ],
+        "state_and_memory_effects": [
+          "Derived original recurrence state'=(08088405h*state+1) mod2^32. Low seed multiplied by8405; wrapped byte/word shifts add low*0808 and high*8405 to product high. ADD AX,1 uses low product, not old seed; ADC high wraps.",
+          "Fixed actual Pascal nextLow to low(product)+1 with explicit modulo16 and high carry wrap. Before source fails-Cr with runtime201; unguarded old source mismatches1681/1753 original state/return cases. Seed1: original08088406 versus old08080002. Final1754-case corpus adds full32-bit rollover seed26b05733->0."
+        ]
       },
-      "review_notes": "",
-      "reviewer": "",
+      "review_notes": "Partial source review2026-11-02 of historical manual reconstruction, not new model recovery. Fixed demonstrated low-product increment/carry mismatch before using this callee contract.292 direct-generator and1462 scaled cases compare state/return plus adjacent guard words to original under explicit valid nonaliasing DS/CS/SS premises; original-only BP/SP/DF/DS/SS/ES observations are not host ABI equivalence. Actual caller DS origin/seed initialization and complete CPU register/flag residue remain unproved. Before/fixed/final evidence and separate old-source semantic control retained in session files/liero-random-*-20261102/.",
+      "reviewer": "Copilot scoped source review",
       "source_file": "src/FUN_24dd_46b1.inc",
-      "source_sha256": "",
-      "status": "unreviewed",
+      "source_sha256": "b9ca503012e34a61bc83ec53c4de6a792b1321507337bca14f0422ded7f80533",
+      "status": "partially_recoverable",
       "unrecoverable_reason": "",
       "verification": {
-        "has_external_effects": null,
-        "host_test_references": [],
-        "host_test_status": "not_run",
-        "notes": "",
-        "original_binary_reason": "",
-        "original_binary_references": [],
-        "original_binary_status": "not_run"
+        "has_external_effects": false,
+        "host_test_references": [
+          "tests/test_liero_random_source.py::test_actual_random_source_and_scaled_returns"
+        ],
+        "host_test_status": "passed",
+        "notes": "1754 finite original/actual-source cases (292 direct generator,1462 scaled), original8405 CS word, allocated writable nonaliasing64K DS; compare state/return/adjacent guards. Original-only BP/SP/DF/DS/SS/ES observations not host ABI. Complete original-byte review supports scoped recurrence/scaling; no source_recovered or training promotion.",
+        "original_binary_reason": "Scoped actual-source state/return differential only; actual caller DS seed/CS mapping, initialization and full register/flag/return ABI remain unresolved.",
+        "original_binary_references": [
+          "tests/test_liero_random_source.py::test_actual_random_source_and_scaled_returns"
+        ],
+        "original_binary_status": "blocked"
       }
     },
     "FUN_24dd_46e9": {

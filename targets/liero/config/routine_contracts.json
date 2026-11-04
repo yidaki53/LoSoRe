@@ -1,6 +1,568 @@
 {
   "schema_version": 1,
   "functions": {
+    "FUN_249c_0037": {
+      "declaration": "procedure FUN_249c_0037(param_1: Pointer; param_2, param_3: Byte);",
+      "oracle": "complete-original-text-execution-and-installed-pascal-projection",
+      "scope": "complete-returning-mode3-device37b3-path-not-all-inputs-or-native-abi",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 90471,
+      "callee_contracts": ["FUN_249c_0000", "FUN_24dd_3930", "FUN_24dd_04f4"],
+      "unresolved_callees": ["FUN_24dd_010f"],
+      "arguments": [
+        {"name": "param_1", "role": "resolved length-prefixed shortstring copied to SS local frame", "representation": "host Pointer explicitly resolving fixtureDS8200, not native far ABI"},
+        {"name": "param_2", "role": "text row, original stack word lowbyte atBP+10", "representation": "Byte, supported0..24"},
+        {"name": "param_3", "role": "text column, original stack word lowbyte atBP+12", "representation": "Byte, column+rawlength<80"}
+      ],
+      "memory_model": "Supported fixture DS=SS=object/code binding, sourceDS8200, objectDS79f0/internal bufferDS7a70, SPdb00..dff0, data physical+e000 belowa0000. Stack locals nonalias code/global/object/source/video; object/buffer bounds checked by callees. B800 textvideo4000bytes and logical BIOS page0cursor projected; not BDA/native stack scratch parity.",
+      "instruction_semantics": "Full0037..0158 original stream checked with realMZsegmentfixups014e/0153 to24dd. ENTER10a copies shortstring; attributes low7/high0 via0013; cursor column,row lowbytes. State0 prints nonzero character/attribute toB800 andadvancesvideooffset; zero entersstate1. State1 sets lowcomponent, state2 sets highcomponent, eachcalls0013 andreturnsstate0 aftersecond. Incompleteescape leaves no visible character. Finalcursor usescolumn+RAWlength includingcontrolbytes, not printedlength. Calls3930 onDS79f0 then04f4 andLEAVE/RETF8. Installed SP mirror returnsentry+12/BP restored only for zero-sticky return. Nonzero binds the actual04f4 far-return0155:LieroTextCodeSegment at the owned logical stack then enters checked nonreturning010f. Runtime/data bindings must agree; arbitrary chains still reject. Actual original diagnostic reports0155, correcting the earlier unmeasured0157 assumption.",
+      "prompt": "Returning text panels compare original4000video+256object/buffer+256input/cursor/sticky/output and exact servicebyte/count sequence. Separate88scroll cases check mode3 CR/LF row23/24; arbitrary console effects remain unsupported. Three full0037 error cases now execute original nonzero04f4/010f and open3711/374d/37b3/37d3 cleanup: one actual invalidhandle6 and two injected5/6 mechanisms. Exact original0155:textCS return pair, declared SP/BP, diagnostics, whole object/global/vector state, both writes and close agree. Video/input are captured at first service BEFORE error diagnostics, not final diagnostic screen parity. Empty descriptor/callback chains and checked sourceDS/textCode/runtimeCode bindings are required; never restore caller BP/SP after termination. Original startup separately observes default console handles/buffers/methods, not Pascal startup or later lifetime. No native/all-path/normal-game/source/training/weight promotion."
+    },
+    "FUN_24dd_396c": {
+      "declaration": "procedure FUN_24dd_396c;",
+      "oracle": "original-output-dispatch-to-checked-write-projection",
+      "scope": "slot20-to37b3-memory-status-and-selected-mirrors-not-universal-dispatch",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 106156,
+      "reviewed_bytes_hex": "065326ff5f140bc07403a31064c3",
+      "callee_contracts": ["FUN_24dd_37b3"],
+      "memory_model": "ES:BX resolves owned object; far slot20 must resolve exact37b3 code identity. Writable proven entryDS6410 disjoint from object/buffer/activeSSstack/code; leaf requires readable buffer and writableused+8. Installed LieroBufferObjectSegment is distinct from code/source segment bindings. Count0..128; no wrapping/aliasing. Input375e projection retained, not generalized.",
+      "instruction_semantics": "PUSHES/PUSHBX forms far object argument; ES:CALLF [BX+14hex]; ORAX setsZF; JZ skips MOVDS6410,AX; nearRET. Success preserves stickyerror even when initiallynonzero; failure overwrites. Original does not restoreBX. With37b3 and DOS preservingBX/DI/ES, BX=handle,DI=objectoffset,ES=objectsegment. Other DOS clobbers and native stack mirrors unknown.14originalbytes/noactualMZfixups.",
+      "prompt": "Use checked37b3 output path only with exact code/object/source bindings, owned/nonaliasing bounds and service premise. Distinguish original logical37b3 from relocated fixture code offset and host address. Input375e stays supported separately; redirected378e or arbitrary methods reject. Actualfile/NUL/invalidhandle observations and injectedCF/AX mechanism checks remain separate. This supplies a scoped dependency for3899, not acceptance of buffered writers, native ABI, normal reachability or all callback targets. No source/training/weights promotion."
+    },
+    "FUN_24dd_397a": {
+      "declaration": "procedure FUN_24dd_397a;",
+      "oracle": "original-optional-output-dispatch-to-checked-write-projection",
+      "scope": "slot24-to37b3-memory-status-and-selected-mirrors-not-universal-dispatch",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 106170,
+      "reviewed_bytes_hex": "065326ff5f180bc07403a31064c3",
+      "callee_contracts": ["FUN_24dd_37b3"],
+      "memory_model": "Same owned object/source/service/global bounds as396c, but far method slot24. Caller must check optional highword before invocation;397a itself does not skip null methods. Explicit code/object/source segment bindings, count0..128.",
+      "instruction_semantics": "PUSHES/PUSHBX;ES:CALLF [BX+18hex];ORAX/JZ;nonzeroMOVDS6410,AX;nearRET. Does not restoreBX. Checked37b3 returns preserve prior stickyerror on success, replace on error, setsZF fromAX; under checked service premise BX=handle,DI=objectoffset,ES=objectsegment. Other external effects unknown.14originalbytes/noactualMZfixups.",
+      "prompt": "Installed output37b3 branch shares checked leaf resolver with396c and does not restoreBX to object. Existing isolated synthetic0400 resolver remains its earlier separate scope; its register restoration must not be inferred for37b3. Null/unknown methods reject rather than fabricate success. Source snapshot explicitly maps fixture code offset to logical37b3 and verifies both slot words before encoding observations. Original service and injected mechanisms are finite evidence, not native ABI/full3930 or normal reachability. No promotion."
+    },
+    "FUN_24dd_37b3": {
+      "declaration": "function FUN_24dd_37b3(objectPointer, bufferPointer: Pointer; dosWrite: TLieroDosWrite): Word;",
+      "oracle": "original-dos-write-and-installed-pascal-service-projection",
+      "scope": "complete-leaf-memory-and-service-status-projection-not-native-abi",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 105715,
+      "reviewed_bytes_hex": "8bdc1e36c47f0426c5550c33c926874d08268b1db440cd21720233c01fca0400",
+      "arguments": [
+        {"name": "objectPointer", "role": "resolved original farobject atSS:[entrySP+4], ES:DI afterLES", "representation": "host Pointer, not nativefar-pointer ABI"},
+        {"name": "bufferPointer", "role": "resolved original LDSDX fromobject+12; samebuffer bytes exposed towrite service", "representation": "explicit host Pointer binding"},
+        {"name": "dosWrite", "role": "DOS21/AH40 service port,zero success/nonzeroerror,bytesWritten ignored on success", "representation": "TLieroDosWrite callback; not original argument"}
+      ],
+      "memory_model": "Readableobjecthandle+0,usedword+8,farbuffer+12/+14; writableusedword; count-readable resolvedbuffer. Ownednonaliasing object/source/activeSSstack/code required, nosegmentwrap claimed. Originalprobe objectCS8000,sourcephysicalCS8100/count0..128; serviceDS=CS orCS+100/sourceoffset8100or7100; originalDS restored. Callback cannot aliasorwrite object/source beyondexplicitservicecontract. Caller originallyDS79f0 object/bufferDS7a70 linkage isstaticconditional,not thisharnessnormalreachability.",
+      "instruction_semantics": "MOVBX,SP;PUSHDS;LES DI,SS:[BX+4];LDS DX,ES:[DI+12];XORCX;XCHG CX,ES:[DI+8] resetsusedbeforecall;BX=ES:[DI];AH40;INT21;JCreturn elseXORAX;POPDS;RETF4. CFclear alwaysreturnsAX0,including successfulshortwrite; CFset preserveserrorAX. GlobalDS6410notwrittenbythisleaf. OtherDOSregister/flag/deviceeffects external. Original32bytes/noMZrelocations; alternateentry notnewroutinecensuscredit.",
+      "prompt": "Reuseinstalled37b3 serviceprojection onlyunderprovenobject/buffer/nonaliasing/servicepremises. Resetusedbeforecallback evenonerror andcount0. Do notaddshortwrite101:thatbelongs378e,not37b3. ActualDOSfile/NUL/invalidhandle observationsandhostprojection arefiniteevidence; injectedCF/AX shortwrite/errors arescriptedmechanismtests,notactualDOSoutcomes. Scoped396c/397a outputdispatch now supports exact37b3 with explicit far-pointer bindings; input375e support remains separate. NativeTP7ABI,normalprogramreachability,fullcaller/errorcontracts andotherDOSclobbers remainunknown. Buffered3899/3930 andfull0037 stillneed their own composition checks. No source/training/weights promotion."
+    },
+    "FUN_249c_0000": {
+      "declaration": "procedure FUN_249c_0000(columnWord, rowWord: Word);",
+      "oracle": "original-bios-cursor-state-and-logical-pascal-projection",
+      "scope": "page0-cursor-position-input-and-return-stack-not-full-bios-abi",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 90416,
+      "reviewed_bytes_hex": "5589e5b402b7008a76068a5608cd10c9ca0400",
+      "arguments": [
+        {"name": "columnWord", "role": "DL low byte ofpreviousword atcalleeBP+8", "representation": "Word argument, high byte ignored"},
+        {"name": "rowWord", "role": "DH low byte oflast pushedword atcalleeBP+6", "representation": "Word argument, high byte ignored"}
+      ],
+      "memory_model": "Actual caller249c0037:0077 pushes column fromBP+0c, row fromBP+0a, PUSHCS/nearCALL0000 forms far frame. Readable/nonaliasing SS args/savedBP/return required. INT10 AH02 setspage0 cursor; logical host BIOSCursorRow/Column represent position only, not BIOS/BDA/device memory.",
+      "instruction_semantics": "PUSHBP/MOVBP,SP;AH02,BH0;DH=SS:[BP+6] byte,DL=SS:[BP+8] byte;INT10;LEAVE/RETF4. Original19bytes and caller0077..0083 checked with actual near displacement0080->0000, no original relocations. Secondcaller012e..0146 computesword(column+shortstringlength), pushesit thenrowword(withpossiblecarriedAH),PUSHCS/nearCALL0143->0000; onlylowbytesused. Far return advancescalleeSP8. BIOS-specific outputregister/flag effects unknown. Bounded DOSBox original AH03 query/BDA40:50 cursor observations match16valid textcoordinates with varying unusedhighargumentbytes. Native stack return/BP/guards and unmodified arena outside8observationbytes checked independently; invalidtextcoordinates fromcolumn+length areoutsideoriginalserviceobservation scope.",
+      "prompt": "Reuse installed logical page0 cursor projection withtwo wordarguments, not old noarg skeleton. Only lowrow/column bytes and declaredSP are modeled. Do not assume external BIOS preservesallregisters/flags or treat logical cursor variables as real BDA storage/native parity. Whole0037 composition needs externalservice contract plus writer/error dependencies; normal reachability, mode/page validity, asynchronous serviceeffects and native TP7 ABI remain unknown. Original service observation and Pascal position projection are separate evidence, no whole-source/training/weight promotion."
+    },
+    "FUN_24dd_0232": {
+      "declaration": "procedure FUN_24dd_0232(param_1: Word);",
+      "oracle": "original-error-exit-output-byte-projection",
+      "scope": "AH06 diagnostic bytes not arbitrary DOS console/native register effects",
+      "memory_model": "Explicit bounded host DosOutputBuffer/DosOutputCount port, not original memory argument. Recorded original INT21 AH06 attempted bytes are checked separately from final displayed console.",
+      "prompt": "Emit AL through original AH06/DL console service. Installed parameter lowbyte appends to checked output buffer. This is a scoped service projection inside terminating010f, not native ABI or all DOS device semantics. Unknown output binding/bounds must reject; no source/training promotion."
+    },
+    "FUN_24dd_020a": {
+      "declaration": "function FUN_24dd_020a: Word;",
+      "oracle": "original-error-exit-decimal-division-projection",
+      "scope": "positive CL divisors100/10 in diagnostic composition",
+      "callee_contracts": ["FUN_24dd_0232"],
+      "prompt": "Zero AH then unsigned divide low AX byte by CL. Emit quotient plus ASCII0, preserve remainder in AH through pushed AX, then copy AH into AL. Result duplicates remainder in both bytes and becomes input to next diagnostic division. Zero divisor and arbitrary quotient/ASCII/device behavior are not accepted by this finite diagnostic scope."
+    },
+    "FUN_24dd_01fe": {
+      "declaration": "function FUN_24dd_01fe: Word;",
+      "oracle": "original-error-exit-decimal-format-projection",
+      "scope": "three decimal digits of low error byte in terminating diagnostics",
+      "callee_contracts": ["FUN_24dd_020a", "FUN_24dd_0232"],
+      "prompt": "Original divides by100 then10 and falls through020e to emit final remainder plus ASCII0. Always three digits, including leading zeroes; full errorword remains stored separately, formatting uses lowbyte. Return is duplicated final remainder, not a byte-count or guessed printing API. Scoped output sequence, not full native register/flags/ABI parity."
+    },
+    "FUN_24dd_022a": {
+      "declaration": "procedure FUN_24dd_022a;",
+      "oracle": "original-error-exit-hex-digit-projection",
+      "scope": "nibbles0..15 supplied by checked formatting callers",
+      "callee_contracts": ["FUN_24dd_0232"],
+      "prompt": "Convert nibble to ASCII0..9/A..F by adding30hex, comparing3ahex and conditionally adding7, then fall through0232. Scoped lowbyte formatting/service output only; arbitrary input/register/flags effects remain outside evidence."
+    },
+    "FUN_24dd_021f": {
+      "declaration": "procedure FUN_24dd_021f;",
+      "oracle": "original-error-exit-hex-byte-projection",
+      "scope": "two hexadecimal digits from AL",
+      "callee_contracts": ["FUN_24dd_022a"],
+      "prompt": "Push original AX, shift AL right4 and emit highnibble; pop AX, mask AL with0fhex, then fall through022a to emit lownibble. Preserve the fall-through; no claim that AX returns unchanged across final console service."
+    },
+    "FUN_24dd_0218": {
+      "declaration": "procedure FUN_24dd_0218;",
+      "oracle": "original-error-exit-hex-word-projection",
+      "scope": "four hexadecimal digits from AX in error diagnostics",
+      "callee_contracts": ["FUN_24dd_021f"],
+      "prompt": "Push AX, move AH into AL and call021f; pop AX then FALL THROUGH021f for original lowbyte. Four digits, not only highbyte, and not a register-preserving Pascal print function. Corrects prior draft omitting the final fall-through. Finite diagnostic output sequence is not universal native ABI acceptance."
+    },
+    "FUN_24dd_01f0": {
+      "declaration": "procedure FUN_24dd_01f0;",
+      "oracle": "original-error-exit-CS-string-projection",
+      "scope": "authenticated NUL-terminated original diagnostic strings",
+      "callee_contracts": ["FUN_24dd_0232"],
+      "memory_model": "Original CS:BX is explicit original CodeMemory binding, disjoint from writable output buffer. String terminator must be within the bounded segment; wrapping unsupported.",
+      "prompt": "Load CS:[BX] into AL, stop onNUL; otherwise call0232, incrementBX and repeat. Original strings024c/025b/0260 are authenticated with original010f bytes. No guessed host string pointers, unbounded traversal or general console/native register acceptance."
+    },
+    "FUN_24dd_37d3": {
+      "declaration": "function FUN_24dd_37d3(objectPointer: Pointer; dosClose: TLieroDosClose): Word;",
+      "oracle": "original-DOS-close-and-installed-pascal-projection",
+      "scope": "checked object handle and explicit close service port",
+      "prompt": "Original37d3 skips DOS close for unsigned handles0..4 and returns0. Other handles invokeAH3e; return0 on carryclear or DOSAX on carryset. Method leaves object memory unchanged. Earlier isolated close evidence is now composed through actual374d/3711 and010f with real file success/invalidhandle6 and separately injected mechanisms. Not arbitrary DOS/native ABI/normal-game parity; no promotion."
+    },
+    "FUN_24dd_374d": {
+      "declaration": "procedure FUN_24dd_374d;",
+      "oracle": "original-object-dispatch-and-installed-pascal-projection",
+      "scope": "explicit checked slot20-to37b3 and slot28-to37d3 resolver, earlier input scope retained",
+      "callee_contracts": ["FUN_24dd_37b3", "FUN_24dd_37d3"],
+      "memory_model": "ES:DI resolves owned object; BX selects methodslot20/28. Host LieroDispatchMethod is an explicit validated port resolving both far words, object identity, service adapter and writable/nonaliasing bounds. It is not a native function pointer.",
+      "prompt": "PUSHES/DI saves object identity and supplies farargument, CALLF ES:[BX+DI], ORAX setsZF and nonzero overwrites sticky6410. POPDI/ES restores object across checked leaf calls. Success preserves stickyerror. Actual output cleanup executes both checked method targets, not a synthetic callback. Unknown slots/code identities/pointers/services reject. No universal-dispatch, full-register/ABI or normal reachability claim."
+    },
+    "FUN_24dd_3711": {
+      "declaration": "procedure FUN_24dd_3711(objectPointer: Pointer);",
+      "oracle": "original-open-object-flush-close-composition",
+      "scope": "inputD7b1 close, outputD7b2 flush-then-close, closed/othermode67",
+      "callee_contracts": ["FUN_24dd_374d"],
+      "memory_model": "Explicit owned object pointer and matching ES:DI; writable modeword+2, separate sticky6410. Resolver must preserve checked object identity and reject unsupported methodslot/target/buffer/service bindings. Output uses37b3, close37d3 in measured profile.",
+      "instruction_semantics": "EntryAL1 is saved across outputslot20 flush; even errorAX does not suppress close. Call slot28 then writeD7b0 unconditionally, including failed close. InputD7b1 skips flush but closes. NeitherD7b1norD7b2 sets sticky67 and leaves mode. Actual374d success preserves previous sticky; errors replace it.",
+      "prompt": "40 original/installed error-composition cases vary direct/check entry, used0/1/7/128 and actual file success, actual invalidhandle6, injectedflush5/close0, flush0/close6 and bothfail. First close inputhandle0 skips DOS; output flush always precedes close, even after errors, and used is zero before both services. Complete globals/object state and service order/mode/count/source/bytes agree. Three additional fulltext-error cases compose the actual caller. Finite checked-port contract, not universal callback/native ABI/full-program recovery."
+    },
+    "FUN_24dd_010f": {
+      "declaration": "procedure FUN_24dd_010f;",
+      "oracle": "original-terminating-error-path-and-installed-pascal-projection",
+      "scope": "empty-descriptors-and-callbacks-closed-or-checked-default-open-objects-not-native-abi",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 91727,
+      "callee_contracts": ["FUN_24dd_3711", "FUN_24dd_01f0", "FUN_24dd_01fe", "FUN_24dd_0218", "FUN_24dd_0232"],
+      "memory_model": "Explicit LieroErrorDataSegment/CodeSegment bindings, owned RealModeMemory, writable disjoint DS6406/6408/640a and stack return pair. Checked DS63d8..7b3b belowa0000; activeSS pair disjoint. OriginalCodeMemory strings/vector IDs frozen. DescriptorDS63e4 and callbackDS6402/6404 zero. Objects78f0/79f0 may be closedD7b0 or default inputD7b1/outputD7b2. Open modes require assigned checked dispatch, slot28=37d3:runtimeCS; output also slot20=37b3:runtimeCS, capacity128,used<=128,buffer7a70:dataDS. All preflight checks precede mutation. Saved vector arena and restore/termination ports owned; no native pointer assumption.",
+      "instruction_semantics": "POPCX/POPBX consumes original callerfarreturn; actualMZ DS immediate011b is relocated, not inherited entryDS. Store full errorword6406, caller offset6408 and segment640a normalized by PSP640c+10hex, except zero pair remains zero. Empty callback chain proceeds018b. Call real3711 twice: closed objects yield sticky67, not successful close. Restore all19 vectors from original CS0239 list and saved pairs. Nonzero translated pair emits Runtime error plus three decimal digits of lowerrorbyte, four hex digits each segment/offset, colon and periodCRLF via original diagnostic leaves. Full errorword6406 retained; AH4c terminates with lowbyte exit status, never returning to caller. Direct010f and nonzero04f4 measured separately.",
+      "prompt": "Retain28 closed-object original/Pascal cases and historical archive. Added40 open-object cases and3 actual whole0037 error caller cases independently compare full58globals,588object/vectorarena,19restores/targets, diagnostic sequence and declared frame/exit request. Open service record checks flush-before-close, usedzero and modeD7b2 at both services, count/source/attemptedbytes; actualfile/invalid6 distinct from injected5/6. Actual text return is0155:textCS, not earlier assumed0157. Host exit status separately checked; original hook records then chains realAH25/06/4c and deliberately saves itself as vector21. Actual callbacks, descriptorchains, arbitrary external effects, native ABI/normalgame and Pascal startup remain unresolved; unsupported bindings reject. Never turn terminating010f into return or accept a hostabort as parity. No source/example/weight promotion."
+    },
+    "FUN_24dd_04f4": {
+      "declaration": "procedure FUN_24dd_04f4;",
+      "oracle": "static-original-sticky-error-return-and-tailcall",
+      "scope": "zero-error-return-or-checked-default-object-nonreturning-error-scope",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 92724,
+      "reviewed_bytes_hex": "833e1064007501cba11064e90dfc",
+      "unresolved_callees": ["FUN_24dd_010f"],
+      "callee_contracts": ["FUN_24dd_010f"],
+      "memory_model": "Proven entryDS:[6410] stickyword must be readable and disjoint from valid farreturn stack. EntryDS is not generally sourceDS; no service segment preservation assumed.",
+      "instruction_semantics": "CMPwordDS6410,0;JNZ04fc;RETF at04fb. Zero returnsno writes,AXunchanged,CF0,ZF1,DFandmirrorspreserved,SPentry+4. Nonzero04fc MOVAX,DS6410;04ff JMP010f inherits originalfarreturnframe. Do not model as nearCALL or guessed returningexceptionservice.14bytes match original no MZrelocation.",
+      "prompt": "Installed04f4 preserves zero-sticky return CF0/ZF1 and logicalSP+4. Nonzero setsAX fromsticky and enters nonreturning010f under checked default-object/empty-chain/sourceDS/vector/termination bindings. Original28 closed,40open and3wholetext-error cases remain separate. Actual0037 far-return0155:textCS and owned logicalstack are explicitly bound, not guessed hostfar ABI. Unsupported010f inputs RunError211, not a parity pass. Original assembly retained, no universal native ABI/normalreachability/whole04f4 or training promotion."
+    },
+    "FUN_24dd_3899": {
+      "declaration": "procedure FUN_24dd_3899;",
+      "oracle": "static-original-buffered-output-dependencies",
+      "scope": "installed-buffered-output-to37b3-with-owned-segmented-bindings-not-native-abi",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 105945,
+      "reviewed_bytes_hex": "833e106400754826817f02b2d77541268b4f04268b7f082bcf2bc1730403c833c01e06538eda26c45f0c03fbfcf3a42bfb5b071f26897f08263b7f04750d5052560653e88d005b075e5a580bc075c0c3c70610646900c3",
+      "callee_contracts": ["FUN_24dd_396c"],
+      "output_linkage": {
+        "scope": "Static conditional original initialization linkage; DOS service outcomes and normal-program reachability are not measured",
+        "data_segment": "Startup24dd:0000 MOVDX,1971 immediate has actual MZrelocation at0001, then8eda MOVDS,DX. With analysisload1000, sourceDS2971. Helpers492c/00b1 preserveDS statically; external DOS services still require explicit segment-preservation premises.",
+        "initialization": "Startup009c supplies DS79f0 object twice and CS0263 empty shortstring to3639, then36bc requestsD7B2 via36c4. Constructor setsmodeD7B0,capacity128,buffer=DS7a70,openmethod=CS420c. Object79f0..7aef and buffer7a70..7aef precede vectors7af0; sourceDS6424 contains0d0a. Actual249c0037:0146 pushesDS79f0 andfarCALL3930; nextfarCALL04f4, actualMZrelocations014e/0153 authenticatecallee segments. Original typed/native ownership and active-stack/nonaliasing bounds remain obligations.",
+        "conditional_targets": "420c empty-name path setsoutputhandle1 andskipsopen/create. DOS21/4400 deviceinfoDL bit80 choosesCS37b3 forslot20 andslot24 ondevice; otherwiseCS378e slot20 andzeroslot24. Correctshortwritehandling differs:378e returns101 forsuccessAX!=requestedcount,37b3 ignorescountsuccess. Actualhandle/deviceinfo/serviceoutcome andslotnormalreachability mustbe observed, not assumed.",
+        "streams": [
+          {"segment": 9437, "offset": 0, "bytes": "ba71198eda", "relocations": [1]},
+          {"segment": 9437, "offset": 156, "bytes": "b8f0791e501e50b863020e500ee88d350ee80c36cb", "relocations": []},
+          {"segment": 9437, "offset": 18732, "bytes": "bf26641e07b9527b2bcfd1e933c0fcf3abc3", "relocations": []},
+          {"segment": 9437, "offset": 177, "bytes": "33c09c5b80e70f539d9c5980e5f080fdf0740e4080cff0539d9c5980e5f0740140a22064c3", "relocations": []},
+          {"segment": 9437, "offset": 13881, "bytes": "33d28bdc1e36c47f0836c57704fc33c0abb8b0d7abb88000ab33c0ababab8d4574ab8cc0abb80c42abb8dd14ab33c0b90e00f3abb94f000bd27509ac3ac876048ac8e308ac0ac07403aae2f832c0aa1fca0800", "relocations": [42]},
+          {"segment": 9437, "offset": 16908, "bytes": "8bdc1e36c57f0433c9890db8003d817d02b1d7740db002ff05817d02b3d77402b43c807d300074098d5530cd21725a8905b85e37badd1433c933db817d02b1d7742f8b1db80044cd21f6c280b8b337badd148bc88bda7514817d02b3d77503e82b00b88e37badd1433c933dbc74502b2d7894514895516894d18895d1ac7451cd337c7451edd1433c01fca0400", "relocations": [53, 80, 102, 133]},
+          {"segment": 9437, "offset": 14222, "bytes": "8bdc1e36c47f0426c5550c33c926874d08268b1db440cd2172072bc17403b865001fca0400", "relocations": []},
+          {"segment": 9437, "offset": 14259, "bytes": "8bdc1e36c47f0426c5550c33c926874d08268b1db440cd21720233c01fca0400", "relocations": []},
+          {"segment": 10609, "offset": 25636, "bytes": "0d0a", "relocations": []},
+          {"segment": 9372, "offset": 302, "bytes": "8a8600ff30e48bd08a460c30e403c2508a460a500ee8bafe", "relocations": []},
+          {"segment": 9372, "offset": 326, "bytes": "bff0791e579a3039dd149af404dd14c9ca0800", "relocations": [8, 13]}
+        ]
+      },
+      "memory_model": "Dynamic ES:BX object mode+2,capacity+4,used+8,farbuffer+12;DX:SI source,DS6410 global. Writable/nonaliasingobject/buffer/source/global/active-stack regions must be provenbeforecopy. Segment switch8eda setsDS=DX onlyinside savedDS/ES/BX block; objects restoredbeforeES:[BX+8]write.",
+      "instruction_semantics": "Stickyerrornonzero immediatelynearRET withCMPflags. Zero error/invalidmode !=D7B2 writes105toDS6410 thenRET. Validoutputmode:CX=capacity-used;subtractfromAX withunsignedborrowclamp;CLD/REPMOVSB ofchunk intoresolvedbuffer+used;restoresDS/ES/BX,updatesused. Ifused=capacity,pushesAX/DX/SI/ES/BX thenCALL396c,restoresinputs and repeatswhileAXnonzero. Fullbuffer/callback must establishprogress/errors,not infinitecopies. Original87bytes, noMZrelocation.",
+      "prompt": "Installed buffered writer now composes exact37b3 output dispatch, separately from input375e. Stickyerror on entry skips all work; invalid mode sets105. Valid capacity1..128 andused<=capacity copiesAXbytes fromDX:SI into resolvedbuffer in chunks. Fullbuffer flushes even withAX0. Original saves remainingAX and continues after flush errors; do not break on sticky error inside loop or restoreused. Checked37b3 resetsused guaranteeing progress; unknown/nonprogress callbacks reject. Installed bindings useRealModeMemory, explicitDS, owned object/source/buffer/global/stack/code nonaliasing and no offset wrap. Actualfile/error and separately injectedshortwrite/error panels compare complete declaredstate/output. Scope is not general callback/nativeABI/whole-source acceptance. Original default output linkage remains conditional; redirected378e unsupported. No source/training/weights promotion."
+    },
+    "FUN_24dd_3930": {
+      "declaration": "procedure FUN_24dd_3930(param_1: Longint);",
+      "oracle": "static-original-two-byte-buffer-write-and-optional-method",
+      "scope": "installed-crlf-buffered-and-optional37b3-composition-not-native-abi",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 106096,
+      "reviewed_bytes_hex": "558becc45e06b80200be24648cdae858ff750a26837f1a007403e82d005dca0400",
+      "callee_contracts": ["FUN_24dd_3899", "FUN_24dd_397a"],
+      "memory_model": "Onefarargument atSS:[BP+6] resolvesES:BX;source2bytes fromprovenentryDS6424. Object/buffer/global/stack bounds mustfit3899/397a; originalparamLongint bitlayout doesnotprove sourcePointertype.",
+      "instruction_semantics": "PUSHBP/MOVBP,SP;LESBXarg;AX2,SI6424,DXentryDS;CALL3899. IfZFtrue,CMPobjectword+26,0;nonzerocalls397a. POPBP/RETF4.33originalbytes/noMZrelocations. 397a readsfarcallbackslot+24,includinghighword+26; callableidentity/effects requireexplicitcontract. 3899 mustresolveoutputmode396c,notinputreadprojection.",
+      "prompt": "Installed3930 uses originalDS6424 CRLF through checked3899. ParamLongint retains original farobject bits and resolves supported object binding, not host Pointer ABI. Calloptional397a only when3899 returnsZFtrue andslot26nonzero. A flusherror inside3899 maystillleaveZFtrue because remainingAX iszero; optionalcallmustnotbesuppressed justbecause stickyerror is nonzero. Nulloptional returns withCMPZFtrue. Count2 mayflushmultiple times forcapacity1; optionalmaycallDOS withcount0. Compare sticky/calls/fullobjectbuffer/input/video/output with original; no nativeABI/whole-source or program acceptance. Unknown378e/general methods and010f remain obligations; no promotion."
+    },
+    "FUN_249c_0013": {
+      "declaration": "procedure FUN_249c_0013(param_1: Integer);",
+      "oracle": "original-ss-byte-arithmetic-and-actual-caller-prefix",
+      "scope": "installed-segmented-runtime-body-and-shortstring-initialization-prefix-not-native-or-whole-caller",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 90435,
+      "reviewed_bytes_hex": "5589e58b7e04368a85fcfe30e48bd0368a85fbfe30e4c1e00403c2368885fdfec9c20200",
+      "arguments": [
+        {
+          "name": "param_1",
+          "role": "one-word original SS-relative frame offset; actual callers PUSH BP",
+          "representation": "existing Integer declaration preserves16-bit bits via explicit masking; historical Pascal type name remains unknown"
+        }
+      ],
+      "memory_model": "Read cells SS:[argument-260] and SS:[argument-261] with independent16-bit offset wrap; write one byte SS:[argument-259]. Proven segment origin is RegisterSS, not DS or entry host pointer. Existing RealModeMemory models20-bit physical wrap. Sequential readable/writable cells must be disjoint from active original argument/return/saved-BP frames and executable code; aliasing these frames would invalidate RET/LEAVE/DI bindings. Host mirror stack is not native execution.",
+      "instruction_semantics": "Complete36-byte callee-free near leaf: PUSH BP/MOV BP,SP/MOV DI,SS:[BP+4]; zeroextend SS:[DI-260] into DX; zeroextend SS:[DI-261], SHL AX4, ADD AX,DX; write AL to SS:[DI-259]; LEAVE/RET2. Maximum byte sum4335, AX retains16-bit sum, DX=second byte, DI=argument bits, CF0, ZF iff sum0, DF and BX/CX/SI/BP/DS/ES/SS preserved; mirrorSP entry+4 modulo65536. Native parity/sign/overflow checked separately, not represented by host flags. Original caller0037:0037..0060 ENTER10a sets ES=SS, copies a shortstring to SS:[BP-100], restores DS from BX, writes7/0 atBP-104/BP-105, PUSH BP nearCALL0013; result attribute7 atBP-103. Original assembly directions verified8cd3/8ec3/8edb, not listing directions.",
+      "prompt": "Reuse installed0013 segmented-memory body only under nonaliasing frame/cell/code premises. ReadStackByte resolves proven SS, not DS. Original0013 code has no callees. Actual0037 prefix matches256training+256terminal lengths0..255 with appended explicit LEAVE/RETF8 boundary and interrupts disabled through capture; capture PUSHF overwrites847e with0002 and is instrumentation, not program output. Whole0037 remains deferred:0000/3930/04f4 contracts and remainder unknown. Other calls0107/011e are not yet composed. Earlier AI actions selected correct arithmetic under a supplied three-cell hostPointer projection; installed segmented source/interface reconciliation is human work, not new blind AI recovery. Native type/TP7 ABI and normal reachability remain unknown. Do not promote this contract to whole routine, gold training, full program parity or model-weight improvement."
+    },
+    "FUN_24dd_00b1": {
+      "declaration": "procedure FUN_24dd_00b1;",
+      "oracle": "static-original-cpu-return-projection",
+      "scope": "all-path-return-segment-stack-and-store-not-cpu-family-parity",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 91633,
+      "reviewed_bytes_hex": "33c09c5b80e70f539d9c5980e5f080fdf0740e4080cff0539d9c5980e5f0740140a22064c3",
+      "return_projection": {
+        "preserved": ["DX", "SI", "DI", "BP", "DS", "ES", "SS"],
+        "stored_al_by_path": [0, 1, 2],
+        "store_ds_offset": 25632,
+        "caller_sp_preserved": true,
+        "source_recovered": false
+      },
+      "memory_model": "Compose with the existing successful MZ-loader/startup-clear contract. CALL000e supplies valid nonwrapping near-return stack; CPU PUSH/POP scratch lies within the same checked active-stack allocation, disjoint from byte DS6420 and reviewed code/heap state. Real-mode TF=0/no-fault/no-trap/no-asynchronous-mutation premise is explicit; do not extend to protected-mode POPF or interrupt handlers.",
+      "instruction_semantics": "Complete37-byte callee-free leaf; no overlapping actual MZ relocation. XOR AX,AX initializes class0. PUSHF/POP BX captures flags; AND BH,0Fh/PUSH BX/POPF then PUSHF/POP CX/AND CH,F0h/CMP CH,F0h/JZ00d2. If first high nibble is Fh, store0; otherwise INC AX and OR BH,F0h/PUSH BX/POPF/PUSHF/POP CX/AND CH,F0h/JZ00d2. If second high nibble is0 store1, otherwise INC AX/store2. Both branches target00d2 MOV DS:[6420],AL then00d5 nearRET. Every PUSHF/PUSH BX pairs with POP BX/POPF/POP CX before either branch. No segment writes, indirect transfers, loops or calls; DX/SI/DI/BP/DS/ES/SS preserved. AX/BX/CX/status flags clobbered. CPU entrySP=FFEA, minimumFFE8, nearRET returns to0011 withSP=FFEC in the checked loader layout. This return/write projection does not require guessing high FLAGS readback or a CPU family.",
+      "prompt": "00b1 return/segment projection established only under explicit successful real-mode loader, TF=0/no-trap/no-asynchronous-mutation and valid disjoint stack/store premises. Original DS6420 is the sole non-stack write, disjoint from reviewed heap cells. Hardware FLAGS readback chooses0/1/2; do not replace all original branches with constant2 or claim host Pascal parity. Historical Pascal body writes2 only and remains unreviewed. This static projection permits composing the next startup heap arithmetic, not accepting the whole startup, allocator, actual PSP capacity or later state/handler lifetime."
+    },
+    "FUN_24dd_04dc": {
+      "declaration": "function FUN_24dd_04dc: Longint;",
+      "oracle": "original-size-rounding-projection",
+      "scope": "unsigned-ax-to-paragraph-offset-and-cf-zf-df-projection",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 92700,
+      "reviewed_bytes_hex": "0507008bd0d1dad1ead1ead1ea250800c3",
+      "instruction_semantics": "Complete17-byte callee-free near leaf: ADD AX,7; MOV DX,AX; RCR DX,1 consumes the addition carry; three SHR DX,1; AND AX,8; RET. Unsigned request n becomes rounded=8*ceil(n/8), AX=rounded mod16 (0 or8), DX=floor(rounded/16). This pair represents physical byte count DX*16+AX, NOT ordinary unsigned32 DX:AX bytes. Existing host Longint packs result bits DX:AX. Request64000 yields AX0/DX4000 paragraphs; request65535 yields AX0/DX4096, representing65536 bytes. Final CF0,ZF iff AX0,DF unchanged. No non-stack data reads/writes; no calls. All65536 inputs compared to original and actual historical Pascal under existing FPC-Mtp unchecked16-bit arithmetic. Full CPU flags/residue and normal-program reachability are not established by this projection.",
+      "prompt": "Reuse existing accepted arithmetic helper, not a new inferred allocation service. RegisterAX input and RegisterAX/RegisterDX plus packed Longint output are the existing host interface. Incoming CF is overwritten by ADD; carry from ADD must feed RCR before SHR. Do not lose the17th bit or replace paragraph+offset with ordinary32-bit byte arithmetic. No heap is allocated and no pointer validity is established. This contract does not establish a range-checked-Cr implementation or full host CPU ABI."
+    },
+    "FUN_24dd_0353": {
+      "declaration": "procedure FUN_24dd_0353;",
+      "oracle": "static-original-allocator-dependencies",
+      "scope": "blocked-heap-and-handler-premises-not-allocation-acceptance",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 92307,
+      "reviewed_bytes_hex": "0bc07477a33c7be87f01bff6638cd98ec18bcf8cc326c43d8cc63b36f063745f263b550677eb7206263b450477e306575351268b0d268b5d0274335351268b4d04268b5d062bc81bda83e10f03c703d604f083d200240f8bf88ec2268f05268f450226894d0426895d068bcf8cc35f0726890d26895d02585af8c333c099c303c703d604f083d200240f3b16f463720877253b06f263771f06578bf98ec3a3ee638916f0632689052689550233c050ff1efe63585af8c3ff363c7bff1efe633c0172b774b6a13c7be93cff",
+      "callee_contracts": ["FUN_24dd_04dc"],
+      "scoped_instruction_semantics": "Deductive empty-list composition: under supplied head=frontier, writable disjoint globals/stack and exact default00d6 callback, 0353/0355/03ce..03d1 return AX=DX=0/CF0 for zero request without writes. Nonzero0357 saves the actual request at DS7b3c;035a uses checked04dc eight-byte rounding, including65535 ->65536 physical bytes. 036d/0371 bypass the nonempty list only under that entry premise. 03d2..03db add rounded offset/paragraphs and normalize the low byte with ADD AL,f0/ADC DX,0/AND AL,0f; preserve 16-bit intermediate semantics, not unbounded pointer addition. 03dd..03e9 compare unsigned segment first, then offset. Success03eb..0409 updates frontier and predecessor/head, calls the default handler with0, returns old head AX/DX and CF0. Failure040a..0414 calls default handler(request): AX0, computed DX retained, CMP AL,1/JB03cd returnsCF1, not through zero-request CWD. engine.instruction_facts.allocator_empty_list_contract recognizes the exact203/17/5-byte composition; deterministic Pascal rendering is a known-slice mechanism, not AI discovery. Its controlled COM CS-relative projection does not prove normal-program entry, arbitrary list/callback paths, full ABI or source recovery. Existing scoped report validation must precede any execution-evidence claim.",
+      "observed_outputs": [
+        "Allocator experiment routing: controlled empty-free-list tests require explicit disjoint writable heap/global/stack and the original default callback, not completion of later startup services. Whole-loop endpoint observation checks all19 vector saves once and stops0064 before installation; it does not establish allocator-entry heap/list/callback lifetime. Do not spend one recovery milestone per remaining query. Empty-list/default-callback behavior is a scoped experiment; free-list traversal/split/exact-fit, nondefault callback/retry, full ABI and normal-program state remain unresolved.",
+        "Startup-only third-service observation, NOT allocator outputs: one frozen thirdAH35/AL1b case returnsF000:1060 matching pre-call IVT1B; loopDS/SI/DI/CX/SS/SP and all6010 protected bytesDS[63d8,7b52) unchanged, including both saved slots. PSP:2/IVT0/2/1b/21 unchanged. First two calls/stores establish context, not independent pre/post evidence. Stop third005a before stores/remaining16 queries. Finite endpoints, not universal DOS ABI, handler-byte/code/table/live-return/transient-write proof, whole-loop/Pascal parity, allocator lifetime/success, source acceptance or learning.",
+        "Startup-only finite first-vector bridge, NOT allocator outputs: one distinct original-only DOSBox case stores offset1060h then segmentF000h at DS7af0..7af3, not dereferencing the pointer. Checks all6010 bytes: first slot4 predicted bytes, other6006 unchanged. Next input before MOV AH35: AX3502/CX18/SI023b/DI7af4/DF0; DS/SS/SP and PSP:2/IVT0/IVT21 unchanged. Original ADD/LOOP intact, pointer stores and CLD/CS:LODSB relocated unchanged in same CS. Stops before second query: that historical bridge case leaves AL2 effects and remaining18 queries unmeasured; later separate AL2 observation is not universal service acceptance. Unobserved/transient memory/code/table/live-return integrity and allocator-entry lifetime remain unresolved. Finite bridge evidence, no universal service ABI, Pascal parity, source recovery or learned improvement.",
+        "Startup-only second-service observation, NOT allocator outputs: one distinct frozen DOSBox case reaches AH35/AL2 after first saved slot, returns0070:0008 matching pre-call IVT2, preservesDS/SI/DI/CX/SS/SP and all6010 protected bytes DS[63d8,7b52), including first slot1060:F000. PSP:2/IVT0/IVT2/IVT21 unchanged. First call establishes input, not independently reverified pre/post. Stop second return005a before its pointer stores/remaining17 queries. Finite instrumented endpoints, not universal DOS ABI, handler-byte/code/table/live-return/transient-write proof, whole-loop/Pascal parity, allocation or source acceptance.",
+        "Startup-only second-vector bridge, NOT allocator outputs: one distinct frozen case stores second offset0008h/segment0070h at DS7af4..7af7, first saved slot intact; all6010 protected bytes checked, second-slot4 bytes predicted and other6006 unchanged. Third input before MOV AH35: observedAX351b/CX17/SI023c/DI7af8/DF0; only AL1b required from LODSB, original MOV would setAH35. Original ADD/LOOP intact, unchanged stores/prefix displaced in same CS, flag-restoring dispatch disclosed. Stops before third service; no service pre/post, remaining17-query effects, other/transient memory/code/table/live-return integrity, allocator lifetime, Pascal parity, source recovery or learning acceptance."
+      ],
+      "startup_third_service_context": {
+        "oracle": "instrumented_original_third_ah35_vector1b",
+        "scope": "one-dosbox-third-call-pre-post-not-universal-service-ABI",
+        "trace_sha256": "f9bc1f261a6ca58b9b22efac4fc98469d63dc97a6f6c7b4c9436e06a01bd0260",
+        "instrumented_sha256": "82094fb7611cb97e9c4d187ee7fc49b5f71546ffeb4c8dd53a6dc95096928cc9",
+        "freeze_sha256": "9d42269c5f4bf9261e851e28152aa1b3d5db073d2664ac9296ba0f58b3d34870",
+        "trace_bytes": 12110,
+        "returned_vector1b_segment_offset": [61440, 4192],
+        "protected_ds_range": [25560, 31570],
+        "protected_bytes_unchanged": 6010,
+        "saved_slot_bytes_checked": 8,
+        "third_pointer_store_executed": false,
+        "service_contract_established": false,
+        "pascal_parity": false,
+        "limitations": "First two calls/stores setup only, not independently reverified pre/post. Third AL1b result agrees with preIVT1B; loopDS/SI/DI/CX/SS/SP, PSP:2/IVT0/2/1b/21 and6010 bytes unchanged. Both saved slots match IVT0/2, remaining clear region zero; heap/class/callback baseline checked. Displaced stores/prefix unchanged, original ADD/LOOP/AH35/INT21 intact, flags-restoring dispatch. Stop third005a before stores/remaining16 queries. Endpoint checks do not prove transient/other-memory/code/table/live-return integrity, handler bytes/stack, universal ABI, normal-program/Pascal/allocator lifetime or source acceptance."
+      },
+      "startup_vector_batch_context": {
+        "oracle": "instrumented_original_vector_loop_endpoints",
+        "scope": "one-instrumented-full-query-save-loop-not-allocator-entry-state",
+        "trace_sha256": "81e64c00e4f3c466464262a253517e56fcf666c958365ec3603f95ae89ce102c",
+        "instrumented_sha256": "c28a6fab1767b83860c65dd38bdc9c7420829b734e08bb9b715849b7343a8cd1",
+        "freeze_sha256": "388d8b481575c6a5ae3dad75bc8f6e7802fc5fde88d69ce27cc5e3d0be5a1dc4",
+        "trace_bytes": 12238,
+        "queries_checked": 19,
+        "saved_pointer_bytes": 76,
+        "other_protected_bytes_unchanged": 5934,
+        "stop_before_startup_offset": 100,
+        "service_contract_established": false,
+        "allocator_entry_state_established": false,
+        "pascal_parity": false,
+        "limitations": "Snapshots enclose all19 original queries/stores/ADD/LOOP, only CLD/CS:LODSB displaced unchanged. Each saved pointer matches its recorded pre-loop IVT entry; all selected IVT entries and PSP:2 unchanged at end, plus tracked DS/SS/SP, CX0/SI024c/DI7b3c. Endpoint checks are not per-service preservation, transient/other-memory/code/table/live-return integrity, universal DOS ABI, handler installation, normal-program allocator lifetime or source recovery."
+      },
+      "startup_heap_evidence": {
+        "oracle": "static-original-startup-and-mz-minimum-allocation",
+        "scope": "conditional-initial-state-not-allocator-entry-state",
+        "file_offset": 91473,
+        "startup_tail_bytes_hex": "8bc4051300b104d3e88cd203c2a3de63a3e0630306d863a3e263a3ec63a3f063a3f8638e060c6426a10200a3f463c706fe63d6008c0e0064",
+        "file_backed_zero_words": [25560, 25582, 25586, 25590],
+        "clear_covers_saved_request": true,
+        "cpu_return_projection": {
+          "routine": "FUN_24dd_00b1",
+          "oracle": "static-original-cpu-return-projection",
+          "preserved": ["DX", "SI", "DI", "BP", "DS", "ES", "SS"],
+          "caller_sp_preserved": true,
+          "source_recovered": false,
+          "premises": "Successful ordinary real-mode loader/startup-clear; TF=0, no traps/faults/asynchronous mutations; valid disjoint near-return stack and DS6420 byte. All three CPU-readback paths converge with balanced stack; no CPU-family or Pascal parity acceptance."
+        },
+        "default_callback": {
+          "offset": 214,
+          "segment_origin": "startup CS",
+          "bytes_hex": "33c0ca0200",
+          "semantics": "XOR AX,AX; RETF2. Under a valid disjoint nonwrapping far-return stack: AX0, CF0, ZF1; BX/CX/DX/SI/DI/BP and DS/ES/SS/DF unchanged. Pops return IP/CS and one argument word, advancing SP6; no heap accesses. This is original-byte instruction review, not Pascal parity or observed normal-program use."
+        },
+        "conditional_state": "After existing startup-clear and checked00b1 return/segment projection under real-mode TF=0/no-trap/no-asynchronous-mutation premises: H=SS+((SP+13h)>>4), using16-bit ADD/SHR and initial63d8=0. Original00b1 writes only DS6420 outside the disjoint stack, leaving these heap cells intact. Stores H to63de/63e0/63e2/63ec/63f0/63f8;63ee/63f2/63f6 remain file-backed0. Free-list0:H initially equals cursor/sentinel0:H. PSP:2 supplies63f4 only if saved entryES is valid DOS PSP. DS63fe/6400 becomes startupCS:00d6.",
+        "minimum_guaranteed_spare_heap_bytes": 0,
+        "next_external_boundary": {
+          "oracle": "static_exact_original_vector_loop_and_table",
+          "file_offset": 91529,
+          "reviewed_bytes_hex": "bff07abe3902b9130090fc2eacb435cd21891d8c450283c704e2ef",
+          "table_file_offset": 92025,
+          "interrupt_numbers": [0, 2, 27, 33, 35, 36, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 117],
+          "stop_before_startup_offset": 88,
+          "first_service_ax": 13568,
+          "conditional_vector_save_ds_range": [31472, 31548],
+          "required_loop_preservation": ["DS", "SI", "DI", "CX", "SS", "SP"],
+          "service_contract_established": false,
+          "scope": "first-external-service-boundary-not-post-service-state",
+          "service_reference": "https://fd.lod.bz/rbil/interrup/dos_kernel/2135.html",
+          "limitations": "Original0049..0063 and19 vector IDs authenticated with real relocation exclusions. FirstINT21 at0058 hasAX3500/CX19/SI023a/DI7af0/DF0; IVT21 actual handler and service preservation/effects are unproved. Conditional19 pointer stores occupy DS[7af0,7b3c), ending before saved-request7b3c and disjoint from heap/callback/code/return stack. Every iteration resetsDF viaCLD; returned ES:BX is stored, not dereferenced. DOS result convention alone does not establish DS/SI/DI/CX/SS/SP preservation, absence of protected-memory mutations, successful allocation or later lifetime."
+        },
+        "instrumented_first_service_observation": {
+          "oracle": "instrumented_original_first_ah35_vector0",
+          "scope": "one-dosbox-first-AH35-AL0-not-universal-service-contract",
+          "trace_sha256": "1c1f3c568ff9fc2de58719a939c4147371e698dead681cfaf5be835df891478b",
+          "instrumented_sha256": "58456e6d5d72bf195a58cd3afc9374f057a136117c528afd06a62f8180c18f42",
+          "freeze_sha256": "c854f03bcf64485fbec47a1147c4ef2a0ac6dc5c70e11b69c242682b7add6b07",
+          "trace_bytes": 12094,
+          "observed_ivt21_segment_offset": [61440, 5280],
+          "returned_vector0_segment_offset": [61440, 4192],
+          "observed_preserved_loop_registers": ["DS", "SI", "DI", "CX", "SS", "SP"],
+          "protected_ds_range": [25560, 31570],
+          "protected_memory_bytes_unchanged": 6010,
+          "psp_allocation_end_and_ivt0_ivt21_unchanged": true,
+          "service_contract_established": false,
+          "allocation_success_established": false,
+          "pascal_parity": false,
+          "limitations": "One disclosed instrumented run, stop005a before original pointer save/remaining eighteen queries. Snapshot before MOV AH,35 hasAX9f00 from PSP-end high byte and vector0 AL; unchanged0056 establishesAX3500. CLD/CS:LODSB relocated unchanged within CS; pre/post scratch uses14 stack bytes. Endpoint equality only, not transient/other-memory or handler-stack/return-content/code/table integrity proof, normal-program guarantee or universal ABI. Frozen historical patch disclosure incorrectly called the service bootstrap ten bytes; actual four-byte bootstrap and14-byte snapshots independently decoded; preserve freeze and record erratum, no rerun."
+        },
+        "instrumented_first_vector_bridge": {
+          "oracle": "instrumented_original_first_vector_save_bridge",
+          "scope": "one-dosbox-first-return-to-next-input-not-second-service",
+          "trace_sha256": "69fdcc0105e4e6f66d9624494b5af5b0d9020b884dada8ded8407f48d3a4b60d",
+          "instrumented_sha256": "05394b48edee391bc31160a6ed54c97325467c181aea79b7275aab19c9f55493",
+          "freeze_sha256": "d0fd39c66925ee69bf169bad78f7c6d587c866381435c801cbaa57dfeb125de0",
+          "trace_bytes": 12094,
+          "first_store_ds_range": [31472, 31476],
+          "stored_offset_segment": [4192, 61440],
+          "memory_bytes_checked": 6010,
+          "other_protected_bytes_unchanged": 6006,
+          "next_input_before_mov_ah35": {
+            "AX": 13570, "CX": 18, "SI": 571, "DI": 31476, "DF": 0
+          },
+          "second_service_executed": false,
+          "service_contract_established": false,
+          "allocation_success_established": false,
+          "pascal_parity": false,
+          "limitations": "Distinct frozen case includes one firstAH35/AL0 call, not a retry of the previous service experiment or an independent whole-loop acceptance. Before snapshot is first returned state, not pre-service; service endpoint preservation not checked in this case. Five original store bytes relocated unchanged; ADD/LOOP intact. Next input captured after displaced CLD/CS:LODSB, before second MOV AH35/INT21; first-return AX3500 observed, not universally required. Gateway PUSHF/CMP/POPF preserves flags; actual14-byte snapshot scratch, four-byte bootstrap. No second-query effects, code/table/live-return-content or transient/other-memory proof, normal-run/Pascal/allocator/source acceptance."
+        },
+        "instrumented_second_service_observation": {
+          "oracle": "instrumented_original_second_ah35_vector2",
+          "scope": "one-dosbox-second-AH35-AL2-not-universal-service-contract",
+          "trace_sha256": "33c058b002c24241791a66ea7a11494bcd4edd638567e288774cc422a636f23e",
+          "instrumented_sha256": "582884fd54673d90f2b3f095df7cb24e6d9793263ed13b1542470100a64c74c1",
+          "freeze_sha256": "0708c49bbbb13aa03402635a3400b82219d260cb3638ff6283d0888da309d8ab",
+          "trace_bytes": 12102,
+          "observed_ivt21_segment_offset": [61440, 5280],
+          "returned_vector2_segment_offset": [112, 8],
+          "protected_ds_range": [25560, 31570],
+          "protected_memory_bytes_unchanged": 6010,
+          "first_saved_slot_offset_segment": [4192, 61440],
+          "observed_preserved_loop_registers": ["DS", "SI", "DI", "CX", "SS", "SP"],
+          "psp_allocation_end_and_ivt0_ivt2_ivt21_unchanged": true,
+          "second_pointer_store_executed": false,
+          "service_contract_established": false,
+          "allocation_success_established": false,
+          "pascal_parity": false,
+          "limitations": "One distinct original-only case, no retry. FirstAH35/AL0 and first slot establish context; only secondAH35/AL2 measured pre/post. Snapshots before second MOV AH35 and after INT21; beforeAL2 checked, AH not assumed; original MOV establishesAX3502. First stores/CLD-CSLODSB relocated unchanged; ADD/LOOP and AH35/INT21 bytes intact. PUSHF/CMP/POPF dispatch restores flags; scratch14/bootstrap4/dispatch2 bytes. Endpoint window/recorded-register/IVT checks only: other/transient memory, original code/table integrity, handler stack/bytes and live-return contents unobserved. Stops second005a before its stores/remaining17 queries; no universal service ABI, Pascal/full-program/allocator lifetime or source acceptance."
+        },
+        "instrumented_second_vector_bridge": {
+          "oracle": "instrumented_original_second_vector_save_bridge",
+          "scope": "one-dosbox-second-return-to-third-input-not-third-service",
+          "trace_sha256": "fc19e4b56cadfb9db8a79f4cfe0ccbaee79898a6705c84a6a8c6f8e763599e5d",
+          "instrumented_sha256": "3a481a4f31924fd8e4b64265590a126b7aef4f35b3cc0c8ba1cf01ffd1795969",
+          "freeze_sha256": "dfb91db2990a20fa2fab0825a0c77ff30a1fb96094a8c80af78c3ff3ac6d9a72",
+          "trace_bytes": 12102,
+          "second_store_ds_range": [31476, 31480],
+          "stored_offset_segment": [8, 112],
+          "memory_bytes_checked": 6010,
+          "other_protected_bytes_unchanged": 6006,
+          "first_saved_slot_intact": true,
+          "next_input_before_mov_ah35": {
+            "AX": 13595, "CX": 17, "SI": 572, "DI": 31480, "DF": 0
+          },
+          "third_service_executed": false,
+          "service_contract_established": false,
+          "allocation_success_established": false,
+          "pascal_parity": false,
+          "limitations": "One distinct frozen case, no retries. First two services and first slot establish baseline; snapshots cover second returned state/third input only, not service pre/post. Current --bridge --second combination explicitly supports this mode; previously rejected combination, older modes unchanged. Unchanged displaced pointer stores execute twice; original ADD/LOOP intact, flags-restoring dispatch. Before returnedAX/DF not assumed; ADD7af4+4 sets CF/PF/AF/ZF/SF/OF0, CLD clearsDF. Snapshot14/bootstrap4/dispatch2 scratch; other memory, transient mutations, code/table/live-return integrity and handler stack unobserved. Stops before third MOV AH35/INT21; remaining17 queries, normal-program/Pascal/allocator lifetime/source acceptance unresolved."
+        },
+        "instrumented_initial_observation": {
+          "oracle": "instrumented_original_mz_heap_initialization",
+          "scope": "one-dosbox-startup-before0049-not-normal-run-or-allocation",
+          "trace_sha256": "b20cc0b6f4575bca1c4919afb9ff599d8970f900d049d7ee015e7c7bafa4e26a",
+          "instrumented_sha256": "5b03eb203323497de8f712485cefb58e22e5f06412b7ddb55537cab49047d3f9",
+          "freeze_sha256": "6734b16223b41cd6c597c0afdd731683def09c0ac5cef051d8c4c1adf47e1341",
+          "load_segment": 417,
+          "psp_segment": 401,
+          "heap_start_segment": 12999,
+          "allocation_end_segment": 40959,
+          "spare_heap_bytes": 447360,
+          "callback_segment": 5758,
+          "callback_offset": 214,
+          "cpu_class": 2,
+          "checked_memory_bytes": 5961,
+          "allocation_success_established": false,
+          "pascal_parity": false,
+          "limitations": "Disclosed bootstrap/collector and header-size/allocation adjustments preserve original total minimum/maximum allocation and measured entry/clear/CPU/heap bytes; no dirty initialization. Stop before0049; PSP:2 captured before collector DOS calls. No claim for unmodified normal runs, later heap/handler lifetime, full ABI, CPU-family coverage or allocator success."
+        },
+        "limitations": "00b1 hardware-dependent CPU-family coverage and constant2 Pascal parity remain unverified; scoped original return/segment projection is established. MZ minimum ends at H, guaranteeing zero spare heap; one instrumented DOSBox observation has447360 extra bytes, not a normal-program capacity guarantee. Clear covers7b3c, but writable/nonaliasing origin at allocator entry and later state/handler lifetime remain unproved. No full startup/allocator execution or source acceptance."
+      },
+      "memory_model": "Entry DS is an unproved heap-state address space, not automatically source DS. Nonzero path first writes original request to DS7b3c, then reads far-list cell DS63f6 after setting ES=entryDS. Valid writable/nonaliasing DS7b3c and heap cells/list nodes, disjoint stack/code/arguments and invariant-valid heap topology are required before following this path. Initialization at allocator entry, list bounds/termination, successful allocation and lifetime remain unknown. One instrumented DOSBox observation before0049 has heap32c7h, PSP limit9fffh and447360 spare bytes; free-list0:32c7h equals sentinel0:32c7h and callback167eh:00d6 is installed. Original entry/clear/CPU/heap instructions and file-backed initial data are preserved, with disclosed bootstrap/collector/header adjustments and no dirty initialization. PSP:2 is captured before collector DOS calls. This initial capacity is not successful allocation, Pascal parity, a normal-program guarantee or proof of later state/callback lifetime. Next boundary is firstINT21 at0058: AH35h/AL0 requests current vector0 intoES:BX via unreviewed IVT21 handler. The documented result convention is not a service preservation guarantee. Original19-iteration vector-save loop conditionally writes DS[7af0,7b3c), ending before saved-request7b3c, only if DS/SI/DI/CX and SS/SP/return bindings survive and code/table/protected state are not mutated. CLD executes each iteration, so loop does not require service preservation ofDF; returned pointer is stored, not dereferenced. One frozen first-service observation returnsF000:1060 via measuredIVT21 F000:14a0, preservesDS/SI/DI/CX/SS/SP and all6010 bytes DS[63d8,7b52), with PSP:2/IVT0/IVT21 unchanged. This finite instrumented0058-to005a endpoint is not universal service ABI, other-memory/code/table/transient-write integrity, handler stack/return contents or remaining18 queries. Do not carry initial heap/PSP/callback facts through the whole loop or into allocator entry from this case. No source acceptance or Pascal parity.",
+      "instruction_semantics": "All203 original bytes match file92307, no overlapping actual MZ relocation. OR AX,AX/JZ03ce makes request0 return AX0/DX0,CF0 without heap access, assuming valid near-return stack. Nonzero0357 stores request at DS7b3c;035a CALL displacement017f targets reviewed04dc. 035d MOV DI,63f6;0360 MOV CX,DS;0362 bytes8ec1 MOV ES,CX (not reversed listing);0364 MOV CX,DI;0366 MOV BX,ES;0368 LES DI,ES:[DI]. This first dereference depends on unproved DS63f6 heap state. Compare node segment with DS63f0 sentinel, then size words at ES:DI+4/+6; other branches traverse/split/update list. Original8ec2 at03ac is MOV ES,DX and8ec3 at03ef MOV ES,BX, not reversed listing. DS63ee/63f0 cursor and DS63f2/63f4 limit participate in growth. Far indirect calls at0402 and040e read DS63fe/6400; targets, callback register/stack/DS effects, return behavior and possible heap changes are not established. Growth pushes0 before0402; exhaustion pushes saved request before040e. Retry at041b JMP035a reloads request first. Known64000 rounding is not a proven allocation or proof of normalized output pointer. No whole-routine source or ABI acceptance.",
+      "prompt": "Blocked allocator context only. Keep unresolved heap/list/cursor and DS63fe far-handler obligations explicit; do not model malloc or silently return a guessed pointer. ES=entryDS at0362 is supported locally only before unproved list/handler effects. Full allocation path requires writable/nonaliasing heap bounds and proven segment provenance, including stores through dynamic ES:DI. Stop at unproved DS63f6 initialization/topology at allocator entry rather than execute with invented heap data. Existing procedure declaration is a skeleton interface, not proof of recovered register-return ABI. Source0353 remains unreviewed despite checked04dc callee and static facts. Original startup conditionally sets free-list0:H equal to sentinel0:H, where H=SS+((SP+13h)>>4) and initial63d8=0;63ee/63f2/63f6 are file-backed zero, and startup clear covers7b3c. 00b1 return/segment projection established under real-mode TF=0/no-trap/no-asynchronous-mutation premises: all three readback paths balance stack, preserveDS/SS/ES and write only disjoint DS6420. The historical constant2 Pascal body and hardware CPU classification are not accepted. Later state preservation remains unresolved. Original MZ minimum allocation guarantees no spare heap: its end equals H, not proof of capacity for64000 bytes. Stores63fe/6400 install startupCS:00d6; default00d6 callback is original33c0ca0200 (XOR AX,AX; RETF2), returning AX0/CF0/ZF1. BX/CX/DX/SI/DI/BP and DS/ES/SS/DF are unchanged; it pops IP/CS and one argument word, advancing SP6 under valid disjoint nonwrapping far-return stack. This does not prove that the callback or initial heap state still applies at allocator entry, or that PSP:2 is the minimum rather than a larger actual allocation end."
+    },
+    "FUN_24dd_028a": {
+      "declaration": "procedure FUN_24dd_028a;",
+      "oracle": "static-original-allocation-wrapper",
+      "scope": "blocked-callee-and-abi-not-allocation-acceptance",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 92106,
+      "reviewed_bytes_hex": "558bec8b4606e8c0005d7203ca0200b8cb00e970fe",
+      "callee_contracts": ["FUN_24dd_0353"],
+      "instruction_semantics": "Complete21 original bytes, no overlapping MZ relocation. PUSH BP/MOV BP,SP loads unsigned request from SS:BP+6 into AX; nearCALL0290 displacement00c0 targets0353. POP BP preserves returned flags; JC0299, otherwise RETF2. Error path MOV AX,00cb; nearJMP029c displacementfe70 targets010f. Correct far-return/argument cleanup and DS/AX/DX/CF outcomes require checked0353 and error-handler010f contracts plus valid writable disjoint stack. Existing no-argument Pascal skeleton does not establish actual request/result ABI.",
+      "prompt": "Keep0353 heap/handler blockers. A requested unsigned64000 byte count is not evidence that memory was allocated, returned offset normalized or DS preserved. No guessed host malloc/fallback or caller buffer acceptance. Resolve direct callee0353 before this wrapper;010f failure transfer and far-return/host signature remain separate obligations. Do not rewrite the existing skeleton signature from this partial contract."
+    },
+    "FUN_1ec2_0895": {
+      "declaration": "procedure FUN_1ec2_0895(param_1: Longint; param_2, param_3, param_4, param_5: Integer);",
+      "oracle": "static-original-callsite-constraints",
+      "scope": "conditional-input-and-callee-facts-not-caller-recovery",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "callee_contracts": [
+        "FUN_24dd_4654",
+        "FUN_1ec2_0dc8"
+      ],
+      "memory_model": "Original BP+6/+8 holds a far pointer, not a proven host linear address. Two authenticated parent call sites load it from DS:6684; second view adds160 to DI modulo65536 without segment normalization. Do not equate this packed pointer with the drawing leaf's Longint linear projection. All argument derivations require valid disjoint SS frame/stack/code and input cells; changed SS/SP or aliasing stores invalidate these bindings. For both views a sufficient nonwrapping base offset is<=14978, plus valid writable/nonaliasing physical bounds through base+50557. Actual allocation and caller DS continuity are unresolved.",
+      "instruction_semantics": "Existing reviewed prefix gives xStep=sign16(wrap16(BP+12 - BP+16)), yStep=sign16(wrap16(BP+10 - BP+14)); ignored sign argument PUSH BP is not an output pointer. Exact caller random PUSH5/zero guard and conditional PUSH2 establish0..4 and0..1, color83/84; state advances once per executed call under46b1 DS-state/CS8405 premises. Checked incoming slices in FUN_1000_5e66 at1000:7e3c..7e81 and8411..845a pass object X/Y minus DS67b0/67b4 or67b2/67b6 (wrapped16) as starting coordinates; target X/Y are parent BP-6+7 and BP-8+4. They push ES:DI from DS6684; second ADD DI,00a0 wraps16. Actual far CALLs at7e7d/8456 have MZ-relocated relative segment0ec2, offset0895. Startup e50b..e519 requests unsignedFA00h=64000 from24dd:028a then stores returned AX/DX at post-call DS6684/6686. That wrapper near-calls unresolved24dd:0353; requested size is not proof of successful allocation, pointer normalization, preserved DS or later pointer lifetime. Full parent5e66 effects, seed initialization, loop/overflow/aliasing and ABI remain unresolved.",
+      "reviewed_slices": [
+        {
+          "entry": "1000:7e3c",
+          "file_offset": 38316,
+          "bytes_hex": "c4bec8fe268b052b06b067998986d0fe8996d2fe268b45022b06b467998986ccfe8996cefeffb6d0feffb6ccfe8b46fa050700508b46f805040050c43e846606579a9508c20e",
+          "relocation_offsets": [68],
+          "far_call_offset": 65,
+          "destination_offset_adjustment": 0
+        },
+        {
+          "entry": "1000:8411",
+          "file_offset": 39809,
+          "bytes_hex": "c4bec8fe268b052b06b267998986d0fe8996d2fe268b45022b06b667998986ccfe8996cefeffb6d0feffb6ccfe8b46fa050700508b46f805040050c43e846681c7a00006579a9508c20e",
+          "relocation_offsets": [72],
+          "far_call_offset": 69,
+          "destination_offset_adjustment": 160
+        },
+        {
+          "entry": "1000:e50b",
+          "file_offset": 64635,
+          "bytes_hex": "6800fa9a8a02dd14a3846689168666",
+          "relocation_offsets": [6],
+          "far_call_offset": 3,
+          "requested_size_word": 64000
+        }
+      ],
+      "conditional_bounds": {
+        "maximum_draw_displacement": 50397,
+        "maximum_view_offset": 15138,
+        "maximum_base_offset_both_views": 14978,
+        "maximum_displacement_both_views": 50557,
+        "required_writable_bytes_from_base": 50558
+      },
+      "prompt": "Partial static constraints only; caller is NOT recovered or eligible to execute. Reuse scoped callee facts without assuming their premises. Keep existing signature, but do not guess whether param_1 has been converted from packed far pointer to a linear host base. Do not cast it to host Pointer or silently normalize offset wrapping. Requested64000 bytes are not an allocator acceptance result. Resolve FUN_24dd_028a through0353 and actual caller DS continuity/pointer lifetime before assuming DS6684 buffer bounds or DS6412 seed mapping. Seed initial value and path from seed writers to this call remain unknown. Preserve wrapped16 arithmetic and unresolved abs(-32768)/loop termination; do not install a guessed caller, promote source or infer learned recovery."
+    },
+    "FUN_24dd_46b1": {
+      "declaration": "procedure FUN_24dd_46b1;",
+      "oracle": "scoped-original-random-state",
+      "scope": "ds-state-and-ax-dx-projection-only",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 109553,
+      "reviewed_bytes_hex": "a112648b1e14648bc82ef726e746d1e1d1e1d1e102e903d103d3d1e3d1e303d302f3b105d3e302f305010083d200a3126489161464c3",
+      "memory_model": "DosMemory mirrors original entry DS; CodeMemory46e7..46e8 mirrors original CS constant8405h. Four writable state bytes at DS6412..6415 must not alias code/stack/arguments.",
+      "instruction_semantics": "Complete54-byte near leaf, no calls/branches, no overlapping MZ relocation at code or following constant. Original CS:46e7 word8405h. Unsigned stateLow*8405h yields DX:AX; wrapped shifts/byte adds contribute stateLow*0808h and stateHigh*8405h to high word; ADD AX,1/ADC DX,0 completes state'=(08088405h*state+1) mod2^32. Store low/high words at DS6412/6414; return new low in AX and high in DX. DS/SS/BP/DF unchanged, nearRET. Other registers/flags are not implemented by the host projection.",
+      "prompt": "Known manually reviewed slice, not blind recovery. Keep existing no-argument declaration and DosMemory/CodeMemory/RegisterAX/RegisterDX mirrors. Require original constant8405h and a proven writable nonaliasing DS state mapping; entry DS is not assumed to be source DS. Increment the LOW PRODUCT, not the old seed. Preserve explicit modulo16 carries including full32-bit rollover under range checking. Full CPU ABI, caller DS provenance and normal-program reachability remain unresolved; no whole-routine acceptance."
+    },
+    "FUN_24dd_4654": {
+      "declaration": "function FUN_24dd_4654(param_1: Word): Integer;",
+      "oracle": "scoped-original-random-scale",
+      "scope": "state-and-return-projection-only",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 109460,
+      "reviewed_bytes_hex": "e85a008bdc8bca36f767048bc18bca36f7670403c183d2008bc2ca0200",
+      "instruction_semantics": "Original nearCALL at4654 has displacement005a and targets46b1. After its nearRET restores entry SP, bound is unsigned word SS:SP+4. Two unsigned MUL instructions and ADD/ADC compute floor(nextState*bound/2^32), returning its16 bits in AX; RETF2. State advances once even for bound0. Range0..bound-1 for bound>0, else0. Host Integer return preserves bits, not an unsigned interpretation for results>=32768; full register/flag residue is not mirrored.",
+      "prompt": "Use the checked46b1 state projection only under its original CS constant and writable nonaliasing DS/code/stack premises. Keep Word input and Integer result bits; unsigned high-product scaling is not modulo bound or signed division. Actual0895 calls use bound5 then conditional bound2: first result0..4, second0..1, color83/84. State mutation occurs for every call including bound0. Caller seed initialization, DS provenance and drawing buffer/loop behavior are not established by this contract."
+    },
+    "FUN_1ec2_0dc8": {
+      "declaration": "procedure FUN_1ec2_0dc8(param_1: Longint; param_2: Char; param_3, param_4: Integer);",
+      "oracle": "scoped-original-draw-memory",
+      "scope": "nonwrapping-linear-memory-effects-only",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "file_offset": 69976,
+      "reviewed_bytes_hex": "5589e5804e0a0074318b5e0c8b4e0e83f9007c2681f99d007f2083fb007c1b81fb9d007f15c47e06c1e30601dfc1e30201df01cf8a460a268805c9ca0a00",
+      "arguments": [
+        {
+          "name": "param_1",
+          "role": "destination",
+          "representation": "host projection of segment*16+offset as Longint, NOT a host pointer or packed far pointer"
+        },
+        {
+          "name": "param_2",
+          "role": "color",
+          "representation": "low byte of original BP+10 stack word, Char"
+        },
+        {
+          "name": "param_3",
+          "role": "row",
+          "representation": "signed16 original BP+12"
+        },
+        {
+          "name": "param_4",
+          "role": "column",
+          "representation": "signed16 original BP+14"
+        }
+      ],
+      "memory_model": "Use the existing RealModeMemory byte array at the supplied linear base plus row*320+column, only under nonwrapping far-offset and physical-address premises.",
+      "instruction_semantics": "All62 bytes checked against original file69976, no overlapping MZ relocations. No calls/globals. OR byte [BP+10],0 is a same-value stack write, then JZ joins LEAVE/RETF10 at slice58. Signed row/column guards each accept0..157; all five early branches join58. LES DI,[BP+6] loads destination, two SHL/ADD stages plus column compute (offset+row*320+column) mod65536; MOV ES:[DI],AL writes exactly one color byte. DF is irrelevant and unchanged. Under offset+50397<=65535 and segment*16+offset+50397<1048576, linear projection preserves memory effects. Zero color or rejected coordinates produce no destination access. Full flags/register/stack-write ABI and wrapping offsets are not represented by this host signature.",
+      "prompt": "This is a manually reviewed known slice, not blind recovery. Keep the exact existing declaration; RealModeMemory is already available through LieroRuntime. Use it for destination writes, not Pointer/Ptr/Seg/Ofs or invented globals. Only the nonwrapping memory-effects projection is requested. Do not silently clamp coordinates, write color0, swap row/column, use stride158, or replace the linear base with a packed-pointer interpretation. Keep unsupported far-offset wrapping/full ABI/caller allocation provenance explicit; this contract is not full routine acceptance.",
+      "observed_outputs": [
+        "destination arena under nonwrapping valid writable nonaliasing bounds"
+      ]
+    },
     "FUN_24dd_3f86": {
       "declaration": "procedure FUN_24dd_3f86(param_1, param_2: Longint);",
       "oracle": "liero-compare-routine-probe",

@@ -1,24 +1,16 @@
-{ liero::FUN_24dd_01f0 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_01f0.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_01f0.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __cdecl16near FUN_24dd_01f0(void)
-// 
-// {
-//   char *in_BX;
-//   
-//   for (; *in_BX != '\0'; in_BX = in_BX + 1) {
-//     FUN_24dd_0232();
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
+{ Oracle: original01f0 CS-relative NUL string through checked0232 output port.
+  CodeMemory is explicit original-code binding, not host address/native ABI. }
 procedure FUN_24dd_01f0;
+var
+  value: Byte;
 begin
-  { TODO: translate from asm/FUN_24dd_01f0.s — UNMATCHED until an oracle passes }
+  repeat
+    value := CodeMemory[RegisterBX];
+    RegisterAX := (RegisterAX and $FF00) or value;
+    RegisterZeroFlag := value = 0;
+    if value = 0 then Exit;
+    FUN_24dd_0232(RegisterAX);
+    if RegisterBX = $FFFF then RunError(211);
+    Inc(RegisterBX);
+  until False;
 end;
-

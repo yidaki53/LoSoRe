@@ -107,6 +107,8 @@ uses LieroRuntime;
 {$I ../src/FUN_24dd_4654.inc}
 {$I ../src/FUN_1000_5e66.inc}
 {$I ../src/FUN_1000_0961.inc}
+{$I ../src/FUN_249c_0013.inc}
+{$I ../src/FUN_249c_0000.inc}
 
 var
   sourceBuffer: array[0..7] of Byte;
@@ -1874,10 +1876,11 @@ begin
   DosOutputCount := 0;
   RegisterAX := $ABCD;
   FUN_24dd_0218;
-  if (DosOutputCount <> 2) or
+  if (DosOutputCount <> 4) or
      (DosOutputBuffer[0] <> Ord('A')) or
      (DosOutputBuffer[1] <> Ord('B')) or
-     (RegisterAX <> $ABCD) then
+     (DosOutputBuffer[2] <> Ord('C')) or
+     (DosOutputBuffer[3] <> Ord('D')) then
     Halt(199);
 
   DosMemory[$6412] := $34;
@@ -1889,7 +1892,7 @@ begin
   actualWord := FUN_24dd_4654(1000);
   if actualWord <> 803 then
     Halt(202);
-  if (DosMemory[$6412] <> $35) or (DosMemory[$6413] <> $12) or
+  if (DosMemory[$6412] <> $49) or (DosMemory[$6413] <> $EA) or
      (DosMemory[$6414] <> $B9) or (DosMemory[$6415] <> $CD) then
     Halt(203);
 
@@ -2045,6 +2048,27 @@ begin
   actualWord := Word(DosMemory[$67B4]) or (Word(DosMemory[$67B5]) shl 8);
   if actualWord <> 40 then
     Halt(201);
+
+  RegisterSS := $2000;
+  RegisterDS := $1000;
+  RegisterSP := $eff0;
+  RegisterBP := $6789;
+  RegisterDirectionFlag := True;
+  RealModeMemory[$282fb] := 17;
+  RealModeMemory[$282fc] := 3;
+  FUN_249c_0013(Integer($8400));
+  if (RealModeMemory[$282fd] <> 19) or (RegisterAX <> 275) or
+     (RegisterDX <> 3) or (RegisterDI <> $8400) or
+     (RegisterBP <> $6789) or (RegisterDS <> $1000) or
+     (RegisterSP <> $eff4) or not RegisterDirectionFlag or RegisterCarryFlag then
+    Halt(219);
+
+  { Oracle: logical cursor input projection only, not external BIOS ABI. }
+  RegisterSP := $fff8;
+  FUN_249c_0000($ab4f, $cd18);
+  if (BIOSCursorColumn <> 79) or (BIOSCursorRow <> 24) or
+     (RegisterSP <> 0) then
+    Halt(220);
 
   WriteLn('Liero runtime-state and memory-copy routines: PASS');
 end.

@@ -13,6 +13,8 @@ type
     Blue: Byte;
   end;
   TVideoPalette = array[0..255] of TPaletteEntry;
+  TLieroRestoreVector = procedure(vector: Byte; offset, segment: Word);
+  TLieroTerminate = procedure(status: Byte);
 
 { Logical mirrors of original DS-relative globals; host addresses are not fixed. }
 const
@@ -48,6 +50,8 @@ var
   RegisterSP: Word;
   RegisterSS: Word;
   BIOSVideoMode: Byte;
+  BIOSCursorRow: Byte;
+  BIOSCursorColumn: Byte;
   DosOutputBuffer: array[0..$FFFF] of Byte;
   DosOutputCount: Word;
   DosMemory: TDosMemory;
@@ -57,6 +61,10 @@ var
   VideoStatusReadSequence: array[0..255] of Byte;
   VideoStatusSequenceLength: Word;
   VideoStatusSequenceIndex: Word;
+  LieroErrorDataSegment, LieroErrorCodeSegment: Word;
+  LieroTextCodeSegment: Word;
+  LieroRestoreVector: TLieroRestoreVector;
+  LieroTerminate: TLieroTerminate;
 
 procedure CopyDWordsForward(source, destination: Pointer; dwordCount: Word);
 procedure CopyBytesForward(source, destination: Pointer; byteCount: Word);
@@ -65,9 +73,32 @@ procedure ClearDWords(destination: Pointer; dwordCount: Word);
 function SignWord(value: Integer): Word;
 function ReadVideoStatusPort: Byte;
 function ReadStackByte(offset: Word): Byte;
+procedure WriteConsoleCRLFByte(value: Byte);
 procedure WriteWordLE(destination: Pointer; byteOffset: Word; value: Word);
 
 implementation
+
+procedure WriteConsoleCRLFByte(value: Byte);
+var
+  cell: Word;
+begin
+  { Oracle: mode3/page0 DOS console CR/LF, bounded original screen observation.
+    Printable bytes, other modes/pages and invalid cursor state are unsupported. }
+  if (BIOSVideoMode <> 3) or (BIOSCursorRow > 24) or
+     (BIOSCursorColumn > 79) then RunError(211);
+  case value of
+    13: BIOSCursorColumn := 0;
+    10: if BIOSCursorRow < 24 then Inc(BIOSCursorRow)
+        else begin
+          Move(RealModeMemory[$B80A0], RealModeMemory[$B8000], 3840);
+          for cell := 0 to 79 do begin
+            RealModeMemory[$B8F00 + LongInt(cell) * 2] := 32;
+            RealModeMemory[$B8F01 + LongInt(cell) * 2] := 7;
+          end;
+        end;
+  else RunError(211);
+  end;
+end;
 
 procedure CopyDWordsForward(source, destination: Pointer; dwordCount: Word);
 var
