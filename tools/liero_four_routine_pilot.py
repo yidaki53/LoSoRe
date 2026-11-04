@@ -6,10 +6,13 @@ import argparse
 import hashlib
 import json
 import pathlib
+import random
 import re
 import shutil
+import struct
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable
@@ -20,10 +23,16 @@ if str(ROOT) not in sys.path:
 
 from engine import knowledge
 from engine.alternate_streams import _mz_relocation_locations, load_binary_evidence
-from engine.instruction_facts import initialization_prefix
+from engine.instruction_facts import (
+    allocator_empty_list_contract,
+    bounded_byte_fill_contract,
+    bounded_shortstring_contract,
+    initialization_prefix,
+)
 from engine.recovery import audit_target
 from tools import liero_compare_routine_probe as compare
 from tools import liero_constructor_probe as constructor
+from tools import liero_file_probe as file_probe
 from tools import liero_read_handler_probe as handler
 
 PANEL = {
@@ -32,6 +41,1657 @@ PANEL = {
     "read": ("FUN_24dd_375e", 0x375E, 48),
     "close": ("FUN_24dd_37d3", 0x37D3, 25),
 }
+LEAF_PANEL = {
+    "FUN_24dd_4905": (0x4905, 20),
+    "FUN_24dd_3b22": (0x3B22, 59),
+}
+FILL_SKETCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "loop_kind": {"type": "string", "enum": ["for", "while"]},
+        "guard_zero": {"type": "boolean"},
+        "first_index": {"type": "integer", "enum": [0, 1]},
+        "end_expression": {"type": "string", "enum": ["count_minus_one", "count"]},
+        "stored_value": {"type": "string", "enum": ["value", "zero"]},
+    },
+    "required": [
+        "loop_kind",
+        "guard_zero",
+        "first_index",
+        "end_expression",
+        "stored_value",
+    ],
+    "additionalProperties": False,
+}
+STRING_SKETCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "loop_kind": {"type": "string", "enum": ["for", "while"]},
+        "prefix": {"type": "string", "enum": ["byte_contract", "zero_all"]},
+        "maximum_text_bytes": {"type": "integer", "enum": [79, 80, 255]},
+        "text_destination_offset": {"type": "integer", "enum": [48, 0]},
+        "source_text_offset": {"type": "integer", "enum": [1, 0]},
+        "stop_at_nul": {"type": "boolean"},
+    },
+    "required": [
+        "loop_kind",
+        "prefix",
+        "maximum_text_bytes",
+        "text_destination_offset",
+        "source_text_offset",
+        "stop_at_nul",
+    ],
+    "additionalProperties": False,
+}
+DRAW_SKETCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "guard_style": {"type": "string", "enum": ["early_exit", "nested"]},
+        "skip_zero": {"type": "boolean"},
+        "stride": {"type": "integer", "enum": [158, 320]},
+        "coordinate_order": {"type": "string", "enum": ["row_column", "column_row"]},
+        "maximum_coordinate": {"type": "integer", "enum": [157, 158]},
+    },
+    "required": [
+        "guard_style",
+        "skip_zero",
+        "stride",
+        "coordinate_order",
+        "maximum_coordinate",
+    ],
+    "additionalProperties": False,
+}
+
+
+def render_draw_sketch(sketch: dict, original: bytes) -> str:
+    """Oracle: known62-byte shape plus supplied nonwrapping memory topology, not recovery."""
+    if original != bytes.fromhex(
+        "5589e5804e0a0074318b5e0c8b4e0e83f9007c2681f99d007f2083fb007c1b"
+        "81fb9d007f15c47e06c1e30601dfc1e30201df01cf8a460a268805c9ca0a00"
+    ):
+        raise ValueError("drawing original-byte shape differs")
+    if (
+        not isinstance(sketch, dict)
+        or set(sketch) != set(DRAW_SKETCH_SCHEMA["required"])
+        or sketch["guard_style"] not in ("early_exit", "nested")
+        or type(sketch["skip_zero"]) is not bool
+        or sketch["skip_zero"] is not True
+        or type(sketch["stride"]) is not int
+        or sketch["stride"] != 320
+        or sketch["coordinate_order"] != "row_column"
+        or type(sketch["maximum_coordinate"]) is not int
+        or sketch["maximum_coordinate"] != 157
+    ):
+        raise ValueError(
+            "drawing sketch conflicts with closed vocabulary/byte contract"
+        )
+    lines = [
+        "{ Oracle: supplied nonwrapping drawing projection; scoped parity required. }",
+        "procedure FUN_1ec2_0dc8(param_1: Longint; param_2: Char; param_3, param_4: Integer);",
+        "var pixelAddress: Longint;",
+        "begin",
+    ]
+    if sketch["guard_style"] == "early_exit":
+        lines += [
+            "  if (param_2 = #0) or (param_3 < 0) or (param_3 > 157) or",
+            "     (param_4 < 0) or (param_4 > 157) then Exit;",
+        ]
+        indent = "  "
+    else:
+        lines += [
+            "  if (param_2 <> #0) and (param_3 >= 0) and (param_3 <= 157) and",
+            "     (param_4 >= 0) and (param_4 <= 157) then",
+            "  begin",
+        ]
+        indent = "    "
+    lines += [
+        f"{indent}pixelAddress := param_1 + Longint(param_3) * 320 + param_4;",
+        f"{indent}RealModeMemory[pixelAddress] := Byte(param_2);",
+    ]
+    if sketch["guard_style"] == "nested":
+        lines.append("  end;")
+    return "\n".join([*lines, "end;", ""])
+
+
+def validate_draw_candidate(source: str, sketch: dict, original: bytes) -> None:
+    """Oracle: execute only exact closed-renderer output under caller-proven arena bounds.
+
+    This is not a safety checker for arbitrary Pascal or unknown input pointers.
+    """
+    if source != render_draw_sketch(sketch, original):
+        raise ValueError("drawing candidate differs from exact rendered source")
+
+
+def render_shortstring_sketch(sketch: dict, routine: str, contract: dict) -> str:
+    """Oracle: supplied typed composition; semantics must agree with exact original bytes."""
+    if (
+        routine != "FUN_24dd_3b22"
+        or not isinstance(sketch, dict)
+        or set(sketch) != set(STRING_SKETCH_SCHEMA["required"])
+        or any(
+            type(sketch[name]) is not int or sketch[name] not in spec["enum"]
+            for name, spec in STRING_SKETCH_SCHEMA["properties"].items()
+            if spec["type"] == "integer"
+        )
+        or type(sketch["stop_at_nul"]) is not bool
+        or sketch["loop_kind"] not in ("for", "while")
+        or sketch["prefix"] not in ("byte_contract", "zero_all")
+    ):
+        raise ValueError("invalid typed shortstring sketch")
+    if (
+        contract
+        != bounded_shortstring_contract(bytes.fromhex(contract["routine_bytes_hex"]))
+        or sketch["prefix"] != "byte_contract"
+        or not sketch["stop_at_nul"]
+        or any(
+            sketch[name] != contract[name]
+            for name in (
+                "maximum_text_bytes",
+                "text_destination_offset",
+                "source_text_offset",
+            )
+        )
+    ):
+        raise ValueError("shortstring sketch conflicts with exact byte contract")
+    lines = [
+        "{ Oracle: supplied typed composition; scoped original-memory comparison required. }",
+        leaf_interface(routine),
+        "var index, count, copied: LongInt;",
+        "begin",
+    ]
+    for write in contract["prefix_writes"]:
+        begin = write["byte_offset"]
+        count = write["word_count"]
+        value = write["value"]["amount"]
+        if count == 1:
+            lines += [
+                f"  destination^[{begin}] := {value & 255};",
+                f"  destination^[{begin + 1}] := {value >> 8};",
+            ]
+        elif count:
+            lines += [
+                f"  for index := 0 to {count - 1} do",
+                "  begin",
+                f"    destination^[{begin} + index * 2] := {value & 255};",
+                f"    destination^[{begin + 1} + index * 2] := {value >> 8};",
+                "  end;",
+            ]
+    limit = contract["maximum_text_bytes"]
+    destination = contract["text_destination_offset"]
+    source = contract["source_text_offset"]
+    lines += [
+        "  count := source^[0];",
+        f"  if count > {limit} then count := {limit};",
+        "  copied := 0;",
+    ]
+    if sketch["loop_kind"] == "for":
+        lines += ["  for index := 0 to count - 1 do", "  begin"]
+    else:
+        lines += ["  index := 0;", "  while index < count do", "  begin"]
+    lines += [
+        f"    if source^[{source} + index] = 0 then Break;",
+        f"    destination^[{destination} + index] := source^[{source} + index];",
+        "    Inc(copied);",
+    ]
+    if sketch["loop_kind"] == "while":
+        lines.append("    Inc(index);")
+    return "\n".join(
+        [*lines, "  end;", f"  destination^[{destination} + copied] := 0;", "end;", ""]
+    )
+
+
+def render_fill_sketch(sketch: dict, routine: str) -> str:
+    """Oracle: typed supplied loop topology, not a model-authored Pascal source body."""
+    if not re.fullmatch(r"FUN_[0-9a-f]{4}_[0-9a-f]{4}", routine):
+        raise ValueError("invalid fill sketch routine name")
+    if (
+        not isinstance(sketch, dict)
+        or set(sketch) != set(FILL_SKETCH_SCHEMA["required"])
+        or type(sketch["guard_zero"]) is not bool
+        or type(sketch["first_index"]) is not int
+        or sketch["first_index"] not in (0, 1)
+        or any(
+            sketch[field] not in FILL_SKETCH_SCHEMA["properties"][field]["enum"]
+            for field in ("loop_kind", "end_expression", "stored_value")
+        )
+    ):
+        raise ValueError("invalid fill sketch fields or vocabulary")
+    limit = (
+        "LongInt(count) - 1"
+        if sketch["end_expression"] == "count_minus_one"
+        else "LongInt(count)"
+    )
+    value = "value" if sketch["stored_value"] == "value" else "0"
+    lines = [
+        "{ Oracle: model-selected typed fill sketch; scoped memory parity required. }",
+        f"procedure {routine}(destination: PBlock; count: Word; value: Byte);",
+        "var index: LongInt;",
+        "begin",
+    ]
+    indent = "  "
+    if sketch["guard_zero"]:
+        lines.extend(["  if count > 0 then", "  begin"])
+        indent = "    "
+    if sketch["loop_kind"] == "for":
+        lines.extend(
+            [
+                f"{indent}for index := {sketch['first_index']} to {limit} do",
+                f"{indent}  destination^[index] := {value};",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                f"{indent}index := {sketch['first_index']};",
+                f"{indent}while index <= {limit} do",
+                f"{indent}begin",
+                f"{indent}  destination^[index] := {value};",
+                f"{indent}  Inc(index);",
+                f"{indent}end;",
+            ]
+        )
+    if sketch["guard_zero"]:
+        lines.append("  end;")
+    return "\n".join([*lines, "end;", ""])
+
+
+def validate_fill_sketch_contract(sketch: dict, contract: dict) -> None:
+    """Oracle: exact REP STOSB argument bindings reject contradicting memory hypotheses."""
+    if (
+        contract.get("oracle") != "exact_byte_shape_under_scoped_far_call_preconditions"
+        or contract.get("destination_far_pointer_slot") != 8
+        or contract.get("count_word_slot") != 6
+        or contract.get("value_low_byte_slot") != 4
+        or sketch["first_index"] != 0
+        or sketch["end_expression"] != "count_minus_one"
+        or sketch["stored_value"] != "value"
+    ):
+        raise ValueError(
+            "fill sketch conflicts with the exact byte contract/host interface"
+        )
+
+
+class LeafCandidateExecutionError(RuntimeError):
+    """Oracle: a compiled candidate failed bounded training execution, never a pass."""
+
+
+def leaf_cases(routine: str, suite: str) -> list[tuple[str, bytes]]:
+    """Oracle: frozen disjoint dirty-memory corpora; no model-dependent cases."""
+    if routine not in LEAF_PANEL or suite not in {"training", "heldout"}:
+        raise ValueError("unknown leaf routine or corpus")
+    seeds = (0, 255) if suite == "training" else (165,)
+    cases = []
+    for seed in seeds:
+        for length in range(257 if routine == "FUN_24dd_4905" else 256):
+            data = bytearray([seed] * 544)
+            if routine == "FUN_24dd_4905":
+                struct.pack_into("<HB", data, 0, length, (length * 37 + seed) & 255)
+            else:
+                data[:256] = bytes([length]) + bytes(65 + i % 26 for i in range(255))
+            cases.append((f"seed-{seed}-length-{length}", bytes(data)))
+    if routine == "FUN_24dd_3b22" and suite == "heldout":
+        for position in (0, 1, 2, 77, 78, 79, 80, 254):
+            data = bytearray(cases[-1][1])
+            data[position + 1] = 0
+            cases.append((f"nul-{position}", bytes(data)))
+    return cases
+
+
+def leaf_stress_cases(spec: dict) -> list[tuple[str, bytes]]:
+    """Oracle: frozen seeded training inputs; heldout payloads excluded without outcome feedback."""
+    if (
+        set(spec) != {"seed", "batch", "count"}
+        or any(type(spec[key]) is not int for key in spec)
+        or not 0 <= spec["seed"] < 2**32
+        or not 0 <= spec["batch"] < 10000
+        or not 1 <= spec["count"] <= 4096
+    ):
+        raise ValueError("invalid stress corpus descriptor")
+    routine = "FUN_24dd_3b22"
+    excluded = {data for _, data in leaf_cases(routine, "heldout")}
+    generator = random.Random((spec["seed"] << 32) + spec["batch"])
+    cases = []
+    for index in range(spec["count"]):
+        data = bytearray(generator.randbytes(544))
+        data[0] = index % 256
+        # Systematically exercise terminator before/at/after the 79-byte clamp.
+        position = (0, 1, 77, 78, 79, 254, None)[(index // 256 + spec["batch"]) % 7]
+        data[1:256] = bytes(generator.randrange(1, 256) for _ in range(255))
+        if position is not None:
+            data[1 + position] = 0
+        struct.pack_into("<II", data, 536, spec["batch"], index)
+        if bytes(data) in excluded:
+            raise ValueError("stress training input overlaps frozen heldout payload")
+        cases.append((f"stress-{spec['batch']}-{index}", bytes(data)))
+    return cases
+
+
+def leaf_expected(routine: str, data: bytes) -> bytes:
+    """Oracle: independently specified memory contract; not supplied as model source."""
+    if routine not in LEAF_PANEL or len(data) != 544:
+        raise ValueError("invalid leaf routine/input")
+    result = bytearray(data)
+    if routine == "FUN_24dd_4905":
+        count = int.from_bytes(data[:2], "little")
+        if count > 256:
+            raise ValueError("leaf fill count exceeds bounded object")
+        result[272 : 272 + count] = bytes([data[2]]) * count
+    else:
+        result[272:320] = b"\0\0\xb0\xd7" + bytes(44)
+        text = data[1 : 1 + min(data[0], 79)].split(b"\0", 1)[0]
+        result[320 : 321 + len(text)] = text + b"\0"
+    return bytes(result)
+
+
+def leaf_interface(routine: str) -> str:
+    """Oracle: declared scoped host interface, not original TP7 ABI equivalence."""
+    if routine == "FUN_24dd_4905":
+        return f"procedure {routine}(destination: PBlock; count: Word; value: Byte);"
+    if routine == "FUN_24dd_3b22":
+        return f"procedure {routine}(source, destination: PBlock);"
+    raise ValueError("unknown leaf routine")
+
+
+def leaf_control_source(routine: str) -> str:
+    """Oracle: disclosed manually known control; never used as generated candidate/seed."""
+    if routine == "FUN_24dd_4905":
+        body = (
+            "var i: LongInt;\nbegin\n"
+            "  if count > 0 then for i := 0 to count - 1 do destination^[i] := value;\n"
+            "end;\n"
+        )
+    elif routine == "FUN_24dd_3b22":
+        body = (
+            "var i, count: LongInt;\nbegin\n"
+            "  for i := 0 to 47 do destination^[i] := 0;\n"
+            "  destination^[2] := $B0; destination^[3] := $D7;\n"
+            "  count := source^[0]; if count > 79 then count := 79;\n"
+            "  i := 0;\n"
+            "  while i < count do begin\n"
+            "    if source^[i + 1] = 0 then break;\n"
+            "    destination^[48 + i] := source^[i + 1]; Inc(i);\n"
+            "  end;\n"
+            "  destination^[48 + i] := 0;\nend;\n"
+        )
+    else:
+        raise ValueError("unknown leaf routine")
+    return leaf_interface(routine) + "\n" + body
+
+
+def _leaf_harness(routine: str) -> str:
+    """Oracle: full original leaf bytes, fixed disjoint input/object, observed RETF 8."""
+    offset = LEAF_PANEL[routine][0]
+    arguments = (
+        "    push %cs\n    push $0x6910\n"
+        "    pushw 0x6800\n    xor %ax,%ax\n    movb 0x6802,%al\n    push %ax\n"
+        if routine == "FUN_24dd_4905"
+        else "    push %cs\n    push $0x6910\n    push %cs\n    push $0x6800\n"
+    )
+    return f""".code16
+.global _start
+_start:
+    push %cs
+    pop %ds
+    mov $input_name,%dx
+    mov $0x3d00,%ax
+    int $0x21
+    jc failed
+    mov %ax,input_handle
+    mov $output_name,%dx
+    xor %cx,%cx
+    mov $0x3c00,%ax
+    int $0x21
+    jc failed
+    mov %ax,output_handle
+next_case:
+    mov input_handle,%bx
+    mov $0x6800,%dx
+    mov $544,%cx
+    mov $0x3f00,%ax
+    int $0x21
+    jc failed
+    or %ax,%ax
+    jz finish
+    cmp $544,%ax
+    jne failed
+    mov %sp,0x67fc
+{arguments}    push %cs
+    call 0x{offset:04x}
+    mov %sp,%cs:0x67fe
+    mov %ds,%ax
+    mov %ax,%cs:0x67f8
+    mov %ss,%ax
+    mov %ax,%cs:0x67fa
+    push %cs
+    pop %ds
+    mov %cs,%ax
+    mov %ax,0x67f6
+    mov case_index,%ax
+    mov %ax,0x67f4
+    incw case_index
+    mov output_handle,%bx
+    mov $0x67f4,%dx
+    mov $556,%cx
+    mov $0x4000,%ax
+    int $0x21
+    jc failed
+    cmp $556,%ax
+    jne failed
+    jmp next_case
+finish:
+    mov input_handle,%bx
+    mov $0x3e00,%ax
+    int $0x21
+    jc failed
+    mov output_handle,%bx
+    mov $0x3e00,%ax
+    int $0x21
+    jc failed
+    mov $0x4c00,%ax
+    int $0x21
+failed:
+    mov $0x4c01,%ax
+    int $0x21
+input_handle: .word 0
+output_handle: .word 0
+case_index: .word 0
+input_name: .asciz "CASES.BIN"
+output_name: .asciz "TRACE.BIN"
+"""
+
+
+def _leaf_program(routine: str) -> str:
+    """Oracle: compile supplied include unchanged; copy/compare the complete input arena."""
+    call = (
+        f"{routine}(@data[272], data[0] + 256 * Word(data[1]), data[2]);"
+        if routine == "FUN_24dd_4905"
+        else f"{routine}(@data[0], @data[272]);"
+    )
+    return f"""program LeafProbe;
+type TBlock = array[0..255] of Byte; PBlock = ^TBlock;
+{{$I candidate.inc}}
+var data: array[0..543] of Byte; inputFile, outputFile: file; count: LongInt;
+begin
+  Assign(inputFile, ParamStr(1)); Reset(inputFile, 1);
+  Assign(outputFile, ParamStr(2)); Rewrite(outputFile, 1);
+  while not Eof(inputFile) do begin
+    BlockRead(inputFile, data, 544, count);
+    if count <> 544 then Halt(1);
+    {call}
+    BlockWrite(outputFile, data, 544, count);
+    if count <> 544 then Halt(1);
+  end;
+  Close(inputFile); Close(outputFile);
+end.
+"""
+
+
+def run_leaf_probe(
+    root: pathlib.Path,
+    output: pathlib.Path,
+    routine: str,
+    source: str,
+    suite: str,
+    *,
+    stress: dict | None = None,
+) -> dict:
+    """Oracle: finite original/actual Pascal/independent contract check; no installation."""
+    if stress is not None and (routine != "FUN_24dd_3b22" or suite != "training"):
+        raise ValueError("stress corpus only supports 3b22 training, never heldout")
+    cases = leaf_cases(routine, suite) if stress is None else leaf_stress_cases(stress)
+    if not (root / "extracted/liero/LIERO.EXE").is_file():
+        return {"status": "skipped", "reason": "BYOD unavailable"}
+    missing = [tool for tool in ("as", "ld", "dosbox", "fpc") if not shutil.which(tool)]
+    if missing:
+        raise FileNotFoundError("leaf probe requires: " + ", ".join(missing))
+    prefix = prefix_transfer_report(root, routine)
+    manifest = json.loads((root / "targets/liero/alternate_streams.json").read_text())
+    binary = (root / "extracted/liero/LIERO.EXE").read_bytes()
+    start, size = prefix["file_offset"], prefix["routine_size"]
+    if any(
+        start - 1 <= location < start + size
+        for location in _mz_relocation_locations(
+            binary, manifest["image_mapping"]["header_bytes"]
+        )
+    ):
+        raise ValueError("leaf probe does not support relocated routine operands")
+    output.mkdir(parents=True, exist_ok=False)
+    (output / "candidate.inc").write_text(source)
+    (output / "probe.pas").write_text(_leaf_program(routine))
+    assembly = output / "harness.S"
+    assembly.write_text(_leaf_harness(routine))
+    harness = file_probe.assemble_probe(assembly, output)
+    image = file_probe._build_image(
+        harness,
+        binary,
+        manifest,
+        [
+            {
+                "address": hex(0x24DD0 + LEAF_PANEL[routine][0]),
+                "bytes_hex": prefix["routine_bytes_hex"],
+            }
+        ],
+    )
+    (output / "PROBE.COM").write_bytes(image)
+    payload = b"".join(data for _, data in cases)
+    (output / "CASES.BIN").write_bytes(payload)
+    file_probe.run_dosbox(output)
+    trace = (output / "TRACE.BIN").read_bytes()
+    if len(trace) != 556 * len(cases):
+        raise ValueError("leaf trace missing, partial or extra records")
+    command = [
+        "fpc",
+        "-Mtp",
+        "-Cr",
+        f"-Fi{output}",
+        f"-FU{output}",
+        f"-o{output / 'probe'}",
+        str(output / "probe.pas"),
+    ]
+    compiled = subprocess.run(command, capture_output=True, check=False, timeout=30)
+    (output / "compile.log").write_bytes(compiled.stdout + compiled.stderr)
+    compiled.check_returncode()
+    runtime_command = [
+        str(output / "probe"),
+        str(output / "CASES.BIN"),
+        str(output / "PASCAL.BIN"),
+    ]
+    try:
+        runtime = subprocess.run(
+            runtime_command, capture_output=True, timeout=30, check=False
+        )
+    except subprocess.TimeoutExpired as exc:
+        save(
+            output / "runtime.json",
+            {
+                "status": "failed",
+                "reason": "candidate-timeout",
+                "command": runtime_command,
+            },
+        )
+        raise LeafCandidateExecutionError(
+            "candidate exceeded its 30-second execution budget"
+        ) from exc
+    runtime_record = {
+        "status": "passed" if runtime.returncode == 0 else "failed",
+        "command": runtime_command,
+        "returncode": runtime.returncode,
+        "stdout": runtime.stdout.decode(errors="replace"),
+        "stderr": runtime.stderr.decode(errors="replace"),
+    }
+    save(output / "runtime.json", runtime_record)
+    if runtime.returncode:
+        raise LeafCandidateExecutionError(
+            "candidate runtime failure: " + json.dumps(runtime_record)
+        )
+    pascal = (output / "PASCAL.BIN").read_bytes()
+    if len(pascal) != len(payload):
+        raise ValueError("leaf Pascal output missing, partial or extra records")
+    rows = _compare_leaf(routine, cases, trace, pascal)
+    report = {
+        "schema_version": 1,
+        "function": routine,
+        "suite": suite,
+        "stress_corpus": stress,
+        "status": "passed"
+        if all(row["status"] == "passed" for row in rows)
+        else "failed",
+        "oracle": "isolated_original_vs_host_pascal_leaf_memory",
+        "case_count": len(cases),
+        "cases": rows,
+        "binary_sha256": prefix["binary_sha256"],
+        "routine_sha256": prefix["routine_sha256"],
+        "source_sha256": hashlib.sha256(source.encode()).hexdigest(),
+        "probe_sha256": digest(root / "tools/liero_four_routine_pilot.py"),
+        "evidence_hashes": _leaf_evidence_hashes(root, routine),
+        "artifact_hashes": {
+            str(path.relative_to(output)): digest(path)
+            for path in output.iterdir()
+            if path.is_file()
+        },
+        "limitations": [
+            "Finite nonaliasing COM arena; not universal/source or normal-program acceptance.",
+            "DS/SS/SP are original-only observations, not host TP7 ABI parity.",
+            "Register/flag outputs are outside this memory contract.",
+            "Manual control/reference topology disclosed; no training promotion.",
+        ],
+    }
+    save(output / "result.json", report)
+    return report
+
+
+def _compare_leaf(
+    routine: str, cases: list[tuple[str, bytes]], trace: bytes, pascal: bytes
+) -> list[dict]:
+    """Oracle: rederive all ordered memory differences and original-only ABI checks."""
+    if len(trace) != 556 * len(cases) or len(pascal) != 544 * len(cases):
+        raise ValueError("leaf outputs missing, partial or extra records")
+    rows = []
+    segment = None
+    for index, (name, data) in enumerate(cases):
+        record = trace[index * 556 : (index + 1) * 556]
+        stage, cs, ds, ss, before, after = struct.unpack("<6H", record[:12])
+        if (
+            stage != index
+            or not cs
+            or cs != ds
+            or cs != ss
+            or before != after
+            or before != 0xFFFE
+            or segment is not None
+            and cs != segment
+        ):
+            raise ValueError(f"leaf original ABI mismatch at {name}")
+        segment = cs
+        original = record[12:]
+        candidate = pascal[index * 544 : (index + 1) * 544]
+        expected = leaf_expected(routine, data)
+        differences = [
+            {
+                "offset": pos,
+                "original": left,
+                "pascal": right,
+                "contract": expected[pos],
+            }
+            for pos, (left, right) in enumerate(zip(original, candidate))
+            if left != right or left != expected[pos]
+        ]
+        rows.append(
+            {
+                "case": name,
+                "status": "failed" if differences else "passed",
+                "differences": differences,
+            }
+        )
+    return rows
+
+
+def validate_leaf_probe(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: replay exact original/Pascal corpus under unchanged byte/probe identities."""
+    report = json.loads((output / "result.json").read_text())
+    prefix = prefix_transfer_report(root, report["function"])
+    if (
+        report["probe_sha256"] != digest(root / "tools/liero_four_routine_pilot.py")
+        or report["binary_sha256"] != prefix["binary_sha256"]
+        or report["routine_sha256"] != prefix["routine_sha256"]
+        or report["source_sha256"] != digest(output / "candidate.inc")
+        or report["evidence_hashes"] != _leaf_evidence_hashes(root, report["function"])
+    ):
+        raise ValueError("stale leaf probe source/binary/method")
+    for name, identity in report["artifact_hashes"].items():
+        path = (output / name).resolve()
+        if not path.is_relative_to(output.resolve()) or digest(path) != identity:
+            raise ValueError("leaf probe artifact changed")
+    required = {
+        "CASES.BIN",
+        "TRACE.BIN",
+        "PASCAL.BIN",
+        "PROBE.COM",
+        "harness.bin",
+        "harness.S",
+        "probe.pas",
+        "candidate.inc",
+        "probe",
+        "probe.conf",
+    }
+    if not required <= report["artifact_hashes"].keys():
+        raise ValueError("leaf probe artifact identities incomplete")
+    if (
+        report["oracle"] != "isolated_original_vs_host_pascal_leaf_memory"
+        or report["schema_version"] != 1
+        or (output / "harness.S").read_text() != _leaf_harness(report["function"])
+        or (output / "probe.pas").read_text() != _leaf_program(report["function"])
+    ):
+        raise ValueError("leaf probe contract/harness changed")
+    stress = report.get("stress_corpus")
+    if stress is not None and (
+        report["function"] != "FUN_24dd_3b22" or report["suite"] != "training"
+    ):
+        raise ValueError("invalid stress corpus scope")
+    cases = (
+        leaf_cases(report["function"], report["suite"])
+        if stress is None
+        else leaf_stress_cases(stress)
+    )
+    if (output / "CASES.BIN").read_bytes() != b"".join(data for _, data in cases):
+        raise ValueError("leaf probe corpus changed")
+    rows = _compare_leaf(
+        report["function"],
+        cases,
+        (output / "TRACE.BIN").read_bytes(),
+        (output / "PASCAL.BIN").read_bytes(),
+    )
+    status = "passed" if all(row["status"] == "passed" for row in rows) else "failed"
+    if (
+        report["cases"] != rows
+        or report["case_count"] != len(cases)
+        or report["status"] != status
+    ):
+        raise ValueError("leaf probe saved outcome disagrees with replay")
+    return report
+
+
+def _leaf_evidence_hashes(root: pathlib.Path, routine: str) -> dict[str, str]:
+    """Oracle: immutable shared byte/mapping/probe inputs for the active leaf contract."""
+    return {
+        name: digest(root / name)
+        for name in (
+            "engine/instruction_facts.py",
+            "engine/alternate_streams.py",
+            "tools/liero_file_probe.py",
+            "targets/liero/alternate_streams.json",
+            f"targets/liero/asm/{routine}.s",
+        )
+    }
+
+
+def run_leaf_optimisation(
+    root: pathlib.Path,
+    output: pathlib.Path,
+    first: pathlib.Path,
+    sketch: dict,
+    freeze: dict,
+) -> dict:
+    """Oracle: fixed typed neighborhood, matched training, one terminal selected holdout.
+
+    The loop flip is supplied search topology, not another live model proposal.
+    Shortest source is only a reproducible search tie-break, not historical truth.
+    """
+    routine = "FUN_24dd_3b22"
+    contract = freeze["routines"][routine]["deductive_constraints"]
+    options = freeze["stress_training"]
+    started = time.monotonic()
+    candidates = [
+        {
+            "directory": str(first.relative_to(output)),
+            "source_sha256": digest(first / "candidate.inc"),
+            "status": "eligible",
+            "training_cases": len(leaf_cases(routine, "training")),
+        }
+    ]
+    if freeze["optimise"]:
+        neighbor = dict(sketch)
+        neighbor["loop_kind"] = "while" if sketch["loop_kind"] == "for" else "for"
+        directory = output / routine / "neighbors" / "loop-flip"
+        directory.mkdir(parents=True)
+        save(directory / "sketch.json", neighbor)
+        source = render_shortstring_sketch(neighbor, routine, contract)
+        (directory / "candidate.inc").write_text(source)
+        try:
+            result = run_leaf_probe(
+                root, directory / "training", routine, source, "training"
+            )
+        except LeafCandidateExecutionError as exc:
+            candidates.append(
+                {
+                    "directory": str(directory.relative_to(output)),
+                    "source_sha256": digest(directory / "candidate.inc"),
+                    "status": "runtime-rejected",
+                    "reason": str(exc),
+                    "training_cases": 0,
+                }
+            )
+        else:
+            validate_leaf_probe(root, directory / "training")
+            candidates.append(
+                {
+                    "directory": str(directory.relative_to(output)),
+                    "source_sha256": digest(directory / "candidate.inc"),
+                    "status": "eligible"
+                    if result["status"] == "passed"
+                    else "training-rejected",
+                    "training_cases": result["case_count"],
+                }
+            )
+    search = {
+        "status": "running",
+        "candidates": candidates,
+        "batches_completed": 0,
+        "unique_stress_inputs": 0,
+        "comparison_cases": 0,
+        "artifact_bytes": 0,
+        "ranking": "All checked training cases pass; then source bytes ascending, SHA256 ascending.",
+        "source_recovered": 0,
+        "examples_promoted": 0,
+    }
+    log = output / "search.json"
+    artifact_bytes = sum(
+        path.stat().st_size for path in output.rglob("*") if path.is_file()
+    )
+    stop = "coverage-budget-complete"
+    for batch in range(options["maximum_batches"]):
+        validate_leaf_freeze(root, output, freeze)
+        if time.monotonic() - started >= options["maximum_seconds"]:
+            stop = "time-budget-exhausted"
+            break
+        if (
+            artifact_bytes >= options["maximum_artifact_bytes"]
+            or shutil.disk_usage(output).free < 2 * 1024**3
+        ):
+            search.update(status="blocked", stop_reason="disk-budget-exhausted")
+            save(log, search)
+            return {"status": "failed", "selected_source": None, "search": search}
+        spec = {
+            "seed": options["seed"],
+            "batch": batch,
+            "count": options["cases_per_batch"],
+        }
+        corpus_sha256 = hashlib.sha256(
+            b"".join(data for _, data in leaf_stress_cases(spec))
+        ).hexdigest()
+        eligible = [row for row in candidates if row["status"] == "eligible"]
+        if not eligible:
+            stop = "no-passing-candidate"
+            break
+        for candidate in eligible:
+            directory = output / candidate["directory"]
+            if digest(directory / "candidate.inc") != candidate["source_sha256"]:
+                raise ValueError("optimisation candidate changed after freeze")
+            destination = directory / "stress" / f"batch-{batch:05d}"
+            save(
+                output / "progress.json",
+                {
+                    "status": "running",
+                    "stage": "matched-stress-training",
+                    "batch": batch,
+                    "candidate": candidate["source_sha256"],
+                    "unique_stress_inputs": search["unique_stress_inputs"],
+                    "comparison_cases": search["comparison_cases"],
+                    "elapsed_seconds": round(time.monotonic() - started, 1),
+                },
+            )
+            try:
+                result = run_leaf_probe(
+                    root,
+                    destination,
+                    routine,
+                    (directory / "candidate.inc").read_text(),
+                    "training",
+                    stress=spec,
+                )
+            except LeafCandidateExecutionError as exc:
+                candidate.update(
+                    status="runtime-rejected",
+                    reason=str(exc),
+                    rejection_reference=str(destination),
+                )
+            else:
+                validate_leaf_probe(root, destination)
+                if digest(destination / "CASES.BIN") != corpus_sha256:
+                    raise ValueError(
+                        "optimisation candidates did not use matched training inputs"
+                    )
+                candidate["training_cases"] += result["case_count"]
+                candidate["last_training_reference"] = str(destination)
+                if result["status"] != "passed":
+                    candidate.update(
+                        status="stress-rejected", rejection_reference=str(destination)
+                    )
+                search["comparison_cases"] += result["case_count"]
+            artifact_bytes += sum(
+                path.stat().st_size for path in destination.rglob("*") if path.is_file()
+            )
+        search.update(
+            batches_completed=batch + 1,
+            unique_stress_inputs=(batch + 1) * spec["count"],
+            artifact_bytes=artifact_bytes,
+        )
+        save(log, search)
+        if batch % 10 == 0:
+            print(
+                json.dumps(
+                    {
+                        "event": "stress-progress",
+                        "batch": batch + 1,
+                        "unique_stress_inputs": search["unique_stress_inputs"],
+                        "comparison_cases": search["comparison_cases"],
+                        "elapsed_seconds": round(time.monotonic() - started, 1),
+                    }
+                ),
+                flush=True,
+            )
+    eligible = [row for row in candidates if row["status"] == "eligible"]
+    if not eligible or not search["batches_completed"]:
+        search.update(
+            status="failed",
+            stop_reason=stop if not eligible else "no-stress-measurement",
+        )
+        save(log, search)
+        return {"status": "failed", "selected_source": None, "search": search}
+    selected = min(
+        eligible,
+        key=lambda row: (
+            (output / row["directory"] / "candidate.inc").stat().st_size,
+            row["source_sha256"],
+        ),
+    )
+    directory = output / selected["directory"]
+    # Freeze the selection before touching the single heldout.
+    search.update(
+        status="selected", stop_reason=stop, selected=selected["source_sha256"]
+    )
+    save(log, search)
+    validate_leaf_freeze(root, output, freeze)
+    save(
+        output / "progress.json",
+        {"status": "running", "stage": "terminal-heldout", "search": str(log)},
+    )
+    try:
+        heldout = run_leaf_probe(
+            root,
+            directory / "heldout",
+            routine,
+            (directory / "candidate.inc").read_text(),
+            "heldout",
+        )
+    except LeafCandidateExecutionError as exc:
+        search.update(status="failed", heldout_runtime_failure=str(exc))
+        save(log, search)
+        return {
+            "status": "failed",
+            "selected_source": str((directory / "candidate.inc").relative_to(output)),
+            "search": search,
+        }
+    validate_leaf_probe(root, directory / "heldout")
+    search.update(status=heldout["status"], heldout_cases=heldout["case_count"])
+    save(log, search)
+    return {
+        "status": heldout["status"],
+        "selected_source": str((directory / "candidate.inc").relative_to(output)),
+        "source_sha256": selected["source_sha256"],
+        "training_cases": selected["training_cases"],
+        "heldout_cases": heldout["case_count"],
+        "reference": str(directory / "heldout"),
+        "search": search,
+    }
+
+
+def leaf_deductive_constraints(routine: str, raw: bytes) -> dict:
+    """Oracle: complete supported leaf shapes, not model/manual-source explanations."""
+    if routine == "FUN_24dd_4905":
+        return bounded_byte_fill_contract(raw)
+    if routine == "FUN_24dd_3b22":
+        return bounded_shortstring_contract(raw)
+    raise ValueError("unknown leaf constraint routine")
+
+
+def run_leaf_trials(
+    root: pathlib.Path,
+    output: pathlib.Path,
+    model: str,
+    endpoint: str,
+    *,
+    byte_constraints: bool = False,
+    resume_trial: pathlib.Path | None = None,
+    fill_sketch: bool = False,
+    string_sketch: bool = False,
+    stress_seconds: int = 0,
+    optimise: bool = False,
+) -> dict:
+    """Oracle: frozen leaf controls, bounded training selection and one holdout each."""
+    if (fill_sketch or string_sketch) and (
+        not byte_constraints or resume_trial is not None
+    ):
+        raise ValueError(
+            "fill sketch requires byte constraints and a fresh known-slice run"
+        )
+    if fill_sketch and string_sketch:
+        raise ValueError("choose one typed sketch mode")
+    if type(stress_seconds) is not int or not 0 <= stress_seconds <= 8 * 3600:
+        raise ValueError("stress budget must be 0..28800 seconds")
+    if stress_seconds and not string_sketch:
+        raise ValueError("overnight stress requires a fresh typed string sketch")
+    if optimise and (not string_sketch or not stress_seconds):
+        raise ValueError(
+            "optimisation requires typed string sketches and a stress budget"
+        )
+    routines = (
+        ("FUN_24dd_4905",)
+        if fill_sketch
+        else ("FUN_24dd_3b22",)
+        if string_sketch
+        else tuple(LEAF_PANEL)
+    )
+    schema = (
+        STRING_SKETCH_SCHEMA
+        if string_sketch
+        else FILL_SKETCH_SCHEMA
+        if fill_sketch
+        else None
+    )
+    if not (root / "extracted/liero/LIERO.EXE").is_file():
+        return {"status": "skipped", "reason": "BYOD unavailable"}
+    missing = [
+        tool
+        for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+        if not shutil.which(tool)
+    ]
+    if missing:
+        raise FileNotFoundError("leaf trials require: " + ", ".join(missing))
+    output.mkdir(parents=True, exist_ok=False)
+    freeze = {
+        "schema_version": 1,
+        "model": model,
+        "endpoint": endpoint,
+        "model_identity": leaf_model_identity(model, endpoint),
+        "generation_options": {"temperature": 0.0, "num_predict": 2048},
+        "byte_constraints": byte_constraints,
+        "fill_sketch": fill_sketch,
+        "string_sketch": string_sketch,
+        "optimise": optimise,
+        "proposal_schema": schema,
+        "stress_training": {
+            "maximum_seconds": stress_seconds,
+            "maximum_batches": 4096,
+            "cases_per_batch": 512,
+            "seed": 20261101,
+            "maximum_artifact_bytes": 16 * 1024**3,
+            "policy": "Compare fixed byte-compatible loop alternatives on identical serial seeded training batches; discard failures, select shortest fully passing source (SHA tie-break), one terminal holdout with no retry.",
+        }
+        if stress_seconds
+        else None,
+        "resume_trial": str(resume_trial.resolve()) if resume_trial else None,
+        "method_sha256": digest(root / "tools/liero_four_routine_pilot.py"),
+        "scheduler_sha256": digest(root / "engine/improve_loop.py"),
+        "tool_hashes": {
+            tool: digest(pathlib.Path(shutil.which(tool)))
+            for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+        },
+        "maximum_model_requests_per_routine": 4,
+        "search_operators": ["flip-for-while"] if optimise else [],
+        "maximum_unique_candidates": 2 if optimise else 1,
+        "repair_alternatives": "new whole include using training/compiler feedback only",
+        "holdout_policy": "one evaluation of first training-passing unique source; no retries",
+        "source_provenance": "previously manual leaves; no manual target bodies read",
+        "topology_disclosure": (
+            "Known-slice typed prefix/string topology and loop-flip search supplied; "
+            "exact bytes fix memory semantics, not model algorithm discovery."
+            if string_sketch
+            else "Known-slice typed fill-loop topology supplied; bytes fix memory semantics; "
+            "model chooses equivalent Pascal loop syntax, not recovered algorithm."
+            if fill_sketch or string_sketch
+            else "host pointer interfaces, static byte/segment bounds and controls manually supplied"
+        ),
+        "routines": {},
+    }
+    for routine in routines:
+        prefix = prefix_transfer_report(root, routine)
+        constraints = (
+            leaf_deductive_constraints(
+                routine, bytes.fromhex(prefix["routine_bytes_hex"])
+            )
+            if byte_constraints
+            else None
+        )
+        freeze["routines"][routine] = {
+            "original_prefix_report": prefix,
+            "evidence_hashes": _leaf_evidence_hashes(root, routine),
+            "deductive_constraints": constraints,
+            "control_source_sha256": hashlib.sha256(
+                leaf_control_source(routine).encode()
+            ).hexdigest(),
+            "case_hashes": {
+                suite: hashlib.sha256(
+                    b"".join(data for _, data in leaf_cases(routine, suite))
+                ).hexdigest()
+                for suite in ("training", "heldout")
+            },
+            "contract": {
+                "oracle": "isolated_original_vs_host_pascal_leaf_memory",
+                "input": "544-byte arena at DS:6800, 256-byte source, 16/256/16 guarded destination at 6910",
+                "bounds": "count 0..256 or short-string length 0..255; disjoint valid nonwrapping pointers",
+                "memory": "all 544 bytes compared, unchanged source and guards",
+                "abi": "original DS/SS and SP=FFFE preserved across RETF 8; no host ABI claim",
+                "output_registers_flags": "outside contract",
+            },
+        }
+    if resume_trial is not None:
+        prior = json.loads((resume_trial / "freeze.json").read_text())
+        if (
+            prior["model_identity"] != freeze["model_identity"]
+            or prior["byte_constraints"] != byte_constraints
+            or list(resume_trial.glob("*/attempt-*/heldout"))
+            or any(
+                prior["routines"][fn]["case_hashes"]
+                != freeze["routines"][fn]["case_hashes"]
+                or prior["routines"][fn]["original_prefix_report"]
+                != freeze["routines"][fn]["original_prefix_report"]
+                for fn in routines
+            )
+        ):
+            raise ValueError(
+                "leaf resume requires unchanged inputs/model and no prior heldout evaluation"
+            )
+        replayed = {}
+        for routine in routines:
+            paths = sorted((resume_trial / routine).glob("attempt-*/raw-response.json"))
+            if any(
+                not (directory / "raw-response.json").is_file()
+                for directory in (resume_trial / routine).glob("attempt-*")
+                if directory.is_dir()
+            ):
+                raise ValueError(
+                    "leaf resume cannot refund an attempt with unknown model request outcome"
+                )
+            expected = [
+                resume_trial / routine / f"attempt-{i}/raw-response.json"
+                for i in range(1, len(paths) + 1)
+            ]
+            if paths != expected or len(paths) > 4:
+                raise ValueError(
+                    "leaf resume request history is not a contiguous bounded prefix"
+                )
+            replayed.update(
+                {str(path.relative_to(resume_trial)): digest(path) for path in paths}
+            )
+        freeze["replayed_response_hashes"] = replayed
+        freeze["prior_freeze_sha256"] = digest(resume_trial / "freeze.json")
+    save(output / "freeze.json", freeze)
+    print(
+        json.dumps(
+            {
+                "event": "trial-frozen",
+                "output": str(output),
+                "routines": list(routines),
+                "maximum_model_requests": 4,
+                "stress_training": freeze["stress_training"],
+            }
+        ),
+        flush=True,
+    )
+    save(
+        output / "progress.json",
+        {"status": "running", "stage": "positive-controls", "model_requests": 0},
+    )
+    for relative, name in (
+        ("tools/liero_four_routine_pilot.py", "pilot-method.py"),
+        ("engine/instruction_facts.py", "instruction-facts-method.py"),
+        ("engine/improve_loop.py", "scheduler-method.py"),
+    ):
+        shutil.copy2(root / relative, output / name)
+    validate_leaf_freeze(root, output, freeze)
+    for routine in routines:
+        control = run_leaf_probe(
+            root,
+            output / routine / "control",
+            routine,
+            leaf_control_source(routine),
+            "training",
+        )
+        if control["status"] != "passed":
+            result = {
+                "status": "blocked",
+                "stop_reason": "positive-control-not-passed",
+                "function": routine,
+                "control_status": control["status"],
+            }
+            save(output / "result.json", result)
+            return result
+        validate_leaf_probe(root, output / routine / "control")
+    outcomes = []
+
+    def check_piece(routine: str) -> dict:
+        """Oracle: bounded training selection followed by at most one terminal holdout."""
+        original = freeze["routines"][routine]["original_prefix_report"]
+        offset = LEAF_PANEL[routine][0]
+        raw_path = output / routine / "original.bin"
+        raw_path.write_bytes(bytes.fromhex(original["routine_bytes_hex"]))
+        disassembly = subprocess.run(
+            [
+                "objdump",
+                "-D",
+                "-b",
+                "binary",
+                "-m",
+                "i8086",
+                f"--adjust-vma={offset}",
+                str(raw_path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
+        prompt = (
+            "Recover Pascal memory behavior from these original 16-bit bytes. "
+            "Return JSON with only source, a complete include, no directives/services. "
+            "No exact historical identifiers/types claim; register/flag outputs are excluded. "
+            "Available type TBlock=array[0..255] of Byte; PBlock=^TBlock. "
+            "Implement this interface: "
+            + leaf_interface(routine)
+            + "\nInput source/destination are disjoint valid nonwrapping 256-byte blocks. "
+            "Original far-call stack at entry: return IP/CS at +0/+2; "
+            "for fill: value word at +4, count word at +6, destination offset/segment at +8/+10. "
+            "For string: source offset/segment at +4/+6, destination at +8/+10. "
+            "Fill count <=256. All unknowns must be reported, not invented. "
+            "DS is saved/restored where shown; host pointer interface handles segment mapping. "
+            "\nOriginal bytes:\n" + original["routine_bytes_hex"] + "\n" + disassembly
+        )
+        if byte_constraints:
+            prompt += (
+                "\nDeduction before induction/abduction: obey these checked byte-derived "
+                "memory constraints; do not ask the model to guess constants they establish:\n"
+                + json.dumps(freeze["routines"][routine]["deductive_constraints"])
+                + "\nWrite actual high-level Pascal assignments and loops on source^[i] "
+                "and destination^[i]. No inline assembly, no labels, no stub/placeholder "
+                "and no assembly transcription in comments. No calls to other routines. "
+                "The return/register instructions are outside the host memory interface. "
+                "Byte writes must include low and high bytes of any fixed word. "
+                "Only explain unresolved suffix behavior by a bounded candidate; "
+                "original/Pascal training execution will reject wrong explanations."
+            )
+        if fill_sketch:
+            prompt = (
+                "Select a typed Pascal fill-loop sketch, JSON only with exactly these fields: "
+                + json.dumps(FILL_SKETCH_SCHEMA)
+                + "\nNo source text or inline assembly. This is a supplied syntax mechanism "
+                "on a known slice, not algorithm discovery. Original byte-derived contract:\n"
+                + json.dumps(freeze["routines"][routine]["deductive_constraints"])
+                + "\nHost interface: "
+                + leaf_interface(routine)
+                + "\nCount is an unsigned Word, bounded 0..256. Byte contract starts at "
+                "destination index 0, writes exactly count input-value bytes; zero count "
+                "writes nothing. Therefore first_index=0, end_expression=count_minus_one, "
+                "stored_value=value are hard constraints, not guesses. loop_kind may be "
+                "for or while; guard_zero may be true or false. Renderer uses signed "
+                "LongInt bounds to avoid unsigned zero-count subtraction wrap."
+            )
+        if string_sketch:
+            prompt = (
+                "Select a typed high-level Pascal shortstring composition sketch. JSON only, "
+                "no source text. This is supplied topology on a known slice, not algorithm "
+                "discovery. Exact schema:\n"
+                + json.dumps(STRING_SKETCH_SCHEMA)
+                + "\nChecked original-byte contract:\n"
+                + json.dumps(freeze["routines"][routine]["deductive_constraints"])
+                + "\nUse prefix=byte_contract, maximum_text_bytes=79, text_destination_offset=48, "
+                "source_text_offset=1, stop_at_nul=true. These are hard byte-derived constraints. "
+                "Choose equivalent loop_kind for or while; renderer supplies signed bounds, "
+                "prefix assignments, length clamp and terminating NUL. All other memory stays unchanged."
+            )
+        feedback = ""
+        seen = set()
+        outcome = {
+            "function": routine,
+            "status": "failed",
+            "attempts": [],
+            "selected_source": None,
+        }
+        for attempt in range(1, 5):
+            validate_leaf_freeze(root, output, freeze)
+            save(
+                output / "progress.json",
+                {
+                    "status": "running",
+                    "stage": "model-request",
+                    "routine": routine,
+                    "model_requests": attempt,
+                },
+            )
+            attempt_dir = output / routine / f"attempt-{attempt}"
+            attempt_dir.mkdir()
+            save(attempt_dir / "prompt.json", {"prompt": prompt + feedback})
+            previous_raw = (
+                resume_trial / routine / f"attempt-{attempt}/raw-response.json"
+                if resume_trial is not None
+                else None
+            )
+            replayed = previous_raw is not None and previous_raw.is_file()
+            raw = (
+                previous_raw.read_text()
+                if replayed
+                else (
+                    request(prompt + feedback, model, endpoint, schema=schema)
+                    if schema is not None
+                    else request(prompt + feedback, model, endpoint)
+                )
+            )
+            (attempt_dir / "raw-response.json").write_text(raw)
+            save(
+                attempt_dir / "request-provenance.json",
+                {
+                    "new_model_request": not replayed,
+                    "previous_response": str(previous_raw) if replayed else None,
+                },
+            )
+            try:
+                if fill_sketch or string_sketch:
+                    sketch = json.loads(json.loads(raw)["response"])
+                    save(attempt_dir / "sketch.json", sketch)
+                    contract = freeze["routines"][routine]["deductive_constraints"]
+                    if string_sketch:
+                        source = render_shortstring_sketch(sketch, routine, contract)
+                    else:
+                        source = render_fill_sketch(sketch, routine)
+                        validate_fill_sketch_contract(sketch, contract)
+                else:
+                    source = candidate_source(json.loads(raw), routine)
+            except (ValueError, TypeError, KeyError) as exc:
+                feedback = "\nPrevious candidate rejected by sanitizer: " + str(exc)
+                outcome["attempts"].append(
+                    {
+                        "attempt": attempt,
+                        "status": "sanitizer-rejected",
+                        "reason": str(exc),
+                    }
+                )
+                continue
+            identity = hashlib.sha256(source.encode()).hexdigest()
+            (attempt_dir / "candidate.inc").write_text(source)
+            if identity in seen:
+                outcome["attempts"].append(
+                    {
+                        "attempt": attempt,
+                        "status": "duplicate-source",
+                        "source_sha256": identity,
+                    }
+                )
+                break
+            seen.add(identity)
+            try:
+                training = run_leaf_probe(
+                    root, attempt_dir / "training", routine, source, "training"
+                )
+            except LeafCandidateExecutionError as exc:
+                feedback = (
+                    "\nPrevious candidate training runtime rejection:\n"
+                    + str(exc)[-4000:]
+                )
+                outcome["attempts"].append(
+                    {
+                        "attempt": attempt,
+                        "status": "runtime-rejected",
+                        "reason": str(exc),
+                        "source_sha256": identity,
+                    }
+                )
+                continue
+            except subprocess.CalledProcessError as exc:
+                log = attempt_dir / "training/compile.log"
+                if not log.is_file() or (attempt_dir / "training/probe").is_file():
+                    raise
+                feedback = (
+                    "\nPrevious candidate compiler rejection:\n"
+                    + log.read_text(errors="replace")[-4000:]
+                )
+                outcome["attempts"].append(
+                    {
+                        "attempt": attempt,
+                        "status": "compile-rejected",
+                        "reason": str(exc),
+                        "source_sha256": identity,
+                    }
+                )
+                continue
+            validate_leaf_probe(root, attempt_dir / "training")
+            outcome["attempts"].append(
+                {
+                    "attempt": attempt,
+                    "status": "training-" + training["status"],
+                    "source_sha256": identity,
+                }
+            )
+            if training["status"] != "passed":
+                bad = next(
+                    row for row in training["cases"] if row["status"] == "failed"
+                )
+                feedback = (
+                    "\nPrevious candidate training mismatch:\n" + json.dumps(bad)[:4000]
+                )
+                continue
+            outcome["selected_source"] = str(
+                (attempt_dir / "candidate.inc").relative_to(output)
+            )
+            if stress_seconds:
+                search = run_leaf_optimisation(
+                    root,
+                    output,
+                    attempt_dir,
+                    sketch,
+                    freeze,
+                )
+                outcome.update(search)
+                break
+            save(
+                output / "progress.json",
+                {"status": "running", "stage": "terminal-heldout", "routine": routine},
+            )
+            try:
+                heldout = run_leaf_probe(
+                    root, attempt_dir / "heldout", routine, source, "heldout"
+                )
+            except LeafCandidateExecutionError as exc:
+                outcome.update(
+                    status="failed",
+                    training_cases=training["case_count"],
+                    heldout_cases=len(leaf_cases(routine, "heldout")),
+                    source_sha256=identity,
+                    heldout_runtime_failure=str(exc),
+                )
+                break
+            validate_leaf_probe(root, attempt_dir / "heldout")
+            outcome.update(
+                status=heldout["status"],
+                training_cases=training["case_count"],
+                heldout_cases=heldout["case_count"],
+                source_sha256=identity,
+                reference=str(attempt_dir / "heldout"),
+            )
+            break
+        save(output / routine / "outcome.json", outcome)
+        outcomes.append(outcome)
+        return {
+            "status": outcome["status"],
+            "oracle": "isolated_original_vs_host_pascal_leaf_memory",
+            "reference": outcome.get("reference"),
+        }
+
+    def frontier() -> dict[str, dict]:
+        """Oracle: revalidated frozen premises/scoped outcomes, not resolved routine source."""
+        pieces = {}
+        for routine in routines:
+            if (
+                _leaf_evidence_hashes(root, routine)
+                != freeze["routines"][routine]["evidence_hashes"]
+            ):
+                raise ValueError("leaf premises changed after freeze")
+            outcome = next(
+                (row for row in outcomes if row["function"] == routine), None
+            )
+            checked = outcome is not None and outcome["status"] == "passed"
+            if checked:
+                validate_leaf_probe(root, pathlib.Path(outcome["reference"]))
+            pieces[routine] = {
+                "premise_sha256": hashlib.sha256(
+                    json.dumps(freeze["routines"][routine], sort_keys=True).encode()
+                ).hexdigest(),
+                "checked": checked,
+                "blockers": [],
+            }
+            if outcome is not None and not checked:
+                terminal_holdout = outcome["selected_source"] is not None
+                exhausted = len(outcome["attempts"]) >= 4 or terminal_holdout
+                pieces[routine].update(
+                    blockers=[
+                        "heldout evaluation is terminal; no retry feedback"
+                        if terminal_holdout
+                        else "candidate request budget exhausted"
+                        if exhausted
+                        else "duplicate candidate; no new hypothesis under frozen alternatives"
+                    ],
+                    blocker_kind="budget" if exhausted else "method",
+                )
+        return pieces
+
+    from engine.improve_loop import run_puzzle_passes
+
+    puzzle = run_puzzle_passes(
+        frontier, check_piece, max_passes=3, milestone=len(routines)
+    )
+    validate_leaf_freeze(root, output, freeze)
+    passes = sum(row["status"] == "passed" for row in outcomes)
+    result = {
+        "status": "passed" if passes == len(routines) else "failed",
+        "new_scoped_routine_passes": 0 if fill_sketch or string_sketch else passes,
+        "scoped_memory_comparison_passes": passes,
+        "automatic_new_recoveries": 0,
+        "known_slice_syntax_mechanism": fill_sketch or string_sketch,
+        "functions_evaluated": len(routines),
+        "routines": outcomes,
+        "yield": passes / len(routines),
+        "stop_reason": "milestone-reached"
+        if passes == len(routines)
+        else "low-yield"
+        if passes / len(routines) < 0.25
+        else "frozen-budget-complete",
+        "puzzle_saturated": False,
+        "expansion_allowed": False,
+        "next_action": (
+            "Review known-slice composition/search evidence; no frontier expansion or source promotion."
+            if fill_sketch or string_sketch
+            else "Review scoped results; honor the 25% yield floor before expanding."
+        ),
+        "source_recovered": 0,
+        "examples_promoted": 0,
+        "puzzle_passes": puzzle,
+        "limitations": "Finite assisted leaf-memory experiment; no source/ABI acceptance, no blind-source or weight-learning claim.",
+    }
+    if stress_seconds and outcomes and "search" in outcomes[0]:
+        result["stop_reason"] = outcomes[0]["search"]["stop_reason"]
+    save(output / "result.json", result)
+    save(
+        output / "progress.json",
+        {
+            "status": result["status"],
+            "stage": "finished",
+            "result": str(output / "result.json"),
+        },
+    )
+    if fill_sketch and result["status"] == "passed":
+        return validate_fill_sketch_trial(root, output)
+    return result
+
+
+def validate_leaf_freeze(
+    root: pathlib.Path, output: pathlib.Path, freeze: dict
+) -> None:
+    """Oracle: frozen corpora/method/model inputs stay unchanged throughout evaluation."""
+    if (
+        json.loads((output / "freeze.json").read_text()) != freeze
+        or freeze["method_sha256"] != digest(root / "tools/liero_four_routine_pilot.py")
+        or freeze["scheduler_sha256"] != digest(root / "engine/improve_loop.py")
+        or freeze["model_identity"]
+        != leaf_model_identity(freeze["model"], freeze["endpoint"])
+    ):
+        raise ValueError("leaf freeze/model/method changed during evaluation")
+    for tool, identity in freeze["tool_hashes"].items():
+        executable = shutil.which(tool)
+        if executable is None or digest(pathlib.Path(executable)) != identity:
+            raise ValueError("leaf frozen tool changed during evaluation")
+    if freeze["resume_trial"] is not None:
+        previous = pathlib.Path(freeze["resume_trial"])
+        if digest(previous / "freeze.json") != freeze["prior_freeze_sha256"] or any(
+            digest(previous / name) != identity
+            for name, identity in freeze["replayed_response_hashes"].items()
+        ):
+            raise ValueError(
+                "leaf previous request/freeze history changed during evaluation"
+            )
+    for routine, frozen in freeze["routines"].items():
+        if (
+            prefix_transfer_report(root, routine) != frozen["original_prefix_report"]
+            or _leaf_evidence_hashes(root, routine) != frozen["evidence_hashes"]
+            or frozen["deductive_constraints"]
+            != (
+                leaf_deductive_constraints(
+                    routine,
+                    bytes.fromhex(
+                        frozen["original_prefix_report"]["routine_bytes_hex"]
+                    ),
+                )
+                if freeze["byte_constraints"]
+                else None
+            )
+            or any(
+                hashlib.sha256(
+                    b"".join(data for _, data in leaf_cases(routine, suite))
+                ).hexdigest()
+                != identity
+                for suite, identity in frozen["case_hashes"].items()
+            )
+        ):
+            raise ValueError("leaf frozen evidence/corpus changed during evaluation")
+
+
+def validate_fill_sketch_trial(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: replay selected typed sketch and terminal original/Pascal comparison."""
+    freeze = json.loads((output / "freeze.json").read_text())
+    if (
+        freeze.get("fill_sketch") is not True
+        or freeze["proposal_schema"] != FILL_SKETCH_SCHEMA
+        or set(freeze["routines"]) != {"FUN_24dd_4905"}
+    ):
+        raise ValueError("not a frozen one-slice fill sketch trial")
+    validate_leaf_freeze(root, output, freeze)
+    report = json.loads((output / "result.json").read_text())
+    if report["status"] != "passed" or len(report["routines"]) != 1:
+        raise ValueError("fill sketch trial has no passing selected candidate")
+    routine = "FUN_24dd_4905"
+    outcome = report["routines"][0]
+    if outcome != json.loads((output / routine / "outcome.json").read_text()):
+        raise ValueError("fill sketch outcome disagrees with saved trial")
+    selected = (output / outcome["selected_source"]).resolve()
+    if not selected.is_relative_to(output.resolve()):
+        raise ValueError("fill sketch selected source escapes experiment")
+    attempt = selected.parent
+    proposal = json.loads(
+        json.loads((attempt / "raw-response.json").read_text())["response"]
+    )
+    if json.loads((attempt / "sketch.json").read_text()) != proposal:
+        raise ValueError("fill sketch differs from recorded model response")
+    source = render_fill_sketch(proposal, routine)
+    validate_fill_sketch_contract(
+        proposal, freeze["routines"][routine]["deductive_constraints"]
+    )
+    identity = hashlib.sha256(source.encode()).hexdigest()
+    if selected.read_text() != source or outcome["source_sha256"] != identity:
+        raise ValueError("fill sketch source differs from rendering")
+    training = validate_leaf_probe(root, attempt / "training")
+    heldout = validate_leaf_probe(root, attempt / "heldout")
+    if (
+        training["status"] != "passed"
+        or heldout["status"] != "passed"
+        or training["suite"] != "training"
+        or heldout["suite"] != "heldout"
+        or training["source_sha256"] != identity
+        or heldout["source_sha256"] != identity
+        or len(list((output / routine).glob("attempt-*"))) != len(outcome["attempts"])
+        or not 1 <= len(outcome["attempts"]) <= 4
+        or len(list(output.glob("*/attempt-*/heldout"))) != 1
+        or report["automatic_new_recoveries"] != 0
+        or report["source_recovered"] != 0
+        or report["examples_promoted"] != 0
+        or not report["known_slice_syntax_mechanism"]
+    ):
+        raise ValueError("fill sketch trial gates or terminal selection disagree")
+    return report
+
+
+def leaf_model_identity(model: str, endpoint: str) -> dict:
+    """Oracle: freeze the actual locally installed model digest, not a mutable tag alone."""
+    with urllib.request.urlopen(
+        endpoint.rstrip("/") + "/api/tags", timeout=30
+    ) as response:
+        models = json.load(response)["models"]
+    for entry in models:
+        if entry["name"] == model:
+            return {
+                "name": model,
+                "digest": entry["digest"],
+                "details": entry["details"],
+            }
+    raise ValueError("requested leaf model is not installed at the configured endpoint")
+
+
 INTERFACES = {
     "constructor": (
         "procedure FUN_24dd_3639(param_1, param_2: Pointer); "
@@ -169,7 +1829,9 @@ def digest(path: pathlib.Path) -> str:
 
 def save(path: pathlib.Path, value: dict) -> None:
     """Oracle: persistent, explicit trial state, never recovery promotion."""
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+    temporary.replace(path)
 
 
 def snapshot(root: pathlib.Path, output: pathlib.Path) -> pathlib.Path:
@@ -366,10 +2028,123 @@ def validate_prefix_transfer(root: pathlib.Path, output: pathlib.Path) -> dict:
     return expected
 
 
+def render_partial_memory_source(writes: list[dict], window: tuple[int, int]) -> str:
+    """Oracle: constant entry-DS write projection; excludes registers, flags and returns."""
+    if not writes:
+        raise ValueError("partial memory source has no supported writes")
+    lower, upper = window
+    if not 0 <= lower <= upper <= 65536:
+        raise ValueError("partial memory source requires bounded constant writes")
+    lines = [
+        "{ Memory effects only; not the original routine or its unresolved return. }",
+        "type TEntryData = array[0..65535] of Byte;",
+        "procedure ApplyPartialMemoryEffects(var entryData: TEntryData);",
+        "var index: LongInt;",
+        "begin",
+    ]
+    for write in writes:
+        offset, count = write.get("byte_offset"), write.get("word_count")
+        value = write.get("value", {})
+        amount = value.get("amount")
+        if (
+            write.get("address_space") != "entry_ds"
+            or value.get("kind") != "constant"
+            or any(type(number) is not int for number in (offset, count, amount))
+            or not 0 <= amount <= 65535
+            or count < 0
+            or not lower <= offset <= offset + 2 * count <= upper
+        ):
+            raise ValueError("partial memory source requires bounded constant writes")
+        if count:
+            lines.extend(
+                [
+                    f"  for index := 0 to {count - 1} do",
+                    "  begin",
+                    f"    entryData[{offset} + 2 * index] := {amount & 255};",
+                    f"    entryData[{offset} + 2 * index + 1] := {amount >> 8};",
+                    "  end;",
+                ]
+            )
+    return "\n".join([*lines, "end;", ""])
+
+
+def _partial_memory_artifact(
+    root: pathlib.Path, output: pathlib.Path
+) -> tuple[str, dict]:
+    """Oracle: current-bound prefix dependencies and exact retained suffix."""
+    prefix = validate_prefix_transfer(root, output)
+    window = prefix["data_window"]
+    if window is None:
+        raise ValueError("partial memory source requires an explicit entry-DS window")
+    source = render_partial_memory_source(prefix["prefix"]["writes"], tuple(window))
+    residue = prefix["prefix"]["residue"]
+    return source, {
+        "schema_version": 1,
+        "function": prefix["function"],
+        "oracle": "static_memory_projection_only",
+        "source_sha256": hashlib.sha256(source.encode()).hexdigest(),
+        "renderer_sha256": digest(root / "tools/liero_four_routine_pilot.py"),
+        "prefix_report_sha256": digest(output / "result.json"),
+        "binary_sha256": prefix["binary_sha256"],
+        "rules_sha256": prefix["rules_sha256"],
+        "data_window": window,
+        "memory_writes": prefix["prefix"]["writes"],
+        "dependency_instruction_offsets": sorted(
+            {
+                offset
+                for write in prefix["prefix"]["writes"]
+                for offset in write["support"]
+            }
+        ),
+        "unresolved_offset": residue["offset"] if residue else None,
+        "unresolved_bytes_hex": residue["bytes_hex"] if residue else "",
+        "routine_recovered": False,
+        "whole_routine_execution": "blocked",
+        "training_promotion": "blocked",
+        "limitations": [
+            "Host Pascal memory projection only; not exact historical source structure.",
+            "Entry-DS window is conditional; no normal-program allocation established.",
+            "Register, flag, segment-stack and return effects are not implemented.",
+            "Original routine bytes/listing remain separate; no mixed-assembly execution.",
+            "Static rendering is not a scoped differential pass or source attestation.",
+        ],
+    }
+
+
+def write_partial_memory_source(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: disposable partial source, never installed into target/runtime/training."""
+    source, report = _partial_memory_artifact(root, output)
+    with (output / "partial-memory.inc").open("x") as stream:
+        stream.write(source)
+    with (output / "partial-memory.json").open("x") as stream:
+        json.dump(report, stream, indent=2)
+    return validate_partial_memory_source(root, output)
+
+
+def validate_partial_memory_source(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: rederive partial source and dependencies; reject stale/tampered artifacts."""
+    source, expected = _partial_memory_artifact(root, output)
+    if (output / "partial-memory.inc").read_text() != source or json.loads(
+        (output / "partial-memory.json").read_text()
+    ) != expected:
+        raise ValueError("saved partial memory artifact disagrees with derivation")
+    return expected
+
+
 def request(
-    prompt: str, model: str, endpoint: str, *, schema: dict | None = None
+    prompt: str,
+    model: str,
+    endpoint: str,
+    *,
+    schema: dict | None = None,
+    max_generated_tokens: int = 2048,
+    think: bool | None = None,
 ) -> str:
     """Oracle: local structured proposal only; binary probes decide acceptance."""
+    if type(max_generated_tokens) is not int or max_generated_tokens <= 0:
+        raise ValueError("generated token budget must be a positive integer")
+    if think is not None and type(think) is not bool:
+        raise ValueError("thinking setting must be boolean or unset")
     payload = {
         "model": model,
         "prompt": prompt,
@@ -382,15 +2157,21 @@ def request(
             "required": ["source"],
             "additionalProperties": False,
         },
-        "options": {"temperature": 0.0, "num_predict": 2048},
+        "options": {"temperature": 0.0, "num_predict": max_generated_tokens},
     }
+    if think is not None:
+        payload["think"] = think
     message = urllib.request.Request(
         endpoint.rstrip("/") + "/api/generate",
         data=json.dumps(payload).encode(),
         headers={"Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(message, timeout=600) as response:
-        return response.read().decode("utf-8")
+    try:
+        with urllib.request.urlopen(message, timeout=600) as response:
+            return response.read().decode("utf-8")
+    except urllib.error.HTTPError as error:
+        detail = error.read().decode("utf-8", errors="replace")
+        raise ValueError(f"local model HTTP {error.code}: {detail}") from error
 
 
 def candidate_source(response: dict, routine: str) -> str:
@@ -1453,11 +3234,908 @@ def run_sketch_repair(
     return result
 
 
+ALLOCATOR_INTERFACE = """procedure FUN_24dd_0353(requestSize, startOffset, startSegment,
+  limitOffset, limitSegment: Word; var resultOffset, resultSegment,
+  newOffset, newSegment, savedRequest: Word; var failed: Boolean);"""
+
+
+def allocator_cases(suite: str) -> list[tuple[int, int, int, int, int]]:
+    """Oracle: frozen empty-list contexts, not arbitrary free-list or startup reachability."""
+    if suite not in ("training", "heldout"):
+        raise ValueError("unknown allocator suite")
+    requests = (
+        (0, 1, 8, 9, 15, 16, 64000, 65535)
+        if suite == "training"
+        else (2, 7, 17, 255, 4095, 65528)
+    )
+    return [
+        (request, offset, 0x800, limit_offset, 0x800 + capacity)
+        for request in requests
+        for offset in (0, 8)
+        for capacity, limit_offset in ((0, 0), (1, 0), (0x1000, 0), (0, 8))
+    ]
+
+
+def allocator_harness(case_path: pathlib.Path, count: int) -> str:
+    """Oracle: controlled disjoint COM data/code/stack with actual allocator/helper/callback."""
+    return f"""
+.code16
+.global _start
+_start:
+    jmp start
+.org 0x1000-0x100
+start:
+    push %cs
+    pop %ds
+    push %cs
+    pop %ss
+    mov $0xeff0, %sp
+    mov %cs, %ax
+    add $0x1000, %ax
+    jc failed
+    cmp 2, %ax
+    ja failed
+    movw $0xc033, %cs:0xd6
+    movw $0x02ca, %cs:0xd8
+    movb $0, %cs:0xda
+    mov $cases, %si
+    mov $records, %di
+    mov ${count}, %cx
+next_case:
+    push %cx
+    push %si
+    push %di
+    push %ds
+    pop %es
+    mov $0x63d8, %di
+    mov $56, %cx
+    mov $0xa5, %al
+    cld
+    rep stosb
+    mov $0x8000, %di
+    mov $128, %cx
+    rep stosb
+    movw $0xa5a5, 0x7b3c
+    mov 2(%si), %ax
+    mov %ax, 0x63ee
+    mov %ax, 0x63f6
+    mov %cs, %ax
+    add 4(%si), %ax
+    mov %ax, 0x63f0
+    mov %ax, 0x63f8
+    mov 6(%si), %ax
+    mov %ax, 0x63f2
+    mov %cs, %ax
+    add 8(%si), %ax
+    mov %ax, 0x63f4
+    movw $0xd6, 0x63fe
+    mov %cs, %ax
+    mov %ax, 0x6400
+    mov (%si), %ax
+    mov %sp, %cs:call_sp
+    call 0x353
+    pushf
+    popw %cs:result_flags
+    cmp %cs:call_sp, %sp
+    jne failed
+    mov %cs, %bx
+    mov %ds, %cx
+    cmp %bx, %cx
+    jne failed
+    mov %ss, %cx
+    cmp %bx, %cx
+    jne failed
+    test %dx, %dx
+    jz normalized
+    sub %bx, %dx
+normalized:
+    push %ds
+    pop %es
+    cld
+    pop %di
+    stosw
+    mov %dx, %ax
+    stosw
+    mov %cs:result_flags, %ax
+    and $1, %ax
+    stosw
+    mov 0x63ee, %ax
+    stosw
+    mov 0x63f0, %ax
+    sub %bx, %ax
+    stosw
+    mov 0x63f6, %ax
+    stosw
+    mov 0x63f8, %ax
+    sub %bx, %ax
+    stosw
+    mov 0x7b3c, %ax
+    stosw
+    mov $0x63d8, %si
+    mov $56, %cx
+    push %ds
+    pop %es
+    rep movsb
+    mov $0x8000, %si
+    mov $128, %cx
+    rep movsb
+    pop %si
+    add $10, %si
+    pop %cx
+    dec %cx
+    jz write_output
+    jmp next_case
+write_output:
+    mov $filename, %dx
+    xor %cx, %cx
+    mov $0x3c00, %ax
+    int $0x21
+    jc failed
+    mov %ax, %bx
+    mov $records, %dx
+    mov ${count * 200}, %cx
+    mov $0x4000, %ax
+    int $0x21
+    jc failed
+    cmp ${count * 200}, %ax
+    jne failed
+    mov $0x3e00, %ax
+    int $0x21
+    jc failed
+    mov $0x4c00, %ax
+    int $0x21
+failed:
+    mov $0x4c01, %ax
+    int $0x21
+call_sp: .word 0
+result_flags: .word 0
+filename: .asciz "TRACE.BIN"
+.balign 2
+cases: .incbin "{case_path}"
+records: .space {count * 200}
+"""
+
+
+def allocator_original(
+    root: pathlib.Path,
+    output: pathlib.Path,
+    cases: list[tuple],
+    binary: bytes,
+    contract: dict,
+) -> list[list[int]]:
+    """Oracle: original203-byte allocator, actual helper/default callback; controlled empty list only."""
+    output.mkdir()
+    (output / "CASES.BIN").write_bytes(
+        b"".join(struct.pack("<5H", *case) for case in cases)
+    )
+    source = output / "harness.S"
+    source.write_text(allocator_harness((output / "CASES.BIN").resolve(), len(cases)))
+    harness = file_probe.assemble_probe(source, output)
+    if len(harness) + 0x100 >= 0x6000:
+        raise ValueError("allocator harness overlaps global cells")
+    image = bytearray(harness)
+    for offset, raw in (
+        (0x353, bytes.fromhex(contract["reviewed_bytes_hex"])),
+        (
+            0x4DC,
+            bytes.fromhex(
+                json.loads(
+                    (root / "targets/liero/config/routine_contracts.json").read_text()
+                )["functions"]["FUN_24dd_04dc"]["reviewed_bytes_hex"]
+            ),
+        ),
+        (0xD6, bytes.fromhex("33c0ca0200")),
+    ):
+        start = contract["file_offset"] + offset - 0x353
+        if binary[start : start + len(raw)] != raw:
+            raise ValueError("allocator dependency bytes differ")
+        if offset < 0x100:
+            # COM starts at0100; use the PSP scratch tail for the unchanged callback bytes.
+            continue
+        if any(image[offset - 0x100 : offset - 0x100 + len(raw)]):
+            raise ValueError("allocator copied code overlaps harness")
+        image[offset - 0x100 : offset - 0x100 + len(raw)] = raw
+    (output / "PROBE.COM").write_bytes(image)
+    file_probe.run_dosbox(output)
+    return allocator_original_rows((output / "TRACE.BIN").read_bytes(), cases)
+
+
+def allocator_original_rows(trace: bytes, cases: list[tuple]) -> list[list[int]]:
+    """Oracle: complete original trace and explicit global/heap guards, not Pascal parity."""
+    if len(trace) != 200 * len(cases):
+        raise ValueError("allocator original trace shape differs")
+    rows = []
+    for index, case in enumerate(cases):
+        record = trace[index * 200 : (index + 1) * 200]
+        fields = list(struct.unpack_from("<8H", record))
+        memory = record[16:72]
+        code_segment = struct.unpack_from("<H", memory, 0x6400 - 0x63D8)[0]
+        if (
+            struct.unpack_from("<H", memory, 0x63F2 - 0x63D8)[0] != case[3]
+            or struct.unpack_from("<H", memory, 0x63F4 - 0x63D8)[0]
+            != code_segment + case[4]
+            or struct.unpack_from("<H", memory, 0x63FE - 0x63D8)[0] != 0xD6
+        ):
+            raise ValueError("allocator changed limit/default callback")
+        # All unrelated globals and guarded heap bytes must stay untouched.
+        allowed = {*(range(0x63EE, 0x63FA)), *range(0x63FE, 0x6402)}
+        if (
+            any(
+                value != 0xA5
+                for cell, value in enumerate(memory, 0x63D8)
+                if cell not in allowed
+            )
+            or record[72:] != bytes([0xA5]) * 128
+        ):
+            raise ValueError("allocator original changed guards/unrelated cells")
+        if fields[2] not in (0, 1) or fields[5:7] != fields[3:5]:
+            raise ValueError("allocator empty-list head/frontier invariant differs")
+        if (
+            fields[7] != (case[0] if case[0] else 0xA5A5)
+            or any(
+                struct.unpack_from("<H", memory, cell - 0x63D8)[0] != expected
+                for cell, expected in (
+                    (0x63EE, fields[3]),
+                    (0x63F0, code_segment + fields[4]),
+                    (0x63F6, fields[5]),
+                    (0x63F8, code_segment + fields[6]),
+                )
+            )
+            or ((not case[0] or fields[2]) and fields[3:5] != list(case[1:3]))
+            or (not case[0] and fields[:3] != [0, 0, 0])
+        ):
+            raise ValueError("allocator original state/row projection differs")
+        rows.append(fields)
+    return rows
+
+
+def render_allocator_empty_source(facts: dict) -> str:
+    """Oracle: deterministic known-slice rendering; no model discovery or full ABI claim."""
+    expected = allocator_empty_list_contract(
+        bytes.fromhex(facts["routine_bytes_hex"]),
+        bytes.fromhex(facts["helper_bytes_hex"]),
+        bytes.fromhex(facts["callback_bytes_hex"]),
+    )
+    if facts != expected:
+        raise ValueError("allocator obligations differ from instruction derivation")
+    return (
+        ALLOCATOR_INTERFACE
+        + """
+var rounded, off, seg: LongWord;
+begin
+  resultOffset := 0; resultSegment := 0; failed := false;
+  if requestSize = 0 then Exit;
+  savedRequest := requestSize;
+  rounded := ((LongWord(requestSize) + 7) div 8) * 8;
+  off := (LongWord(startOffset) + rounded mod 16) and $ffff;
+  seg := (LongWord(startSegment) + rounded div 16) and $ffff;
+  if (off and 255) >= 16 then seg := (seg + 1) and $ffff;
+  off := off and $ff0f;
+  if (seg > limitSegment) or ((seg = limitSegment) and (off > limitOffset)) then
+  begin
+    resultSegment := seg;
+    failed := true
+  end
+  else begin
+    resultOffset := startOffset; resultSegment := startSegment;
+    newOffset := off; newSegment := seg;
+  end;
+end;
+"""
+    )
+
+
+def allocator_deduction_inputs(root: pathlib.Path) -> tuple[bytes, dict, dict]:
+    """Oracle: actual original bytes and MZ relocations, never assembly-listing facts."""
+    from engine.routine_contract import load_contract
+
+    target = root / "targets/liero"
+    contract = load_contract(target, "FUN_24dd_0353")
+    helper = load_contract(target, "FUN_24dd_04dc")
+    binary, header, _, identity = load_binary_evidence(
+        target, json.loads((target / "alternate_streams.json").read_text())
+    )
+    if identity != contract["binary_sha256"] or identity != helper["binary_sha256"]:
+        raise ValueError("allocator dependency binary identity differs")
+    start = contract["file_offset"]
+    raw = binary[start : start + 203]
+    helper_start = start + 0x4DC - 0x353
+    callback_start = start + 0xD6 - 0x353
+    helper_raw = binary[helper_start : helper_start + 17]
+    callback = binary[callback_start : callback_start + 5]
+    if (
+        raw.hex() != contract["reviewed_bytes_hex"]
+        or helper_raw.hex() != helper["reviewed_bytes_hex"]
+        or any(
+            begin - 1 <= relocation < begin + size
+            for relocation in _mz_relocation_locations(binary, header)
+            for begin, size in ((start, 203), (helper_start, 17), (callback_start, 5))
+        )
+    ):
+        raise ValueError("allocator dependency bytes/relocations differ")
+    return (
+        binary,
+        contract,
+        {
+            **allocator_empty_list_contract(raw, helper_raw, callback),
+            "binary_sha256": identity,
+        },
+    )
+
+
+def allocator_deduction_freeze(root: pathlib.Path, facts: dict) -> dict:
+    """Oracle: deterministic strategy/corpus/premise identity, separate from old model trials."""
+    paths = (
+        "tools/liero_four_routine_pilot.py",
+        "tools/liero_file_probe.py",
+        "engine/instruction_facts.py",
+        "engine/routine_contract.py",
+        "engine/alternate_streams.py",
+        "targets/liero/config/routine_contracts.json",
+        "targets/liero/alternate_streams.json",
+    )
+    return {
+        "strategy": "byte-deduction-empty-list-v1",
+        "binary_sha256": facts["binary_sha256"],
+        "method_hashes": {path: digest(root / path) for path in paths},
+        "training": [list(case) for case in allocator_cases("training")],
+        "heldout": [list(case) for case in allocator_cases("heldout")],
+        "budget": {"candidates": 1, "model_requests": 0, "heldout_evaluations": 1},
+        "known_scope": (
+            "Developer-known empty-list/default-callback slice; supplied topology, "
+            "historical corpus and control. Deductive mechanism check, not automatic "
+            "unseen-routine generalization or normal-program allocator acceptance."
+        ),
+    }
+
+
+def _allocator_suite_result(
+    original: list[list[int]], candidate: list[list[int]], count: int
+) -> dict:
+    """Oracle: exact complete row counts; partial output never becomes a scored pass."""
+    if any(
+        len(rows) != count
+        or any(
+            len(row) != 8 or any(type(v) is not int or not 0 <= v <= 65535 for v in row)
+            for row in rows
+        )
+        for rows in (original, candidate)
+    ):
+        raise ValueError("allocator comparison has incomplete or invalid trace shape")
+    mismatches = [
+        i
+        for i, pair in enumerate(zip(original, candidate, strict=True))
+        if pair[0] != pair[1]
+    ]
+    return {
+        "cases": count,
+        "passed": count - len(mismatches),
+        "mismatch_indices": mismatches,
+    }
+
+
+def run_allocator_deduction(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: one deterministic candidate, complete training then one terminal validation."""
+    if not (root / "extracted/liero/LIERO.EXE").is_file():
+        return {"status": "skipped", "reason": "Liero BYOD unavailable"}
+    binary, contract, facts = allocator_deduction_inputs(root)
+    freeze = allocator_deduction_freeze(root, facts)
+    semantic_facts = {
+        key: value for key, value in facts.items() if key != "binary_sha256"
+    }
+    source = render_allocator_empty_source(semantic_facts)
+    output.mkdir(parents=True, exist_ok=False)
+    save(output / "freeze.json", freeze)
+    save(output / "obligations.json", facts)
+    (output / "candidate.inc").write_text(source)
+    (output / "methods").mkdir()
+    for path in freeze["method_hashes"]:
+        shutil.copy2(root / path, output / "methods" / pathlib.Path(path).name)
+    result = {
+        "status": "failed",
+        "function": "FUN_24dd_0353",
+        "oracle": "controlled_original_empty_freelist_vs_deduced_pascal",
+        "binary_sha256": facts["binary_sha256"],
+        "scope": freeze["known_scope"],
+        "model_requests": 0,
+        "heldout_evaluations": 0,
+        "source_promoted": False,
+        "routine_recovered": False,
+        "automatic_discovery": False,
+        "expansion_allowed": False,
+        "unresolved": facts["unresolved"],
+    }
+
+    def validate_frozen() -> None:
+        """Oracle: current original bytes, methods, obligations and exact rendered source."""
+        _, _, current = allocator_deduction_inputs(root)
+        if (
+            current != facts
+            or json.loads((output / "freeze.json").read_text()) != freeze
+            or allocator_deduction_freeze(root, current) != freeze
+            or json.loads((output / "obligations.json").read_text()) != facts
+            or (output / "candidate.inc").read_text() != source
+        ):
+            raise ValueError("allocator deduction freeze/method/premises changed")
+
+    try:
+        for suite in ("training", "heldout"):
+            validate_frozen()
+            cases = [tuple(case) for case in freeze[suite]]
+            if suite == "heldout":
+                result["heldout_evaluations"] = 1
+            original = allocator_original(
+                root, output / f"original-{suite}", cases, binary, contract
+            )
+            candidate = allocator_candidate(
+                output / f"candidate-{suite}", source, cases
+            )
+            result[suite] = _allocator_suite_result(original, candidate, len(cases))
+            validate_frozen()
+            if result[suite]["mismatch_indices"]:
+                result["stop_reason"] = f"{suite}-failure-no-retry"
+                break
+        else:
+            result.update(status="passed", stop_reason="deductive-scope-validated")
+    except (OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:
+        result["error"] = f"{type(exc).__name__}: {exc}"
+        result["stop_reason"] = "first-error-no-retry"
+    save(
+        output / "review.json",
+        {
+            "decision": "accept-controlled-projection"
+            if result["status"] == "passed"
+            else "reject-controlled-projection",
+            "basis": "exact supported byte composition and complete scoped comparison",
+            "source_installed": False,
+            "routine_recovered": False,
+            "unresolved": facts["unresolved"],
+        },
+    )
+    result["freeze_sha256"] = digest(output / "freeze.json")
+    result["artifact_hashes"] = {
+        str(path.relative_to(output)): digest(path)
+        for path in output.rglob("*")
+        if path.is_file()
+    }
+    save(output / "result.json", result)
+    return result
+
+
+def validate_allocator_deduction(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: replay source-bound complete traces under current bytes/methods, no execution."""
+    report = json.loads((output / "result.json").read_text())
+    _, contract, facts = allocator_deduction_inputs(root)
+    freeze = allocator_deduction_freeze(root, facts)
+    source = render_allocator_empty_source(
+        {key: value for key, value in facts.items() if key != "binary_sha256"}
+    )
+    if (
+        json.loads((output / "freeze.json").read_text()) != freeze
+        or report["freeze_sha256"] != digest(output / "freeze.json")
+        or json.loads((output / "obligations.json").read_text()) != facts
+        or (output / "candidate.inc").read_text() != source
+        or report["oracle"] != "controlled_original_empty_freelist_vs_deduced_pascal"
+        or report["function"] != "FUN_24dd_0353"
+        or report["binary_sha256"] != facts["binary_sha256"]
+        or report["scope"] != freeze["known_scope"]
+        or report["status"] != "passed"
+        or report["model_requests"] != 0
+        or report["heldout_evaluations"] != 1
+        or any(
+            report[key] is not False
+            for key in (
+                "source_promoted",
+                "routine_recovered",
+                "automatic_discovery",
+                "expansion_allowed",
+            )
+        )
+        or report["unresolved"] != facts["unresolved"]
+    ):
+        raise ValueError(
+            "allocator deduction report/premises/source changed or not passed"
+        )
+    required = {"freeze.json", "obligations.json", "candidate.inc", "review.json"}
+    for path in freeze["method_hashes"]:
+        name = f"methods/{pathlib.Path(path).name}"
+        required.add(name)
+        if digest(output / name) != freeze["method_hashes"][path]:
+            raise ValueError("allocator saved method differs")
+    for suite in ("training", "heldout"):
+        cases = [tuple(case) for case in freeze[suite]]
+        original_dir = output / f"original-{suite}"
+        candidate_dir = output / f"candidate-{suite}"
+        original_files = ("CASES.BIN", "harness.S", "PROBE.COM", "TRACE.BIN")
+        candidate_files = (
+            "candidate.inc",
+            "probe.pas",
+            "probe",
+            "compile.log",
+            "execution.log",
+            "PASCAL.BIN",
+        )
+        required.update(f"original-{suite}/{name}" for name in original_files)
+        required.update(f"candidate-{suite}/{name}" for name in candidate_files)
+        if (
+            (original_dir / "CASES.BIN").read_bytes()
+            != b"".join(struct.pack("<5H", *case) for case in cases)
+            or (original_dir / "harness.S").read_text()
+            != allocator_harness((original_dir / "CASES.BIN").resolve(), len(cases))
+            or (candidate_dir / "candidate.inc").read_text() != source
+            or (candidate_dir / "probe.pas").read_text()
+            != allocator_candidate_program(cases)
+        ):
+            raise ValueError("allocator saved corpus/harness/candidate differs")
+        image = (original_dir / "PROBE.COM").read_bytes()
+        for offset, raw in (
+            (0x353, bytes.fromhex(contract["reviewed_bytes_hex"])),
+            (0x4DC, bytes.fromhex(facts["helper_bytes_hex"])),
+        ):
+            if image[offset - 0x100 : offset - 0x100 + len(raw)] != raw:
+                raise ValueError("allocator original image dependency changed")
+        original = allocator_original_rows(
+            (original_dir / "TRACE.BIN").read_bytes(), cases
+        )
+        trace = (candidate_dir / "PASCAL.BIN").read_bytes()
+        if len(trace) != 16 * len(cases):
+            raise ValueError("allocator saved Pascal trace shape differs")
+        candidate = [list(row) for row in struct.iter_unpack("<8H", trace)]
+        measured = _allocator_suite_result(original, candidate, len(cases))
+        if measured != report[suite] or measured["passed"] != len(cases):
+            raise ValueError("allocator replay comparison differs or failed")
+    review = json.loads((output / "review.json").read_text())
+    if review != {
+        "decision": "accept-controlled-projection",
+        "basis": "exact supported byte composition and complete scoped comparison",
+        "source_installed": False,
+        "routine_recovered": False,
+        "unresolved": facts["unresolved"],
+    }:
+        raise ValueError("allocator scoped review changed")
+    if not required <= report["artifact_hashes"].keys():
+        raise ValueError("allocator artifact identities incomplete")
+    for name, identity in report["artifact_hashes"].items():
+        path = (output / name).resolve()
+        if not path.is_relative_to(output.resolve()) or digest(path) != identity:
+            raise ValueError("allocator deduction artifact changed")
+    return report
+
+
+def run_allocator_puzzle(root: pathlib.Path, output: pathlib.Path) -> dict:
+    """Oracle: one known-slice check in the existing scheduler; callers remain dependency-gated."""
+    from engine.improve_loop import run_puzzle_passes
+    from engine.scoped_verification import allocator_contract_graph, allocator_frontier
+
+    if not (root / "extracted/liero/LIERO.EXE").is_file():
+        return {"status": "skipped", "reason": "Liero BYOD unavailable"}
+    target = root / "targets/liero"
+    comparisons = 0
+
+    def frontier() -> dict:
+        """Oracle: revalidate before every scheduler decision, including resumption."""
+        return allocator_frontier(target, output)
+
+    def check(piece: str) -> dict:
+        """Oracle: only the declared deduction slice is executable in this tranche."""
+        nonlocal comparisons
+        if piece != "allocator.empty-list":
+            raise ValueError("unsupported allocator puzzle piece")
+        comparisons += 1
+        result = run_allocator_deduction(root, output)
+        return {
+            "status": result["status"],
+            "oracle": result["oracle"],
+            "reference": str((output / "result.json").resolve()),
+        }
+
+    puzzle = run_puzzle_passes(frontier, check, max_passes=2)
+    pieces = frontier()
+    checked = pieces["allocator.empty-list"]["checked"]
+    if checked:
+        allocator_contract_graph(target, output).save(output / "contract-graph.json")
+    result = {
+        "status": "scoped-frontier-blocked" if checked else "failed",
+        "known_scope_checked": checked,
+        "new_comparisons": comparisons,
+        "automatic_new_recoveries": 0,
+        "source_recovered": 0,
+        "expansion_allowed": False,
+        "puzzle": puzzle,
+    }
+    if output.is_dir():
+        save(output / "puzzle.json", result)
+    return result
+
+
+def allocator_candidate_program(cases: list[tuple]) -> str:
+    """Oracle: exact host projection harness; not original DOS calling convention."""
+    statements = "\n".join(f"  Run({', '.join(map(str, case))});" for case in cases)
+    return f"""program AllocatorProjection;
+{{$I candidate.inc}}
+var f: file; row: array[0..7] of Word; n: LongInt;
+procedure Run(requestSize, startOffset, startSegment, limitOffset, limitSegment: Word);
+var resultOffset, resultSegment, newOffset, newSegment, savedRequest: Word; failed: Boolean;
+begin
+  resultOffset := 0; resultSegment := 0; newOffset := startOffset;
+  newSegment := startSegment; savedRequest := $a5a5; failed := false;
+  FUN_24dd_0353(requestSize, startOffset, startSegment, limitOffset, limitSegment,
+    resultOffset, resultSegment, newOffset, newSegment, savedRequest, failed);
+  row[0] := resultOffset; row[1] := resultSegment; row[2] := Ord(failed);
+  row[3] := newOffset; row[4] := newSegment;
+  row[5] := newOffset; row[6] := newSegment; row[7] := savedRequest;
+  BlockWrite(f, row, SizeOf(row), n); if n <> SizeOf(row) then Halt(2);
+end;
+begin
+  Assign(f, 'PASCAL.BIN'); Rewrite(f, 1);
+{statements}
+  Close(f);
+end.
+"""
+
+
+def allocator_candidate(
+    output: pathlib.Path, source: str, cases: list[tuple]
+) -> list[list[int]]:
+    """Oracle: compile/run exact generated Pascal include, never a restored baseline."""
+    output.mkdir()
+    (output / "candidate.inc").write_text(source)
+    (output / "probe.pas").write_text(allocator_candidate_program(cases))
+    compiled = subprocess.run(
+        ["fpc", "-Mtp", "-Cr", "probe.pas"],
+        cwd=output,
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    (output / "compile.log").write_bytes(compiled.stdout + compiled.stderr)
+    compiled.check_returncode()
+    completed = subprocess.run(
+        [str((output / "probe").resolve())],
+        cwd=output,
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    (output / "execution.log").write_bytes(completed.stdout + completed.stderr)
+    completed.check_returncode()
+    data = (output / "PASCAL.BIN").read_bytes()
+    if len(data) != 16 * len(cases):
+        raise ValueError("allocator Pascal trace shape differs")
+    return [list(row) for row in struct.iter_unpack("<8H", data)]
+
+
+def run_allocator_trial(
+    root: pathlib.Path,
+    output: pathlib.Path,
+    model: str,
+    endpoint: str,
+    *,
+    scaffold_from: pathlib.Path | None = None,
+) -> dict:
+    """Oracle: one proposal, training-only selection, one heldout, explicit partial review gate."""
+    target = root / "targets/liero"
+    if not (root / "extracted/liero/LIERO.EXE").is_file():
+        return {"status": "skipped", "reason": "Liero BYOD unavailable"}
+    from engine.routine_contract import load_contract
+    from tools.liero_candidate_experiment import _local_api_root
+
+    endpoint = _local_api_root(endpoint)
+    previous = None
+    if scaffold_from is not None:
+        previous = json.loads((scaffold_from / "result.json").read_text())
+        previous_freeze = json.loads((scaffold_from / "freeze.json").read_text())
+        if (
+            previous["status"] != "failed"
+            or previous["heldout_evaluations"] != 0
+            or previous.get("candidate_sha256") is not None
+            or not previous.get("error", "").startswith("ValueError: proposal lacks")
+            or previous["freeze_sha256"] != digest(scaffold_from / "freeze.json")
+            or previous_freeze.get("proposal_mode", "source-json") != "source-json"
+        ):
+            raise ValueError(
+                "format retry requires a rejected declaration and no evaluated candidate/holdout"
+            )
+    contract = load_contract(target, "FUN_24dd_0353")
+    manifest = json.loads((target / "alternate_streams.json").read_text())
+    binary, header, _, identity = load_binary_evidence(target, manifest)
+    raw = bytes.fromhex(contract["reviewed_bytes_hex"])
+    if (
+        identity != contract["binary_sha256"]
+        or binary[contract["file_offset"] : contract["file_offset"] + len(raw)] != raw
+    ):
+        raise ValueError("allocator binary identity differs")
+    regions = (
+        (contract["file_offset"], len(raw)),
+        (contract["file_offset"] + 0x4DC - 0x353, 17),
+        (contract["file_offset"] + 0xD6 - 0x353, 5),
+    )
+    if any(
+        start - 1 <= r < start + size
+        for r in _mz_relocation_locations(binary, header)
+        for start, size in regions
+    ):
+        raise ValueError("allocator copied code has unsupported relocation")
+    output.mkdir(parents=True, exist_ok=False)
+    training, heldout = allocator_cases("training"), allocator_cases("heldout")
+    paths = (
+        pathlib.Path(__file__),
+        root / "tools/liero_file_probe.py",
+        root / "engine/alternate_streams.py",
+        target / "config/routine_contracts.json",
+    )
+    (output / "methods").mkdir()
+    for path in paths:
+        shutil.copy2(path, output / "methods" / path.name)
+    freeze = {
+        "function": "FUN_24dd_0353",
+        "binary_sha256": identity,
+        "oracle": "controlled_original_empty_freelist_vs_generated_pascal",
+        "model": leaf_model_identity(model, endpoint),
+        "training": [list(case) for case in training],
+        "heldout": [list(case) for case in heldout],
+        "budget": "one proposal, zero repairs, one training and at most one heldout; original subprocess30s/model600s; no retries",
+        "method_hashes": {str(p.relative_to(root)): digest(p) for p in paths},
+        "known_scope": "Developer-supplied empty-free-list topology, host projection and a manually known preflight control body. Model sees byte-backed helper/callback/branch facts, not the control body. Not unseen-routine generalization.",
+        "review_gate": "Finite pass never promotes routine. Static review must account for complete original paths before source acceptance; unknown branches remain residue.",
+        "startup_dependencies": "NONE for controlled COM test. Explicit disjoint writable globals, code, stack and heap guard; authenticated default callback and resolved rounding helper. Actual allocator-entry heap/list/callback lifetime remains unproved.",
+        "layout": "DOS COM, require PSP:2 covers64KiB atCS; DS=SS=CS, SP=eff0, code0353/04dc, harness1000..below6000, globals63d8..6410 plus7b3c, heap guard8000..807f. Authenticated callback copied to PSP command-tail scratchd6..da, callback pointer CS:d6. Limit segments are input bounds, not dereferenced. Capture AX/DX/CF/frontier/head/request and original-only global/128-byte heap guards; not all registers or memory.",
+        "proposal_mode": "declaration-constrained-known-slice",
+        "prior_rejected_freeze_sha256": previous["freeze_sha256"] if previous else None,
+        "prior_rejected_result_sha256": digest(scaffold_from / "result.json")
+        if scaffold_from
+        else None,
+    }
+    save(output / "freeze.json", freeze)
+    prompt = (
+        "Recover only the empty-free-list behavior of the original Liero allocator as Pascal. "
+        "Return JSON source, one complete procedure, no services/directives/assembler. /no_think\n"
+        + ALLOCATOR_INTERFACE
+        + "\nHost projection: segments are relative to harness CS; unsigned16-bit values. "
+        "newOffset/newSegment initialized to start, savedRequest=$a5a5. "
+        "resultOffset/resultSegment and failed must reflect original AX/DX and carry. "
+        "Empty-list head equals frontier; branch036d goes03d2, bypasses free-list scan. "
+        "Default callback authenticated XOR AX,AX; RETF2. "
+        "Failure callback leaves computed DX intact; CMP AL,1 then JB03cd returns with CF1, not through XOR AX/CWD at03ce. "
+        "Zero-size path03ce returns AX=DX=0, CF0 and no memory writes. "
+        "Nonzero writes savedRequest then calls resolved rounding helper. "
+        "Use widened arithmetic and explicit masks; FPC-Mtp-Cr enabled. "
+        "Compute only memory/result projection, not register residue. "
+        "Known topology supplied by developer, not unseen-routine recovery.\n"
+        + json.loads((target / "config/routine_contracts.json").read_text())[
+            "functions"
+        ]["FUN_24dd_04dc"]["instruction_semantics"]
+        + "\nAuthenticated allocator bytes: "
+        + raw.hex()
+        + "\nAssembly reference (some listing branch addresses use alternate mapping; bytes authoritative):\n"
+        + (target / "asm/FUN_24dd_0353.s").read_text()
+    )
+    schema = {
+        "type": "object",
+        "properties": {
+            "source": {
+                "type": "string",
+                "minLength": 160,
+                "pattern": "^procedure FUN_24dd_0353.*$",
+            }
+        },
+        "required": ["source"],
+        "additionalProperties": False,
+    }
+    prompt += (
+        "\nOUTPUT CONTRACT: JSON object with one source string containing the COMPLETE "
+        "Pascal procedure above: declaration, any local variables, begin, implementation, end;. "
+        "The first characters inside source MUST be procedure FUN_24dd_0353. "
+        "Do NOT return a language name, markdown, explanation or a stub. "
+        "Implement zero, success and default-callback failure paths. This attempt changes only "
+        "the output-format strategy; no training or heldout results are supplied."
+    )
+    save(output / "proposal-schema.json", schema)
+    (output / "prompt.txt").write_text(prompt)
+    freeze["prompt_sha256"] = digest(output / "prompt.txt")
+    freeze["proposal_schema"] = schema
+    save(output / "freeze.json", freeze)
+    freeze_identity = digest(output / "freeze.json")
+
+    def validate_frozen() -> None:
+        """Oracle: reject input/method/model drift before exposing any next suite."""
+        if (
+            json.loads((output / "freeze.json").read_text()) != freeze
+            or digest(output / "prompt.txt") != freeze["prompt_sha256"]
+            or any(
+                digest(path) != freeze["method_hashes"][str(path.relative_to(root))]
+                for path in paths
+            )
+            or leaf_model_identity(model, endpoint) != freeze["model"]
+        ):
+            raise ValueError("allocator freeze/method/model changed")
+
+    result = {
+        "status": "failed",
+        "function": "FUN_24dd_0353",
+        "source_promoted": False,
+        "routine_recovered": False,
+        "model_requests": 1,
+        "heldout_evaluations": 0,
+        "proposal_mode": freeze["proposal_mode"],
+        "scope": freeze["known_scope"],
+        "unresolved": [
+            "free-list exact-fit/split/traversal",
+            "nondefault callback/retry",
+            "normal-program heap provenance/lifetime",
+            "full register/flag ABI",
+        ],
+    }
+    try:
+        response = request(prompt, model, endpoint, schema=schema)
+        (output / "raw-response.json").write_text(response)
+        source = candidate_source(json.loads(response), "FUN_24dd_0353")
+        (output / "candidate.inc").write_text(source)
+        result["candidate_sha256"] = hashlib.sha256(source.encode()).hexdigest()
+        for suite, cases in (("training", training), ("heldout", heldout)):
+            validate_frozen()
+            if suite == "heldout":
+                result["heldout_evaluations"] = 1
+            original = allocator_original(
+                root, output / f"original-{suite}", cases, binary, contract
+            )
+            candidate = allocator_candidate(
+                output / f"candidate-{suite}", source, cases
+            )
+            mismatches = [
+                i
+                for i, pair in enumerate(zip(original, candidate, strict=True))
+                if pair[0] != pair[1]
+            ]
+            result[suite] = {
+                "cases": len(cases),
+                "passed": len(cases) - len(mismatches),
+                "mismatch_indices": mismatches,
+            }
+            if mismatches:
+                result["stop_reason"] = (
+                    "training-failure-no-repair-or-heldout"
+                    if suite == "training"
+                    else "heldout-failure-no-feedback-retry"
+                )
+                break
+        else:
+            result.update(
+                status="scoped-pass-awaiting-review",
+                stop_reason="frozen-budget-complete",
+            )
+        validate_frozen()
+    except (OSError, ValueError, KeyError, subprocess.SubprocessError) as exc:
+        result["error"] = f"{type(exc).__name__}: {exc}"
+        result["stop_reason"] = "first-error-no-retry"
+    result["freeze_sha256"] = freeze_identity
+    result["artifact_hashes"] = {
+        str(path.relative_to(output)): digest(path)
+        for path in output.rglob("*")
+        if path.is_file()
+    }
+    result["expansion_allowed"] = False
+    save(output / "result.json", result)
+    return result
+
+
 def main() -> int:
     """Oracle: report completed measurements without claiming recovery success."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--model", default="qwen2.5-coder:14b-instruct")
+    parser.add_argument("--allocator-trial", action="store_true")
+    parser.add_argument("--allocator-scaffold-from", type=pathlib.Path)
+    parser.add_argument("--allocator-deduction", action="store_true")
+    parser.add_argument("--allocator-deduction-replay", action="store_true")
+    parser.add_argument("--allocator-puzzle", action="store_true")
+    parser.add_argument("--leaf-trials", action="store_true")
+    parser.add_argument("--leaf-byte-constraints", action="store_true")
+    parser.add_argument("--leaf-fill-sketch", action="store_true")
+    parser.add_argument("--leaf-string-sketch", action="store_true")
+    parser.add_argument("--optimise-loop-search", action="store_true")
+    parser.add_argument("--overnight-hours", type=int, choices=range(1, 9), default=0)
+    parser.add_argument("--resume-leaf-trial", type=pathlib.Path)
     parser.add_argument("--routine", choices=tuple(PANEL))
     parser.add_argument("--recovered-examples", action="store_true")
     parser.add_argument("--constrained-close", action="store_true")
@@ -1466,11 +4144,161 @@ def main() -> int:
     parser.add_argument("--automatic-constructor-repair", action="store_true")
     parser.add_argument("--constructor-instruction-constraints", action="store_true")
     parser.add_argument("--prefix-transfer-routine")
+    parser.add_argument("--partial-memory-source", action="store_true")
     parser.add_argument(
         "--prefix-data-window", nargs=2, type=lambda value: int(value, 0)
     )
     parser.add_argument("--branch-repair-seed", type=pathlib.Path)
     args = parser.parse_args()
+    if args.allocator_puzzle:
+        if any(
+            value
+            for key, value in vars(args).items()
+            if key not in {"output", "model", "allocator_puzzle"}
+        ):
+            parser.error("--allocator-puzzle excludes other experiment modes")
+        result = run_allocator_puzzle(ROOT, args.output)
+        print(json.dumps(result, indent=2))
+        return 0 if result["status"] in {"scoped-frontier-blocked", "skipped"} else 1
+    if args.allocator_deduction:
+        active = {
+            key
+            for key, value in vars(args).items()
+            if value
+            and key
+            not in {
+                "output",
+                "model",
+                "allocator_deduction",
+                "allocator_deduction_replay",
+            }
+        }
+        if active:
+            parser.error("--allocator-deduction excludes other experiment modes")
+        result = (
+            validate_allocator_deduction(ROOT, args.output)
+            if args.allocator_deduction_replay
+            else run_allocator_deduction(ROOT, args.output)
+        )
+        print(json.dumps(result, indent=2))
+        return 0 if result["status"] in {"passed", "skipped"} else 1
+    if args.allocator_deduction_replay:
+        parser.error("--allocator-deduction-replay requires --allocator-deduction")
+    if args.allocator_trial:
+        active = {
+            key
+            for key, value in vars(args).items()
+            if value
+            and key
+            not in {"output", "model", "allocator_trial", "allocator_scaffold_from"}
+        }
+        if active:
+            parser.error("--allocator-trial excludes other experiment modes")
+        result = run_allocator_trial(
+            ROOT,
+            args.output,
+            args.model,
+            "http://localhost:11434",
+            scaffold_from=args.allocator_scaffold_from,
+        )
+        print(json.dumps(result, indent=2))
+        return (
+            0 if result["status"] in {"scoped-pass-awaiting-review", "skipped"} else 1
+        )
+    if args.allocator_scaffold_from:
+        parser.error("--allocator-scaffold-from requires --allocator-trial")
+    if args.leaf_string_sketch and (
+        not args.leaf_trials
+        or not args.leaf_byte_constraints
+        or args.resume_leaf_trial
+        or args.leaf_fill_sketch
+    ):
+        parser.error(
+            "--leaf-string-sketch requires fresh --leaf-trials --leaf-byte-constraints and excludes fill mode"
+        )
+    if args.overnight_hours and not args.leaf_string_sketch:
+        parser.error("--overnight-hours requires --leaf-string-sketch")
+    if args.optimise_loop_search and not args.overnight_hours:
+        parser.error("--optimise-loop-search requires --overnight-hours")
+    if args.leaf_fill_sketch and (
+        not args.leaf_trials or not args.leaf_byte_constraints or args.resume_leaf_trial
+    ):
+        parser.error(
+            "--leaf-fill-sketch requires fresh --leaf-trials --leaf-byte-constraints"
+        )
+    if args.leaf_trials:
+        if any(
+            (
+                args.routine,
+                args.recovered_examples,
+                args.constrained_close,
+                args.automatic_close_repair,
+                args.automatic_read_repair,
+                args.automatic_constructor_repair,
+                args.constructor_instruction_constraints,
+                args.prefix_transfer_routine,
+                args.prefix_data_window,
+                args.partial_memory_source,
+                args.branch_repair_seed,
+            )
+        ):
+            parser.error(
+                "--leaf-trials cannot be combined with existing candidate/prefix modes"
+            )
+        output_existed = args.output.exists()
+        try:
+            result = run_leaf_trials(
+                ROOT,
+                args.output,
+                args.model,
+                "http://localhost:11434",
+                byte_constraints=args.leaf_byte_constraints,
+                resume_trial=args.resume_leaf_trial,
+                fill_sketch=args.leaf_fill_sketch,
+                string_sketch=args.leaf_string_sketch,
+                stress_seconds=args.overnight_hours * 3600,
+                optimise=args.optimise_loop_search,
+            )
+        except (
+            OSError,
+            ValueError,
+            subprocess.SubprocessError,
+            LeafCandidateExecutionError,
+        ) as exc:
+            if (
+                not output_existed
+                and (args.output / "freeze.json").is_file()
+                and not (args.output / "result.json").exists()
+            ):
+                save(
+                    args.output / "failure.json",
+                    {
+                        "status": "failed",
+                        "error_type": type(exc).__name__,
+                        "reason": str(exc),
+                    },
+                )
+                save(
+                    args.output / "progress.json",
+                    {
+                        "status": "failed",
+                        "stage": "infrastructure-or-contract-failure",
+                        "reason": str(exc),
+                    },
+                )
+            raise
+        print(json.dumps(result, indent=2))
+        return 0 if result["status"] in {"passed", "skipped"} else 1
+    if args.leaf_byte_constraints:
+        parser.error("--leaf-byte-constraints requires --leaf-trials")
+    if args.resume_leaf_trial:
+        parser.error("--resume-leaf-trial requires --leaf-trials")
+    if args.partial_memory_source and (
+        not args.prefix_transfer_routine or args.prefix_data_window is None
+    ):
+        parser.error(
+            "--partial-memory-source requires --prefix-transfer-routine and --prefix-data-window"
+        )
     if args.prefix_transfer_routine:
         if (
             args.routine
@@ -1495,6 +4323,8 @@ def main() -> int:
                 else {}
             ),
         )
+        if args.partial_memory_source and result["status"] != "skipped":
+            write_partial_memory_source(ROOT, args.output)
         print(json.dumps(result, indent=2))
         return 0 if result["status"] in ("prefix-decoded", "skipped") else 1
     if args.prefix_data_window is not None:

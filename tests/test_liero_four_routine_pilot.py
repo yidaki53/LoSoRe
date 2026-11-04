@@ -6,7 +6,781 @@ import urllib.error
 
 import pytest
 
+from engine.instruction_facts import bounded_shortstring_contract, initialization_prefix
 from tools import liero_four_routine_pilot as pilot
+
+
+@pytest.mark.parametrize("loop_kind", ["for", "while"])
+def test_shortstring_sketch_compiles_and_replays_seeded_guarded_training(
+    tmp_path, loop_kind
+):
+    """Oracle: supplied loop syntax against complete original bytes, not model recovery."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    routine = "FUN_24dd_3b22"
+    contract = pilot.leaf_deductive_constraints(
+        routine,
+        bytes.fromhex(pilot.prefix_transfer_report(root, routine)["routine_bytes_hex"]),
+    )
+    sketch = {
+        "loop_kind": loop_kind,
+        "prefix": "byte_contract",
+        "maximum_text_bytes": 79,
+        "text_destination_offset": 48,
+        "source_text_offset": 1,
+        "stop_at_nul": True,
+    }
+    source = pilot.render_shortstring_sketch(sketch, routine, contract)
+    output = tmp_path / "stress"
+    spec = {"seed": 20261101, "batch": 2, "count": 256}
+    result = pilot.run_leaf_probe(
+        root, output, routine, source, "training", stress=spec
+    )
+    assert result["status"] == "passed"
+    assert result["case_count"] == 256
+    assert pilot.validate_leaf_probe(root, output) == result
+    result["stress_corpus"]["seed"] += 1
+    (output / "result.json").write_text(json.dumps(result))
+    with pytest.raises(ValueError, match="corpus"):
+        pilot.validate_leaf_probe(root, output)
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"stop_at_nul": False},
+        {"maximum_text_bytes": 80},
+        {"text_destination_offset": 0},
+        {"source_text_offset": 0},
+        {"prefix": "zero_all"},
+        {"source": "Halt(1);"},
+        {"maximum_text_bytes": True},
+        {"loop_kind": "while; Halt(1);"},
+    ],
+)
+def test_shortstring_sketch_rejects_conflicting_or_executable_fields(change):
+    """Oracle: no silent semantic repair or executable model text."""
+    raw = bytes.fromhex(
+        "33d28bdc1e36c47f0836c57704fc33c0abb8b0d7ab33c0b91600f3ab"
+        "b94f000bd27509ac3ac876048ac8e308ac0ac07403aae2f832c0aa1fca0800"
+    )
+    sketch = {
+        "loop_kind": "for",
+        "prefix": "byte_contract",
+        "maximum_text_bytes": 79,
+        "text_destination_offset": 48,
+        "source_text_offset": 1,
+        "stop_at_nul": True,
+    }
+    sketch.update(change)
+    with pytest.raises(ValueError):
+        pilot.render_shortstring_sketch(
+            sketch, "FUN_24dd_3b22", bounded_shortstring_contract(raw)
+        )
+
+
+def test_stress_inputs_are_reproducible_disjoint_and_cover_length_nul_patterns():
+    """Oracle: frozen input generator, no heldout outcome inspection."""
+    heldout = {data for _, data in pilot.leaf_cases("FUN_24dd_3b22", "heldout")}
+    hashes = set()
+    for batch in range(7):
+        spec = {"seed": 20261101, "batch": batch, "count": 256}
+        cases = pilot.leaf_stress_cases(spec)
+        assert cases == pilot.leaf_stress_cases(spec)
+        assert {data[0] for _, data in cases} == set(range(256))
+        for _, data in cases:
+            assert len(data) == 544
+            assert data not in heldout
+            assert data not in hashes
+            hashes.add(data)
+    assert len(hashes) == 1792
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"seed": True},
+        {"batch": -1},
+        {"count": 0},
+        {"count": 4097},
+        {"batch": 10000},
+    ],
+)
+def test_stress_descriptor_rejects_invalid_or_unbounded_inputs(change):
+    """Oracle: bounded serial corpus sizes and integer-only identities."""
+    spec = {"seed": 42, "batch": 0, "count": 256}
+    spec.update(change)
+    with pytest.raises(ValueError, match="descriptor"):
+        pilot.leaf_stress_cases(spec)
+
+
+@pytest.mark.parametrize("all_fail", [False, True])
+def test_optimisation_preserves_training_failures_and_selects_before_one_holdout(
+    tmp_path,
+    monkeypatch,
+    all_fail,
+):
+    """Oracle: scripted search ordering/budgets, not a live experiment."""
+    routine = "FUN_24dd_3b22"
+    root = pathlib.Path(__file__).resolve().parents[1]
+    raw = bytes.fromhex(
+        "33d28bdc1e36c47f0836c57704fc33c0abb8b0d7ab33c0b91600f3ab"
+        "b94f000bd27509ac3ac876048ac8e308ac0ac07403aae2f832c0aa1fca0800"
+    )
+    contract = bounded_shortstring_contract(raw)
+    sketch = {
+        "loop_kind": "for",
+        "prefix": "byte_contract",
+        "maximum_text_bytes": 79,
+        "text_destination_offset": 48,
+        "source_text_offset": 1,
+        "stop_at_nul": True,
+    }
+    first = tmp_path / routine / "attempt-1"
+    first.mkdir(parents=True)
+    (first / "candidate.inc").write_text(
+        pilot.render_shortstring_sketch(sketch, routine, contract)
+    )
+    freeze = {
+        "optimise": True,
+        "routines": {routine: {"deductive_constraints": contract}},
+        "stress_training": {
+            "maximum_seconds": 100,
+            "maximum_batches": 2,
+            "cases_per_batch": 4,
+            "seed": 42,
+            "maximum_artifact_bytes": 10**9,
+        },
+    }
+    calls = []
+
+    def probe(root, destination, fn, source, suite, *, stress=None):
+        destination.mkdir(parents=True)
+        if stress is not None:
+            (destination / "CASES.BIN").write_bytes(
+                b"".join(data for _, data in pilot.leaf_stress_cases(stress))
+            )
+        calls.append((str(destination), suite, stress))
+        if suite == "heldout":
+            saved = json.loads((tmp_path / "search.json").read_text())
+            assert saved["status"] == "selected"
+        failed = stress is not None and ("attempt-1" in str(destination) or all_fail)
+        return {"status": "failed" if failed else "passed", "case_count": 4}
+
+    monkeypatch.setattr(pilot, "run_leaf_probe", probe)
+    monkeypatch.setattr(pilot, "validate_leaf_probe", lambda *_: None)
+    monkeypatch.setattr(pilot, "validate_leaf_freeze", lambda *_: None)
+    result = pilot.run_leaf_optimisation(root, tmp_path, first, sketch, freeze)
+    assert result["status"] == ("failed" if all_fail else "passed")
+    assert sum(suite == "heldout" for _, suite, _ in calls) == (0 if all_fail else 1)
+    search = result["search"]
+    assert search["candidates"][0]["status"] == "stress-rejected"
+    if not all_fail:
+        assert "neighbors" in result["selected_source"]
+        assert search["batches_completed"] == 2
+    else:
+        assert result["selected_source"] is None
+
+
+def test_optimisation_heldout_failure_is_terminal(tmp_path, monkeypatch):
+    """Oracle: a selected-candidate holdout failure never evaluates its neighbor again."""
+    routine = "FUN_24dd_3b22"
+    raw = bytes.fromhex(
+        "33d28bdc1e36c47f0836c57704fc33c0abb8b0d7ab33c0b91600f3ab"
+        "b94f000bd27509ac3ac876048ac8e308ac0ac07403aae2f832c0aa1fca0800"
+    )
+    contract = bounded_shortstring_contract(raw)
+    sketch = {
+        "loop_kind": "for",
+        "prefix": "byte_contract",
+        "maximum_text_bytes": 79,
+        "text_destination_offset": 48,
+        "source_text_offset": 1,
+        "stop_at_nul": True,
+    }
+    first = tmp_path / routine / "attempt-1"
+    first.mkdir(parents=True)
+    (first / "candidate.inc").write_text(
+        pilot.render_shortstring_sketch(sketch, routine, contract)
+    )
+    freeze = {
+        "optimise": True,
+        "routines": {routine: {"deductive_constraints": contract}},
+        "stress_training": {
+            "maximum_seconds": 100,
+            "maximum_batches": 1,
+            "cases_per_batch": 4,
+            "seed": 42,
+            "maximum_artifact_bytes": 10**9,
+        },
+    }
+    heldouts = []
+
+    def probe(root, destination, fn, source, suite, *, stress=None):
+        destination.mkdir(parents=True)
+        if stress is not None:
+            (destination / "CASES.BIN").write_bytes(
+                b"".join(data for _, data in pilot.leaf_stress_cases(stress))
+            )
+        if suite == "heldout":
+            heldouts.append(destination)
+        return {"status": "failed" if suite == "heldout" else "passed", "case_count": 4}
+
+    monkeypatch.setattr(pilot, "run_leaf_probe", probe)
+    monkeypatch.setattr(pilot, "validate_leaf_probe", lambda *_: None)
+    monkeypatch.setattr(pilot, "validate_leaf_freeze", lambda *_: None)
+    result = pilot.run_leaf_optimisation(
+        pathlib.Path.cwd(), tmp_path, first, sketch, freeze
+    )
+    assert result["status"] == "failed"
+    assert len(heldouts) == 1
+    selected = min(
+        result["search"]["candidates"],
+        key=lambda row: (
+            (tmp_path / row["directory"] / "candidate.inc").stat().st_size,
+            row["source_sha256"],
+        ),
+    )
+    assert result["source_sha256"] == selected["source_sha256"]
+    assert result["search"]["selected"] == selected["source_sha256"]
+
+
+@pytest.mark.parametrize(
+    "flags",
+    [
+        ["--overnight-hours", "8"],
+        ["--optimise-loop-search"],
+        ["--leaf-trials", "--leaf-string-sketch"],
+        [
+            "--leaf-trials",
+            "--leaf-byte-constraints",
+            "--leaf-string-sketch",
+            "--leaf-fill-sketch",
+        ],
+    ],
+)
+def test_overnight_cli_rejects_incompatible_modes(tmp_path, monkeypatch, flags):
+    """Oracle: only fresh scoped local composition runs can activate stress search."""
+    output = tmp_path / "run"
+    monkeypatch.setattr(pilot.sys, "argv", ["pilot", "--output", str(output), *flags])
+    with pytest.raises(SystemExit) as exc:
+        pilot.main()
+    assert exc.value.code == 2
+    assert not output.exists()
+
+
+def test_leaf_constraints_include_checked_composition_and_reject_forged_freeze(
+    tmp_path, monkeypatch
+):
+    """Oracle: scripted prompt/freeze wiring only; no live candidate or heldout."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    cases = pilot.leaf_cases
+    monkeypatch.setattr(pilot, "leaf_cases", lambda fn, suite: cases(fn, suite)[:1])
+    monkeypatch.setattr(pilot, "leaf_model_identity", lambda *_: {"name": "scripted"})
+    prompts = []
+
+    def propose(prompt, *_):
+        prompts.append(prompt)
+        return json.dumps({"response": "{}"})
+
+    monkeypatch.setattr(pilot, "request", propose)
+    output = tmp_path / "freeze"
+    result = pilot.run_leaf_trials(
+        root,
+        output,
+        "scripted",
+        "http://localhost",
+        byte_constraints=True,
+    )
+    assert result["status"] == "failed"
+    assert len(prompts) == 8
+    string_prompts = [p for p in prompts if "exact_shortstring_composition" in p]
+    assert len(string_prompts) == 4
+    assert all('"maximum_text_bytes": 79' in p for p in string_prompts)
+    assert not list(output.glob("*/attempt-*/heldout"))
+    freeze = json.loads((output / "freeze.json").read_text())
+    frozen = freeze["routines"]["FUN_24dd_3b22"]
+    assert frozen["deductive_constraints"] == bounded_shortstring_contract(
+        bytes.fromhex(frozen["original_prefix_report"]["routine_bytes_hex"])
+    )
+    frozen["deductive_constraints"]["maximum_text_bytes"] = 80
+    (output / "freeze.json").write_text(json.dumps(freeze))
+    with pytest.raises(ValueError, match="evidence/corpus"):
+        pilot.validate_leaf_freeze(root, output, freeze)
+
+
+@pytest.mark.parametrize("loop_kind", ["for", "while"])
+@pytest.mark.parametrize("guard_zero", [False, True])
+def test_restricted_fill_sketch_renders_portable_pascal_and_checks_memory(
+    tmp_path, monkeypatch, loop_kind, guard_zero
+):
+    """Oracle: supplied syntax topology on varied boundary counts; not live model recovery."""
+    sketch = {
+        "loop_kind": loop_kind,
+        "guard_zero": guard_zero,
+        "first_index": 0,
+        "end_expression": "count_minus_one",
+        "stored_value": "value",
+    }
+    source = pilot.render_fill_sketch(sketch, "FUN_24dd_4905")
+    assert "var index: LongInt;" in source
+    assert "for var" not in source
+    assert "asm" not in source
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    cases = pilot.leaf_cases("FUN_24dd_4905", "training")
+    monkeypatch.setattr(
+        pilot, "leaf_cases", lambda *_: [cases[i] for i in (0, 1, 255, 256, -1)]
+    )
+    report = pilot.run_leaf_probe(
+        root, tmp_path / "probe", "FUN_24dd_4905", source, "training"
+    )
+    assert report["status"] == "passed"
+    assert pilot.validate_leaf_probe(root, tmp_path / "probe") == report
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"loop_kind": "asm"},
+        {"guard_zero": 1},
+        {"first_index": True},
+        {"end_expression": "count; Halt(1)"},
+        {"stored_value": "FillChar"},
+        {"extra": "injection"},
+    ],
+)
+def test_fill_sketch_rejects_untyped_or_executable_fields(change):
+    """Oracle: bounded vocabulary only; no executable source text accepted from model."""
+    sketch = {
+        "loop_kind": "for",
+        "guard_zero": True,
+        "first_index": 0,
+        "end_expression": "count_minus_one",
+        "stored_value": "value",
+    }
+    with pytest.raises(ValueError, match="fill sketch"):
+        pilot.render_fill_sketch({**sketch, **change}, "FUN_24dd_4905")
+
+
+@pytest.mark.parametrize(
+    "change",
+    [{"first_index": 1}, {"end_expression": "count"}, {"stored_value": "zero"}],
+)
+def test_fill_sketch_semantic_conflicts_are_rejected_not_silently_repaired(change):
+    """Oracle: exact byte-derived REP STOSB constraints reject conflicting proposals."""
+    sketch = {
+        "loop_kind": "for",
+        "guard_zero": True,
+        "first_index": 0,
+        "end_expression": "count_minus_one",
+        "stored_value": "value",
+    }
+    contract = pilot.bounded_byte_fill_contract(
+        bytes.fromhex("8bdc36c47f08368b4f06368a4704fcf3aaca0800")
+    )
+    with pytest.raises(ValueError, match="byte contract"):
+        pilot.validate_fill_sketch_contract({**sketch, **change}, contract)
+    with pytest.raises(ValueError, match="routine name"):
+        pilot.render_fill_sketch(sketch, "x; Halt(1)")
+
+
+def test_fill_sketch_trial_keeps_conflict_then_selects_once_and_replays(
+    tmp_path, monkeypatch
+):
+    """Oracle: scripted structured proposal wiring, not a live model recovery."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    cases = pilot.leaf_cases
+    monkeypatch.setattr(
+        pilot,
+        "leaf_cases",
+        lambda fn, suite: [cases(fn, suite)[0], cases(fn, suite)[-1]],
+    )
+    monkeypatch.setattr(
+        pilot, "leaf_model_identity", lambda *_: {"name": "scripted", "digest": "test"}
+    )
+    calls = []
+
+    def propose(prompt, model, endpoint, *, schema):
+        assert schema == pilot.FILL_SKETCH_SCHEMA
+        assert "FUN_24dd_3b22" not in prompt
+        calls.append(prompt)
+        sketch = {
+            "loop_kind": "while",
+            "guard_zero": False,
+            "first_index": 1 if len(calls) == 1 else 0,
+            "end_expression": "count_minus_one",
+            "stored_value": "value",
+        }
+        return json.dumps({"response": json.dumps(sketch)})
+
+    monkeypatch.setattr(pilot, "request", propose)
+    output = tmp_path / "trial"
+    report = pilot.run_leaf_trials(
+        root,
+        output,
+        "scripted",
+        "http://localhost",
+        byte_constraints=True,
+        fill_sketch=True,
+    )
+    assert len(calls) == 2
+    assert report["status"] == "passed"
+    assert report["functions_evaluated"] == 1
+    assert report["known_slice_syntax_mechanism"] is True
+    assert report["automatic_new_recoveries"] == 0
+    assert report["routines"][0]["attempts"][0]["status"] == "sanitizer-rejected"
+    assert "byte contract" in report["routines"][0]["attempts"][0]["reason"]
+    assert not (output / "FUN_24dd_4905/attempt-1/training").exists()
+    assert len(list(output.glob("*/attempt-*/heldout/result.json"))) == 1
+    assert pilot.validate_fill_sketch_trial(root, output) == report
+    sketch_file = output / "FUN_24dd_4905/attempt-2/sketch.json"
+    sketch = json.loads(sketch_file.read_text())
+    sketch["loop_kind"] = "for"
+    sketch_file.write_text(json.dumps(sketch))
+    with pytest.raises(ValueError, match="sketch"):
+        pilot.validate_fill_sketch_trial(root, output)
+
+
+@pytest.mark.parametrize(
+    "flags",
+    [
+        ["--leaf-fill-sketch"],
+        ["--leaf-trials", "--leaf-fill-sketch"],
+        [
+            "--leaf-trials",
+            "--leaf-byte-constraints",
+            "--leaf-fill-sketch",
+            "--resume-leaf-trial",
+            "prior",
+        ],
+    ],
+)
+def test_fill_sketch_cli_rejects_missing_constraints_or_reused_run(
+    tmp_path, monkeypatch, flags
+):
+    """Oracle: known-slice changed strategy must freeze fresh method/inputs before evaluation."""
+    output = tmp_path / "out"
+    monkeypatch.setattr(pilot.sys, "argv", ["pilot", "--output", str(output), *flags])
+    with pytest.raises(SystemExit) as exc:
+        pilot.main()
+    assert exc.value.code == 2
+    assert not output.exists()
+
+
+@pytest.mark.parametrize("routine", ["FUN_24dd_4905", "FUN_24dd_3b22"])
+def test_leaf_corpora_are_disjoint_and_controls_match_guarded_contract(routine):
+    """Oracle: fixed disjoint inputs and exact independently specified leaf effects."""
+    training = pilot.leaf_cases(routine, "training")
+    heldout = pilot.leaf_cases(routine, "heldout")
+    assert {data for _, data in training}.isdisjoint(data for _, data in heldout)
+    assert all(len(data) == 544 for _, data in training + heldout)
+    for _, data in training + heldout:
+        expected = pilot.leaf_expected(routine, data)
+        assert expected[:272] == data[:272]
+        assert expected[528:] == data[528:]
+    if routine == "FUN_24dd_4905":
+        data = bytearray(training[0][1])
+        data[:3] = b"\x00\x01\xfe"
+        assert pilot.leaf_expected(routine, bytes(data))[272:528] == b"\xfe" * 256
+        data[:2] = b"\x01\x01"
+        with pytest.raises(ValueError, match="count"):
+            pilot.leaf_expected(routine, bytes(data))
+    else:
+        data = bytearray(training[0][1])
+        data[:5] = b"\x04A\x00BC"
+        assert pilot.leaf_expected(routine, bytes(data))[320:323] == b"A\0\0"
+
+
+@pytest.mark.parametrize("routine", tuple(pilot.LEAF_PANEL))
+def test_leaf_original_control_replay_and_tamper_rejection(
+    tmp_path, monkeypatch, routine
+):
+    """Oracle: original bytes vs disclosed control; tampered finite evidence cannot replay."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    cases = pilot.leaf_cases(routine, "training")
+    monkeypatch.setattr(pilot, "leaf_cases", lambda *_: [cases[0], cases[-1]])
+    report = pilot.run_leaf_probe(
+        root,
+        tmp_path / "probe",
+        routine,
+        pilot.leaf_control_source(routine),
+        "training",
+    )
+    assert report["status"] == "passed"
+    assert pilot.validate_leaf_probe(root, tmp_path / "probe") == report
+    (tmp_path / "probe/PASCAL.BIN").write_bytes(bytes(1088))
+    with pytest.raises(ValueError, match="artifact changed"):
+        pilot.validate_leaf_probe(root, tmp_path / "probe")
+
+
+def test_leaf_trial_selects_training_only_and_never_repairs_from_holdout(
+    tmp_path, monkeypatch
+):
+    """Oracle: scripted mechanism test, not a live model recovery or unseen benchmark."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    original_cases = pilot.leaf_cases
+    monkeypatch.setattr(
+        pilot, "leaf_cases", lambda fn, suite: [original_cases(fn, suite)[-1]]
+    )
+    monkeypatch.setattr(
+        pilot, "leaf_model_identity", lambda *_: {"name": "scripted", "digest": "test"}
+    )
+    prompts = []
+
+    def propose(prompt, *_):
+        assert "heldout" not in prompt
+        prompts.append(prompt)
+        fn = next(fn for fn in pilot.LEAF_PANEL if fn in prompt)
+        source = pilot.leaf_control_source(fn)
+        if fn == "FUN_24dd_4905":
+            source = source.replace(
+                "destination^[i] := value;",
+                "destination^[i] := value; if value = 165 then destination^[0] := 0;",
+            )
+        return json.dumps({"response": json.dumps({"source": source})})
+
+    monkeypatch.setattr(pilot, "request", propose)
+    report = pilot.run_leaf_trials(
+        root, tmp_path / "trial", "scripted", "http://localhost"
+    )
+    assert len(prompts) == 2
+    fill = next(row for row in report["routines"] if row["function"] == "FUN_24dd_4905")
+    assert fill["training_cases"] == 1
+    assert fill["status"] == "failed"
+    assert len(fill["attempts"]) == 1
+    assert report["new_scoped_routine_passes"] == 1
+    assert not report["puzzle_saturated"]
+    assert report["examples_promoted"] == 0
+    assert len(list((tmp_path / "trial").glob("*/attempt-*/heldout/result.json"))) == 2
+
+
+def test_leaf_runtime_failure_is_rejected_and_resume_keeps_request_budget(
+    tmp_path, monkeypatch
+):
+    """Oracle: scripted interruption/runtime rejection, not additional model evidence."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    cases = pilot.leaf_cases
+    monkeypatch.setattr(pilot, "leaf_cases", lambda fn, suite: [cases(fn, suite)[-1]])
+    monkeypatch.setattr(
+        pilot, "leaf_model_identity", lambda *_: {"name": "scripted", "digest": "test"}
+    )
+    requests = []
+
+    def propose(prompt, *_):
+        fn = next(fn for fn in pilot.LEAF_PANEL if fn in prompt)
+        requests.append(fn)
+        source = (
+            pilot.leaf_interface(fn)
+            + "\nvar index: LongInt;\nbegin index := 256; destination^[index] := 0; end;"
+            if len(requests) == 1
+            else pilot.leaf_control_source(fn)
+        )
+        return json.dumps({"response": json.dumps({"source": source})})
+
+    run_probe = pilot.run_leaf_probe
+
+    def interrupt(root, output, *args):
+        if "attempt-1" in str(output):
+            raise RuntimeError("scripted interruption before training")
+        return run_probe(root, output, *args)
+
+    monkeypatch.setattr(pilot, "request", propose)
+    monkeypatch.setattr(pilot, "run_leaf_probe", interrupt)
+    with pytest.raises(RuntimeError, match="scripted interruption"):
+        pilot.run_leaf_trials(
+            root, tmp_path / "interrupted", "scripted", "http://localhost"
+        )
+    monkeypatch.setattr(pilot, "run_leaf_probe", run_probe)
+    report = pilot.run_leaf_trials(
+        root,
+        tmp_path / "resumed",
+        "scripted",
+        "http://localhost",
+        resume_trial=tmp_path / "interrupted",
+    )
+    assert report["new_scoped_routine_passes"] == 2
+    assert requests.count("FUN_24dd_3b22") == 2
+    first = tmp_path / "resumed/FUN_24dd_3b22/attempt-1"
+    assert (
+        json.loads((first / "request-provenance.json").read_text())["new_model_request"]
+        is False
+    )
+    assert (
+        json.loads((first / "training/runtime.json").read_text())["status"] == "failed"
+    )
+    assert not (first / "heldout").exists()
+    string = next(
+        row for row in report["routines"] if row["function"] == "FUN_24dd_3b22"
+    )
+    assert string["attempts"][0]["status"] == "runtime-rejected"
+    unknown = tmp_path / "interrupted/FUN_24dd_3b22/attempt-2"
+    unknown.mkdir()
+    with pytest.raises(ValueError, match="unknown model request outcome"):
+        pilot.run_leaf_trials(
+            root,
+            tmp_path / "unknown-attempt",
+            "scripted",
+            "http://localhost",
+            resume_trial=tmp_path / "interrupted",
+        )
+    with pytest.raises(ValueError, match="no prior heldout"):
+        pilot.run_leaf_trials(
+            root,
+            tmp_path / "forbidden",
+            "scripted",
+            "http://localhost",
+            resume_trial=tmp_path / "resumed",
+        )
+
+
+def test_exhausted_leaf_requests_stop_as_low_yield_not_puzzle_saturation(
+    tmp_path, monkeypatch
+):
+    """Oracle: scripted rejected proposals; budgets are not semantic fixed points."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file() or not all(
+        shutil.which(tool) for tool in ("as", "ld", "dosbox", "fpc", "objdump")
+    ):
+        pytest.skip("BYOD or leaf tools unavailable")
+    cases = pilot.leaf_cases
+    monkeypatch.setattr(pilot, "leaf_cases", lambda fn, suite: [cases(fn, suite)[-1]])
+    monkeypatch.setattr(
+        pilot, "leaf_model_identity", lambda *_: {"name": "scripted", "digest": "test"}
+    )
+    calls = []
+
+    def rejected(prompt, *_):
+        fn = next(fn for fn in pilot.LEAF_PANEL if fn in prompt)
+        calls.append(fn)
+        return json.dumps(
+            {
+                "response": json.dumps(
+                    {"source": pilot.leaf_interface(fn) + " begin asm end; end;"}
+                )
+            }
+        )
+
+    monkeypatch.setattr(pilot, "request", rejected)
+    report = pilot.run_leaf_trials(
+        root, tmp_path / "out", "scripted", "http://localhost"
+    )
+    assert len(calls) == 8
+    assert all(calls.count(fn) == 4 for fn in pilot.LEAF_PANEL)
+    assert report["stop_reason"] == "low-yield"
+    assert report["puzzle_passes"]["stop_reason"] == "candidate-budget-exhausted"
+    assert report["puzzle_passes"]["saturated"] is False
+    assert not list((tmp_path / "out").glob("*/attempt-*/heldout"))
+
+
+def test_partial_memory_artifact_replays_and_keeps_unknown_return(tmp_path):
+    """Oracle: byte-derived memory projection, not executable whole-routine recovery."""
+    root = pathlib.Path(__file__).resolve().parents[1]
+    if not (root / "extracted/liero/LIERO.EXE").is_file():
+        pytest.skip("Liero BYOD unavailable")
+    output = tmp_path / "partial"
+    pilot.run_prefix_transfer(
+        root, output, "FUN_24dd_492c", data_window=(0x6000, 0x8000)
+    )
+    report = pilot.write_partial_memory_source(root, output)
+    assert report["routine_recovered"] is False
+    assert report["whole_routine_execution"] == "blocked"
+    assert report["training_promotion"] == "blocked"
+    assert report["unresolved_bytes_hex"] == "c3"
+    assert report["oracle"] == "static_memory_projection_only"
+    source = (output / "partial-memory.inc").read_text()
+    assert "entryData[25638 + 2 * index]" in source
+    assert "0 to 2965" in source
+    assert pilot.validate_partial_memory_source(root, output) == report
+    (output / "partial-memory.inc").write_text(source.replace("2965", "2964"))
+    with pytest.raises(ValueError, match="partial memory"):
+        pilot.validate_partial_memory_source(root, output)
+
+
+@pytest.mark.parametrize(
+    "offset,count,value", [(16, 2, 0x1234), (65534, 1, 0xFFFF), (30, 0, 0)]
+)
+def test_partial_renderer_uses_shared_constant_write_facts(offset, count, value):
+    """Oracle: varied write immediates, including zero count and segment boundary."""
+    raw = (
+        b"\xbf"
+        + offset.to_bytes(2, "little")
+        + b"\x1e\x07\xb9"
+        + count.to_bytes(2, "little")
+        + b"\xb8"
+        + value.to_bytes(2, "little")
+        + bytes.fromhex("fcf3abc3")
+    )
+    facts = initialization_prefix(raw, data_window=(0, 65536))
+    source = pilot.render_partial_memory_source(facts["writes"], (0, 65536))
+    if count:
+        assert f"0 to {count - 1}" in source
+        assert f":= {value & 255};" in source
+        assert f":= {value >> 8};" in source
+    else:
+        assert "for index" not in source
+
+
+def test_partial_renderer_refuses_unknown_or_unbounded_writes():
+    """Oracle: unknown origins/values and escaping writes cannot become Pascal effects."""
+    write = {
+        "address_space": "entry_ds",
+        "byte_offset": 16,
+        "word_count": 2,
+        "value": {"kind": "constant", "amount": 0},
+    }
+    for changed in (
+        {**write, "address_space": "entry_es"},
+        {**write, "word_count": 3},
+        {**write, "value": {"kind": "unknown"}},
+    ):
+        with pytest.raises(ValueError, match="bounded constant"):
+            pilot.render_partial_memory_source([changed], (16, 20))
+    with pytest.raises(ValueError, match="no supported"):
+        pilot.render_partial_memory_source([], (16, 20))
+
+
+@pytest.mark.parametrize(
+    "flags",
+    [
+        ["--partial-memory-source"],
+        ["--partial-memory-source", "--prefix-transfer-routine", "FUN_24dd_492c"],
+    ],
+)
+def test_partial_cli_requires_explicit_prefix_and_bounds(tmp_path, monkeypatch, flags):
+    """Oracle: malformed partial request fails before creating experiment output."""
+    output = tmp_path / "out"
+    monkeypatch.setattr(pilot.sys, "argv", ["pilot", "--output", str(output), *flags])
+    with pytest.raises(SystemExit) as error:
+        pilot.main()
+    assert error.value.code == 2
+    assert not output.exists()
 
 
 def test_prefix_transfer_requires_global_bound_and_retains_return_residue(tmp_path):
