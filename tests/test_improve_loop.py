@@ -7,6 +7,121 @@ import pytest
 from engine import improve_loop
 
 
+def test_puzzle_passes_reopens_caller_after_checked_callee_and_preserves_scope():
+    """Oracle: checked contract changes unlock the next pass, not compilation."""
+    settled = set()
+    calls = []
+
+    def frontier():
+        return {
+            "callee": {
+                "premise_sha256": "bytes-a",
+                "checked": "callee" in settled,
+                "blockers": [],
+            },
+            "caller": {
+                "premise_sha256": "contract-a" if "callee" in settled else "unknown",
+                "checked": "caller" in settled,
+                "blockers": [] if "callee" in settled else ["callee contract unknown"],
+            },
+        }
+
+    def check(piece):
+        calls.append(piece)
+        settled.add(piece)
+        return {
+            "status": "passed",
+            "oracle": "scoped-binary-contract",
+            "reference": piece,
+        }
+
+    report = improve_loop.run_puzzle_passes(frontier, check, max_passes=4)
+    assert calls == ["callee", "caller"]
+    assert report["passes"] == 2
+    assert report["stop_reason"] == "frontier-settled"
+    assert report["saturated"] is False
+    assert report["source_recovered"] is False
+
+
+def test_puzzle_passes_suppresses_unchanged_failure_until_material_premise_change():
+    """Oracle: finite evidence-relative fixed point, never unchanged retry progress."""
+    calls = []
+    pieces = {"leaf": {"premise_sha256": "bytes-a", "checked": False, "blockers": []}}
+
+    def check(piece):
+        calls.append(piece)
+        return {"status": "failed", "oracle": "binary"}
+
+    report = improve_loop.run_puzzle_passes(lambda: pieces, check, max_passes=3)
+    assert calls == ["leaf"]
+    assert report["saturated"]
+    assert report["stop_reason"] == "evidence-relative-saturation"
+    assert (
+        report["leftovers"][0]["reopen_when"]
+        == "new checked premise or discriminating experiment"
+    )
+
+
+@pytest.mark.parametrize(
+    "blocker,expected",
+    [
+        ("environment", "environment-blocked"),
+        ("method", "method-blocked"),
+        ("budget", "candidate-budget-exhausted"),
+    ],
+)
+def test_puzzle_passes_separates_blockers_and_budget_from_saturation(blocker, expected):
+    """Oracle: unavailable inputs/methods and pass caps cannot masquerade as saturation."""
+    pieces = {
+        "leaf": {
+            "premise_sha256": "a",
+            "checked": False,
+            "blockers": ["no oracle"],
+            "blocker_kind": blocker,
+        }
+    }
+    report = improve_loop.run_puzzle_passes(
+        lambda: pieces, lambda _: pytest.fail(), max_passes=2
+    )
+    assert report["stop_reason"] == expected
+    assert not report["saturated"]
+    pieces["leaf"]["blockers"] = []
+    report = improve_loop.run_puzzle_passes(
+        lambda: pieces, lambda _: {"status": "compiled", "oracle": "none"}, max_passes=1
+    )
+    assert report["stop_reason"] == "pass-budget-exhausted"
+    assert not report["saturated"]
+    assert report["checked_passes"] == 0
+
+
+def test_puzzle_passes_rechecks_invalidated_result_and_rejects_false_pass():
+    """Oracle: changed premise reopens a previously checked piece; compilation is not checking."""
+    pieces = {
+        "a": {"premise_sha256": "v1", "checked": False, "blockers": []},
+        "b": {"premise_sha256": "v1", "checked": False, "blockers": ["a"]},
+    }
+    calls = []
+
+    def check(piece):
+        calls.append(piece)
+        if calls == ["a"]:
+            pieces["a"].update(premise_sha256="v2", checked=False)
+            pieces["b"]["blockers"] = []
+        else:
+            pieces[piece]["checked"] = True
+        return {"status": "passed", "oracle": "binary", "reference": piece}
+
+    report = improve_loop.run_puzzle_passes(lambda: pieces, check, max_passes=5)
+    assert calls == ["a", "a", "b"]
+    assert report["stop_reason"] == "frontier-settled"
+    with pytest.raises(ValueError, match="oracle"):
+        improve_loop.run_puzzle_passes(
+            lambda: {"x": {"premise_sha256": "x", "checked": False, "blockers": []}},
+            lambda _: {"status": "passed", "oracle": "none"},
+            max_passes=2,
+        )
+
+
 def test_verify_returns_subprocess_exit_code(tmp_path, monkeypatch):
     monkeypatch.setattr(
         improve_loop,
@@ -36,9 +151,10 @@ def test_verified_function_count_ignores_format_oracle_paths():
         }
     }
 
-    assert improve_loop._verified_functions(
-        data, "liero", "dat-parity", {"FUN_1000_01a1"}
-    ) == set()
+    assert (
+        improve_loop._verified_functions(data, "liero", "dat-parity", {"FUN_1000_01a1"})
+        == set()
+    )
     assert improve_loop._verified_functions(
         data, "liero", "byte-exact", {"FUN_1000_01a1"}
     ) == {"FUN_1000_01a1"}
@@ -131,9 +247,7 @@ def test_generation_evidence_records_prompt_and_previous_candidate_hashes(
             {
                 "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
                 "completion_sha256": hashlib.sha256(completion.encode()).hexdigest(),
-                "candidate_sha256": hashlib.sha256(
-                    b"sanitized candidate"
-                ).hexdigest(),
+                "candidate_sha256": hashlib.sha256(b"sanitized candidate").hexdigest(),
             }
         )
     )
@@ -149,9 +263,10 @@ def test_generation_evidence_records_prompt_and_previous_candidate_hashes(
 
     assert evidence["status"] == "captured"
     assert evidence["prompt_sha256"] == hashlib.sha256(prompt.encode()).hexdigest()
-    assert evidence["previous_candidate_sha256"] == hashlib.sha256(
-        previous_candidate
-    ).hexdigest()
+    assert (
+        evidence["previous_candidate_sha256"]
+        == hashlib.sha256(previous_candidate).hexdigest()
+    )
     assert evidence["prompt_chars"] == len(prompt)
 
 
@@ -167,9 +282,9 @@ def test_binary_verified_count_excludes_format_oracles():
         }
     }
 
-    assert improve_loop._binary_verified_functions(
-        data, "liero", {"FUN_0001"}
-    ) == {"FUN_0001"}
+    assert improve_loop._binary_verified_functions(data, "liero", {"FUN_0001"}) == {
+        "FUN_0001"
+    }
 
 
 def test_candidate_selection_skips_empty_assembly_and_invalid_decomp(tmp_path):
@@ -237,9 +352,10 @@ def test_candidate_selection_resolves_callees_before_callers(tmp_path):
     target = _make_dependency_target(tmp_path)
     function_names = {"FUN_LEAF", "FUN_CALLER"}
 
-    assert improve_loop._direct_call_dependencies(
-        target, function_names
-    ) == {"FUN_LEAF": set(), "FUN_CALLER": {"FUN_LEAF"}}
+    assert improve_loop._direct_call_dependencies(target, function_names) == {
+        "FUN_LEAF": set(),
+        "FUN_CALLER": {"FUN_LEAF"},
+    }
     assert improve_loop._select_candidates(
         target,
         function_names,
@@ -256,14 +372,17 @@ def test_candidate_selection_resolves_callees_before_callers(tmp_path):
     (target / "src" / "FUN_CALLER.inc").write_text(
         "procedure FUN_CALLER;\nbegin\n  Value := 2;\nend;\n"
     )
-    assert improve_loop._select_candidates(
-        target,
-        function_names,
-        attempted=improve_loop.Counter(),
-        failed=set(),
-        max_attempts_per_function=1,
-        limit=2,
-    ) == []
+    assert (
+        improve_loop._select_candidates(
+            target,
+            function_names,
+            attempted=improve_loop.Counter(),
+            failed=set(),
+            max_attempts_per_function=1,
+            limit=2,
+        )
+        == []
+    )
     assert improve_loop._has_dependency_blocked_candidates(
         target, function_names, improve_loop.Counter(), 1
     )
@@ -311,6 +430,35 @@ def test_dependency_blockers_name_callee_call_site_and_evidence(tmp_path):
             "evidence_refs": ["asm:FUN_CALLER:0x200"],
         }
     ]
+
+
+def test_liero_scoped_contracts_do_not_unlock_unresolved_caller():
+    """Oracle: actual engine scheduler keeps partial callees blocked despite prompt facts."""
+    root = Path(__file__).resolve().parents[1] / "targets/liero"
+    if not (root.parent.parent / "extracted/liero/LIERO.EXE").is_file():
+        pytest.skip("Liero BYOD unavailable")
+    functions = {
+        "FUN_1ec2_0895",
+        "FUN_1ec2_086b",
+        "FUN_24dd_4654",
+        "FUN_24dd_46b1",
+        "FUN_1ec2_0dc8",
+    }
+    dependencies = improve_loop._direct_call_dependencies(root, functions)
+    assert dependencies["FUN_1ec2_0895"] == {
+        "FUN_1ec2_086b",
+        "FUN_24dd_4654",
+        "FUN_1ec2_0dc8",
+    }
+    blockers = improve_loop._dependency_blockers(
+        root, functions, improve_loop.Counter(), 1
+    )
+    assert {
+        item["callee"] for item in blockers if item["function"] == "FUN_1ec2_0895"
+    } == {"FUN_24dd_4654", "FUN_1ec2_0dc8"}
+    assert "FUN_1ec2_0895" not in improve_loop._select_candidates(
+        root, functions, improve_loop.Counter(), set(), 1, 5
+    )
 
 
 def test_candidate_selection_groups_mutually_recursive_routines(tmp_path):
@@ -369,9 +517,7 @@ def test_callers_wait_for_every_member_of_a_recursive_group(tmp_path):
 
     def attest(function_name):
         source = target / "src" / f"{function_name}.inc"
-        source.write_text(
-            f"procedure {function_name};\nbegin\n  Value := 1;\nend;\n"
-        )
+        source.write_text(f"procedure {function_name};\nbegin\n  Value := 1;\nend;\n")
         improve_loop.recovery.attest_source(
             target,
             function_name,
@@ -436,16 +582,12 @@ def test_improve_counts_only_compiled_meaningful_candidates(tmp_path, monkeypatc
 
     def fake_draft(target, **kwargs):
         calls.append(kwargs)
-        candidate.write_text(
-            "procedure FUN_0001;\nbegin\n  Inc(Value);\nend;\n"
-        )
+        candidate.write_text("procedure FUN_0001;\nbegin\n  Inc(Value);\nend;\n")
         return 0
 
     monkeypatch.setattr(improve_loop, "_draft", fake_draft)
 
-    summary = improve_loop.improve(
-        "liero", max_iterations=3, saturation_window=2
-    )
+    summary = improve_loop.improve("liero", max_iterations=3, saturation_window=2)
 
     assert calls[0]["fn"] == "FUN_0001"
     assert calls[0]["retry_existing"] is True
@@ -494,9 +636,7 @@ def test_failed_candidate_is_rolled_back_and_retried_with_diagnostics(
 
     def fake_draft(target, **kwargs):
         calls.append(kwargs)
-        candidate.write_text(
-            "procedure FUN_0001;\nbegin\n  INVALID;\nend;\n"
-        )
+        candidate.write_text("procedure FUN_0001;\nbegin\n  INVALID;\nend;\n")
         return 0
 
     monkeypatch.setattr(improve_loop, "_draft", fake_draft)
@@ -546,9 +686,7 @@ def test_improve_resume_continues_failed_routine_attempt_history(tmp_path, monke
 
     monkeypatch.setattr(improve_loop, "_draft", fake_draft)
 
-    first = improve_loop.improve(
-        "liero", max_iterations=1, max_attempts_per_function=3
-    )
+    first = improve_loop.improve("liero", max_iterations=1, max_attempts_per_function=3)
     resumed = improve_loop.improve(
         "liero",
         max_iterations=1,
@@ -584,9 +722,7 @@ def test_improve_resume_rejects_changed_assembly_inputs(tmp_path, monkeypatch):
     (target_root / "asm" / "FUN_0001.s").write_text("INT 21h\n")
 
     with pytest.raises(ValueError, match="input files changed"):
-        improve_loop.improve(
-            "liero", max_iterations=1, resume_run_id=first["run_id"]
-        )
+        improve_loop.improve("liero", max_iterations=1, resume_run_id=first["run_id"])
 
 
 def test_improve_resume_restores_sources_after_interrupted_generation(
@@ -610,9 +746,7 @@ def test_improve_resume_restores_sources_after_interrupted_generation(
         if draft_calls == 1:
             candidate.write_text("partial candidate\n")
             raise KeyboardInterrupt
-        candidate.write_text(
-            "procedure FUN_0001;\nbegin\n  Inc(Value);\nend;\n"
-        )
+        candidate.write_text("procedure FUN_0001;\nbegin\n  Inc(Value);\nend;\n")
         return 0
 
     monkeypatch.setattr(improve_loop, "_draft", interrupt_first_draft)
@@ -624,9 +758,7 @@ def test_improve_resume_restores_sources_after_interrupted_generation(
     run_id = interrupted_run.stem
     assert candidate.read_text() == "partial candidate\n"
 
-    resumed = improve_loop.improve(
-        "liero", max_iterations=1, resume_run_id=run_id
-    )
+    resumed = improve_loop.improve("liero", max_iterations=1, resume_run_id=run_id)
 
     persisted_run = json.loads(interrupted_run.read_text())
     attempts = persisted_run["routines"]["FUN_0001"]["attempts"]
@@ -654,8 +786,7 @@ def _make_checked_routine_target(tmp_path):
                 "functions": {
                     "FUN_24dd_3f86": {
                         "declaration": (
-                            "procedure FUN_24dd_3f86("
-                            "param_1, param_2: Longint);"
+                            "procedure FUN_24dd_3f86(param_1, param_2: Longint);"
                         ),
                         "oracle": "liero-compare-routine-probe",
                         "arguments": [
@@ -688,19 +819,13 @@ def _make_checked_routine_target(tmp_path):
     )
     sibling = target / "src" / "LieroRuntime.pas"
     sibling.write_text("unit LieroRuntime; { shared declarations }\n")
-    (target / "src" / "_forward.inc").write_text(
-        "procedure SharedRoutine; forward;\n"
-    )
+    (target / "src" / "_forward.inc").write_text("procedure SharedRoutine; forward;\n")
     return target, candidate, sibling
 
 
 def _write_fake_generation_capture(kwargs, function_name, generated_candidate):
     workspace_candidate = (
-        kwargs["cwd"]
-        / "targets"
-        / "liero"
-        / "src"
-        / f"{function_name}.inc"
+        kwargs["cwd"] / "targets" / "liero" / "src" / f"{function_name}.inc"
     )
     previous_candidate = (
         workspace_candidate.read_text() if workspace_candidate.is_file() else ""
@@ -740,7 +865,9 @@ def test_function_oracle_mismatch_is_retried_and_scoped_pass_is_not_promotion(
     monkeypatch.setattr(
         improve_loop,
         "_verify",
-        lambda *args, **kwargs: pytest.fail("the unrelated final oracle must be skipped"),
+        lambda *args, **kwargs: pytest.fail(
+            "the unrelated final oracle must be skipped"
+        ),
     )
     monkeypatch.setattr(
         improve_loop.knowledge,
@@ -765,9 +892,7 @@ def test_function_oracle_mismatch_is_retried_and_scoped_pass_is_not_promotion(
             kwargs["cwd"] / "targets" / "liero" / "src" / candidate.name
         )
         generated_candidate = generated_candidates[len(drafted) - 1]
-        _write_fake_generation_capture(
-            kwargs, "FUN_24dd_3f86", generated_candidate
-        )
+        _write_fake_generation_capture(kwargs, "FUN_24dd_3f86", generated_candidate)
         candidate_in_workspace.write_text(generated_candidate)
         return 0
 
@@ -855,9 +980,7 @@ def test_function_oracle_mismatch_is_retried_and_scoped_pass_is_not_promotion(
     assert "CompareStrings" in prompt_capture
 
 
-def test_repeated_candidate_hash_stops_bounded_repair(
-    tmp_path, monkeypatch
-):
+def test_repeated_candidate_hash_stops_bounded_repair(tmp_path, monkeypatch):
     target_root, candidate, sibling = _make_checked_routine_target(tmp_path)
     improve_loop.recovery.initialize_ledger(target_root)
     original_candidate = candidate.read_bytes()
@@ -878,9 +1001,7 @@ def test_repeated_candidate_hash_stops_bounded_repair(
         candidate_in_workspace = (
             kwargs["cwd"] / "targets" / "liero" / "src" / candidate.name
         )
-        _write_fake_generation_capture(
-            kwargs, "FUN_24dd_3f86", generated_candidate
-        )
+        _write_fake_generation_capture(kwargs, "FUN_24dd_3f86", generated_candidate)
         candidate_in_workspace.write_text(generated_candidate)
         return 0
 
@@ -929,9 +1050,10 @@ def test_repeated_candidate_hash_stops_bounded_repair(
         "candidate-oracle-rejected",
         "candidate-duplicate",
     ]
-    assert attempts[1]["evidence"]["candidate_sha256"] == hashlib.sha256(
-        generated_candidate.encode()
-    ).hexdigest()
+    assert (
+        attempts[1]["evidence"]["candidate_sha256"]
+        == hashlib.sha256(generated_candidate.encode()).hexdigest()
+    )
     assert attempts[1]["evidence"]["duplicate_of_attempt"] == 1
     resumed_summary = improve_loop.improve(
         "liero",
@@ -969,9 +1091,7 @@ def test_function_oracle_skip_error_or_missing_report_blocks_candidate(
             "procedure FUN_24dd_3f86(param_1, param_2: Longint);\n"
             "begin\n  CompareStrings;\nend;\n"
         )
-        _write_fake_generation_capture(
-            kwargs, "FUN_24dd_3f86", generated_candidate
-        )
+        _write_fake_generation_capture(kwargs, "FUN_24dd_3f86", generated_candidate)
         candidate_in_workspace.write_text(generated_candidate)
         return 0
 

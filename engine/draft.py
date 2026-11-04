@@ -875,40 +875,27 @@ def _build_pascal_prompt(root, target, fn, asm_text, seed_c, ref_source, decl, a
             sib_txt = ("Called routines are forward-declared with EXACTLY these "
                        "signatures — match arity and argument types when calling:\n"
                        + rows + "\n")
-    contract = routine_contract.load_contract(root, fn)
+    contracts = routine_contract.load_contracts(root / "config" / "routine_contracts.json")
+    contract = contracts.get(fn)
     contract_prompt = ""
     if contract is not None:
-        contract_details = [f"Checked declaration: {contract['declaration']}"]
-        if contract.get("arguments"):
-            contract_details.append(
-                "Arguments:\n"
-                + "\n".join(
-                    f"- {argument['name']} ({argument['role']}): "
-                    f"{argument['representation']}"
-                    for argument in contract["arguments"]
-                )
-            )
-        if contract.get("memory_model"):
-            contract_details.append(f"Memory model: {contract['memory_model']}")
-        if contract.get("observed_outputs"):
-            contract_details.append(
-                "Observed outputs: " + ", ".join(contract["observed_outputs"])
-            )
-        if contract.get("instruction_semantics"):
-            contract_details.append(
-                "Instruction-level semantics:\n"
-                + contract["instruction_semantics"]
-            )
-        if contract.get("fixture_flag_table"):
-            contract_details.append(
-                "Original trace flag table:\n" + contract["fixture_flag_table"]
-            )
         contract_prompt = (
             "CHECKED ROUTINE CONTRACT (overrides generic pointer guidance):\n"
-            + "\n".join(contract_details)
-            + "\n"
-            f"{contract['prompt']}\n\n"
+            + routine_contract.prompt_context(contract)
+            + "\n\n"
         )
+        if contract.get("callee_contracts"):
+            contract_prompt += (
+                "SCOPED CALLEE CONTRACTS (one hop; not dependency resolution or "
+                "permission to execute). Every premise and limitation still applies; "
+                "a conditional contract is not a recovered callee:\n"
+                + "\n\n".join(
+                    f"{callee} [{contracts[callee]['oracle']}]\n"
+                    + routine_contract.prompt_context(contracts[callee])
+                    for callee in contract["callee_contracts"]
+                )
+                + "\n\n"
+            )
     type_guidance = (
         "- It must compile standalone under {$MODE TP} with no undeclared "
         "identifiers. Use only standard TP7 types (Byte, Word, Integer, "

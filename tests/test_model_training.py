@@ -12,6 +12,32 @@ import model_training
 import knowledge
 
 
+def test_synthetic_residual_prompt_requires_provenance():
+    """Oracle: labeled synthetic supervision never becomes original-source gold."""
+    example = {
+        "task": "synthetic_residual",
+        "prompt": "compiler instructions",
+        "trust_status": "compiler-backed-synthetic",
+    }
+    assert model_training.format_training_prompt(example) == "compiler instructions"
+    example["trust_status"] = "verified"
+    with pytest.raises(ValueError, match="provenance"):
+        model_training.format_training_prompt(example)
+
+
+def test_experimental_development_split_must_be_nonempty(tmp_path):
+    """Oracle: data gate runs before dependencies or model loading."""
+    with pytest.raises(ValueError, match="split"):
+        model_training.train_adapter(
+            [{"target": "train"}],
+            tmp_path,
+            "synthetic",
+            development_target="dev",
+            quantized=True,
+            experimental=True,
+        )
+
+
 def _pair(target, fn, asm=None, pascal=None, **overrides):
     pair = {
         "example_id": f"{target}:{fn}",
@@ -52,6 +78,121 @@ def test_eligible_training_pairs_require_verified_pascal_and_deduplicate():
     assert [example["target"] for example in eligible] == ["game-a", "game-b"]
 
 
+def test_readiness_does_not_count_noisy_c_as_verified_pascal(tmp_path):
+    """Oracle: actual corpus selectors; no export, model load, or training side effects."""
+    data = knowledge._empty()
+    data["examples"]["turbo-pascal-7"] = [
+        {
+            "target": target,
+            "fn": "FUN_LEGACY",
+            "asm_head": f"0000:{index:04x} MOV AX, 1\n0000:0003 RET",
+            "c": "void FUN_LEGACY(void) {\n int value = 1;\n value += 2;\n return;\n}\n",
+        }
+        for index, target in enumerate(("game-a", "game-b"))
+    ]
+    report = model_training.training_readiness(
+        data, "turbo-pascal-7", targets_root=tmp_path, threshold=2
+    )
+    assert report["selected_pairs"] == 2
+    assert report["legacy_unverified_c_pairs"] == 2
+    assert report["marked_verified_pascal_pairs"] == 0
+    assert report["pascal_corpus_status"] == "blocked"
+    assert report["pascal_corpus_blockers"] == [
+        "0/2 new unique marked-verified Pascal pairs",
+        "0/2 projects with marked-verified Pascal pairs",
+    ]
+    assert report["behavioral_improvement_established"] is False
+    assert report["source_review_revalidated"] is False
+    assert report["current_activation_gate"] == "held-out-target token loss only"
+    assert report["changes_weights"] is False
+    assert not list(tmp_path.iterdir())
+
+
+def test_readiness_counts_unique_unattempted_pascal_and_project_split(tmp_path):
+    """Oracle: deduplication and attempt identities, not repeated use of one example."""
+    first = _pair("game-a", "FUN_A")
+    second = _pair("game-b", "FUN_B")
+    data = knowledge._empty()
+    data["verified_pascal_examples"]["turbo-pascal-7"] = [first, first, second]
+    attempted = [model_training.pair_fingerprint(first)]
+    report = model_training.training_readiness(
+        data,
+        "turbo-pascal-7",
+        targets_root=tmp_path,
+        attempted_fingerprints=attempted,
+        threshold=2,
+    )
+    assert report["marked_verified_pascal_pairs"] == 2
+    assert report["new_marked_verified_pascal_pairs"] == 1
+    assert report["marked_verified_pascal_projects"] == ["game-a", "game-b"]
+    assert report["pascal_corpus_blockers"] == [
+        "1/2 new unique marked-verified Pascal pairs"
+    ]
+    report = model_training.training_readiness(
+        data,
+        "turbo-pascal-7",
+        targets_root=tmp_path,
+        threshold=2,
+    )
+    assert report["pascal_corpus_status"] == "candidate-corpus-only"
+    assert report["pascal_corpus_blockers"] == []
+    assert report["behavioral_improvement_established"] is False
+    assert report["source_review_revalidated"] is False
+    assert len(report["required_before_weight_promotion"]) == 4
+    with pytest.raises(ValueError, match="positive"):
+        model_training.training_readiness(data, "turbo-pascal-7", threshold=0)
+
+
+def test_readiness_cli_is_read_only_without_local_model(tmp_path, monkeypatch, capsys):
+    """Oracle: readiness must work before ML dependencies/model/second project exist."""
+    monkeypatch.chdir(tmp_path)
+    _configure_target(tmp_path)
+    store = tmp_path / "knowledge.json"
+    knowledge.save(knowledge._empty(), store)
+    before = store.read_bytes()
+    monkeypatch.setattr(
+        model_training,
+        "train_adapter",
+        lambda *args, **kwargs: pytest.fail("readiness must never train"),
+    )
+    state = tmp_path / "state.json"
+    assert (
+        model_training.main(
+            [
+                "--target",
+                "sample",
+                "--readiness",
+                "--store",
+                str(store),
+                "--state",
+                str(state),
+                "--threshold",
+                "64",
+            ]
+        )
+        == 0
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["target"] == "sample"
+    assert report["language"] == "pascal"
+    assert report["marked_verified_pascal_pairs"] == 0
+    assert store.read_bytes() == before
+    assert not state.exists()
+    assert not (tmp_path / ".lsr").exists()
+
+
+def test_readiness_rejects_non_pascal_target(tmp_path, monkeypatch, capsys):
+    """Oracle: a Pascal readiness report cannot qualify a target the trainer would skip."""
+    monkeypatch.chdir(tmp_path)
+    _configure_target(tmp_path)
+    config = tmp_path / "targets/sample/config/toolchain.yaml"
+    config.write_text(config.read_text().replace("language: pascal", "language: c"))
+    with pytest.raises(SystemExit) as exc:
+        model_training.main(["--target", "sample", "--readiness"])
+    assert exc.value.code == 2
+    assert "not configured as Pascal" in capsys.readouterr().err
+
+
 def test_legacy_assembly_examples_are_separate_and_labeled(tmp_path):
     for target in ("game-a", "game-b"):
         config = tmp_path / target / "config"
@@ -68,15 +209,11 @@ def test_legacy_assembly_examples_are_separate_and_labeled(tmp_path):
             "0000:0013  RET\n"
         )
         (decomp_dir / "FUN_0010.c").write_text(
-            "void FUN_0010(void)\n{\n  int value = 1;\n"
-            "  value += 2;\n  return;\n}\n"
+            "void FUN_0010(void)\n{\n  int value = 1;\n  value += 2;\n  return;\n}\n"
         )
-        (asm_dir / "FUN_0020.s").write_text(
-            "0000:0020  MOV BX, 2\n0000:0023  RET\n"
-        )
+        (asm_dir / "FUN_0020.s").write_text("0000:0020  MOV BX, 2\n0000:0023  RET\n")
         (decomp_dir / "FUN_0020.c").write_text(
-            "void FUN_0020(void)\n{\n  int value = 2;\n"
-            "  value += 3;\n  return;\n}\n"
+            "void FUN_0020(void)\n{\n  int value = 2;\n  value += 3;\n  return;\n}\n"
         )
 
     data = knowledge._empty()
@@ -95,7 +232,7 @@ def test_legacy_assembly_examples_are_separate_and_labeled(tmp_path):
             "fn": "LIERO.DAT",
             "asm_head": "format data",
             "c": "/* format-only record */",
-        }
+        },
     ]
 
     examples = model_training.legacy_assembly_examples(
@@ -105,9 +242,10 @@ def test_legacy_assembly_examples_are_separate_and_labeled(tmp_path):
     assert {example["target"] for example in examples} == {"game-a", "game-b"}
     assert all(example["task"] == "assembly_to_c" for example in examples)
     assert all(example["trust_status"] == "legacy-unverified" for example in examples)
-    assert next(item for item in examples if item["target"] == "game-a")[
-        "source_type"
-    ] == "legacy-knowledge+ghidra-decompiler"
+    assert (
+        next(item for item in examples if item["target"] == "game-a")["source_type"]
+        == "legacy-knowledge+ghidra-decompiler"
+    )
     assert next(item for item in examples if item["target"] == "game-a")["fn"] == (
         "FUN_0010"
     )
@@ -138,8 +276,11 @@ def test_training_corpus_combines_verified_pascal_and_legacy_c(tmp_path):
 
 
 def test_target_split_keeps_projects_disjoint():
-    examples = [_pair("game-a", "FUN_A"), _pair("game-a", "FUN_B"),
-                _pair("game-b", "FUN_C")]
+    examples = [
+        _pair("game-a", "FUN_A"),
+        _pair("game-a", "FUN_B"),
+        _pair("game-b", "FUN_C"),
+    ]
 
     training, validation, held_out = model_training.split_by_target(examples)
 
@@ -195,8 +336,12 @@ def test_auto_training_respects_new_pair_threshold(tmp_path, monkeypatch, capsys
 
     monkeypatch.setattr(model_training, "train_adapter", unexpected_training)
     result = model_training.train_for_target(
-        "sample", str(model_path), 64, automatic=True,
-        store_path=store, state_path=tmp_path / "state.json",
+        "sample",
+        str(model_path),
+        64,
+        automatic=True,
+        store_path=store,
+        state_path=tmp_path / "state.json",
         output_root=tmp_path / "adapters",
     )
 
@@ -218,13 +363,18 @@ def test_auto_training_waits_for_second_project(tmp_path, monkeypatch, capsys):
     model_path = tmp_path / "base-model"
     model_path.mkdir()
     monkeypatch.setattr(
-        model_training, "train_adapter",
+        model_training,
+        "train_adapter",
         lambda *args, **kwargs: pytest.fail("training requires two targets"),
     )
 
     result = model_training.train_for_target(
-        "sample", str(model_path), 64, automatic=True,
-        store_path=store, state_path=tmp_path / "state.json",
+        "sample",
+        str(model_path),
+        64,
+        automatic=True,
+        store_path=store,
+        state_path=tmp_path / "state.json",
         output_root=tmp_path / "adapters",
     )
 
@@ -237,8 +387,10 @@ def test_training_requires_two_projects_before_importing_ml_stack(tmp_path):
     base_model.mkdir()
     with pytest.raises(ValueError, match="at least 2 targets"):
         model_training.train_adapter(
-            [_pair("only-project", "FUN_A")], base_model,
-            "turbo-pascal-7", output_root=tmp_path / "adapters",
+            [_pair("only-project", "FUN_A")],
+            base_model,
+            "turbo-pascal-7",
+            output_root=tmp_path / "adapters",
         )
 
 
@@ -248,19 +400,21 @@ def test_active_adapter_requires_local_adapter_and_base_model(tmp_path):
     adapter_path = tmp_path / "adapter"
     model_path.mkdir()
     adapter_path.mkdir()
-    state_path.write_text(json.dumps({
-        "toolchains": {
-            "turbo-pascal-7": {
-                "base_model_path": str(model_path),
-                "adapter_path": str(adapter_path),
-                "trained_tasks": ["assembly_to_pascal"],
+    state_path.write_text(
+        json.dumps(
+            {
+                "toolchains": {
+                    "turbo-pascal-7": {
+                        "base_model_path": str(model_path),
+                        "adapter_path": str(adapter_path),
+                        "trained_tasks": ["assembly_to_pascal"],
+                    }
+                }
             }
-        }
-    }))
+        )
+    )
 
-    assert model_training.active_adapter_for(
-        "turbo-pascal-7", state_path
-    ) == {
+    assert model_training.active_adapter_for("turbo-pascal-7", state_path) == {
         "base_model_path": str(model_path),
         "adapter_path": str(adapter_path),
     }
@@ -273,19 +427,21 @@ def test_legacy_only_adapter_is_not_activated_for_pascal(tmp_path):
     adapter_path = tmp_path / "adapter"
     model_path.mkdir()
     adapter_path.mkdir()
-    state_path.write_text(json.dumps({
-        "toolchains": {
-            "turbo-pascal-7": {
-                "base_model_path": str(model_path),
-                "adapter_path": str(adapter_path),
-                "trained_tasks": ["assembly_to_c"],
+    state_path.write_text(
+        json.dumps(
+            {
+                "toolchains": {
+                    "turbo-pascal-7": {
+                        "base_model_path": str(model_path),
+                        "adapter_path": str(adapter_path),
+                        "trained_tasks": ["assembly_to_c"],
+                    }
+                }
             }
-        }
-    }))
+        )
+    )
 
-    assert model_training.active_adapter_for(
-        "turbo-pascal-7", state_path
-    ) is None
+    assert model_training.active_adapter_for("turbo-pascal-7", state_path) is None
     assert model_training.active_adapter_for(
         "turbo-pascal-7", state_path, task="assembly_to_c"
     ) == {

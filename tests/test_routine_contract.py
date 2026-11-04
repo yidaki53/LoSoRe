@@ -9,13 +9,191 @@ ROOT = Path(__file__).resolve().parents[1]
 ROUTINE = "FUN_24dd_3f86"
 
 
+@pytest.mark.parametrize(
+    "declaration",
+    [
+        "procedure Draw(base: Longint; color: Char; row, column: Integer);",
+        "function Sign(unused: Word; value: Integer): Word;",
+        "procedure Draw;",
+    ],
+)
+def test_declaration_accepts_separate_parameter_groups(declaration):
+    name = "Sign" if declaration.startswith("function") else "Draw"
+    assert routine_contract.pascal_declaration(declaration, name) == declaration
+
+
+@pytest.mark.parametrize(
+    "declaration",
+    [
+        "procedure DrawOther(base: Longint; color: Char);",
+        "procedure Draw(base: Longint; color: Char); forward;",
+        "procedure Draw(base: Longint; color: Char); begin end;",
+        "procedure Draw(base: Longint; color: Char;",
+    ],
+)
+def test_parameter_groups_do_not_allow_another_declaration_or_body(declaration):
+    assert routine_contract.pascal_declaration(declaration, "Draw") is None
+
+
+def test_scoped_draw_contract_reaches_the_engine_prompt():
+    target_root = ROOT / "targets/liero"
+    routine = "FUN_1ec2_0dc8"
+    contract = routine_contract.load_contract(target_root, routine)
+    declaration = draft._decl_for(target_root, routine)
+    assert declaration == contract["declaration"]
+    prompt = draft._build_pascal_prompt(
+        target_root, "liero", routine, "", "", "Ghidra", declaration, set()
+    )
+    assert "RealModeMemory is already available through LieroRuntime" in prompt
+    assert "NOT a host pointer or packed far pointer" in prompt
+    assert "offset+50397<=65535" in prompt
+    assert "same-value stack write" in prompt
+    assert "not full routine acceptance" in prompt
+
+
+def test_caller_prompt_inherits_scoped_callee_contracts_without_decompiler():
+    """Oracle: explicit reviewed relations, not inferred calls or whole-routine acceptance."""
+    target_root = ROOT / "targets/liero"
+    routine = "FUN_1ec2_0895"
+    declaration = draft._decl_for(target_root, routine)
+    prompt = draft._build_pascal_prompt(
+        target_root, "liero", routine, "", "", "Ghidra", declaration, set()
+    )
+    assert "SCOPED CALLEE CONTRACTS" in prompt
+    assert "not dependency resolution or permission to execute" in prompt
+    assert "FUN_24dd_4654 [scoped-original-random-scale]" in prompt
+    assert "FUN_1ec2_0dc8 [scoped-original-draw-memory]" in prompt
+    assert "unsigned high-product scaling is not modulo bound" in prompt
+    assert "offset+50397<=65535" in prompt
+    assert "DS:6684" in prompt
+    assert "14978" in prompt
+    assert "FUN_24dd_028a" in prompt
+    assert "caller DS continuity" in prompt
+
+
+def test_allocator_caller_inherits_conditional_deduction_not_acceptance():
+    """Oracle: scoped facts reach the real caller without resolving entry/ABI obligations."""
+    target = ROOT / "targets/liero"
+    prompt = draft._build_pascal_prompt(
+        target,
+        "liero",
+        "FUN_24dd_028a",
+        "",
+        "",
+        "Ghidra",
+        "procedure FUN_24dd_028a;",
+        set(),
+    )
+    assert "Deductive empty-list composition" in prompt
+    assert "computed DX retained" in prompt
+    assert "not AI discovery" in prompt
+    assert "010f failure transfer" in prompt
+    assert "not dependency resolution" in prompt
+
+
+@pytest.mark.parametrize("value", ["", [], 1])
+def test_scoped_instruction_semantics_rejects_nontext(tmp_path, value):
+    """Oracle: malformed scoped constraints are errors, never omitted evidence."""
+    path = tmp_path / "contracts.json"
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "functions": {
+                    "Leaf": {
+                        "declaration": "procedure Leaf;",
+                        "oracle": "scoped",
+                        "prompt": "Conditional only.",
+                        "scoped_instruction_semantics": value,
+                    }
+                },
+            }
+        )
+    )
+    with pytest.raises(routine_contract.RoutineContractError):
+        routine_contract.load_contracts(path)
+
+
+def test_callee_contract_changes_are_not_cached_or_treated_as_source_acceptance(
+    tmp_path,
+):
+    """Oracle: a changed callee premise reaches the next prompt; no recursive expansion."""
+    config = tmp_path / "config"
+    config.mkdir()
+    path = config / "routine_contracts.json"
+    contracts = {
+        "Caller": {
+            "declaration": "procedure Caller;",
+            "oracle": "static-conditional",
+            "prompt": "Caller remains blocked.",
+            "callee_contracts": ["Leaf"],
+        },
+        "Leaf": {
+            "declaration": "procedure Leaf;",
+            "oracle": "scoped-memory",
+            "instruction_semantics": "Version one.",
+            "prompt": "Only under disjoint bounds.",
+            "callee_contracts": ["Caller"],
+        },
+    }
+
+    def render():
+        return draft._build_pascal_prompt(
+            tmp_path, "sample", "Caller", "", "", "Ghidra", "procedure Caller;", set()
+        )
+
+    path.write_text(json.dumps({"schema_version": 1, "functions": contracts}))
+    first = render()
+    assert "Version one." in first
+    assert "Only under disjoint bounds." in first
+    assert first.count("Leaf [scoped-memory]") == 1
+    assert "Caller [static-conditional]" not in first
+    contracts["Leaf"]["instruction_semantics"] = "Version two; old premise invalid."
+    path.write_text(json.dumps({"schema_version": 1, "functions": contracts}))
+    second = render()
+    assert "Version one." not in second
+    assert "Version two; old premise invalid." in second
+    assert contracts["Caller"]["prompt"] in second
+
+
+@pytest.mark.parametrize(
+    "references",
+    ["Leaf", [""], [1], ["Missing"], ["Caller"], ["Leaf", "Leaf"]],
+)
+def test_callee_contract_relations_reject_invalid_or_missing_entries(
+    tmp_path, references
+):
+    """Oracle: explicit contract references must be unique, named and present."""
+    path = tmp_path / "contracts.json"
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "functions": {
+                    "Caller": {
+                        "declaration": "procedure Caller;",
+                        "oracle": "static",
+                        "prompt": "Blocked caller.",
+                        "callee_contracts": references,
+                    },
+                    "Leaf": {
+                        "declaration": "procedure Leaf;",
+                        "oracle": "scoped",
+                        "prompt": "Scoped leaf.",
+                    },
+                },
+            }
+        )
+    )
+    with pytest.raises(routine_contract.RoutineContractError, match="callee contract"):
+        routine_contract.load_contracts(path)
+
+
 def test_checked_liero_contract_overrides_decompiler_pointer_guess():
     target_root = ROOT / "targets" / "liero"
     declaration = routine_contract.load_contract(target_root, ROUTINE)["declaration"]
 
-    assert declaration == (
-        "procedure FUN_24dd_3f86(param_1, param_2: Longint);"
-    )
+    assert declaration == ("procedure FUN_24dd_3f86(param_1, param_2: Longint);")
     assert draft._decl_for(target_root, ROUTINE) == declaration
     candidate = draft._force_decl(
         "procedure FUN_24dd_3f86(param_1, param_2: Pointer);\n"
@@ -190,9 +368,7 @@ def _make_localized_draft_target(tmp_path):
     target_root = tmp_path / "targets" / "liero"
     for directory in ("asm", "src", "config"):
         (target_root / directory).mkdir(parents=True, exist_ok=True)
-    (target_root / "asm" / f"{ROUTINE}.s").write_text(
-        "24DD:3F9A  CMP CL,AH\n"
-    )
+    (target_root / "asm" / f"{ROUTINE}.s").write_text("24DD:3F9A  CMP CL,AH\n")
     (target_root / "config" / "routine_contracts.json").write_text(
         json.dumps(
             {
@@ -206,9 +382,7 @@ def _make_localized_draft_target(tmp_path):
                         "prompt": "Use the checked comparison semantics.",
                         "localized_repair_region": {
                             "start": "if srcLen <= destLen then",
-                            "end": (
-                                "RegisterCarryFlag := (srcLen < destLen);"
-                            ),
+                            "end": ("RegisterCarryFlag := (srcLen < destLen);"),
                         },
                     }
                 },
@@ -287,9 +461,7 @@ def test_localized_draft_applies_patch_without_changing_surrounding_source(
     assert result == 0
     assert patched.startswith(original_prefix)
     assert patched.endswith(original_suffix)
-    metadata = json.loads(
-        (capture_dir / ROUTINE / "capture.json").read_text()
-    )
+    metadata = json.loads((capture_dir / ROUTINE / "capture.json").read_text())
     assert metadata["repair_mode"] == "localized-region"
     assert metadata["sanitizer_accepted"] is True
 
@@ -303,9 +475,7 @@ def test_localized_draft_rejects_full_routine_and_preserves_candidate(
     monkeypatch.setattr(
         draft,
         "run_llm",
-        lambda *args, **kwargs: (
-            "procedure FUN_24dd_3f86;\nbegin\n  Compare;\nend;"
-        ),
+        lambda *args, **kwargs: "procedure FUN_24dd_3f86;\nbegin\n  Compare;\nend;",
     )
     capture_dir = tmp_path / "captures"
 
@@ -323,9 +493,7 @@ def test_localized_draft_rejects_full_routine_and_preserves_candidate(
 
     assert result == 2
     assert candidate.read_bytes() == original
-    metadata = json.loads(
-        (capture_dir / ROUTINE / "capture.json").read_text()
-    )
+    metadata = json.loads((capture_dir / ROUTINE / "capture.json").read_text())
     assert metadata["sanitizer_accepted"] is False
     assert metadata["rejection_reason"] == "routine-declaration-in-region"
 
@@ -384,14 +552,14 @@ def test_function_only_draft_preserves_shared_target_files(tmp_path, monkeypatch
     monkeypatch.setattr(
         draft,
         "run_llm",
-        lambda *args, **kwargs: (
-            "procedure FUN_0001;\nbegin\n  Value := 1;\nend;"
-        ),
+        lambda *args, **kwargs: "procedure FUN_0001;\nbegin\n  Value := 1;\nend;",
     )
     monkeypatch.setattr(
         draft,
         "_write_program",
-        lambda *args, **kwargs: pytest.fail("function-only draft rewrote shared program"),
+        lambda *args, **kwargs: pytest.fail(
+            "function-only draft rewrote shared program"
+        ),
     )
 
     result = draft.draft(

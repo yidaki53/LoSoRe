@@ -14,6 +14,7 @@ training = [
     "transformers>=4.46,<5",
     "peft>=0.15,<1",
     "accelerate>=1.0",
+    "bitsandbytes>=0.45",
 ]
 experiments = [
     "mlflow>=3.17.2",

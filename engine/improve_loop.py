@@ -12,7 +12,7 @@ import subprocess
 import sys
 import tempfile
 from collections import Counter
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager, nullcontext
 from typing import Any
 
@@ -37,13 +37,126 @@ DEFAULT_LOCAL_ENDPOINT = "http://localhost:11434"
 FUNCTION_ORACLES = {"byte-exact", "relocation-aware"}
 
 
-def _run(
-    cmd: list[str], cwd: pathlib.Path | None = None
-) -> tuple[int, str, str]:
+def run_puzzle_passes(
+    frontier: Callable[[], dict[str, dict]],
+    check: Callable[[str], dict],
+    *,
+    max_passes: int,
+    milestone: int | None = None,
+) -> dict:
+    """Oracle: bounded scheduling of externally validated scoped pieces, not source acceptance.
+
+    The frontier adapter must revalidate evidence and invalidate checked entries
+    after premise changes. The check adapter owns fixed candidate budgets and
+    oracle validation. This helper never upgrades a compiled body or hypothesis.
+    """
+    if type(max_passes) is not int or max_passes < 1:
+        raise ValueError("puzzle pass budget must be a positive integer")
+    if milestone is not None and (type(milestone) is not int or milestone < 1):
+        raise ValueError("puzzle milestone must be a positive integer")
+    attempted: set[tuple[str, str]] = set()
+    measurements = []
+    passes = 0
+    saturated = False
+    stop_reason = "pass-budget-exhausted"
+    while passes < max_passes:
+        pieces = frontier()
+        for name, piece in pieces.items():
+            if (
+                not isinstance(name, str)
+                or not isinstance(piece.get("premise_sha256"), str)
+                or not piece["premise_sha256"]
+                or type(piece.get("checked")) is not bool
+                or not isinstance(piece.get("blockers"), list)
+                or any(not isinstance(reason, str) for reason in piece["blockers"])
+                or piece.get("blocker_kind", "dependency")
+                not in {"dependency", "environment", "method", "budget"}
+            ):
+                raise ValueError(
+                    "puzzle frontier requires current premises and explicit blockers"
+                )
+        checked = sum(piece["checked"] for piece in pieces.values())
+        if milestone is not None and checked >= milestone:
+            stop_reason = "milestone-reached"
+            break
+        remaining = {
+            name: piece for name, piece in pieces.items() if not piece["checked"]
+        }
+        if not remaining:
+            stop_reason = "frontier-settled" if pieces else "no-frontier"
+            break
+        ready = [
+            (name, piece["premise_sha256"])
+            for name, piece in sorted(remaining.items())
+            if not piece["blockers"]
+            and (name, piece["premise_sha256"]) not in attempted
+        ]
+        if not ready:
+            kinds = {
+                piece.get("blocker_kind", "dependency")
+                for piece in remaining.values()
+                if piece["blockers"]
+            }
+            if "environment" in kinds:
+                stop_reason = "environment-blocked"
+            elif "budget" in kinds:
+                stop_reason = "candidate-budget-exhausted"
+            elif "method" in kinds:
+                stop_reason = "method-blocked"
+            else:
+                stop_reason = "evidence-relative-saturation"
+                saturated = True
+            break
+        passes += 1
+        for name, premise in ready:
+            # A preceding check may invalidate another piece's eligibility.
+            current = frontier().get(name)
+            if (
+                current is None
+                or current["checked"]
+                or current["blockers"]
+                or current["premise_sha256"] != premise
+            ):
+                continue
+            attempted.add((name, premise))
+            result = check(name)
+            if result.get("status") == "passed" and (
+                result.get("oracle") in {None, "", "none"}
+                or not result.get("reference")
+            ):
+                raise ValueError(
+                    "puzzle pass requires a checked oracle and evidence reference"
+                )
+            measurements.append(
+                {"piece": name, "premise_sha256": premise, "result": result}
+            )
+    final = frontier()
+    leftovers = [
+        {
+            "piece": name,
+            "premise_sha256": piece["premise_sha256"],
+            "blockers": piece["blockers"]
+            or ["no new checked result under current premises"],
+            "reopen_when": "new checked premise or discriminating experiment",
+        }
+        for name, piece in sorted(final.items())
+        if not piece["checked"]
+    ]
+    return {
+        "passes": passes,
+        "checked_passes": sum(piece["checked"] for piece in final.values()),
+        "measurements": measurements,
+        "leftovers": leftovers,
+        "saturated": saturated,
+        "saturation_scope": "declared frontier under current evidence and method",
+        "stop_reason": stop_reason,
+        "source_recovered": False,
+    }
+
+
+def _run(cmd: list[str], cwd: pathlib.Path | None = None) -> tuple[int, str, str]:
     """Run a command; return (returncode, stdout, stderr)."""
-    result = subprocess.run(
-        cmd, check=False, capture_output=True, text=True, cwd=cwd
-    )
+    result = subprocess.run(cmd, check=False, capture_output=True, text=True, cwd=cwd)
     return result.returncode, result.stdout, result.stderr
 
 
@@ -83,11 +196,7 @@ def _draft(
         command.extend(["--capture-dir", str(capture_dir)])
     command.extend(["--temperature", str(temperature)])
     model = model or os.environ.get("LSR_LLM_MODEL") or DEFAULT_LOCAL_MODEL
-    endpoint = (
-        endpoint
-        or os.environ.get("LSR_LLM_ENDPOINT")
-        or DEFAULT_LOCAL_ENDPOINT
-    )
+    endpoint = endpoint or os.environ.get("LSR_LLM_ENDPOINT") or DEFAULT_LOCAL_ENDPOINT
     if model:
         command.extend(["--model", model])
     if endpoint:
@@ -102,8 +211,7 @@ def _draft(
         returncode = returncode or 3
     if returncode:
         print(
-            f"[improve:{target}] draft failed for {fn or 'target'} "
-            f"(exit {returncode})"
+            f"[improve:{target}] draft failed for {fn or 'target'} (exit {returncode})"
         )
     return returncode
 
@@ -164,10 +272,7 @@ def _persist_candidate(
 ) -> tuple[str, str]:
     function_key = hashlib.sha256(function_name.encode()).hexdigest()
     destination = (
-        run.path.parent
-        / f"{run.run_id}.candidates"
-        / function_key
-        / f"{attempt}.inc"
+        run.path.parent / f"{run.run_id}.candidates" / function_key / f"{attempt}.inc"
     )
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_bytes(contents)
@@ -183,9 +288,7 @@ def _duplicate_candidate_attempt(
 ) -> int | None:
     if candidate_hash is None:
         return None
-    attempts = (
-        run.data.get("routines", {}).get(function_name, {}).get("attempts", [])
-    )
+    attempts = run.data.get("routines", {}).get(function_name, {}).get("attempts", [])
     for previous in attempts:
         if (
             previous.get("attempt") != current_attempt
@@ -209,9 +312,7 @@ def _generation_evidence(
     metadata_path = capture_root / "capture.json"
     evidence: dict[str, Any] = {
         "status": "missing",
-        "capture_path": capture_root.resolve().relative_to(
-            root.resolve()
-        ).as_posix(),
+        "capture_path": capture_root.resolve().relative_to(root.resolve()).as_posix(),
         "model": model,
         "temperature": temperature,
         "previous_candidate_sha256": (
@@ -251,12 +352,8 @@ def _generation_evidence(
     return evidence
 
 
-def _previous_candidate(
-    run: run_state.RecoveryRun, function_name: str
-) -> bytes | None:
-    attempts = (
-        run.data.get("routines", {}).get(function_name, {}).get("attempts", [])
-    )
+def _previous_candidate(run: run_state.RecoveryRun, function_name: str) -> bytes | None:
+    attempts = run.data.get("routines", {}).get(function_name, {}).get("attempts", [])
     if not attempts:
         return None
     evidence = attempts[-1].get("evidence", {})
@@ -268,7 +365,9 @@ def _previous_candidate(
     try:
         candidate.resolve().relative_to(run.target_root.resolve())
     except ValueError as exc:
-        raise ValueError(f"{function_name}: persisted candidate path escapes target") from exc
+        raise ValueError(
+            f"{function_name}: persisted candidate path escapes target"
+        ) from exc
     if not candidate.is_file():
         return None
     contents = candidate.read_bytes()
@@ -299,7 +398,9 @@ def _verify(
         ]
     )
     if returncode:
-        print(f"[improve:{target}] {oracle} oracle returned {returncode}: {stderr.strip()}")
+        print(
+            f"[improve:{target}] {oracle} oracle returned {returncode}: {stderr.strip()}"
+        )
     return returncode
 
 
@@ -316,10 +417,7 @@ def _verified_functions(
 ) -> set[str]:
     """Return verified paths that correspond to known assembly functions."""
     entries = (
-        data.get("targets", {})
-        .get(target, {})
-        .get("verified", {})
-        .get(oracle, [])
+        data.get("targets", {}).get(target, {}).get("verified", {}).get(oracle, [])
     )
     return {
         pathlib.Path(entry).stem
@@ -328,7 +426,9 @@ def _verified_functions(
     }
 
 
-def _binary_verified_functions(data: dict, target: str, function_names: set[str]) -> set[str]:
+def _binary_verified_functions(
+    data: dict, target: str, function_names: set[str]
+) -> set[str]:
     """Exclude format and trace checks from function-level binary verification."""
     verified = data.get("targets", {}).get(target, {}).get("verified", {})
     return set().union(
@@ -394,9 +494,7 @@ def _source_recovered_functions(root: pathlib.Path) -> set[str]:
         return set()
     report = recovery.audit_target(root)
     return {
-        routine["name"]
-        for routine in report["routines"]
-        if routine["source_recovered"]
+        routine["name"] for routine in report["routines"] if routine["source_recovered"]
     }
 
 
@@ -516,9 +614,9 @@ def _has_dependency_blocked_candidates(
     max_attempts_per_function: int,
 ) -> bool:
     """Distinguish unresolved prerequisites from ordinary attempt exhaustion."""
-    return bool(_dependency_blockers(
-        root, function_names, attempted, max_attempts_per_function
-    ))
+    return bool(
+        _dependency_blockers(root, function_names, attempted, max_attempts_per_function)
+    )
 
 
 def _dependency_blockers(
@@ -618,9 +716,9 @@ def _run_inputs(root: pathlib.Path, byod: pathlib.Path) -> list[pathlib.Path]:
     return inputs
 
 
-def _resume_attempt_history(run: run_state.RecoveryRun) -> tuple[
-    Counter[str], set[str], dict[str, str]
-]:
+def _resume_attempt_history(
+    run: run_state.RecoveryRun,
+) -> tuple[Counter[str], set[str], dict[str, str]]:
     attempted: Counter[str] = Counter()
     failed = set()
     repair_notes = {}
@@ -633,9 +731,7 @@ def _resume_attempt_history(run: run_state.RecoveryRun) -> tuple[
             continue
         latest = attempts[-1]
         if latest.get("status") == "started":
-            raise ValueError(
-                f"{function_name}: interrupted attempt was not restored"
-            )
+            raise ValueError(f"{function_name}: interrupted attempt was not restored")
         if latest.get("status") in {
             "candidate-rejected",
             "candidate-oracle-rejected",
@@ -740,12 +836,15 @@ def improve(
     additional strict gate; scoped passes do not certify whole-routine
     recovery.
     """
-    if min(
-        max_iterations,
-        saturation_window,
-        functions_per_iteration,
-        max_attempts_per_function,
-    ) < 1:
+    if (
+        min(
+            max_iterations,
+            saturation_window,
+            functions_per_iteration,
+            max_attempts_per_function,
+        )
+        < 1
+    ):
         raise ValueError("iteration and attempt limits must be positive")
     if not 0.0 <= temperature <= 2.0:
         raise ValueError("temperature must be between 0.0 and 2.0")
@@ -766,7 +865,9 @@ def improve(
     if only_functions is not None:
         unknown = only_functions - function_names
         if unknown:
-            raise ValueError(f"unknown assembly routine(s): {', '.join(sorted(unknown))}")
+            raise ValueError(
+                f"unknown assembly routine(s): {', '.join(sorted(unknown))}"
+            )
         function_names &= only_functions
     if function_oracle is not None:
         if function_oracle != "liero-compare-routine-probe":
@@ -775,9 +876,7 @@ def improve(
             raise ValueError(
                 "liero-compare-routine-probe requires only FUN_24dd_3f86 on liero"
             )
-        contract = draft.routine_contract.load_contract(
-            root, "FUN_24dd_3f86"
-        )
+        contract = draft.routine_contract.load_contract(root, "FUN_24dd_3f86")
         if contract is None or contract["oracle"] != function_oracle:
             raise ValueError(
                 "routine oracle does not match the checked routine contract"
@@ -787,9 +886,7 @@ def improve(
     build = build or root / "build"
     effective_model = model or os.environ.get("LSR_LLM_MODEL") or DEFAULT_LOCAL_MODEL
     effective_endpoint = (
-        endpoint
-        or os.environ.get("LSR_LLM_ENDPOINT")
-        or DEFAULT_LOCAL_ENDPOINT
+        endpoint or os.environ.get("LSR_LLM_ENDPOINT") or DEFAULT_LOCAL_ENDPOINT
     )
     run = run_state.open_run(
         root,
@@ -893,7 +990,8 @@ def improve(
     attempted, failed, repair_notes = _resume_attempt_history(run)
     errors: list[str] = []
     candidate_failures = sum(
-        attempt.get("status") in {
+        attempt.get("status")
+        in {
             "candidate-rejected",
             "candidate-oracle-rejected",
             "candidate-duplicate",
@@ -974,9 +1072,7 @@ def improve(
                 use_localized_repair = (
                     localized_repair
                     and previous_candidate is not None
-                    and repair_notes.get(fn, "").startswith(
-                        "ORIGINAL-ORACLE FAILURE:"
-                    )
+                    and repair_notes.get(fn, "").startswith("ORIGINAL-ORACLE FAILURE:")
                 )
                 try:
                     draft_rc = _draft(
@@ -1004,7 +1100,10 @@ def improve(
                         temperature,
                     )
                     run_state.finish_attempt(
-                        run, fn, attempt["attempt"], status="blocked",
+                        run,
+                        fn,
+                        attempt["attempt"],
+                        status="blocked",
                         diagnostics=[message],
                         evidence={"generation": generation_evidence},
                     )
@@ -1026,7 +1125,10 @@ def improve(
                     _restore_source(root, target, snapshot)
                     message = f"draft command returned {draft_rc} for {fn}"
                     run_state.finish_attempt(
-                        run, fn, attempt["attempt"], status="blocked",
+                        run,
+                        fn,
+                        attempt["attempt"],
+                        status="blocked",
                         diagnostics=[message],
                         evidence={"generation": generation_evidence},
                     )
@@ -1035,10 +1137,7 @@ def improve(
                     stop_reason = "draft-command-failed"
                     break
 
-                if (
-                    function_oracle
-                    and generation_evidence["status"] != "captured"
-                ):
+                if function_oracle and generation_evidence["status"] != "captured":
                     _restore_source(root, target, snapshot)
                     message = (
                         f"generation input capture is "
@@ -1057,11 +1156,12 @@ def improve(
                     stop_reason = "generation-capture-invalid"
                     break
 
-                meaningful = (
-                    candidate.is_file()
-                    and _has_pascal_implementation(candidate)
+                meaningful = candidate.is_file() and _has_pascal_implementation(
+                    candidate
                 )
-                candidate_contents = candidate.read_bytes() if candidate.is_file() else b""
+                candidate_contents = (
+                    candidate.read_bytes() if candidate.is_file() else b""
+                )
                 candidate_hash = (
                     hashlib.sha256(candidate_contents).hexdigest()
                     if candidate_contents
@@ -1199,9 +1299,7 @@ def improve(
                             "routine oracle reported failure without case details"
                         )
                         diagnostics = mismatches or [message]
-                        repair_notes[fn] = (
-                            "ORIGINAL-ORACLE FAILURE:\n" + message
-                        )
+                        repair_notes[fn] = "ORIGINAL-ORACLE FAILURE:\n" + message
                         failed.add(fn)
                         candidate_failures += 1
                         run_state.finish_attempt(
@@ -1213,9 +1311,7 @@ def improve(
                             source_sha256=candidate_hash,
                             evidence=evidence,
                         )
-                        print(
-                            f"[improve:{target}] routine oracle FAIL: {fn}"
-                        )
+                        print(f"[improve:{target}] routine oracle FAIL: {fn}")
                         for diagnostic in diagnostics[:8]:
                             print(f"[improve:{target}] {diagnostic}")
                         continue
@@ -1327,7 +1423,10 @@ def improve(
                     message = (
                         "restoring the previous candidate did not recover the baseline "
                         "build: "
-                        + ("; ".join(restored_diagnostics) or ", ".join(sorted(restored_errors)))
+                        + (
+                            "; ".join(restored_diagnostics)
+                            or ", ".join(sorted(restored_errors))
+                        )
                     )
                     errors.append(message)
                     blocked = True
@@ -1413,9 +1512,7 @@ def improve(
             attempted,
             max_attempts_per_function,
         ),
-        "unresolved_call_targets": _unresolved_call_targets(
-            root, function_names
-        ),
+        "unresolved_call_targets": _unresolved_call_targets(root, function_names),
         "errors": errors,
         "stop_reason": stop_reason,
     }

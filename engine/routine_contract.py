@@ -23,7 +23,9 @@ def load_contracts(path: pathlib.Path) -> dict[str, dict[str, Any]]:
         raise RoutineContractError(f"unsupported routine contract file: {path}")
     functions = data.get("functions")
     if not isinstance(functions, dict):
-        raise RoutineContractError(f"routine contract functions must be an object: {path}")
+        raise RoutineContractError(
+            f"routine contract functions must be an object: {path}"
+        )
     contracts: dict[str, dict[str, Any]] = {}
     for name, contract in functions.items():
         if not isinstance(name, str) or not isinstance(contract, dict):
@@ -38,11 +40,13 @@ def load_contracts(path: pathlib.Path) -> dict[str, dict[str, Any]]:
         prompt = contract.get("prompt")
         if not isinstance(prompt, str) or not prompt.strip():
             raise RoutineContractError(f"{name}: contract prompt must be non-empty")
-        for field in ("instruction_semantics", "fixture_flag_table"):
+        for field in (
+            "instruction_semantics",
+            "scoped_instruction_semantics",
+            "fixture_flag_table",
+        ):
             value = contract.get(field)
-            if value is not None and (
-                not isinstance(value, str) or not value.strip()
-            ):
+            if value is not None and (not isinstance(value, str) or not value.strip()):
                 raise RoutineContractError(
                     f"{name}: {field} must be a non-empty string"
                 )
@@ -57,17 +61,14 @@ def load_contracts(path: pathlib.Path) -> dict[str, dict[str, Any]]:
                 for field in ("start", "end")
             )
         ):
-            raise RoutineContractError(
-                f"{name}: invalid localized repair region"
-            )
+            raise RoutineContractError(f"{name}: invalid localized repair region")
         if not isinstance(contract.get("oracle"), str):
             raise RoutineContractError(f"{name}: oracle id must be a string")
         arguments = contract.get("arguments", [])
         if not isinstance(arguments, list) or any(
             not isinstance(argument, dict)
             or any(
-                not isinstance(argument.get(field), str)
-                or not argument[field].strip()
+                not isinstance(argument.get(field), str) or not argument[field].strip()
                 for field in ("name", "role", "representation")
             )
             for argument in arguments
@@ -83,7 +84,44 @@ def load_contracts(path: pathlib.Path) -> dict[str, dict[str, Any]]:
         ):
             raise RoutineContractError(f"{name}: invalid observed outputs")
         contracts[name] = contract
+    for name, contract in contracts.items():
+        callees = contract.get("callee_contracts", [])
+        if not isinstance(callees, list) or any(
+            not isinstance(callee, str) or callee == name or callee not in contracts
+            for callee in callees
+        ):
+            raise RoutineContractError(f"{name}: invalid or missing callee contract")
+        if len(set(callees)) != len(callees):
+            raise RoutineContractError(f"{name}: duplicate callee contract")
     return contracts
+
+
+def prompt_context(contract: dict[str, Any]) -> str:
+    """Oracle: render supplied scoped facts, not dependency or source acceptance."""
+    details = [f"Checked declaration: {contract['declaration']}"]
+    if contract.get("scope"):
+        details.append(f"Scope: {contract['scope']}")
+    if contract.get("arguments"):
+        details.append(
+            "Arguments:\n"
+            + "\n".join(
+                f"- {argument['name']} ({argument['role']}): "
+                f"{argument['representation']}"
+                for argument in contract["arguments"]
+            )
+        )
+    if contract.get("memory_model"):
+        details.append(f"Memory model: {contract['memory_model']}")
+    if contract.get("observed_outputs"):
+        details.append("Observed outputs: " + ", ".join(contract["observed_outputs"]))
+    for field, label in (
+        ("instruction_semantics", "Instruction-level semantics"),
+        ("scoped_instruction_semantics", "Scoped instruction-level semantics"),
+        ("fixture_flag_table", "Original trace flag table"),
+    ):
+        if contract.get(field):
+            details.append(f"{label}:\n{contract[field]}")
+    return "\n".join(details) + "\n" + contract["prompt"]
 
 
 def load_contract(
@@ -105,7 +143,8 @@ def pascal_declaration(source: str, function_name: str) -> str | None:
 def _declaration_matches(declaration: str, function_name: str) -> bool:
     return bool(
         re.match(
-            rf"^(?:procedure|function)\s+{re.escape(function_name)}\b[^;]*;\s*$",
+            rf"^(?:procedure|function)\s+{re.escape(function_name)}\b"
+            r"(?:\s*\([^()\r\n]*\))?\s*(?::\s*[^;\r\n]+)?;\s*$",
             declaration.strip(),
             re.IGNORECASE,
         )

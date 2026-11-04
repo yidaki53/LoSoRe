@@ -32,60 +32,61 @@ def _read_yaml_value(path: pathlib.Path, key: str, default: str = "unknown") -> 
 def toolchain_for_target(target: str) -> tuple[str, str, str]:
     config = pathlib.Path("targets") / target / "config"
     compiler = _read_yaml_value(
-        config / "toolchain.yaml", "compiler",
+        config / "toolchain.yaml",
+        "compiler",
         _read_yaml_value(config / "target.yaml", "compiler"),
     )
     platform = _read_yaml_value(
-        config / "toolchain.yaml", "platform",
+        config / "toolchain.yaml",
+        "platform",
         _read_yaml_value(config / "target.yaml", "platform"),
     )
     language = _read_yaml_value(
-        config / "toolchain.yaml", "language",
+        config / "toolchain.yaml",
+        "language",
         _read_yaml_value(config / "target.yaml", "language"),
     ).lower()
     return knowledge.compiler_key(compiler, platform), compiler, language
 
 
 def pair_fingerprint(example: dict[str, Any]) -> str:
-    content = "\0".join(
-        (example.get("asm", ""), example.get("pascal", ""))
-    )
+    content = "\0".join((example.get("asm", ""), example.get("pascal", "")))
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
-def eligible_examples(
-    data: dict[str, Any], toolchain: str
-) -> list[dict[str, Any]]:
+def eligible_examples(data: dict[str, Any], toolchain: str) -> list[dict[str, Any]]:
     """Return unique, verified Pascal pairs; reject legacy and placeholder data."""
     examples = []
     seen_pairs: set[str] = set()
     for example in data.get("verified_pascal_examples", {}).get(toolchain, []):
         pascal = example.get("pascal", "")
-        if (example.get("verification_status") != "verified"
-                or example.get("language") != "pascal"
-                or not example.get("oracle")
-                or not example.get("target")
-                or not example.get("asm")
-                or not re.search(
-                    r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*", pascal
-                )
-                or re.search(r"\bTODO\b|UNMATCHED", pascal, re.IGNORECASE)):
+        if (
+            example.get("verification_status") != "verified"
+            or example.get("language") != "pascal"
+            or not example.get("oracle")
+            or not example.get("target")
+            or not example.get("asm")
+            or not re.search(r"(?im)^\s*(procedure|function)\s+[A-Za-z_]\w*", pascal)
+            or re.search(r"\bTODO\b|UNMATCHED", pascal, re.IGNORECASE)
+        ):
             continue
         fingerprint = pair_fingerprint(example)
         if fingerprint in seen_pairs:
             continue
         seen_pairs.add(fingerprint)
-        examples.append({
-            **example,
-            "task": "assembly_to_pascal",
-            "completion": pascal,
-            "trust_status": "oracle-verified",
-            "source_type": "verified-pascal",
-            "pair_fingerprint": fingerprint,
-        })
-    return sorted(examples, key=lambda item: (
-        item.get("target", ""), item.get("fn", "")
-    ))
+        examples.append(
+            {
+                **example,
+                "task": "assembly_to_pascal",
+                "completion": pascal,
+                "trust_status": "oracle-verified",
+                "source_type": "verified-pascal",
+                "pair_fingerprint": fingerprint,
+            }
+        )
+    return sorted(
+        examples, key=lambda item: (item.get("target", ""), item.get("fn", ""))
+    )
 
 
 def _is_legacy_c_pair(fn: str, asm: str, completion: str) -> bool:
@@ -117,8 +118,7 @@ def legacy_assembly_examples(
         fn = example.get("fn", "")
         asm = example.get("asm") or example.get("asm_head", "")
         completion = example.get("c", "")
-        if (target and fn and
-                _is_legacy_c_pair(fn, asm, completion)):
+        if target and fn and _is_legacy_c_pair(fn, asm, completion):
             candidates[(target, fn)] = {
                 "target": target,
                 "fn": fn,
@@ -193,10 +193,12 @@ def legacy_assembly_examples(
 
     selected = []
     for target, examples in sorted(by_target.items()):
-        examples.sort(key=lambda item: (
-            0 if "legacy-knowledge" in item["source_type"] else 1,
-            item["pair_fingerprint"],
-        ))
+        examples.sort(
+            key=lambda item: (
+                0 if "legacy-knowledge" in item["source_type"] else 1,
+                item["pair_fingerprint"],
+            )
+        )
         selected.extend(examples[:max_per_target])
     return selected
 
@@ -208,15 +210,73 @@ def training_examples(
     max_legacy_per_target: int = 32,
 ) -> list[dict[str, Any]]:
     """Combine oracle-verified Pascal with separately labeled legacy C pairs."""
-    return (
-        eligible_examples(data, toolchain)
-        + legacy_assembly_examples(
-            data, toolchain, targets_root, max_per_target=max_legacy_per_target
-        )
+    return eligible_examples(data, toolchain) + legacy_assembly_examples(
+        data, toolchain, targets_root, max_per_target=max_legacy_per_target
     )
 
 
+def training_readiness(
+    data: dict[str, Any],
+    toolchain: str,
+    targets_root: pathlib.Path = pathlib.Path("targets"),
+    attempted_fingerprints: list[str] | tuple[str, ...] = (),
+    threshold: int = DEFAULT_THRESHOLD,
+) -> dict[str, Any]:
+    """Assess corpus supply without treating labels or token loss as recovery proof."""
+    if threshold < 1:
+        raise ValueError("training readiness threshold must be positive")
+    examples = training_examples(data, toolchain, targets_root)
+    pascal = [item for item in examples if item["task"] == "assembly_to_pascal"]
+    projects = sorted({item["target"] for item in pascal})
+    attempted = set(attempted_fingerprints)
+    new_pascal = sum(item["pair_fingerprint"] not in attempted for item in pascal)
+    blockers = []
+    if new_pascal < threshold:
+        blockers.append(
+            f"{new_pascal}/{threshold} new unique marked-verified Pascal pairs"
+        )
+    if len(projects) < 2:
+        blockers.append(f"{len(projects)}/2 projects with marked-verified Pascal pairs")
+    return {
+        "toolchain": toolchain,
+        "selected_pairs": len(examples),
+        "legacy_unverified_c_pairs": len(examples) - len(pascal),
+        "marked_verified_pascal_pairs": len(pascal),
+        "new_marked_verified_pascal_pairs": new_pascal,
+        "marked_verified_pascal_projects": projects,
+        "threshold": threshold,
+        "pascal_corpus_status": "blocked" if blockers else "candidate-corpus-only",
+        "pascal_corpus_blockers": blockers,
+        "source_review_revalidated": False,
+        "behavioral_improvement_established": False,
+        "current_activation_gate": "held-out-target token loss only",
+        "changes_weights": False,
+        "required_before_weight_promotion": [
+            (
+                "Revalidate complete reviewed routine/source/binary identities and oracle scope; "
+                "exclude projections, synthetic controls and unknown paths from gold labels."
+            ),
+            (
+                "Freeze family-deduplicated project train/development/terminal-test splits; "
+                "the loss-validation project is development, not an untouched behavioral test."
+            ),
+            (
+                "Compare base, retrieval-only and adapted models with equal frozen draft/repair "
+                "budgets on unseen routines; select on training, then one terminal binary-backed test."
+            ),
+            (
+                "Require measured behavioral recovery gain and retention on prior projects; "
+                "preserve failures and never infer recovery gain from token loss alone."
+            ),
+        ],
+    }
+
+
 def format_training_prompt(example: dict[str, Any]) -> str:
+    if example.get("task") == "synthetic_residual":
+        if example.get("trust_status") != "compiler-backed-synthetic":
+            raise ValueError("synthetic residual requires explicit compiler provenance")
+        return example["prompt"]
     if example.get("task") == "assembly_to_c":
         return (
             "Reconstruct a Ghidra-style C pseudocode interpretation of this "
@@ -232,7 +292,8 @@ def format_training_prompt(example: dict[str, Any]) -> str:
     decomp = example.get("decomp_c", "").strip()
     optional_decomp = (
         f"\nDecompiler pseudocode (lossy reference, not ground truth):\n{decomp}\n"
-        if decomp else ""
+        if decomp
+        else ""
     )
     return (
         "Reconstruct this verified original Turbo Pascal function. "
@@ -252,7 +313,8 @@ def format_training_prompt(example: dict[str, Any]) -> str:
 
 def training_record(example: dict[str, Any]) -> dict[str, Any]:
     return {
-        "id": example.get("example_id") or example.get("pair_fingerprint")
+        "id": example.get("example_id")
+        or example.get("pair_fingerprint")
         or hashlib.sha256(
             (example.get("asm", "") + "\0" + example.get("completion", "")).encode(
                 "utf-8"
@@ -351,10 +413,17 @@ class _PairedDataset:
 
             def __getitem__(self, index):
                 example = examples[index]
+                prompt = format_training_prompt(example)
+                if example.get("task") == "synthetic_residual":
+                    prompt = tokenizer.apply_chat_template(
+                        [{"role": "user", "content": prompt}],
+                        tokenize=False,
+                        add_generation_prompt=True,
+                    )
                 prompt_ids = tokenizer(
-                    format_training_prompt(example),
+                    prompt,
                     add_special_tokens=True,
-                    truncation=True,
+                    truncation=example.get("task") != "synthetic_residual",
                     max_length=max_length // 2,
                 )["input_ids"]
                 completion_ids = tokenizer(
@@ -363,7 +432,14 @@ class _PairedDataset:
                 )["input_ids"]
                 if tokenizer.eos_token_id is not None:
                     completion_ids.append(tokenizer.eos_token_id)
-                completion_ids = completion_ids[:max_length - len(prompt_ids)]
+                if (
+                    example.get("task") == "synthetic_residual"
+                    and len(prompt_ids) + len(completion_ids) > max_length
+                ):
+                    raise ValueError(
+                        "synthetic residual exceeds frozen sequence budget"
+                    )
+                completion_ids = completion_ids[: max_length - len(prompt_ids)]
                 input_ids = prompt_ids + completion_ids
                 labels = [-100] * len(prompt_ids) + completion_ids
                 return {
@@ -381,10 +457,23 @@ def train_adapter(
     toolchain: str,
     output_root: pathlib.Path = ADAPTER_ROOT,
     max_length: int = 2048,
+    *,
+    quantized: bool = False,
+    development_target: str | None = None,
+    experimental: bool = False,
 ) -> dict[str, Any]:
-    training, validation, validation_target = split_by_target(examples)
+    if development_target is None:
+        training, validation, validation_target = split_by_target(examples)
+    else:
+        training = [item for item in examples if item["target"] != development_target]
+        validation = [item for item in examples if item["target"] == development_target]
+        validation_target = development_target
+        if not training or not validation:
+            raise ValueError("explicit development split is empty")
     if not base_model_path.is_dir():
-        raise ValueError(f"base model path must be a local directory: {base_model_path}")
+        raise ValueError(
+            f"base model path must be a local directory: {base_model_path}"
+        )
 
     try:
         import torch
@@ -392,6 +481,7 @@ def train_adapter(
         from transformers import (
             AutoModelForCausalLM,
             AutoTokenizer,
+            BitsAndBytesConfig,
             DataCollatorForSeq2Seq,
             Trainer,
             TrainingArguments,
@@ -411,22 +501,44 @@ def train_adapter(
         raise ValueError("the configured tokenizer must define an EOS or pad token")
 
     use_bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+    if quantized and not torch.cuda.is_available():
+        raise RuntimeError("experimental QLoRA requires CUDA")
+    quantization_options = {}
+    if quantized:
+        quantization_options = {
+            "quantization_config": BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_compute_dtype=torch.bfloat16 if use_bf16 else torch.float16,
+            ),
+            "device_map": {"": 0},
+        }
     model = AutoModelForCausalLM.from_pretrained(
         str(base_model_path),
         local_files_only=True,
         **({"torch_dtype": torch.bfloat16} if use_bf16 else {}),
+        **quantization_options,
     )
+    if quantized:
+        from peft import prepare_model_for_kbit_training
+
+        model = prepare_model_for_kbit_training(model)
+        model.config.use_cache = False
     model.config.pad_token_id = tokenizer.pad_token_id
     if torch.cuda.is_available():
         model.gradient_checkpointing_enable()
         model.enable_input_require_grads()
-    model = get_peft_model(model, LoraConfig(
-        task_type=TaskType.CAUSAL_LM,
-        r=8,
-        lora_alpha=16,
-        lora_dropout=0.05,
-        target_modules="all-linear",
-    ))
+    model = get_peft_model(
+        model,
+        LoraConfig(
+            task_type=TaskType.CAUSAL_LM,
+            r=8,
+            lora_alpha=16,
+            lora_dropout=0.05,
+            target_modules="all-linear",
+        ),
+    )
 
     run_name = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     output_dir = output_root / toolchain / run_name
@@ -449,6 +561,8 @@ def train_adapter(
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
         greater_is_better=False,
+        optim="paged_adamw_8bit" if quantized else "adamw_torch",
+        seed=20261103,
     )
     trainer = Trainer(
         model=model,
@@ -473,8 +587,9 @@ def train_adapter(
         "validation_pairs": len(validation),
         "task_counts": {
             task: sum(item.get("task") == task for item in examples)
-            for task in sorted({item.get("task", "assembly_to_pascal")
-                                for item in examples})
+            for task in sorted(
+                {item.get("task", "assembly_to_pascal") for item in examples}
+            )
         },
     }
     improved = (
@@ -487,21 +602,25 @@ def train_adapter(
         "base_model_path": str(base_model_path.resolve()),
         "adapter_path": str(adapter_dir.resolve()),
         "created_at": datetime.now(UTC).isoformat(),
-        "trained_tasks": sorted({
-            item.get("task", "assembly_to_pascal") for item in examples
-        }),
+        "trained_tasks": sorted(
+            {item.get("task", "assembly_to_pascal") for item in examples}
+        ),
         "trust_counts": {
             trust: sum(item.get("trust_status") == trust for item in examples)
-            for trust in sorted({item.get("trust_status", "oracle-verified")
-                                 for item in examples})
+            for trust in sorted(
+                {item.get("trust_status", "oracle-verified") for item in examples}
+            )
         },
         "metrics": metrics,
         "validation_loss_improved": improved,
+        "experimental": experimental,
+        "quantized": quantized,
+        "activation_allowed": improved and not experimental,
     }
     (output_dir / "manifest.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n"
     )
-    if not improved:
+    if not improved and not experimental:
         raise RuntimeError(
             "adapter was saved but not activated: held-out target loss did not improve"
         )
@@ -526,19 +645,25 @@ def train_for_target(
         return 0
     base_model_path = pathlib.Path(model_path).expanduser()
     if not base_model_path.is_dir():
-        print(f"[train:{target}] SKIP local model directory not found: {base_model_path}")
+        print(
+            f"[train:{target}] SKIP local model directory not found: {base_model_path}"
+        )
         return 0
 
     data = knowledge.load(store_path)
     examples = training_examples(data, toolchain)
     if not examples:
-        print(f"[train:{target}] SKIP no eligible reverse-engineering examples "
-              f"for {toolchain}")
+        print(
+            f"[train:{target}] SKIP no eligible reverse-engineering examples "
+            f"for {toolchain}"
+        )
         return 0
 
     if len({item["target"] for item in examples}) < 2:
-        print(f"[train:{target}] SKIP target-level validation needs examples "
-              "from at least 2 projects")
+        print(
+            f"[train:{target}] SKIP target-level validation needs examples "
+            "from at least 2 projects"
+        )
         return 0
 
     state = _load_state(state_path)
@@ -548,8 +673,10 @@ def train_for_target(
         item for item in examples if item["pair_fingerprint"] not in attempted
     ]
     if automatic and len(new_examples) < threshold:
-        print(f"[train:{target}] SKIP {len(new_examples)}/{threshold} new "
-              "unique training pairs since the previous training attempt")
+        print(
+            f"[train:{target}] SKIP {len(new_examples)}/{threshold} new "
+            "unique training pairs since the previous training attempt"
+        )
         return 0
 
     try:
@@ -565,25 +692,29 @@ def train_for_target(
         raise
 
     record = state.setdefault("toolchains", {}).setdefault(toolchain, {})
-    record.update({
-        "base_model_path": manifest["base_model_path"],
-        "adapter_path": manifest["adapter_path"],
-        "trained_tasks": manifest["trained_tasks"],
-        "attempted_pair_fingerprints": sorted(
-            attempted | {item["pair_fingerprint"] for item in examples}
-        ),
-        "trained_pair_fingerprints": sorted(
-            item["pair_fingerprint"] for item in examples
-        ),
-        "manifest_path": str(
-            pathlib.Path(manifest["adapter_path"]).parent / "manifest.json"
-        ),
-    })
+    record.update(
+        {
+            "base_model_path": manifest["base_model_path"],
+            "adapter_path": manifest["adapter_path"],
+            "trained_tasks": manifest["trained_tasks"],
+            "attempted_pair_fingerprints": sorted(
+                attempted | {item["pair_fingerprint"] for item in examples}
+            ),
+            "trained_pair_fingerprints": sorted(
+                item["pair_fingerprint"] for item in examples
+            ),
+            "manifest_path": str(
+                pathlib.Path(manifest["adapter_path"]).parent / "manifest.json"
+            ),
+        }
+    )
     _save_state(state_path, state)
-    print(f"[train:{target}] saved LoRA adapter for {compiler} "
-          f"(tasks: {', '.join(manifest['trained_tasks'])}; "
-          f"{len(examples)} pairs; held-out eval loss "
-          f"{manifest['metrics']['final_eval_loss']:.4f})")
+    print(
+        f"[train:{target}] saved LoRA adapter for {compiler} "
+        f"(tasks: {', '.join(manifest['trained_tasks'])}; "
+        f"{len(examples)} pairs; held-out eval loss "
+        f"{manifest['metrics']['final_eval_loss']:.4f})"
+    )
     return 0
 
 
@@ -593,17 +724,28 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--target", required=True)
     mode = parser.add_mutually_exclusive_group(required=True)
-    mode.add_argument("--auto", action="store_true",
-                      help="fine-tune after the new-pair threshold is reached")
-    mode.add_argument("--train", action="store_true",
-                      help="fine-tune all eligible examples now")
-    mode.add_argument("--export", type=pathlib.Path,
-                      help="export labeled training pairs to JSONL")
+    mode.add_argument(
+        "--auto",
+        action="store_true",
+        help="fine-tune after the new-pair threshold is reached",
+    )
+    mode.add_argument(
+        "--train", action="store_true", help="fine-tune all eligible examples now"
+    )
+    mode.add_argument(
+        "--export", type=pathlib.Path, help="export labeled training pairs to JSONL"
+    )
+    mode.add_argument(
+        "--readiness",
+        action="store_true",
+        help="report Pascal corpus blockers and promotion requirements without training",
+    )
     parser.add_argument("--model-path", default=os.environ.get("LSR_TRAIN_MODEL"))
-    parser.add_argument("--threshold", type=int,
-                        default=int(os.environ.get(
-                            "LSR_TRAIN_THRESHOLD", DEFAULT_THRESHOLD
-                        )))
+    parser.add_argument(
+        "--threshold",
+        type=int,
+        default=int(os.environ.get("LSR_TRAIN_THRESHOLD", DEFAULT_THRESHOLD)),
+    )
     parser.add_argument("--store", type=pathlib.Path, default=knowledge.STORE)
     parser.add_argument("--state", type=pathlib.Path, default=STATE_PATH)
     parser.add_argument("--output-root", type=pathlib.Path, default=ADAPTER_ROOT)
@@ -611,20 +753,47 @@ def main(argv: list[str] | None = None) -> int:
     if args.threshold < 1:
         parser.error("--threshold must be positive")
 
+    if args.readiness:
+        toolchain, _, language = toolchain_for_target(args.target)
+        if language != "pascal":
+            parser.error(f"target {args.target} is not configured as Pascal")
+        state = _load_state(args.state)
+        attempted = (
+            state.get("toolchains", {})
+            .get(toolchain, {})
+            .get("attempted_pair_fingerprints", [])
+        )
+        report = training_readiness(
+            knowledge.load(args.store),
+            toolchain,
+            attempted_fingerprints=attempted,
+            threshold=args.threshold,
+        )
+        print(
+            json.dumps(
+                {**report, "target": args.target, "language": language},
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 0
+
     if args.export:
         toolchain, _, language = toolchain_for_target(args.target)
         if language != "pascal":
             parser.error(f"target {args.target} is not configured as Pascal")
-        count = export_dataset(
-            knowledge.load(args.store), toolchain, args.export
-        )
+        count = export_dataset(knowledge.load(args.store), toolchain, args.export)
         print(f"[train:{args.target}] exported {count} labeled pairs to {args.export}")
         return 0
 
     return train_for_target(
-        args.target, args.model_path, args.threshold,
-        automatic=args.auto, store_path=args.store,
-        state_path=args.state, output_root=args.output_root,
+        args.target,
+        args.model_path,
+        args.threshold,
+        automatic=args.auto,
+        store_path=args.store,
+        state_path=args.state,
+        output_root=args.output_root,
     )
 
 

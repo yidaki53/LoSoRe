@@ -17,6 +17,219 @@ def _value_record(value: _Value) -> dict:
     return {"kind": value.kind, "amount": value.amount, "support": list(value.support)}
 
 
+def allocator_empty_list_contract(raw: bytes, helper: bytes, callback: bytes) -> dict:
+    """Oracle: exact 0353 composition under supplied empty-list/default-callback premises.
+
+    The list scan is bypassed only because the supplied head equals the frontier.
+    This recognizer does not prove original-program entry state or memory ownership.
+    """
+    template = bytes.fromhex(
+        "0bc07477a33c7be87f01bff6638cd98ec18bcf8cc326c43d8cc63b36f063"
+        "745f263b550677eb7206263b450477e306575351268b0d268b5d0274335351"
+        "268b4d04268b5d062bc81bda83e10f03c703d604f083d200240f8bf88ec2"
+        "268f05268f450226894d0426895d068bcf8cc35f0726890d26895d02585af8"
+        "c333c099c303c703d604f083d200240f3b16f463720877253b06f263771f06"
+        "578bf98ec3a3ee638916f0632689052689550233c050ff1efe63585af8c3ff"
+        "363c7bff1efe633c0172b774b6a13c7be93cff"
+    )
+    if (
+        raw != template
+        or helper != bytes.fromhex("0507008bd0d1dad1ead1ead1ea250800c3")
+        or callback != bytes.fromhex("33c0ca0200")
+    ):
+        raise ValueError(
+            "unsupported allocator/helper/default callback instruction shape"
+        )
+    return {
+        "oracle": "exact_allocator_empty_list_composition",
+        "routine_bytes_hex": raw.hex(),
+        "helper_bytes_hex": helper.hex(),
+        "callback_bytes_hex": callback.hex(),
+        "rounding": {"bias": helper[1], "alignment": helper[14], "paragraph": 16},
+        "saved_request_cell": int.from_bytes(raw[5:7], "little"),
+        "limit_order": ["segment", "offset"],
+        "success_return": "old_head",
+        "failure_return": {"AX": 0, "DX": "computed_segment", "CF": 1},
+        "zero_writes": [],
+        "support": {
+            "zero": [0x353, 0x355, 0x3CE, 0x3D0, 0x3D1],
+            "save_and_round": [0x357, 0x35A, 0x4DC],
+            "empty_list": [0x35D, 0x360, 0x362, 0x368, 0x36B, 0x36D, 0x371],
+            "normalize": [0x3D2, 0x3D4, 0x3D6, 0x3D8, 0x3DB],
+            "limit": [0x3DD, 0x3E1, 0x3E3, 0x3E5, 0x3E9],
+            "success": [
+                0x3EB,
+                0x3EC,
+                0x3ED,
+                0x3EF,
+                0x3F1,
+                0x3F4,
+                0x3F8,
+                0x3FB,
+                0x3FF,
+                0x401,
+                0x402,
+                0x406,
+                0x407,
+                0x408,
+                0x409,
+            ],
+            "failure": [0x40A, 0x40E, 0x412, 0x414, 0x3CD, 0xD6],
+        },
+        "preconditions": [
+            "Controlled COM layout supplies DS=SS=CS and disjoint writable globals/stack.",
+            "Free-list head equals frontier; both offset and segment are supplied.",
+            "Only the authenticated XOR AX,AX / RETF 2 default callback is installed.",
+            "Case segments are CS-relative without segment-addition wrap.",
+            "Comparison covers AX/DX/CF, saved request, frontier and head only.",
+        ],
+        "unresolved": [
+            "free-list exact-fit/split/traversal",
+            "nondefault callback/retry",
+            "normal-program heap provenance/lifetime",
+            "full register/flag ABI",
+        ],
+        "source_recovered": False,
+    }
+
+
+def bounded_byte_fill_contract(raw: bytes) -> dict:
+    """Oracle: exact stack-load/CLD/REP STOSB leaf shape; bounds are caller obligations.
+
+    This recognizes one complete far-return shape without extending the generic
+    initialization-prefix return gate. It does not establish normal-program
+    reachability, valid pointers or a historical Pascal declaration.
+    """
+    if (
+        len(raw) != 20
+        or raw[:5] != bytes.fromhex("8bdc36c47f")
+        or raw[6:9] != bytes.fromhex("368b4f")
+        or raw[10:13] != bytes.fromhex("368a47")
+        or raw[14:18] != bytes.fromhex("fcf3aaca")
+    ):
+        raise ValueError("unsupported bounded byte-fill instruction shape")
+    slots = [raw[5], raw[9], raw[13]]
+    cleanup = int.from_bytes(raw[18:20], "little")
+    if (
+        any(slot < 4 or slot % 2 for slot in slots)
+        or len(set(slots)) != 3
+        or set(slots) != {slots[0], slots[0] - 2, slots[0] - 4}
+        or not slots[2] < slots[1] < slots[0]
+        or cleanup < slots[0]
+    ):
+        raise ValueError(
+            "byte-fill stack slots lack a supported disjoint argument layout"
+        )
+    return {
+        "oracle": "exact_byte_shape_under_scoped_far_call_preconditions",
+        "destination_far_pointer_slot": slots[0],
+        "count_word_slot": slots[1],
+        "value_low_byte_slot": slots[2],
+        "memory_operation": "write count copies of value to destination, zero count writes nothing",
+        "support_offsets": [0, 2, 6, 10, 14, 15],
+        "far_return_cleanup_bytes": cleanup,
+        "preconditions": [
+            "Entry SS:SP argument cells and return address are valid and disjoint from destination.",
+            "Destination far pointer is valid, writable and nonwrapping for the unsigned count.",
+            "Count is independently bounded by the supplied object allocation.",
+        ],
+        "limitations": "Memory contract only; no host ABI or normal-program acceptance.",
+    }
+
+
+def bounded_shortstring_contract(raw: bytes) -> dict:
+    """Oracle: exact zero-mode initialization/shortstring shape, under disjoint bounds.
+
+    The alternate DX path is unreachable because the complete entry clears DX.
+    No arbitrary branch, relocated operand, aliased pointer or return is certified.
+    """
+    template = bytes.fromhex(
+        "33d28bdc1e36c47f0836c57704fc33c0abb8b0d7ab33c0b91600f3ab"
+        "b94f000bd27509ac3ac876048ac8e308ac0ac07403aae2f832c0aa1fca0800"
+    )
+    parameters = {8, 12, 18, 19, 24, 25, 29, 30, 57, 58}
+    if len(raw) != len(template) or any(
+        actual != expected
+        for offset, (actual, expected) in enumerate(zip(raw, template))
+        if offset not in parameters
+    ):
+        raise ValueError("unsupported bounded shortstring composition shape")
+    destination_slot, source_slot = raw[8], raw[12]
+    word_count = int.from_bytes(raw[24:26], "little")
+    limit = int.from_bytes(raw[29:31], "little")
+    cleanup = int.from_bytes(raw[57:59], "little")
+    initialization_bytes = 4 + 2 * word_count
+    if (
+        source_slot != 4
+        or destination_slot != 8
+        or cleanup < destination_slot
+        or not 1 <= limit <= 255
+        or initialization_bytes > 256
+    ):
+        raise ValueError("shortstring arguments or memory spans lack supported bounds")
+    prefix = initialization_prefix(raw)
+    if prefix["residue"]["offset"] != 31:
+        raise ValueError("shortstring prefix contract is not established")
+    return {
+        "oracle": "exact_shortstring_composition_under_scoped_far_call_preconditions",
+        "routine_bytes_hex": raw.hex(),
+        "destination_far_pointer_slot": destination_slot,
+        "source_far_pointer_slot": source_slot,
+        "prefix_writes": prefix["writes"],
+        "text_destination_offset": initialization_bytes,
+        "source_length_offset": 0,
+        "source_text_offset": 1,
+        "maximum_text_bytes": limit,
+        "length_operation": "unsigned min(source[0], maximum_text_bytes)",
+        "termination": "stop before first NUL or bounded length, then append one NUL",
+        "write_order": "prefix writes, copied nonzero text bytes, final NUL",
+        "support_offsets": [
+            0,
+            2,
+            4,
+            5,
+            9,
+            13,
+            14,
+            16,
+            17,
+            20,
+            21,
+            23,
+            26,
+            28,
+            31,
+            33,
+            35,
+            36,
+            38,
+            40,
+            42,
+            44,
+            45,
+            47,
+            49,
+            50,
+            52,
+            54,
+            55,
+            56,
+        ],
+        "unreachable_branch": {
+            "offset": 33,
+            "reason": "DX is zero from entry XOR; no intervening DX write",
+        },
+        "far_return_cleanup_bytes": cleanup,
+        "preconditions": [
+            "Entry SS:SP argument cells and return address are valid and disjoint from both objects.",
+            "Source and destination are disjoint nonwrapping far-pointer allocations.",
+            "Source holds its length byte and at least min(length, limit) text bytes.",
+            "Destination has a valid 256-byte initialization window and is writable through text_destination_offset + limit inclusive.",
+        ],
+        "limitations": "Scoped memory contract, not historical Pascal, full ABI or normal-program provenance.",
+    }
+
+
 def initialization_prefix(
     raw: bytes,
     *,
