@@ -1,162 +1,709 @@
 {
+  "_experience_buffer": {
+    "experience_buffer": {
+      "bootstrap-move-forward-v2": {
+        "attempts": 1,
+        "successes": 1
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.1|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.1|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.1|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.1|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.1|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.3|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.3|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.3|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.3|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.3|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.5|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.5|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.5|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.5|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.5|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.7|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.7|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.7|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.7|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.7|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.9|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.9|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.9|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.9|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|0.9|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.1|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.1|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.1|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.1|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.1|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.3|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.3|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.3|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.3|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.3|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.5|0": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.5|1": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.5|3": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.5|5": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "losore-llm4decompile-22b-v2:Q4_K_M|1.5|7": {
+        "attempts": 0,
+        "successes": 0
+      },
+      "oracle-arithmetic-v1": {
+        "attempts": 1,
+        "successes": 1
+      },
+      "oracle-init-v1": {
+        "attempts": 1,
+        "successes": 1
+      },
+      "oracle-normalize-v1": {
+        "attempts": 1,
+        "successes": 1
+      },
+      "qwen2.5-coder:14b-instruct-q4_K_M|0.2|1": {
+        "attempts": 1,
+        "successes": 1
+      }
+    }
+  },
   "compilers": {
     "turbo-pascal-7": {
-      "calling_conventions": {
-        "__cdecl16far": 616,
-        "__cdecl16near": 1118,
-        "__stdcall16far": 1574,
-        "__stdcall16near": 640,
-        "unknown": 281
-      },
-      "compiler": "turbo-pascal-7",
-      "compiler_confidence": "high",
-      "functions_seen": 4229,
-      "image_bases": [
-        "0000:0000"
-      ],
-      "language": "pascal",
-      "platform": "dos",
       "targets": [
-        "liero-dos",
-        "liero",
-        "stickman"
-      ],
-      "top_bigrams": {
-        "ADD MOV": 8520,
-        "ADD PUSH": 5048,
-        "CALLF MOV": 8396,
-        "CMP JNZ": 6454,
-        "CMP JZ": 5588,
-        "JMP MOV": 4662,
-        "LES ADD": 10094,
-        "LES MOV": 6580,
-        "MOV ADD": 4008,
-        "MOV CMP": 7861,
-        "MOV JMP": 5515,
-        "MOV MOV": 40837,
-        "MOV PUSH": 11605,
-        "MOV SHL": 8384,
-        "MOV SUB": 4777,
-        "MOV XOR": 12753,
-        "PUSH CALLF": 14127,
-        "PUSH MOV": 12346,
-        "PUSH PUSH": 33776,
-        "XOR MOV": 9019
-      },
-      "top_mnemonics": {
-        "ADC": 4172,
-        "ADD": 25358,
-        "CALL": 5378,
-        "CALLF": 21786,
-        "CMP": 26261,
-        "CWD": 3206,
-        "IMUL": 5515,
-        "INC": 6724,
-        "JLE": 3062,
-        "JMP": 15495,
-        "JNZ": 9072,
-        "JZ": 8154,
-        "LEA": 6021,
-        "LES": 21935,
-        "MOV": 122300,
-        "POP": 4722,
-        "PUSH": 70519,
-        "SHL": 10675,
-        "SUB": 9103,
-        "XOR": 17738
-      }
+        "FUN_24dd_48e1",
+        "FUN_24dd_4141"
+      ]
     }
   },
-  "example_quality": {
-    "turbo-pascal-7": {
-      "FUN_TEST": {
-        "failure_count": 1,
-        "last_used": "2026-10-27",
-        "success_count": 1
-      }
-    }
-  },
-  "examples": {
-    "turbo-pascal-7": [
+  "cumulative_reward": 5.0,
+  "current_function": "FUN_24dd_04dc",
+  "current_target": "liero",
+  "epsilon": 0.14628731296828124,
+  "example_quality": {},
+  "examples": {},
+  "experience_buffer": {
+    "pascal|turbo-pascal-7": [
       {
-        "asm_head": "; dat-parity verified format",
-        "c": "/* verified LIERO.DAT format oracle */",
-        "fn": "LIERO.DAT",
-        "target": "liero"
+        "action": "bootstrap-move-forward-v2",
+        "done": true,
+        "next_state": "lang=pascal|turbo-pascal-7|coverage=0.01|recent_sr=1.00|inst=0|callee=True|blocker=None|ver=3",
+        "reward": 1.0,
+        "state": "lang=pascal|turbo-pascal-7|coverage=0.01|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=3"
       },
       {
-        "asm_head": "; FUN_410e_028f  entry=410e:028f size=6\n410e:028f  OR byte ptr [0xeb08],0x8\n410e:0294  RETF",
-        "c": "\nvoid __cdecl16far FUN_410e_028f(void)\n\n{\n  undefined2 unaff_DS;\n  \n  *(byte *)0xeb08 = *(byte *)0xeb08 | 8;\n  return;\n}\n\n",
-        "calling_convention": "__cdecl16far",
-        "fn": "FUN_410e_028f",
-        "target": "stickman"
+        "action": "oracle-normalize-v1",
+        "done": true,
+        "next_state": "lang=pascal|turbo-pascal-7|coverage=0.01|recent_sr=1.00|inst=0|callee=True|blocker=None|ver=4",
+        "reward": 1.0,
+        "state": "lang=pascal|turbo-pascal-7|coverage=0.01|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=4"
       },
       {
-        "asm_head": "; FUN_42b5_05bf  entry=42b5:05bf size=60\n42b5:05bf  MOV AL,0x1\n42b5:05c1  PUSH BP\n42b5:05c2  MOV BP,SP\n42b5:05c4  LES DI,[BP + 0x6]\n42b5:05c7  CMP word ptr ES:[DI + 0x2],0xd7b1\n42b5:05cd  JZ 0x4000:3137\n42b5:05cf  CMP word ptr ES:[DI + 0x2],0xd7b2\n42b5:05d5  JZ 0x4000:312f\n42b5:05d7  MOV word ptr [0x39c],0x67\n42b5:05dd  JMP 0x4000:3147\n42b5:05df  PUSH AX\n42b5:05e0  MOV BX,0x14\n42b5:05e3  CALL 0x4000:314b\n42b5:05e6  POP AX\n42b5:05e7  OR AL,AL\n42b5:05e9  JZ 0x4000:3147\n42b5:05eb  MOV BX,0x1c\n42b5:05ee  CALL 0x4000:314b\n42b5:05f1  MOV word ptr ES:[DI + 0x2],0xd7b0\n42b5:05f7  POP BP\n42b5:05f8  RETF 0x4",
-        "c": "\nvoid __stdcall16far FUN_42b5_05bf(undefined4 param_1)\n\n{\n  int iVar1;\n  undefined2 uVar2;\n  undefined2 unaff_DS;\n  \n  uVar2 = (undefined2)((ulong)param_1 >> 0x10);\n  iVar1 = (int)param_1;\n  if (*(int *)(iVar1 + 2) != -0x284f) {\n    if (*(int *)(iVar1 + 2) != -0x284e) {\n      *(undefined2 *)0x39c = 0x67;\n      return;\n    }\n    FUN_42b5_05fb();\n  }\n  FUN_42b5_05fb();\n  *(undefined2 *)(iVar1 + 2) = 0xd7b0;\n  return;\n}\n\n",
-        "calling_convention": "__stdcall16far",
-        "fn": "FUN_42b5_05bf",
-        "target": "stickman"
+        "action": "oracle-arithmetic-v1",
+        "done": true,
+        "next_state": "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=1.00|inst=0|callee=True|blocker=None|ver=5",
+        "reward": 1.0,
+        "state": "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=5"
       },
       {
-        "asm_head": "; FUN_4170_00c3  entry=4170:00c3 size=94\n4170:00c3  PUSH BP\n4170:00c4  MOV BP,SP\n4170:00c6  MOV AX,0x4\n4170:00c9  CALLF 0x4000:302f\n4170:00ce  SUB SP,0x4\n4170:00d1  LES DI,[BP + 0x6]\n4170:00d4  CMP byte ptr ES:[DI],0x0\n4170:00d8  JZ 0x4000:181b\n4170:00da  LES DI,[BP + 0x6]\n4170:00dd  MOV AL,byte ptr ES:[DI]\n4170:00e0  XOR AH,AH\n4170:00e2  MOV word ptr [BP + -0x4],AX\n4170:00e5  MOV AX,0x1\n4170:00e8  CMP AX,word ptr [BP + -0x4]\n4170:00eb  JG 0x4000:181b\n4170:00ed  MOV word ptr [BP + -0x2],AX\n4170:00f0  JMP 0x4000:17f5\n4170:00f2  INC word ptr [BP + -0x2]\n4170:00f5  MOV AX,word ptr [BP + -0x2]\n4170:00f8  LES DI,[BP + 0x6]\n4170:00fb  ADD DI,AX\n4170:00fd  MOV AL,byte ptr ES:[DI]\n4170:0100  PUSH AX",
-        "c": "\nvoid __stdcall16far FUN_4170_00c3(byte *param_1)\n\n{\n  byte bVar1;\n  byte bVar2;\n  undefined2 uVar3;\n  uint local_4;\n  \n  FUN_42b5_04df();\n  if ((*param_1 != 0) && (bVar1 = *param_1, bVar1 != 0)) {\n    local_4 = 1;\n    while( true ) {\n      uVar3 = (undefined2)((ulong)param_1 >> 0x10);\n      bVar2 = FUN_42b5_1bc4(CONCAT11((char)(local_4 >> 8),((byte *)param_1)[local_4]));\n      ((byte *)param_1)[local_4] = bVar2;\n      if (local_4 == bVar1) break;\n      local_4 = local_4 + 1;\n    }\n  }\n  return;\n}\n\n",
-        "calling_convention": "__stdcall16far",
-        "fn": "FUN_4170_00c3",
-        "target": "stickman"
+        "action": "oracle-init-v1",
+        "done": true,
+        "next_state": "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=1.00|inst=0|callee=True|blocker=None|ver=6",
+        "reward": 1.0,
+        "state": "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=6"
       },
       {
-        "asm_head": "; FUN_1000_4bf5  entry=1000:4bf5 size=125\n1000:4bf5  PUSH BP\n1000:4bf6  MOV BP,SP\n1000:4bf8  XOR AX,AX\n1000:4bfa  CALLF 0x4000:302f\n1000:4bff  MOV DI,0x4be6\n1000:4c02  PUSH CS\n1000:4c03  PUSH DI\n1000:4c04  CALLF 0x3000:de5d\n1000:4c09  CMP byte ptr [0x594],0x0\n1000:4c0e  JZ 0x1000:4c24\n1000:4c10  MOV AX,0x11\n1000:4c13  PUSH AX\n1000:4c14  MOV AX,0xc\n1000:4c17  PUSH AX\n1000:4c18  MOV DI,0x4bf1\n1000:4c1b  PUSH CS\n1000:4c1c  PUSH DI\n1000:4c1d  CALLF 0x3000:ea1a\n1000:4c22  JMP 0x1000:4c36\n1000:4c24  MOV AX,0x1c\n1000:4c27  PUSH AX\n1000:4c28  MOV AX,0xc\n1000:4c2b  PUSH AX",
-        "c": "\nvoid __cdecl16near FUN_1000_4bf5(void)\n\n{\n  undefined2 unaff_DS;\n  \n  FUN_42b5_04df();\n  FUN_3de3_002d(0x4be6,0x42b5);\n  if (*(char *)0x594 == '\\0') {\n    FUN_3de3_0bea(0x4bf1,0x3de3,0xc,0x1c);\n  }\n  else {\n    FUN_3de3_0bea(0x4bf1,0x3de3,0xc,0x11);\n  }\n  *(bool *)0x594 = *(char *)0x594 == '\\0';\n  if (*(char *)0x594 == '\\0') {\n    FUN_3de3_0bea(0x4bf3,0x3de3,0xc,0x1c);\n  }\n  else {\n    FUN_3de3_0bea(0x4bf3,0x3de3,0xc,0x11);\n  }\n  return;\n}\n\n",
-        "calling_convention": "__cdecl16near",
-        "fn": "FUN_1000_4bf5",
-        "target": "stickman"
-      },
-      {
-        "asm_head": "; FUN_40a5_0098  entry=40a5:0098 size=1322\n40a5:0098  PUSH BP\n40a5:0099  MOV BP,SP\n40a5:009b  MOV AX,0x316\n40a5:009e  CALLF 0x4000:302f\n40a5:00a3  SUB SP,0x316\n40a5:00a7  CMP byte ptr [0x163],0x1b\n40a5:00ac  JNZ 0x4000:0b0c\n40a5:00ae  CMP byte ptr [0x164],0x5b\n40a5:00b3  JNZ 0x4000:0b0c\n40a5:00b5  CMP byte ptr [0x162],0x3\n40a5:00ba  JNC 0x4000:0b14\n40a5:00bc  MOV byte ptr [0x162],0x0\n40a5:00c1  JMP 0x4000:100e\n40a5:00c4  MOV DI,0x162\n40a5:00c7  PUSH DS\n40a5:00c8  PUSH DI\n40a5:00c9  MOV AX,0x1\n40a5:00cc  PUSH AX\n40a5:00cd  MOV AX,0x2\n40a5:00d0  PUSH AX\n40a5:00d1  CALLF 0x4000:38c5\n40a5:00d6  XOR AX,AX\n40a5:00d8  MOV word ptr [BP + -0xc],AX",
-        "c": "\nvoid __cdecl16near FUN_40a5_0098(void)\n\n{\n  byte bVar1;\n  char cVar2;\n  undefined1 extraout_AH;\n  undefined1 extraout_AH_00;\n  undefined2 uVar3;\n  undefined1 extraout_AH_01;\n  undefined1 uVar8;\n  undefined2 uVar4;\n  byte bVar9;\n  byte extraout_AH_02;\n  undefined1 extraout_AH_03;\n  uint uVar5;\n  uint uVar6;\n  int iVar7;\n  undefined2 unaff_SS;\n  undefined2 unaff_DS;\n  bool bVar10;\n  undefined1 *puVar11;\n  undefined1 *puVar12;\n  undefined1 local_318 [256];\n  undefined1 local_218 [254];\n  undefined2 local_11a;\n  byte local_118 [8];\n  undefined1 local_110 [256];\n  int local_10;\n  int local_e;\n  uint local_c;\n  uint local_a;\n  uint local_8;\n  int local_6;\n  undefined1 uStack_4;\n  undefined1 local_3;\n  \n  uStack_4 = 0xa5;\n  local_3 = 0x40;\n  local_6 = 0xaf3;\n  FUN_42b5_04df();\n  if (((*(char *)0x163 == '\\x1b') && (*(char *)0x164 == '[')) && (2 < *(byte *)0x162)) {\n    FUN_42b5_0d75(2,1,0x162,unaff_DS);\n    local_e = 0;\n    bVar10 = true;\n    FUN_42b5_0e79(0x58,0x42b5,*(undefined1 *)(*(byte *)0x162 + 0x162));\n    if ((!bVar10) && (*(char *)0x163 == ';')) {\n      local_e = 1;\n      local_118[0] = 1;\n    }\n    if (*(char *)0x163 == '=') {\n      FUN_42b5_0d75(1,1,0x162,unaff_DS);\n    }\n    local_6 = 0;\n    while (((1 < *(byte *)0x162 && (local_e < 7)) && (local_6 < 10))) {\n      if (*(char *)0x163 == ';') {\n        FUN_42b5_0d75(1,1,0x162,unaff_DS);\n      }\n      else {\n        local_110[0] = 0;\n        while ((bVar10 = *(byte *)0x162 == 1, 1 < *(byte *)0x162 &&\n               (FUN_42b5_0e79(0x78,0x42b5,*(undefined1 *)0x163), !bVar10))) {\n          puVar12 = local_318;\n          uVar4 = unaff_SS;\n          FUN_42b5_0bc4(local_110,unaff_SS);\n          puVar11 = local_218;\n          uVar3 = unaff_SS;\n          FUN_42b5_0cf4(CONCAT11(extraout_AH,*(undefined1 *)0x163));\n          FUN_42b5_0c51(puVar11,uVar3);\n          FUN_42b5_0bde(0xff,local_110,unaff_SS,puVar12,uVar4);\n          FUN_42b5_0d75(1,1,0x162,unaff_DS);\n        }\n        bVar1 = FUN_42b5_17b1(&local_10,unaff_SS,local_110,unaff_SS);\n        local_118[local_e] = bVar1;\n        if (local_10 == 0) {\n          local_e = local_e + 1;\n        }\n        else {\n          local_6 = local_6 + 1;\n        }\n      }\n    }\n    cVar2 = *(char *)(*(byte *)0x162 + 0x162);\n    if ((cVar2 == 'f') || (cVar2 == 'H')) {\n      FUN_410e_0213(1,1);\n      uVar8 = extraout_AH_00;\n      if (0 < local_e) {\n        uVar3 = FUN_410e_023f();\n        FUN_410e_0213(local_118[0],uVar3);\n        uVar8 = extraout_AH_01;\n      }\n      if (1 < local_e) {\n        uVar3 = CONCAT11(uVar8,local_118[1]);\n        uVar4 = FUN_410e_024b(uVar3);\n        FUN_410e_0213(uVar4,uVar3);\n      }\n    }\n    else if (cVar2 == 'K') {\n      local_8 = FUN_410e_023f();\n      local_8 = local_8 & 0xff;\n      local_a = FUN_410e_024b();\n      local_a = local_a & 0xff;\n      do {\n        uVar4 = 0xec16;\n        uVar3 = unaff_DS;\n        FUN_42b5_08b5(0,0x20);\n        FUN_42b5_086c(uVar4,uVar3);\n        FUN_42b5_04a9();\n        cVar2 = FUN_410e_023f();\n      } while (cVar2 != '\\x01');\n      FUN_410e_0213(local_a & 0xff,local_8 & 0xff);\n    }\n    else if (cVar2 == 'm') {\n      if (0 < local_e) {\n        local_11a = local_e;\n        uVar5 = 0;\n        if (0 < local_e) {\n          local_c = 1;\n          while( true ) {\n            bVar1 = local_118[local_c + -1];\n            bVar9 = (byte)(uVar5 >> 8);\n            if (bVar1 == 0) {\n              *(undefined1 *)0x15b = 0;\n              *(undefined1 *)0x15a = 0;\n              FUN_40a5_0000(CONCAT11(bVar9,7));\n              FUN_40a5_003b((uint)extraout_AH_02 << 8);\n            }\n            else if (bVar1 == 1) {\n              *(undefined1 *)0x15b = 1;\n              FUN_40a5_0000(CONCAT11(bVar9,*(undefined1 *)0x15c));\n            }\n            else if (bVar1 == 5) {\n              *(undefined1 *)0x15a = 1;\n              FUN_40a5_0000(CONCAT11(bVar9,*(undefined1 *)0x15c));\n            }\n            else if (bVar1 == 7) {\n              local_3 = *(undefined1 *)0x15c;\n              FUN_40a5_0000(CONCAT11(",
-        "calling_convention": "__cdecl16near",
-        "fn": "FUN_40a5_0098",
-        "target": "stickman"
+        "action": "qwen2.5-coder:14b-instruct-q4_K_M|0.2|1",
+        "done": true,
+        "gate_outcome": {
+          "decision": {
+            "oracle": "routine-trace-parity",
+            "promotion_eligible": true,
+            "reason": "training and terminal parity passed",
+            "status": "verified",
+            "terminal": {
+              "compile": {
+                "returncode": 0,
+                "status": "passed"
+              },
+              "source_path": "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/candidate.inc",
+              "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+              "suites": {
+                "terminal": {
+                  "candidate": {
+                    "cases": 56,
+                    "failures": [],
+                    "matches": 56,
+                    "status": "passed"
+                  },
+                  "original": {
+                    "cases": 56,
+                    "status": "passed"
+                  }
+                }
+              }
+            },
+            "training": {
+              "compile": {
+                "returncode": 0,
+                "status": "passed"
+              },
+              "source_path": "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/candidate.inc",
+              "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+              "suites": {
+                "training": {
+                  "candidate": {
+                    "cases": 56,
+                    "failures": [],
+                    "matches": 56,
+                    "status": "passed"
+                  },
+                  "original": {
+                    "cases": 56,
+                    "status": "passed"
+                  }
+                }
+              }
+            }
+          },
+          "gate_status": "verified",
+          "method": "generic-ir-v1",
+          "oracle": "routine-trace-parity",
+          "outcome": "verified",
+          "promotion_eligible": true,
+          "reward": 1.0,
+          "verified": true
+        },
+        "next_state": "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=1.00|inst=0|callee=True|blocker=None|ver=7",
+        "reward": 1.0,
+        "state": "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=1.00|inst=8|callee=True|blocker=None|ver=6|exq={'targets': ['FUN_24dd_48e1', 'FUN_24dd_4141']}"
       }
     ]
   },
+  "function_history": {
+    "liero": {
+      "FUN_24dd_04dc": {
+        "attempts": 1,
+        "last_result": "verified",
+        "verified": 1
+      }
+    },
+    "sample": {
+      "FUN_249c_0013": {
+        "attempts": 1,
+        "last_result": "verified",
+        "verified": 1
+      },
+      "FUN_24dd_3d68": {
+        "attempts": 1,
+        "last_result": "verified",
+        "verified": 1
+      },
+      "FUN_24dd_40d6": {
+        "attempts": 1,
+        "last_result": "verified",
+        "verified": 1
+      },
+      "FUN_24dd_455e": {
+        "attempts": 1,
+        "last_result": "verified",
+        "verified": 1
+      }
+    }
+  },
+  "last_coverage": 0.020338983050847456,
+  "last_epsilon": 0.14702242509375,
+  "last_type": "gen",
+  "q_table": {
+    "pascal|turbo-pascal-7": {
+      "lang=pascal|turbo-pascal-7|coverage=0.01|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=3": {
+        "bootstrap-move-forward-v2": 0.2
+      },
+      "lang=pascal|turbo-pascal-7|coverage=0.01|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=4": {
+        "oracle-normalize-v1": 0.2
+      },
+      "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=5": {
+        "oracle-arithmetic-v1": 0.2
+      },
+      "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=0.00|inst=0|callee=True|blocker=None|ver=6": {
+        "oracle-init-v1": 0.2
+      },
+      "lang=pascal|turbo-pascal-7|coverage=0.02|recent_sr=1.00|inst=8|callee=True|blocker=None|ver=6|exq={'targets': ['FUN_24dd_48e1', 'FUN_24dd_4141']}": {
+        "qwen2.5-coder:14b-instruct-q4_K_M|0.2|1": 0.2
+      }
+    }
+  },
   "targets": {
     "liero": {
-      "compiler": "turbo-pascal-7",
-      "compiler_confidence": "high",
-      "examples_added": 5,
-      "functions": 295,
-      "language": "pascal",
-      "num_verified": 1,
-      "platform": "dos",
-      "toolchain": "turbo-pascal-7",
+      "_total_functions": 295,
+      "candidates": {
+        "FUN_24dd_04dc": {
+          "action": "qwen2.5-coder:14b-instruct-q4_K_M|0.2|1",
+          "attempts": 1,
+          "detail": {
+            "evidence": {
+              "assembly_sha256": "5d52d5d942f9a6326f1c5f062c3aebf5f097b9e97a5aa568503757683f94f857",
+              "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+              "bytes_sha256": "440dc8e6e579ef895d168051f9a82a7def5562006d3777c191f15b88bf5bce1d",
+              "evidence_gate": {
+                "passed": false,
+                "reasons": [
+                  "raw-byte decoder does not end at a single RET residue"
+                ]
+              },
+              "source_policy": {
+                "binary_derived_evidence_only": true,
+                "candidate_source_in_prompt": false,
+                "decompiler_output_in_prompt": false,
+                "online_agent_seed": null,
+                "source_examples_in_prompt": false
+              }
+            },
+            "pipeline": "target-packet/generic-ir/routine-trace-parity",
+            "promotion": {
+              "dl_readiness": {
+                "behavioral_improvement_established": false,
+                "changes_weights": false,
+                "current_activation_gate": "held-out-target token loss only",
+                "legacy_unverified_c_pairs": 64,
+                "marked_verified_pascal_pairs": 7,
+                "marked_verified_pascal_projects": [
+                  "liero"
+                ],
+                "new_marked_verified_pascal_pairs": 7,
+                "pascal_corpus_blockers": [
+                  "7/64 new unique marked-verified Pascal pairs",
+                  "1/2 projects with marked-verified Pascal pairs"
+                ],
+                "pascal_corpus_status": "blocked",
+                "required_before_weight_promotion": [
+                  "Revalidate complete reviewed routine/source/binary identities and oracle scope; exclude projections, synthetic controls and unknown paths from gold labels.",
+                  "Freeze family-deduplicated project train/development/terminal-test splits; the loss-validation project is development, not an untouched behavioral test.",
+                  "Compare base, retrieval-only and adapted models with equal frozen draft/repair budgets on unseen routines; select on training, then one terminal binary-backed test.",
+                  "Require measured behavioral recovery gain and retention on prior projects; preserve failures and never infer recovery gain from token loss alone."
+                ],
+                "selected_pairs": 71,
+                "source_review_revalidated": false,
+                "threshold": 64,
+                "toolchain": "turbo-pascal-7"
+              },
+              "evidence": [
+                "trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/terminal",
+                "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/arm.json"
+              ],
+              "method": "generic-ir-v1",
+              "oracle": "routine-trace-parity",
+              "previous_source_sha256": "6f1bfbe8a87b369de886aa2bdbc8a52c196b6241cac5c0472988cae2ddc1b31e",
+              "rl_outcome": {
+                "decision": {
+                  "oracle": "routine-trace-parity",
+                  "promotion_eligible": true,
+                  "reason": "training and terminal parity passed",
+                  "status": "verified",
+                  "terminal": {
+                    "compile": {
+                      "returncode": 0,
+                      "status": "passed"
+                    },
+                    "source_path": "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/candidate.inc",
+                    "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+                    "suites": {
+                      "terminal": {
+                        "candidate": {
+                          "cases": 56,
+                          "failures": [],
+                          "matches": 56,
+                          "status": "passed"
+                        },
+                        "original": {
+                          "cases": 56,
+                          "status": "passed"
+                        }
+                      }
+                    }
+                  },
+                  "training": {
+                    "compile": {
+                      "returncode": 0,
+                      "status": "passed"
+                    },
+                    "source_path": "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/candidate.inc",
+                    "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+                    "suites": {
+                      "training": {
+                        "candidate": {
+                          "cases": 56,
+                          "failures": [],
+                          "matches": 56,
+                          "status": "passed"
+                        },
+                        "original": {
+                          "cases": 56,
+                          "status": "passed"
+                        }
+                      }
+                    }
+                  }
+                },
+                "gate_status": "verified",
+                "method": "generic-ir-v1",
+                "oracle": "routine-trace-parity",
+                "outcome": "verified",
+                "promotion_eligible": true,
+                "reward": 1.0,
+                "verified": true
+              },
+              "routine": "FUN_24dd_04dc",
+              "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+              "status": "promoted",
+              "target": "targets/liero/src/FUN_24dd_04dc.inc"
+            },
+            "synthesis": {
+              "ir": {
+                "method": "generic-ir-v1",
+                "operands": {
+                  "add": 7,
+                  "cleanup_bytes": 0,
+                  "declaration": "function FUN_24dd_04dc: Longint;",
+                  "frame_words": 2,
+                  "mask": 8,
+                  "shift": 4
+                },
+                "operations": [
+                  "ADD",
+                  "MOV",
+                  "RCR",
+                  "SHR",
+                  "SHR",
+                  "SHR",
+                  "AND",
+                  "RET"
+                ],
+                "routine": "FUN_24dd_04dc",
+                "schema_version": 1,
+                "shape": "register-shift-mask",
+                "target": "liero"
+              },
+              "ir_sha256": "dbc0caaa96dd84db8abc487a2e31e4cca47a1cd8c68e5335ce948c0342fbbf5d",
+              "method": "generic-ir-v1",
+              "schema_version": 1,
+              "source_policy": {
+                "binary_derived_evidence_only": true,
+                "no_routine_identity_dispatch": true,
+                "source_examples_in_prompt": false
+              },
+              "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+              "status": "synthesized"
+            },
+            "verification": {
+              "checked": 2,
+              "decision": {
+                "oracle": "routine-trace-parity",
+                "promotion_eligible": true,
+                "reason": "training and terminal parity passed",
+                "status": "verified",
+                "terminal": {
+                  "compile": {
+                    "returncode": 0,
+                    "status": "passed"
+                  },
+                  "source_path": "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/candidate.inc",
+                  "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+                  "suites": {
+                    "terminal": {
+                      "candidate": {
+                        "cases": 56,
+                        "failures": [],
+                        "matches": 56,
+                        "status": "passed"
+                      },
+                      "original": {
+                        "cases": 56,
+                        "status": "passed"
+                      }
+                    }
+                  }
+                },
+                "training": {
+                  "compile": {
+                    "returncode": 0,
+                    "status": "passed"
+                  },
+                  "source_path": "/home/robin/OneDrive/University and such/LoSoRe/trials/autonomous/liero/FUN_24dd_04dc/bbf15f495d3245e1aa6cd6b586a1303d/candidate.inc",
+                  "source_sha256": "9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17",
+                  "suites": {
+                    "training": {
+                      "candidate": {
+                        "cases": 56,
+                        "failures": [],
+                        "matches": 56,
+                        "status": "passed"
+                      },
+                      "original": {
+                        "cases": 56,
+                        "status": "passed"
+                      }
+                    }
+                  }
+                }
+              },
+              "oracle": "routine-trace-parity",
+              "promotion_eligible": true,
+              "reason": "training and terminal parity passed",
+              "status": "verified"
+            }
+          },
+          "status": "verified"
+        }
+      },
+      "coverage": 0.0237,
+      "coverage_oracle": "routine-trace-parity",
+      "num_functions": 295,
+      "num_verified": 7,
       "verified": {
-        "dat-parity": [
-          "LIERO.DAT"
+        "routine-trace-parity": [
+          "FUN_249c_0013",
+          "FUN_24dd_04dc",
+          "FUN_24dd_3d68",
+          "FUN_24dd_40d6",
+          "FUN_24dd_4141",
+          "FUN_24dd_455e",
+          "FUN_24dd_48e1"
         ]
       }
     },
-    "liero-dos": {
-      "compiler": "turbo-pascal-7",
-      "compiler_confidence": "high",
-      "examples_added": 5,
-      "functions": 295,
-      "language": "pascal",
-      "platform": "dos",
-      "toolchain": "turbo-pascal-7"
-    },
-    "stickman": {
-      "compiler": "turbo-pascal-7",
-      "compiler_confidence": "high",
-      "examples_added": 5,
-      "functions": 284,
-      "language": "pascal",
-      "platform": "dos",
-      "toolchain": "turbo-pascal-7"
+    "sample": {
+      "candidates": {},
+      "num_functions": 0,
+      "verified": {}
     }
   },
-  "updated": "2026-10-27",
-  "verified_pascal_examples": {},
+  "total_attempts": 5,
+  "total_verified": 5,
+  "updated": "2026-11-23",
+  "verified_pascal_examples": {
+    "turbo-pascal-7": [
+      {
+        "asm": "; FUN_24dd_48e1  entry=24dd:48e1 size=36\n24dd:48e1  MOV BX,SP\n24dd:48e3  MOV DX,DS\n24dd:48e5  LDS SI,SS:[BX + 0xa]\n24dd:48e9  LES DI,SS:[BX + 0x6]\n24dd:48ed  MOV CX,word ptr SS:[BX + 0x4]\n24dd:48f1  CLD\n24dd:48f2  CMP SI,DI\n24dd:48f4  JNC 0x2000:96cd\n24dd:48f6  ADD SI,CX\n24dd:48f8  ADD DI,CX\n24dd:48fa  DEC SI\n24dd:48fb  DEC DI\n24dd:48fc  STD\n24dd:48fd  MOVSB.REP ES:DI,SI\n24dd:48ff  CLD\n24dd:4900  MOV DX,DS\n24dd:4902  RETF 0xa\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "862b3760a3ef66ecffcb101416d9241593d90259de2ff5c88cc6ad62c55bbf0e",
+        "fn": "FUN_24dd_48e1",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "procedure FUN_24dd_48e1(param_1: Integer; param_2, param_3: Pointer);\nvar sourceOffset, destinationOffset, count: LongInt; backward: Boolean;\nbegin\n  sourceOffset := RegisterSI; destinationOffset := RegisterDI;\n  count := Word(param_1); backward := sourceOffset < destinationOffset;\n  Move(param_3^, param_2^, Word(count));\n  RegisterBX := RegisterSP; RegisterDX := RegisterDS;\n  RegisterES := RegisterDS; RegisterCX := 0; RegisterDirectionFlag := False;\n  if backward then begin\n    RegisterCarryFlag := destinationOffset + count > 65535;\n    RegisterZeroFlag := ((destinationOffset + count - 1) and 65535) = 0;\n    RegisterSI := (sourceOffset - 1) and 65535;\n    RegisterDI := (destinationOffset - 1) and 65535;\n  end else begin\n    RegisterCarryFlag := False; RegisterZeroFlag := sourceOffset = destinationOffset;\n    RegisterSI := (sourceOffset + count) and 65535;\n    RegisterDI := (destinationOffset + count) and 65535;\n  end;\n  RegisterSP := (RegisterSP + 14) and 65535;\nend;\n",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-22"
+      },
+      {
+        "asm": "; FUN_24dd_4141  entry=24dd:4141 size=32\n24dd:4141  CLD\n24dd:4142  MOV BX,SP\n24dd:4144  MOV DX,DS\n24dd:4146  LDS SI,SS:[BX + 0xa]\n24dd:414a  LES DI,SS:[BX + 0x6]\n24dd:414e  MOV BX,word ptr SS:[BX + 0x4]\n24dd:4152  MOV CL,BH\n24dd:4154  XOR CH,CH\n24dd:4156  ADD SI,CX\n24dd:4158  MOV CL,BL\n24dd:415a  MOVSB.REP ES:DI,SI\n24dd:415c  MOV DX,DS\n24dd:415e  RETF 0xa\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "5b8ed0657e4ccecc3ec3af2c3b6ed19d5681e460495e6ff717c4aa3ff04ddf83",
+        "fn": "FUN_24dd_4141",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "procedure FUN_24dd_4141(param_1: Word; param_2, param_3: Pointer);\nvar src, dst: PByte; count, skip, i, sourceOffset: LongInt;\nbegin\n  count := param_1 and $ff; skip := param_1 shr 8;\n  src := PByte(param_3); dst := PByte(param_2);\n  for i := 0 to count - 1 do dst[i] := src[skip + i];\n  sourceOffset := (LongInt(RegisterSI) + skip) and $ffff;\n  RegisterBX := param_1; RegisterDX := RegisterDS; RegisterES := RegisterDS;\n  RegisterCarryFlag := LongInt(RegisterSI) + skip > $ffff;\n  RegisterZeroFlag := sourceOffset = 0;\n  RegisterSI := (LongInt(RegisterSI) + skip + count) and $ffff;\n  RegisterDI := (LongInt(RegisterDI) + count) and $ffff;\n  RegisterCX := 0; RegisterDirectionFlag := False;\n  RegisterSP := (LongInt(RegisterSP) + 14) and $ffff;\nend;\n",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-22"
+      },
+      {
+        "asm": "; FUN_24dd_3d68  entry=24dd:3d68 size=24\n24dd:3d68  MOV BX,SP\n24dd:3d6a  MOV DX,DS\n24dd:3d6c  LDS SI,SS:[BX + 0xa]\n24dd:3d70  LES DI,SS:[BX + 0x6]\n24dd:3d74  MOV CX,word ptr SS:[BX + 0x4]\n24dd:3d78  CLD\n24dd:3d79  MOVSB.REP ES:DI,SI\n24dd:3d7b  MOV DX,DS\n24dd:3d7d  RETF 0xa\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "dd577b69b70dcc2a30adf22e4e7078167f2fb8c3971ce4f1420e77ccad0c9abb",
+        "fn": "FUN_24dd_3d68",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "procedure FUN_24dd_3d68(param_1: Integer; param_2, param_3: Pointer);\nvar sourceOffset, destinationOffset, count, i: LongInt; src, dst: PByte;\nbegin\n  sourceOffset := RegisterSI; destinationOffset := RegisterDI;\n  count := Word(param_1);\n  src := PByte(param_3); dst := PByte(param_2);\n  for i := 0 to count - 1 do dst[i] := src[i];\n  RegisterBX := RegisterSP; RegisterDX := RegisterDS;\n  RegisterES := RegisterDS; RegisterCX := 0; RegisterDirectionFlag := False;\n  RegisterSI := (sourceOffset + count) and 65535;\n  RegisterDI := (destinationOffset + count) and 65535;\n  RegisterSP := (RegisterSP + 14) and 65535;\nend;",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-22"
+      },
+      {
+        "asm": "; FUN_24dd_455e  entry=24dd:455e size=60\n24dd:455e  MOV BX,AX\n24dd:4560  OR BX,DX\n24dd:4562  JZ 0x2000:9369\n24dd:4564  MOV CH,DH\n24dd:4566  OR DX,DX\n24dd:4568  JNS 0x2000:9341\n24dd:456a  NEG DX\n24dd:456c  NEG AX\n24dd:456e  SBB DX,0x0\n24dd:4571  MOV BX,AX\n24dd:4573  MOV AX,0xa0\n24dd:4576  OR DX,DX\n24dd:4578  JNZ 0x2000:9356\n24dd:457a  XCHG BX,DX\n24dd:457c  MOV AL,0x90\n24dd:457e  OR DH,DH\n24dd:4580  JNZ 0x2000:9356\n24dd:4582  XCHG DL,DH\n24dd:4584  MOV AL,0x88\n24dd:4586  OR DX,DX\n24dd:4588  JS 0x2000:9362\n24dd:458a  DEC AL\n24dd:458c  ADD BX,BX\n24dd:458e  ADC DX,DX\n24dd:4590  JNS 0x2000:935a\n24dd:4592  OR CH,CH\n24dd:4594  JS 0x2000:9369\n24dd:4596  AND DH,0x7f\n24dd:4599  RET\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "703ac55672edc39276705b6b6aaa7ea9101a59bcdf3b924162a4943cb8a812ec",
+        "fn": "FUN_24dd_455e",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "procedure FUN_24dd_455e;\nvar magnitude: Int64; exponent, originalHigh, flagByte: Word; negative: Boolean;\nbegin\n  originalHigh := RegisterDX;\n  magnitude := Int64(RegisterDX) * 65536 + RegisterAX;\n  if magnitude = 0 then begin\n    RegisterAX := 0; RegisterBX := 0; RegisterDX := 0; flagByte := 0;\n  end else begin\n    RegisterCX := (originalHigh and $ff00) or (RegisterCX and $ff);\n    negative := originalHigh >= $8000;\n    if negative then magnitude := Int64(4294967296) - magnitude;\n    exponent := 160;\n    while magnitude < Int64(2147483648) do begin\n      magnitude := magnitude * 2; Dec(exponent);\n    end;\n    RegisterAX := exponent; RegisterBX := magnitude and $ffff;\n    RegisterDX := (magnitude shr 16) and $ffff;\n    if negative then flagByte := originalHigh shr 8 else begin\n      RegisterDX := RegisterDX and $7fff; flagByte := RegisterDX shr 8;\n    end;\n  end;\n  RegisterCarryFlag := False; RegisterZeroFlag := flagByte = 0;\n  RegisterSP := (RegisterSP + 2) and $ffff;\nend;",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-22"
+      },
+      {
+        "asm": "; FUN_249c_0013  entry=249c:0013 size=36\n249c:0013  PUSH BP\n249c:0014  MOV BP,SP\n249c:0016  MOV DI,word ptr [BP + 0x4]\n249c:0019  MOV AL,byte ptr SS:[DI + 0xfefc]\n249c:001e  XOR AH,AH\n249c:0020  MOV DX,AX\n249c:0022  MOV AL,byte ptr SS:[DI + 0xfefb]\n249c:0027  XOR AH,AH\n249c:0029  SHL AX,0x4\n249c:002c  ADD AX,DX\n249c:002e  MOV byte ptr SS:[DI + 0xfefd],AL\n249c:0033  LEAVE\n249c:0034  RET 0x2\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "128d8720dfbebeb7398251d041c036c3e369d8ed3de351dd6e7ba3833ff7707b",
+        "fn": "FUN_249c_0013",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "procedure FUN_249c_0013(param_1: Word; param_2: Pointer);\nvar p: PByte; value: LongInt;\nbegin\n  p := PByte(param_2);\n  value := (LongInt(p[0]) shl 4) + p[1];\n  RegisterAX := value; RegisterDX := p[1]; RegisterDI := param_1;\n  p[2] := value and 255;\n  RegisterCarryFlag := False; RegisterZeroFlag := value = 0;\n  RegisterSP := (RegisterSP + 4) and 65535;\nend;",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-22"
+      },
+      {
+        "asm": "; FUN_24dd_40d6  entry=24dd:40d6 size=22\n24dd:40d6  CLD\n24dd:40d7  MOV BX,SP\n24dd:40d9  LES DI,SS:[BX + 0x6]\n24dd:40dd  MOV AX,word ptr SS:[BX + 0x4]\n24dd:40e1  STOSW ES:DI\n24dd:40e2  MOV CX,0xf\n24dd:40e5  XOR AX,AX\n24dd:40e7  STOSW.REP ES:DI\n24dd:40e9  RETF 0x2\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "99323a793f0fc2ba37e974e509c75bc79be7ddb82729b26dcd08dc70e6128863",
+        "fn": "FUN_24dd_40d6",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "procedure FUN_24dd_40d6(param_1: Word; param_2: Pointer);\nvar destination: ^Word; remaining, entry: Word;\nbegin\n  entry := RegisterSP;\n  destination := param_2;\n  destination^ := param_1;\n  Inc(destination);\n  remaining := 15;\n  while remaining <> 0 do\n  begin\n    destination^ := 0;\n    Inc(destination);\n    Dec(remaining);\n  end;\n  RegisterAX := 0; RegisterBX := entry; RegisterCX := 0; RegisterDX := $369c;\n  RegisterDI := (RegisterDI + 32) and $ffff;\n  RegisterSP := (entry + 6) and $ffff;\n  RegisterCarryFlag := False; RegisterZeroFlag := True; RegisterDirectionFlag := False;\nend;",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-22"
+      },
+      {
+        "asm": "; FUN_24dd_04dc  entry=24dd:04dc size=17\n24dd:04dc  ADD AX,0x7\n24dd:04df  MOV DX,AX\n24dd:04e1  RCR DX,0x1\n24dd:04e3  SHR DX,0x1\n24dd:04e5  SHR DX,0x1\n24dd:04e7  SHR DX,0x1\n24dd:04e9  AND AX,0x8\n24dd:04ec  RET\n",
+        "calling_convention": null,
+        "compiler": "turbo-pascal-7",
+        "decomp_c": "",
+        "example_id": "3678e96b9223a2c7fa01fd4e15f24e17650d536e5418c74c285ad227027d3288",
+        "fn": "FUN_24dd_04dc",
+        "language": "pascal",
+        "oracle": "routine-trace-parity",
+        "pascal": "function FUN_24dd_04dc: Longint;\nvar adjustedAX, highWord: Word; carryOut: Boolean;\nbegin\n  carryOut := LongInt(RegisterAX) + 7 > $ffff;\n  adjustedAX := (LongInt(RegisterAX) + 7) and $ffff;\n  highWord := adjustedAX shr 4;\n  if carryOut then highWord := highWord or $1000;\n  RegisterAX := adjustedAX and $8;\n  RegisterDX := highWord;\n  RegisterCarryFlag := False; RegisterZeroFlag := False;\n  FUN_24dd_04dc := (LongInt(RegisterDX) shl 16) + RegisterAX;\nend;",
+        "platform": "dos",
+        "target": "liero",
+        "verification_status": "verified",
+        "verified_at": "2026-11-23"
+      }
+    ]
+  },
   "version": 2
 }

@@ -1,0 +1,2671 @@
+{
+  "counts": {
+    "oracle_verified": 7,
+    "partial": 4,
+    "reviewed_unattested": 28,
+    "unrecovered": 256
+  },
+  "functions": [
+    {
+      "attempts": 0,
+      "name": "FUN_1000_01a1",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_39c3",
+        "FUN_24dd_3930",
+        "FUN_24dd_04f4",
+        "FUN_1e7d_018a",
+        "FUN_235c_0086",
+        "FUN_1ec2_0018",
+        "FUN_24dd_3a4b",
+        "FUN_24dd_31d8",
+        "FUN_24dd_3adf",
+        "FUN_24dd_3951",
+        "FUN_235c_0340",
+        "FUN_24dd_0116",
+        "FUN_235c_0361",
+        "FUN_235c_0482",
+        "FUN_235c_04bc",
+        "FUN_235c_0711",
+        "FUN_235c_04f3",
+        "FUN_235c_0bbc"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_05a4",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_235c_0f1d",
+        "FUN_235c_032e",
+        "FUN_235c_08e4",
+        "FUN_235c_04a2"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_05eb",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_1ec2_0810"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_0961",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_0ac7",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4654",
+        "FUN_1000_0961",
+        "FUN_202c_1b84"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_0be1",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4654"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_0c7f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_0d70",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_0ebe",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4654",
+        "FUN_1000_0c7f",
+        "FUN_202c_005a",
+        "FUN_24dd_4161",
+        "FUN_202c_14b6"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_10ec",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161",
+        "FUN_24dd_4654",
+        "FUN_235c_095c",
+        "FUN_202c_1b84",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd",
+        "FUN_24dd_3e7c",
+        "FUN_235c_0a1e",
+        "FUN_202c_18c0",
+        "FUN_235c_09eb",
+        "FUN_202c_14b6",
+        "FUN_1000_0d70",
+        "FUN_202c_165d",
+        "FUN_202c_005a",
+        "FUN_1000_0c7f",
+        "FUN_202c_0000"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_3d39",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd",
+        "FUN_1000_0be1",
+        "FUN_202c_04d5",
+        "FUN_202c_1b84",
+        "FUN_1000_0d70",
+        "FUN_24dd_4654",
+        "FUN_235c_0a1e",
+        "FUN_235c_095c",
+        "FUN_202c_165d",
+        "FUN_202c_005a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_4964",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd",
+        "FUN_24dd_3e7c",
+        "FUN_24dd_4654",
+        "FUN_24dd_4161",
+        "FUN_202c_1b84",
+        "FUN_202c_14b6",
+        "FUN_202c_165d",
+        "FUN_1000_0d70",
+        "FUN_235c_0a1e",
+        "FUN_235c_095c",
+        "FUN_202c_005a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_5aef",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd",
+        "FUN_202c_1b84"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_5c36",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161",
+        "FUN_24dd_4654"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_5e66",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_3dbd",
+        "FUN_1ec2_13d3",
+        "FUN_24dd_4654",
+        "FUN_1ea2_01a8",
+        "FUN_24dd_3d80",
+        "FUN_1ec2_12ad",
+        "FUN_1ec2_13e9",
+        "FUN_24dd_3e95",
+        "FUN_202c_076d",
+        "FUN_24dd_3f14",
+        "FUN_1ec2_00d0",
+        "FUN_24dd_3eaf",
+        "FUN_1ec2_0e8f",
+        "FUN_1ec2_0f44",
+        "FUN_24dd_4161",
+        "FUN_1000_0ebe",
+        "FUN_24dd_3e7c",
+        "FUN_1000_5aef",
+        "FUN_1ec2_1008",
+        "FUN_1ec2_0dc8",
+        "FUN_1ec2_0e4a",
+        "FUN_1000_4964",
+        "FUN_1000_3d39",
+        "FUN_1ec2_0895",
+        "FUN_1ec2_0b0d",
+        "FUN_1ec2_0c3b",
+        "FUN_1ec2_09e7",
+        "FUN_1ec2_0386",
+        "FUN_1ec2_01df",
+        "FUN_1ec2_0734",
+        "FUN_1000_5c36",
+        "FUN_1ec2_13c5",
+        "FUN_1ec2_13b0",
+        "FUN_1ec2_1619",
+        "FUN_1ec2_10ea",
+        "FUN_1ec2_11b5",
+        "FUN_1ec2_155e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_8c03",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_1000_0d70",
+        "FUN_24dd_4161",
+        "FUN_24dd_3e7c",
+        "FUN_24dd_3dbd",
+        "FUN_202c_0000",
+        "FUN_24dd_4654",
+        "FUN_202c_165d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_929a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4654",
+        "FUN_24dd_4161",
+        "FUN_24dd_40ac",
+        "FUN_24dd_40ec",
+        "FUN_24dd_4181",
+        "FUN_1000_5e66",
+        "FUN_1ec2_0000",
+        "FUN_202c_0673",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_235c_095c",
+        "FUN_1ec2_13c5",
+        "FUN_1ec2_10ea",
+        "FUN_1ec2_1619",
+        "FUN_1ec2_155e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_9e7a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_9f45",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4161",
+        "FUN_1ec2_10cf",
+        "FUN_1000_0ebe",
+        "FUN_24dd_4654",
+        "FUN_1000_0c7f",
+        "FUN_202c_005a",
+        "FUN_1000_929a",
+        "FUN_235c_095c",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd",
+        "FUN_1000_0ac7",
+        "FUN_1000_10ec",
+        "FUN_1000_8c03",
+        "FUN_1000_5e66",
+        "FUN_1000_9e7a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_a816",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_202c_0843",
+        "FUN_24dd_3639",
+        "FUN_24dd_36b7",
+        "FUN_24dd_04f4",
+        "FUN_24dd_3988",
+        "FUN_24dd_38f0",
+        "FUN_24dd_4654",
+        "FUN_24dd_3711"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_a8f7",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_3d80"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_a9c1",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24ba_00c4",
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_202c_0673",
+        "FUN_1ec2_00a5",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_249c_019d",
+        "FUN_24dd_4919",
+        "FUN_24dd_403d",
+        "FUN_24dd_3fb1",
+        "FUN_24ba_0090",
+        "FUN_235c_095c",
+        "FUN_202c_093b"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_ab94",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24ba_00c4",
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_202c_0673",
+        "FUN_1ec2_00a5",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_249c_019d",
+        "FUN_24dd_4919",
+        "FUN_24dd_403d",
+        "FUN_24dd_3fb1",
+        "FUN_202c_0843",
+        "FUN_24ba_0090",
+        "FUN_235c_095c",
+        "FUN_202c_08b2",
+        "FUN_1000_05eb"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_ad8b",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24ba_00c4",
+        "FUN_202c_076d",
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_202c_0673",
+        "FUN_1ec2_00a5",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_249c_019d",
+        "FUN_24dd_3fb1",
+        "FUN_24dd_403d",
+        "FUN_1000_a8f7",
+        "FUN_24ba_0090",
+        "FUN_235c_095c"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_b04a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24ba_00c4",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_202c_0673",
+        "FUN_1ec2_00a5",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_249c_019d",
+        "FUN_24dd_403d",
+        "FUN_24dd_3fb1",
+        "FUN_24dd_3eaf",
+        "FUN_24ba_0090",
+        "FUN_235c_095c"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_b28f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_202c_076d",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_b3fe",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24ba_00d8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_b45e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_4905",
+        "FUN_1000_b28f",
+        "FUN_1ec2_00a5",
+        "FUN_202c_0673",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_1ec2_0d5d",
+        "FUN_1ec2_01df",
+        "FUN_235c_095c",
+        "FUN_1000_b04a",
+        "FUN_24dd_3eaf",
+        "FUN_1000_a816",
+        "FUN_1000_ad8b",
+        "FUN_1000_b3fe",
+        "FUN_1000_05eb",
+        "FUN_1ec2_13c5",
+        "FUN_1ec2_1619"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_bcca",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_3eaf",
+        "FUN_202c_076d",
+        "FUN_1ec2_00d0",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3e95",
+        "FUN_202c_0843"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_bfd7",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_1000_ad8b",
+        "FUN_24dd_028a",
+        "FUN_24dd_3eaf",
+        "FUN_24cb_0000",
+        "FUN_24dd_3ed3",
+        "FUN_24cb_003e",
+        "FUN_24dd_3f86",
+        "FUN_1ec2_00a5",
+        "FUN_202c_0673",
+        "FUN_1ec2_0d88",
+        "FUN_1ec2_13e9",
+        "FUN_24dd_3e7c",
+        "FUN_1ec2_12e6",
+        "FUN_1ec2_0d5d",
+        "FUN_235c_095c",
+        "FUN_1ec2_13c5",
+        "FUN_1ec2_1619",
+        "FUN_24dd_029f",
+        "FUN_1000_b45e",
+        "FUN_24ba_00d8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_ccf1",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_235c_095c",
+        "FUN_1000_bfd7"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_cfb7",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_1ec2_10ea",
+        "FUN_1000_5e66",
+        "FUN_1ec2_0d5d",
+        "FUN_1ec2_13e9",
+        "FUN_24dd_4905",
+        "FUN_1ec2_0000",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_1000_bcca",
+        "FUN_202c_0673",
+        "FUN_1ec2_0d88",
+        "FUN_235c_095c",
+        "FUN_1000_bfd7",
+        "FUN_1000_a9c1",
+        "FUN_1000_ab94",
+        "FUN_1000_ccf1",
+        "FUN_1ec2_13c5",
+        "FUN_1ec2_1619",
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_d7b5",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_1000_05eb",
+        "FUN_202c_0f10",
+        "FUN_24dd_4905",
+        "FUN_24dd_4654",
+        "FUN_1000_cfb7",
+        "FUN_1ec2_10cf",
+        "FUN_24dd_3f86",
+        "FUN_1ec2_13e9",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd",
+        "FUN_1000_9f45"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_db9c",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_46e9",
+        "FUN_202c_0843",
+        "FUN_24dd_3639",
+        "FUN_24dd_36b7",
+        "FUN_24dd_04f4",
+        "FUN_24dd_3988",
+        "FUN_24dd_38f0",
+        "FUN_24dd_3711",
+        "FUN_24dd_3eaf",
+        "FUN_202c_08b2",
+        "FUN_1000_a816",
+        "FUN_202c_079e",
+        "FUN_24dd_4654"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1000_df98",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0530",
+        "FUN_24dd_3d2f",
+        "FUN_24dd_3ce0",
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3ed3",
+        "FUN_24dd_3f86",
+        "FUN_202c_0706",
+        "FUN_24dd_3e95",
+        "FUN_24dd_4919",
+        "FUN_24dd_3fb1",
+        "FUN_24dd_3f14"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "entry",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0000",
+        "FUN_24dd_0548",
+        "FUN_235c_135f",
+        "FUN_1ea2_01f0",
+        "FUN_24dd_0530",
+        "FUN_249c_0159",
+        "FUN_249c_0037",
+        "FUN_24dd_02b9",
+        "FUN_24dd_028a",
+        "FUN_24dd_3930",
+        "FUN_24dd_04f4",
+        "FUN_1ea2_0000",
+        "FUN_24dd_39c3",
+        "FUN_24dd_3951",
+        "FUN_1000_db9c",
+        "FUN_1000_df98",
+        "FUN_1000_01a1",
+        "FUN_24dd_40ac",
+        "FUN_24dd_4181",
+        "FUN_249c_0180",
+        "FUN_249c_019d",
+        "FUN_24ba_0090",
+        "FUN_24ba_00d8",
+        "FUN_1ec2_15bb",
+        "FUN_1ec2_13c5",
+        "FUN_1ec2_10ea",
+        "FUN_24dd_029f",
+        "FUN_1ec2_13a4",
+        "FUN_1000_d7b5",
+        "FUN_24ba_00c4",
+        "FUN_202c_093b",
+        "FUN_1ea2_0104",
+        "FUN_1000_05a4",
+        "FUN_24dd_02cb",
+        "FUN_24dd_0116"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1e7d_0082",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3fb1",
+        "FUN_24dd_3f40",
+        "FUN_24dd_403d",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3fde",
+        "FUN_24dd_4824"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1e7d_018a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3e95",
+        "FUN_24cb_00a7",
+        "FUN_24dd_3eaf",
+        "FUN_1e7d_0082"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ea2_0000",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0303",
+        "FUN_24dd_028a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ea2_0104",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_029f"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ea2_01a8",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ea2_01f0",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0000",
+      "status": "partial",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0018",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3fb1",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_00a5",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_00d0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3dbd",
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3e95",
+        "FUN_202c_076d",
+        "FUN_24dd_3f14"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_01df",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_0dc8",
+        "FUN_1ec2_0e06"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0386",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_0dc8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0734",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_0e4a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0810",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_10cf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_086b",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0895",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_086b",
+        "FUN_24dd_4654",
+        "FUN_1ec2_0dc8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_09bd",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_09e7",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_09bd",
+        "FUN_1ec2_0e4a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0ae3",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0b0d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_0ae3",
+        "FUN_1ec2_0dc8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0c11",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0c3b",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_0c11",
+        "FUN_1ec2_0dc8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0d5d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0d88",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0dc8",
+      "status": "partial",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0e06",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0e4a",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0e8f",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_0f44",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_1008",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_10cf",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_10ea",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_10cf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_11b5",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_10cf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_12ad",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_12e6",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_13a4",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_13b0",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_13c5",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_13d3",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_13e9",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_2971_67f6"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_152f",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_155e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_2971_65df"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_15bb",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_152f"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_1ec2_1619",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_1ec2_152f",
+        "FUN_2971_65df"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0000",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3d80",
+        "FUN_24dd_32a9",
+        "FUN_24dd_3249"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_005a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_032d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_04d5",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0673",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0706",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4824",
+        "FUN_24dd_46e9"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_076d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_47d9",
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_079e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_202c_0843",
+        "FUN_24dd_3b22",
+        "FUN_24dd_3b5d",
+        "FUN_24dd_04f4",
+        "FUN_24dd_3cb0",
+        "FUN_24dd_3c48",
+        "FUN_24dd_3bde"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0843",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3b22",
+        "FUN_24dd_3b5d",
+        "FUN_24dd_3bde",
+        "FUN_24dd_04ed"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_08b2",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_202c_079e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_093b",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3eaf",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3639",
+        "FUN_24dd_36bc",
+        "FUN_24dd_04f4",
+        "FUN_24dd_39c3",
+        "FUN_24dd_3930",
+        "FUN_24dd_3711",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3b22",
+        "FUN_24dd_3b66",
+        "FUN_24dd_3c4f",
+        "FUN_24dd_3bde"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0a74",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0b0e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_202c_0843",
+        "FUN_24dd_3b22",
+        "FUN_24dd_3b5d",
+        "FUN_24dd_04f4",
+        "FUN_24dd_3c48",
+        "FUN_24dd_3bde"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0bc0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4654",
+        "FUN_202c_032d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_0f10",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_46e9",
+        "FUN_202c_0bc0",
+        "FUN_24dd_4654",
+        "FUN_202c_005a",
+        "FUN_202c_0a74",
+        "FUN_202c_032d",
+        "FUN_24dd_4161",
+        "FUN_24dd_3e95",
+        "FUN_24dd_3f14",
+        "FUN_202c_0b0e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_14b6",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4654"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_165d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4654",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_18c0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4654",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3dbd"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_202c_1b84",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4654",
+        "FUN_235c_095c",
+        "FUN_24dd_3d80",
+        "FUN_24dd_3e63",
+        "FUN_24dd_3dbd",
+        "FUN_202c_165d",
+        "FUN_235c_0a1e",
+        "FUN_202c_14b6",
+        "FUN_202c_005a",
+        "FUN_24dd_4161"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0000",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_001a",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0036",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_249c_01c3",
+        "FUN_235c_001a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0086",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0036",
+        "FUN_235c_0000",
+        "FUN_235c_001a",
+        "FUN_24dd_462e",
+        "FUN_24dd_31d8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_032e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_131a",
+        "FUN_235c_0036"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0340",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_1380",
+        "FUN_2494_0010"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0361",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_2494_001e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0372",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3dbd"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_03a1",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0000",
+        "FUN_235c_0372"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_045d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0000"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0482",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_2494_0027"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_04a2",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_2494_0050"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_04bc",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_04f3",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0502",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3fc3",
+        "FUN_24dd_3f86"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_056f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3b22",
+        "FUN_24dd_3b5d",
+        "FUN_24dd_04f4",
+        "FUN_24dd_3c48",
+        "FUN_235c_0502",
+        "FUN_24dd_3cb0",
+        "FUN_24dd_0116",
+        "FUN_24dd_486c"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_06d7",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0711",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_056f",
+        "FUN_24dd_028a",
+        "FUN_24dd_3dbd",
+        "FUN_2494_0027",
+        "FUN_2494_003d",
+        "FUN_235c_06d7",
+        "FUN_24dd_3c48",
+        "FUN_24dd_04f4",
+        "FUN_24dd_3d80",
+        "FUN_2494_0060",
+        "FUN_24dd_3bde"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_08e4",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_2494_0050",
+        "FUN_24dd_029f"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_091d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_095c",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_09eb",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_091d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0a1e",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0a51",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_091d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0aad",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0ad3",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0aad"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0aeb",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4905"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0aff",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3d80"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0b33",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0aff",
+        "FUN_24dd_3dbd"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0b7c",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0bbc",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_091d",
+        "FUN_24dd_028a",
+        "FUN_235c_0aff",
+        "FUN_24dd_3dbd",
+        "FUN_235c_0b33",
+        "FUN_24dd_4905",
+        "FUN_235c_0b7c",
+        "FUN_235c_0aad",
+        "FUN_235c_03a1"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0f1d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_045d",
+        "FUN_24dd_029f"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_0f57",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3dbd",
+        "FUN_235c_0b33",
+        "FUN_24dd_3d80",
+        "FUN_2494_0060"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_10a3",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0f57"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_1162",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0aeb",
+        "FUN_235c_10a3"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_118c",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_11aa",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_11db",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_118c",
+        "FUN_235c_11aa"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_11ef",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_0000"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_131a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24cb_0094"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_1345",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_235c_045d",
+        "FUN_235c_032e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_135f",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_235c_1380",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2494_0010",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2494_001e",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2494_0027",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2494_003d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2494_0050",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2494_0060",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_0000",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_0013",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_0037",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_249c_0000",
+        "FUN_24dd_3930",
+        "FUN_24dd_04f4"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_0159",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_249c_0000"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_0180",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_019d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_249c_01c3",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24ba_0090",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4905",
+        "FUN_24cb_007c",
+        "FUN_24cb_0094"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24ba_00c4",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24cb_0094"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24ba_00d8",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24cb_0000",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24cb_0058"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24cb_003e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24cb_0058"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24cb_0058",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24cb_007c",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24cb_0094",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24cb_00a7",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0000",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_492c",
+        "FUN_24dd_00b1",
+        "FUN_24dd_3639",
+        "FUN_24dd_36b7",
+        "FUN_24dd_36bc"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_00b1",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_010f",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0116",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3711",
+        "FUN_24dd_01f0",
+        "FUN_24dd_01fe",
+        "FUN_24dd_0218",
+        "FUN_24dd_0232"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_01f0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0232"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_01fe",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_020a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_020a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0232"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0218",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_021f"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_021f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_022a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_022a",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0232",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_028a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0353"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_029f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_041e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_02b9",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_02cb",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0303",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0353",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_041e",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_047d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_047d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 1,
+      "name": "FUN_24dd_04dc",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_04ed",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_04f4",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0530",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0548",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_2fcd"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0582",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_05e8",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_05fd",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_060f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_2361"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0628",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0642",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0673",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0e57",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_2361"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_0ee2",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0e57",
+        "FUN_24dd_060f",
+        "FUN_24dd_2361"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_10a7",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_2361",
+        "FUN_24dd_0e57",
+        "FUN_24dd_060f",
+        "FUN_24dd_05fd",
+        "FUN_24dd_0628",
+        "FUN_24dd_1190"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_1190",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_1277",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_2361",
+        "FUN_24dd_05fd",
+        "FUN_24dd_0e57",
+        "FUN_24dd_060f"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_14c4",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0628",
+        "FUN_24dd_1519",
+        "FUN_24dd_1277",
+        "FUN_24dd_0ee2",
+        "FUN_24dd_0e57",
+        "FUN_24dd_2361",
+        "FUN_24dd_05e8"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_1519",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_17d1",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_18d9",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0642",
+        "FUN_24dd_1190"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_1ee4",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_1eee",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0628",
+        "FUN_24dd_1f27",
+        "FUN_24dd_0642",
+        "FUN_24dd_10a7"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_1f27",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_0582",
+        "FUN_24dd_0ee2",
+        "FUN_24dd_1277",
+        "FUN_24dd_0673",
+        "FUN_24dd_17d1",
+        "FUN_24dd_18d9",
+        "FUN_24dd_10a7"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_2361",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_23c0",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_23ef",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_23c0"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_24ba",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_24d8",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_24ba",
+        "FUN_24dd_2361"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_2e94",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_2fcd",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3054",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3117",
+        "FUN_24dd_31a6"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3117",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_31a6",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_31d8",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3249",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_32a9",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3360",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_35d4",
+        "FUN_24dd_350e"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_350e",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_351a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_35b3",
+        "FUN_24dd_4732",
+        "FUN_24dd_35d4"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_35b3",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_35d4",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_1ee4"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3639",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_36b7",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_36bc",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_36c4",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3711",
+        "FUN_24dd_374d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3711",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_374d"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_374d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_37ec",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_396c"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_384a",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_396c"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3899",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_396c"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_38f0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_37ec",
+        "FUN_24dd_397a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3930",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3899",
+        "FUN_24dd_397a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3951",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_397a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_396c",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_397a",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3988",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_37ec"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_39c3",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_384a",
+        "FUN_24dd_3899"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_39ef",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_37ec",
+        "FUN_24dd_4732"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3a4b",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_46f6",
+        "FUN_24dd_384a",
+        "FUN_24dd_3899"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3a7f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_37ec",
+        "FUN_24dd_351a"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3adf",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3360",
+        "FUN_24dd_384a",
+        "FUN_24dd_3899"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3b22",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3b5d",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3b66",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3bde"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3bde",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3c03"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3c03",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3c48",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3c4f",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3c03"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3cb0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3c03"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3ce0",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3d36"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3d2f",
+      "status": "reviewed_unattested",
+      "unverified_callees": [
+        "FUN_24dd_3d36"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3d36",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3d68",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3d80",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3dbd",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3e63",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3e7c",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3e95",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3eaf",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3ed3",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3f14",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3f40",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3f86",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3fb1",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3fc3",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_3fde",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3ed3",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_403d",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_3ed3",
+        "FUN_24dd_3f14",
+        "FUN_24dd_3eaf"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_40ac",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_40d6",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_40ec",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4141",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4161",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4181",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_455e",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_462e",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4654",
+      "status": "partial",
+      "unverified_callees": [
+        "FUN_24dd_46b1"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_46b1",
+      "status": "partial",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_46e9",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_46f6",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4712"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4712",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4732",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_47d9",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_46f6"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4824",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_4732"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_486c",
+      "status": "unrecovered",
+      "unverified_callees": [
+        "FUN_24dd_489c",
+        "FUN_24dd_3dbd"
+      ]
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_489c",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_48e1",
+      "status": "oracle_verified",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4905",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_4919",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_24dd_492c",
+      "status": "reviewed_unattested",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2971_65df",
+      "status": "unrecovered",
+      "unverified_callees": []
+    },
+    {
+      "attempts": 0,
+      "name": "FUN_2971_67f6",
+      "status": "unrecovered",
+      "unverified_callees": []
+    }
+  ],
+  "generated": "2026-11-23T00:57:52.587685+00:00",
+  "oracle": "dat-parity",
+  "promotion_policy": "dat-parity and constructor-parity are scoped checks and never promote source",
+  "schema_version": 2,
+  "target": "liero",
+  "total": 295,
+  "verification": {
+    "checked": 1,
+    "reason": "format round-trip only; no source promotion",
+    "status": "scoped"
+  },
+  "verified_functions": [
+    "FUN_249c_0013",
+    "FUN_24dd_04dc",
+    "FUN_24dd_3d68",
+    "FUN_24dd_40d6",
+    "FUN_24dd_4141",
+    "FUN_24dd_455e",
+    "FUN_24dd_48e1"
+  ]
+}
