@@ -8,7 +8,7 @@ license = { text = "MIT" }
 dependencies = []  # engine/tools are stdlib-only by design
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "ruff>=0.9"]
+dev = ["pytest>=7", "ruff>=0.9", "mypy>=1.10"]
 training = [
     "torch>=2.4",
     "transformers>=4.46,<5",
