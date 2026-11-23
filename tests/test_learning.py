@@ -132,6 +132,23 @@ def test_record_verified_closes_loop(tmp_path):
     assert "byte-exact" in data2["targets"]["tgt-a"]["verified"]
 
 
+def test_record_verified_adds_synthetic_pascal_example(tmp_path, monkeypatch):
+    store = tmp_path / "knowledge.json"
+    _make_target(tmp_path, "tgt-pascal")
+    src = tmp_path / "targets" / "tgt-pascal" / "src"
+    src.mkdir()
+    (src / "FUN_0.inc").write_text("procedure FUN_0;\nbegin\nend;\n")
+    monkeypatch.chdir(tmp_path)
+    knowledge.save(knowledge._empty(), store)
+    data = knowledge.load(store)
+    knowledge.record_verified(data, "tgt-pascal", ["FUN_0"],
+                              "routine-trace-parity", store=store)
+    data2 = knowledge.load(store)
+    examples = data2["verified_pascal_examples"]["turbo-pascal-7"]
+    assert [item["fn"] for item in examples] == ["FUN_0"]
+    assert examples[0]["oracle"] == "routine-trace-parity"
+
+
 def _verified_pascal_pair(target, fn, asm, source, convention="__cdecl16near"):
     return {
         "fn": fn,
