@@ -24,6 +24,16 @@ import re
 STORE = pathlib.Path("knowledge/knowledge.json")
 SCHEMA_VERSION = 2
 
+
+def _yaml_value(path: pathlib.Path, key: str, default: str = "unknown") -> str:
+    if not path.exists():
+        return default
+    for line2 in path.read_text(errors="replace").splitlines():
+        if line2.startswith(key + ":"):
+            return line2.split(":", 1)[1].strip() or default
+    return default
+
+
 # examples with success_rate below this are excluded from few-shot prompts
 MIN_EXAMPLE_SUCCESS_RATE = 0.3
 
@@ -293,6 +303,26 @@ def record_verified(data: dict, target: str, passed: list[str],
     t.setdefault("verified", {})
     t["verified"][oracle] = sorted(set(passed))
     t["num_verified"] = len(t["verified"].get(oracle, []))
+
+    # --- NEW: Compute and store coverage ---
+    total_funcs = data.get("targets", {}).get(target, {}).get("_total_functions", 0)
+    if total_funcs == 0:
+        # Try to compute from functions.json
+        funcs_path = pathlib.Path(f"targets/{target}/functions.json")
+        if funcs_path.exists():
+            import json as _json
+            funcs = _json.loads(funcs_path.read_text(errors="replace")).get("functions", [])
+            total_funcs = len(funcs)
+            data["targets"][target]["_total_functions"] = total_funcs
+
+    if total_funcs > 0:
+        coverage = len(t["verified"].get(oracle, [])) / total_funcs
+        t["coverage"] = round(coverage, 4)
+        t["coverage_oracle"] = oracle
+
+    # --- NEW: Record verified Pascal examples ---
+    _record_verified_pascal_examples(data, target, passed, oracle)
+
     save(data, store)
 
 
@@ -307,12 +337,109 @@ def stats(data: dict) -> dict:
     for tc in comps.values():
         for cat in tc.get("failures", {}).values():
             failure_total += cat.get("count", 0)
+
+    # Compute coverage summary
+    targets_seen = len(data.get("targets", {}))
+    total_verified = 0
+    total_functions = 0
+    coverage_by_target = {}
+
+    for target, tdata in data.get("targets", {}).items():
+        verified_count = len(tdata.get("verified", {}).get("dat-parity", []))
+        # Try to get total functions
+        funcs_path = pathlib.Path(f"targets/{target}/functions.json")
+        if funcs_path.exists():
+            import json as _json
+            funcs = _json.loads(funcs_path.read_text(errors="replace")).get("functions", [])
+            fn_count = len(funcs)
+        else:
+            fn_count = 0
+        total_functions += fn_count
+        total_verified += verified_count
+        coverage = verified_count / fn_count if fn_count > 0 else 0
+        coverage_by_target[target] = {
+            "verified": verified_count,
+            "total": fn_count,
+            "coverage_pct": round(coverage * 100, 1)
+        }
+
     return {
-        "targets_seen": len(data.get("targets", {})),
+        "targets_seen": targets_seen,
         "toolchains_seen": len(comps),
         "examples_total": sum(len(v) for v in data.get("examples", {}).values()),
         "example_quality_entries": eq_total,
         "failure_catalogue_entries": failure_total,
         "most_experienced": sorted(
             comps.items(), key=lambda kv: -len(kv[1].get("targets", [])))[:3],
+        "coverage_summary": {
+            "total_verified": total_verified,
+            "total_functions": total_functions,
+            "overall_coverage_pct": round(total_verified / total_functions * 100, 1) if total_functions > 0 else 0,
+            "coverage_by_target": coverage_by_target,
+        }
     }
+
+
+def _record_verified_pascal_examples(data: dict, target: str, passed: list[str],
+                                     oracle: str) -> None:
+    """Record verified Pascal examples for passed functions.
+
+    Reads the Pascal and ASM files for each passed function and records
+    them in the verified_pascal_examples section of the knowledge base.
+    """
+    import json as _json
+    t = data["targets"].get(target, {})
+    passed_set = set(passed)
+
+    # Get compiler/platform info for this target
+    config_dir = pathlib.Path(f"targets/{target}/config")
+    toolchain = {
+        "compiler": _yaml_value(config_dir / "toolchain.yaml", "compiler", ""),
+        "platform": _yaml_value(config_dir / "toolchain.yaml", "platform", ""),
+    }
+
+    for fn in passed_set:
+        # Read the Pascal file if it exists
+        pascal_file = pathlib.Path(f"targets/{target}/src/{fn}.inc")
+        if pascal_file.is_file():
+            pascal_body = pascal_file.read_text(errors="replace")
+            # Read asm file for anchors
+            asm_file = pathlib.Path(f"targets/{target}/asm/{fn}.s")
+            asm_body = ""
+            if asm_file.is_file():
+                asm_body = asm_file.read_text(errors="replace")
+
+            # Generate example_id
+            digest_input = "\0".join(
+                (toolchain["compiler"], target, fn, asm_body, pascal_body)
+            )
+            example_id = hashlib.sha256(digest_input.encode("utf-8")).hexdigest()
+
+            # Check if example already exists
+            examples = data.setdefault("verified_pascal_examples", {}).setdefault(
+                compiler_key(toolchain["compiler"], toolchain["platform"]), []
+            )
+            if not any(item.get("example_id") == example_id for item in examples):
+                record = {
+                    "example_id": example_id,
+                    "fn": fn,
+                    "target": target,
+                    "compiler": toolchain["compiler"],
+                    "platform": toolchain["platform"],
+                    "language": "pascal",
+                    "calling_convention": None,
+                    "asm": asm_body,
+                    "decomp_c": "",
+                    "pascal": pascal_body,
+                    "verification_status": "verified",
+                    "oracle": oracle,
+                    "verified_at": _dt.date.today().isoformat(),
+                }
+                examples.append(record)
+
+            # Update example quality
+            key = compiler_key(toolchain["compiler"], toolchain["platform"])
+            if key not in data.setdefault("compilers", {}):
+                data.setdefault("compilers", {})[key] = {}
+            if fn not in data["compilers"][key].setdefault("targets", []):
+                data["compilers"][key].setdefault("targets", []).append(fn)

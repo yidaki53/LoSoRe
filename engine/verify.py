@@ -12,8 +12,9 @@ Oracles:
       -> original Liero constructor versus host Pascal over a fixed guarded
          corpus; reports scoped results and constraints, without any promotion.
 
-When checks pass, records which relpaths matched back into knowledge/knowledge.json
-(engine/knowledge.record_verified) so the factory accumulates verified work.
+When byte/relocation/trace checks pass, records which relpaths matched back into
+knowledge/knowledge.json (engine/knowledge.record_verified) so the factory
+accumulates verified work. Format checks never write to that store.
 
 NEW (self-improvement):
   * On pass: retain an actual Pascal function body only when its matching
@@ -31,14 +32,15 @@ import pathlib
 import re
 import sys
 import uuid
+from typing import Any
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from diff import byte_exact, relocation_aware
 
 import knowledge
 
-ORACLES = ["byte-exact", "relocation-aware", "round-trip", "trace-parity", "dat-parity",
-           "constructor-parity"]
+ORACLES = ["byte-exact", "relocation-aware", "round-trip", "trace-parity",
+           "routine-trace-parity", "dat-parity", "constructor-parity"]
 
 
 def _yaml_value(path: pathlib.Path, key: str, default: str = "unknown") -> str:
@@ -139,6 +141,8 @@ def _load_dat_oracle(target: str):
     for p in candidates:
         if p.exists():
             spec = importlib.util.spec_from_file_location(f"{target}_liero_dat", p)
+            if spec is None or spec.loader is None:
+                continue
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
             return mod
@@ -160,53 +164,106 @@ def _dat_parity(target: str, byod: pathlib.Path) -> int:
         return 0
     rt_ok, cov, notes = mod.round_trip(dat.read_bytes())
     print(f"[{'OK ' if rt_ok else 'DIFF'}:dat-parity/round-trip] coverage={cov:.0%}")
-    if rt_ok:
-        data = knowledge.load()
-        knowledge.record_verified(data, target, ["LIERO.DAT"], "dat-parity")
-        knowledge.save(data)
     return 0 if rt_ok else 1
 
 
-def verify(target: str, byod: pathlib.Path, build: pathlib.Path, oracle: str = "byte-exact") -> int:
-    if oracle == "constructor-parity":
-        return _constructor_parity(target, byod, build)
-    if oracle == "dat-parity":
-        if not byod.exists():
-            print(f"[verify:{target}] SKIP no BYOD at {byod} (disc-gated, CI passes)")
-            return 0
-        ok = _dat_parity(target, byod) == 0
-        print(f"[verify:{target}] {'PASS' if ok else 'FAIL'}")
-        return 0 if ok else 1
+def _gate_entries(path: pathlib.Path) -> list[str]:
+    if not path.is_file():
+        return []
+    return [
+        ln.strip() for ln in path.read_text(errors="replace").splitlines()
+        if ln.strip() and not ln.strip().startswith("#")
+    ]
 
+
+def verify_status(target: str, byod: pathlib.Path | None,
+                  build: pathlib.Path | None,
+                  oracle: str = "byte-exact",
+                  *,
+                  routine: str | None = None,
+                  source_path: pathlib.Path | None = None,
+                  output: pathlib.Path | None = None,
+                  root: pathlib.Path | None = None) -> dict:
+    """Return a truthful verification status; never convert skip into verified."""
+    byod_path = pathlib.Path(byod) if byod is not None else None
+    build_path = pathlib.Path(build) if build is not None else None
     cfg = pathlib.Path(f"targets/{target}/config/build.sha1")
-    if not byod.exists():
-        print(f"[verify:{target}] SKIP no BYOD at {byod} (disc-gated, CI passes)")
-        return 0
-    if not cfg.exists():
-        print(f"[verify:{target}] no oracle config — NOT verified (residue build only)")
-        return 0
-    entries = [ln.strip() for ln in cfg.read_text().splitlines()
-               if ln.strip() and not ln.strip().startswith("#")]
+    entries = _gate_entries(cfg)
+
+    if oracle == "routine-trace-parity":
+        if not routine or source_path is None or output is None:
+            return {
+                "status": "not_verified",
+                "checked": 0,
+                "reason": "routine-trace-parity requires routine, source_path and output",
+            }
+        from engine import oracle_gate
+        decision = oracle_gate.evaluate_routine(
+            root or pathlib.Path.cwd(), target, routine, source_path, output
+        )
+        result = oracle_gate.decide(oracle, decision)
+        return {**result, "checked": 2, "decision": decision}
+
+    if oracle == "constructor-parity":
+
+        if byod_path is None:
+            return {"status": "skipped", "reason": "no BYOD", "checked": 0}
+        rc = _constructor_parity(target, byod_path, build_path or pathlib.Path("."))
+        return {"status": "failed" if rc else "scoped", "checked": 0,
+                "reason": "constructor-parity never promotes"}
+
+    if oracle == "dat-parity":
+        if byod_path is None or not byod_path.exists() or not (byod_path / "LIERO.DAT").is_file():
+            mod = _load_dat_oracle(target)
+            if mod is None:
+                print(f"[verify:{target}] dat-parity SKIP (no tools/liero_dat.py)")
+                return {"status": "skipped", "checked": 0}
+            ok, msg = mod.selftest()
+            print(f"[{'OK ' if ok else 'DIFF'}:dat-parity/selftest] {msg}")
+            print(f"[verify:{target}] SKIP dat-parity: no LIERO.DAT in BYOD")
+            return {"status": "scoped" if ok else "failed", "checked": 1,
+                    "reason": "format selftest only; no source promotion"}
+        rc = _dat_parity(target, byod_path)
+        return {"status": "failed" if rc else "scoped", "checked": 1,
+                "reason": "format round-trip only; no source promotion"}
+
+    if not cfg.is_file():
+        print(f"[verify:{target}] WARN no build.sha1 file -- NOT verified")
+        return {"status": "not_verified", "checked": 0, "reason": "missing oracle gate"}
     if not entries:
-        # An empty oracle gate means NOTHING was checked — this is not a pass.
-        print(f"[verify:{target}] WARN empty build.sha1 — NOT verified "
-              f"(residue build only; add '<sha1> <relpath>' entries to gate)")
-        return 0
-    ok = True
+        print(f"[verify:{target}] WARN empty build.sha1 -- NOT verified")
+        return {"status": "not_verified", "checked": 0, "reason": "empty oracle gate"}
+    if byod_path is None or not byod_path.exists():
+        print(f"[verify:{target}] SKIP no BYOD at {byod_path} (disc-gated)")
+        return {"status": "skipped", "checked": 0, "reason": "no BYOD"}
+    if build_path is None or not build_path.is_dir():
+        print(f"[verify:{target}] WARN no build directory -- NOT verified")
+        return {"status": "not_verified", "checked": 0, "reason": "no build"}
+
     passed: list[str] = []
     failed: list[str] = []
     for line in entries:
-        expect, rel = line.split()
-        match = (relocation_aware if oracle == "relocation-aware" else byte_exact)(byod / rel, build / rel)
+        parts = line.split()
+        if len(parts) != 2:
+            failed.append(line)
+            continue
+        expect, rel = parts
+        a_path = byod_path / rel
+        b_path = build_path / rel
+        if not a_path.is_file() or not b_path.is_file():
+            print(f"[SKIP:{oracle}] {rel} (missing on one side)")
+            continue
+        match = (relocation_aware if oracle == "relocation-aware" else byte_exact)(a_path, b_path)
         print(f"[{'OK ' if match else 'DIFF'}:{oracle}] {rel}")
-        ok = ok and match
-        if match:
-            passed.append(rel)
-        else:
-            failed.append(rel)
+        (passed if match else failed).append(rel)
+    checked = len(passed) + len(failed)
+    if checked == 0:
+        print(f"[verify:{target}] SKIP no files to compare in build/ -- NOT verified")
+        return {"status": "not_verified", "checked": 0,
+                "reason": "no build files matched the gate"}
+    ok = not failed
     print(f"[verify:{target}] {'PASS' if ok else 'FAIL'}")
 
-    # --- self-improvement feedback ---
     data = knowledge.load()
     config = pathlib.Path(f"targets/{target}/config")
     compiler = _yaml_value(config / "toolchain.yaml", "compiler",
@@ -214,30 +271,43 @@ def verify(target: str, byod: pathlib.Path, build: pathlib.Path, oracle: str = "
     platform = _yaml_value(config / "toolchain.yaml", "platform",
                            _yaml_value(config / "target.yaml", "platform"))
     tc = knowledge.compiler_key(compiler, platform)
-
     if passed:
         knowledge.record_verified(data, target, passed, oracle)
         print(f"[verify:{target}] recorded {len(passed)} verified -> knowledge store")
         _promote_verified_pascal(target, passed, oracle, data, tc)
-        knowledge.save(data)
-
     if failed:
-        # Record failures for negative feedback
         for rel in failed:
             fn = rel.rsplit(".", 1)[0] if "." in rel else rel
             try:
-                knowledge.record_example_failure(data, tc,
-                                                 {"fn": fn, "target": target})
+                knowledge.record_example_failure(data, tc, {"fn": fn, "target": target})
                 asm_file = pathlib.Path(f"targets/{target}/asm/{fn}.s")
                 asm_snippet = asm_file.read_text(errors="replace")[:500] if asm_file.exists() else ""
-                knowledge.record_failure(
-                    data, tc, "unknown", asm_snippet, fn, target,
-                )
+                knowledge.record_failure(data, tc, "unknown", asm_snippet, fn, target)
             except Exception as e:
                 print(f"[verify:{target}] could not record failure for {fn}: {e}")
-        knowledge.save(data)
+    knowledge.save(data)
+    return {"status": "verified" if ok else "failed", "checked": checked,
+            "passed": passed, "failed": failed, "oracle": oracle}
 
-    return 0 if ok else 1
+
+def verify_routine_status(
+    root: pathlib.Path,
+    target: str,
+    routine: str,
+    source_path: pathlib.Path,
+    output: pathlib.Path,
+) -> dict:
+    return verify_status(
+        target, None, None, "routine-trace-parity",
+        routine=routine, source_path=source_path, output=output, root=root,
+    )
+
+
+def verify(target: str, byod: pathlib.Path | None, build: pathlib.Path | None,
+           oracle: str = "byte-exact", **kwargs: Any) -> int:
+    """Compatibility wrapper: only a real oracle failure is non-zero."""
+    result = verify_status(target, byod, build, oracle, **kwargs)
+    return 1 if result["status"] == "failed" else 0
 
 
 def _constructor_parity(target: str, byod: pathlib.Path, build: pathlib.Path) -> int:
@@ -271,7 +341,21 @@ if __name__ == "__main__":
     ap.add_argument("--byod", default=None)
     ap.add_argument("--build", default=None)
     ap.add_argument("--oracle", default="byte-exact", choices=ORACLES)
+    ap.add_argument("--routine", default=None)
+    ap.add_argument("--source", default=None)
+    ap.add_argument("--output", default=None)
+    ap.add_argument("--root", default=None)
     a = ap.parse_args()
     t = a.target
+    kwargs = {}
+    if a.routine:
+        kwargs["routine"] = a.routine
+    if a.source:
+        kwargs["source_path"] = pathlib.Path(a.source)
+    if a.output:
+        kwargs["output"] = pathlib.Path(a.output)
+    if a.root:
+        kwargs["root"] = pathlib.Path(a.root)
     sys.exit(verify(t, pathlib.Path(a.byod or f"extracted/{t}"),
-                    pathlib.Path(a.build or f"targets/{t}/build"), a.oracle))
+                    pathlib.Path(a.build or f"targets/{t}/build"), a.oracle,
+                    **kwargs))

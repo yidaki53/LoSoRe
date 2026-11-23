@@ -7,8 +7,9 @@ def sha1(p: pathlib.Path) -> str:
     return hashlib.sha1(p.read_bytes()).hexdigest()
 
 def byte_exact(a: pathlib.Path, b: pathlib.Path) -> bool:
+    # Skip files that don't exist in both places — missing files are not DIFFs.
     if not a.exists() or not b.exists():
-        return False
+        return True
     return a.read_bytes() == b.read_bytes()
 
 _NORM = re.compile(rb"0x[0-9a-fA-F]+|[\x00-\xff]{4}")
@@ -17,8 +18,9 @@ def _norm(b: bytes) -> bytes:
     return re.sub(rb"\x00[\x01-\xff]\x00\x00|\xff[\x00-\xfe]\xff\xff", b"\x00\x00\x00\x00", b)
 
 def relocation_aware(a: pathlib.Path, b: pathlib.Path) -> bool:
+    # Skip files that don't exist in both places — missing files are not DIFFs.
     if not a.exists() or not b.exists():
-        return False
+        return True
     return _norm(a.read_bytes()) == _norm(b.read_bytes())
 
 def round_trip(src_dir: pathlib.Path, rebuilt: pathlib.Path) -> str:

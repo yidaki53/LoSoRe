@@ -468,6 +468,17 @@ def fewshot_context(target: str, compiler: str, platform: str,
                 parts.append(f"--- {e['fn']} ({e.get('calling_convention','?')}) ---")
                 parts.append("ASM:\n" + e["asm_head"])
                 parts.append("C:\n" + e["c"][:1200])
+    # Add learned type patterns from knowledge base
+    data = knowledge.load()
+    target_patterns = data.get("targets", {}).get(target, {})
+    type_patterns = target_patterns.get("type_patterns", {})
+    if type_patterns:
+        parts.append("\nLearned type patterns from " + target + " projects:")
+        for pattern_name, pattern_info in type_patterns.items():
+            if isinstance(pattern_info, dict) and "declaration" in pattern_info:
+                parts.append("  - " + pattern_name + ": " + pattern_info["declaration"])
+            else:
+                parts.append("  - " + pattern_name + ": " + str(pattern_info))
     if anti_patterns:
         ap = knowledge.get_anti_patterns(data, knowledge.compiler_key(compiler, platform), limit=6)
         if ap:

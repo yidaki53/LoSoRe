@@ -632,7 +632,7 @@ def train_for_target(
     model_path: str | None,
     threshold: int,
     automatic: bool,
-    store_path: pathlib.Path = knowledge.STORE,
+    store_path: pathlib.Path | None = None,
     state_path: pathlib.Path = STATE_PATH,
     output_root: pathlib.Path = ADAPTER_ROOT,
 ) -> int:
@@ -650,7 +650,7 @@ def train_for_target(
         )
         return 0
 
-    data = knowledge.load(store_path)
+    data = knowledge.load(store_path or knowledge.STORE)
     examples = training_examples(data, toolchain)
     if not examples:
         print(
@@ -746,7 +746,7 @@ def main(argv: list[str] | None = None) -> int:
         type=int,
         default=int(os.environ.get("LSR_TRAIN_THRESHOLD", DEFAULT_THRESHOLD)),
     )
-    parser.add_argument("--store", type=pathlib.Path, default=knowledge.STORE)
+    parser.add_argument("--store", type=pathlib.Path, default=None),
     parser.add_argument("--state", type=pathlib.Path, default=STATE_PATH)
     parser.add_argument("--output-root", type=pathlib.Path, default=ADAPTER_ROOT)
     args = parser.parse_args(argv)

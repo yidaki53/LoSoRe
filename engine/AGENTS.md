@@ -1,0 +1,22 @@
+# engine/AGENTS.md
+
+- `"engine/recovery_loop.py"` is the single recovery loop. Do not add a second orchestrator or parallel RL implementation.
+- Matrix ordering lives in `"engine/matrix.py"`: callee-first, unverified callees are blockers, never treat compile as resolution.
+- `"engine/rl_engine.py"` owns Q-table, replay and epsilon updates. Outcomes must be real: `verified`, `compiled`, `skipped`, `failed`.
+- `"engine/draft.py"` proposes candidates only. Parse and compile checks create scaffold candidates, not verified source.
+- Use `"verify.verify_status()"` for truthful status; `"verify.verify()"` is only a compatibility exit-code wrapper.
+- `dat-parity`, `constructor-parity` and format selftests never promote source or write the knowledge store; `verify_status()` returns `scoped` for passing format checks. Byte/relocation/trace oracles promote only matched relpaths.
+- Stop expansion at the 25% yield floor; record the concrete blocker instead of lowering gates.
+- Keep `knowledge/knowledge.json` canonical; legacy `"knowledge/rl_state.json"` is merged on load, not written separately. `record_verified()` writes verified Pascal examples via `compiler_key()` and top-level `hashlib`; keep those helpers valid when touching that path.
+- Module imports are mixed (`import draft` and `from engine import ...`). Follow each file's existing style; do not introduce a package-wide restructure.
+- `"engine/local_trial_inference.py"` is transport integrity only; `raw-source` normalizes plain/fenced text as a frozen representation, never salvage, and replay uses the saved `response_format`.
+- `"engine/bootstrap.py"` is the frozen representation search behind `"tools/run_bootstrap.py"`; it is not a second recovery orchestrator and records real outcomes through `"engine/rl_engine.py"`. Its promotion path delegates to `"engine/oracle_gate.py"`.
+- `"engine/oracle_gate.py"` is the only bridge from an oracle verdict to source promotion, RL replay and DL eligibility. A single gate decision must drive all three; failures, format checks and compile-only results never promote or add verified examples.
+- The autonomous path is `"engine/target_packet.py"` → `"engine/generic_synthesizer.py"` → `"engine/verify.py::verify_routine_status"` → `"engine/oracle_gate.py"`. It must not branch on routine IDs or use source examples, candidate bodies, decompiler output or online-agent answer seeds.
+- `"engine/oracle_gate.py::routine_trace_supported()"` is the oracle-side fixture registry. Routines without a registered hard-coded or contract-derived Liero fixture are recorded as `skipped` before target-packet synthesis or terminal evaluation; this check is not part of synthesis and must not select routine-specific generators.
+- `"engine/contract_oracle.py"` may use reviewed contract declarations and decomp presence to register safe leaf fixtures and execute original-byte traces. Contract/decomp content must not enter synthesis prompts; only the checked Pascal declaration may be carried as non-prompt evidence metadata.
+- `"engine/frozen_source_eval.py::run_training()"` is the training-only selector; terminal evaluation is a separate one-shot run and no terminal outcome is fed back into generation.
+- `"engine/target_packet.py"` builds an evidence-only packet for a target subfolder: binary hash, raw routine bytes, Ghidra assembly, deterministic byte facts, decompiler hash, checked declaration metadata and Matrix state. It must never include verified Pascal examples, candidate bodies, decompiler output, arbitrary classification labels or online-agent answer seeds. Only file-backed, entry-consistent, straight-line RET leaves pass the static evidence gate; the gate is non-promoting.
+- Bootstrap promotes source, recovery state, knowledge examples and RL outcomes only after exact routine training and terminal parity; compile and training passes never promote.
+- `bootstrap-normalize-v1` and `bootstrap-normalize-v2` classify closed oracle-backed alternatives for `FUN_24dd_455e` and render only locally supported hypotheses; `trials/normalize-oracle-455e-20261122` records the deterministic lowering promotion, not a model success.
+- Run `make lint`, `make typecheck` and `python3 -m pytest tests/test_recovery_integration.py tests/test_bootstrap.py tests/test_oracle.py -q` after edits.
