@@ -1,6 +1,6 @@
 # Recovery TODOs
 
-Checkpoint: 2026-11-04. This is the persistent recovery backlog, not an
+Checkpoint: 2026-11-22. This is the persistent recovery backlog, not an
 instruction to execute every future task. Session SQL tracks execution;
 these IDs and acceptance gates make the next batch understandable without
 that session. See [current handoff](../CONTINUATION_SUMMARY.md),
@@ -17,15 +17,140 @@ that session. See [current handoff](../CONTINUATION_SUMMARY.md),
 | Done | Manual/composed file-input contracts | Original-byte probes, actual callees, dirty objects, callback/refill and stack checks; scoped, not full-program parity |
 | Done | Automatic close/refill PoC | Close 8/8 training, 16/16 holdout; refill 64/64, 32/32; supplied sketches |
 | Done | Constructor failure analysis | 17 compiled hypotheses, zero training passes; 0/1 slice yield stopped expansion |
-| Done | Byte-constrained constructor repair | 514/514 training, 264/264 holdout; known-slice changed-strategy pass |
+| Done | Model list expansion for Ollama trials | Added Kimi K2 Thinking, Qwen3-Coder-480B-A35B-Instruct, Qwen3-Coder-Next to ACTION_MODEL in engine/rl_engine.py for future trial phases after existing 480B download completes |
 | Done | Frozen transfer assessment | 4/18 bytes at 492c, no writes; historical failure preserved |
 | Done | `global-transfer`, `global-measure`, `global-record` | Shared segment/global rules; explicit DS window; three 8192-byte original-only checks; 184 focused tests |
+| Done | Routine-oracle RTL bridge | qwen classified `Move`; deterministic v3 renderer passed 56/56 training and 56/56 terminal cases; promoted only `FUN_24dd_48e1` under `routine-trace-parity` |
+| Done | Packed-copy bridge | qwen1.5 classified `CopySkipHighCountLowForward`; deterministic v2 renderer passed compile, 56/56 training and 56/56 terminal cases; promoted only `FUN_24dd_4141`; v1 compile failure preserved |
+| Done | Automatic verified-data bootstrap | `engine/bootstrap.py` searches frozen representations, selects on training only, runs terminal once per training pass, promotes only after routine parity and feeds verified same-target examples back into prompts |
+| Done | Bootstrap-produced routine | `bootstrap-move-forward-v2` classified `Move` for `FUN_24dd_3d68`; the forward byte loop passed compile, 56/56 training and 56/56 terminal cases; promoted under `routine-trace-parity`, with v1's `14/56` failure preserved |
+| Done | Binary-derived evidence packets | `engine/target_packet.py` binds binary/routine hashes, raw bytes, assembly safety and deterministic byte facts for a target subfolder; no source examples, decompiler output, arbitrary labels or online-agent seeds. The static gate is non-promoting and rejects tail jumps such as stickman `FUN_42b5_00e2` |
+| Done | Normalization routine promotion | `FUN_24dd_455e` was promoted from local deterministic oracle lowering after compile and 56/56 training plus 56/56 terminal parity; three failed model representation arms are preserved and no terminal run followed a failed classification |
+| Done | Arithmetic routine promotion | `bootstrap-arithmetic-v1` produced an unsupported classification; `trials/arithmetic-oracle-249c-20261122` promoted `FUN_249c_0013` from deterministic local rendering after compile and 56/56 training plus 56/56 terminal parity |
+| Done | Initializer routine promotion | `FUN_24dd_40d6` was promoted from byte-derived `oracle-init-v1` lowering after compile and 56/56 training plus 56/56 terminal parity; the prior answer-shaped body was preserved |
+| Done | Contract-derived autonomous recovery | `engine/contract_oracle.py` registers safe checked-contract leaves, the routine-agnostic synthesizer recognizes the register-shift-mask ASM shape, and `FUN_24dd_04dc` promoted after compile and 56/56 training plus 56/56 terminal original-trace parity |
 
-None of the recent generated trials installed source, changed recovery
-attestations, promoted examples or demonstrated continual weight learning.
-Repeated replay is integrity validation, not additional independent support.
+Most generated trials did not install source or demonstrate continual weight
+learning. The exceptions are the routine-oracle and packed-copy bridges, the
+bootstrap-produced forward-Move routine, the deterministic normalization,
+arithmetic and initializer lowerings, and the contract-derived generic
+register-shift-mask path, which promoted seven exact routines with terminal
+evidence; they did not establish whole-game parity. The shared oracle
+gate now automates source/RL/DL promotion for the autonomous loop and the
+bootstrap path. Repeated replay is integrity validation, not additional
+independent support.
+
+### Implemented integration baseline: 2026-11-22
+
+The single-loop integration is now wired: `"engine/matrix.py"` builds the
+callee-first frontier, `"engine/target_packet.py"` supplies binary-derived
+evidence, `"engine/generic_synthesizer.py"` renders routine-agnostic Pascal,
+`"engine/recovery_loop.py"` orchestrates, and `"engine/oracle_gate.py"` shares
+one verdict with source promotion, RL replay and DL eligibility.
+`"verify.verify_status()"` reports `verified`, `failed`, `skipped` or
+`not_verified` without turning skips into passes. `"run_verification.py"`
+regenerates `"recovery_results.json"`; the current truthful status is 7
+oracle-verified Pascal bodies, 28 reviewed bodies, 4 partial and 256
+unrecovered. DAT round-trip is a scoped format check and cannot promote source.
+CI now runs lint, typecheck, tests and the false-status assertion.
+`"graphify/codebase.json"` is regenerated by
+`"tools/build_codebase_graph.py"`; the installed `graphify` CLI is
+job-search-specific and must not be used here.
+
+### 22B-vs-1.5B benchmark: 2026-11-22
+
+`python3 "tools/benchmark_matrix_models.py" --output "trials/matrix-benchmark-20261122-22b-vs-15b"` froze Matrix leaf `FUN_24dd_48e1`, prompt `468f5ea16cf01171d82e86a93bd36c128a08f65d21438732d970efc92323f833`, the same training/terminal corpora and pinned Ollama digests for `losore-llm4decompile-22b-v2:Q4_K_M` and `qwen2.5-coder:1.5b`. Each arm made one accepted request: the 22B response was empty and the 1.5B response was non-JSON. The conservative context guard refused the second repair request in both arms. Result: `0` compiled candidates, `0` terminal evaluations, `0` source promotions, `blocked-inference-not-semantic-yield`. This is an inference-format blocker, not evidence that either model is semantically correct or incorrect. Both archives replayed without re-execution. Preserve `trials/matrix-benchmark-20261122-22b-vs-15b/comparison.json`; do not reuse the terminal outcome as repair feedback.
+
+### Raw-source representation gate: 2026-11-22
+
+`python3 "tools/benchmark_matrix_models.py" --output "trials/matrix-representation-20261122-raw-source" --profile raw-source --representation-only` froze a plain-Pascal prompt `0fd0dc4ba58c6c0c92c31d9d81dd404f02d6116103697d6b1d7a22a0cece8c4c` with `raw-source` normalization, 4096 max tokens, 16384 context tokens and one request per pinned model. The 22B response was non-empty but C/asm-like and failed the required Pascal routine gate; the 1.5B response ended with `done_reason: length`. Result: `0` valid sources, `0` oracle calls, `0` promotions, representation-format blocker. Preserve `trials/matrix-representation-20261122-raw-source/comparison.json`; do not retry or tune from either response.
+
+### Routine-oracle RTL bridge: 2026-11-22
+
+`qwen3.8:27b` filled the near-token-exhaustion fallback: raw-source emitted
+Pascal with inline `asm`/`REP MOVSB` and was rejected as forbidden directives;
+`pascal-no-asm` then timed out at 600s. Colibri's endpoint refused connections,
+and its current import path does not support the 22B Llama architecture.
+
+The classification-only RTL bridge froze prompt
+`43f993d3b8dccf1abaad4c0cd2a45674e8a097982668e4e3dd472b5851478977`. qwen1.5
+classified `Move`. `rtl-template` failed compilation, `rtl-template-v2` compiled
+but failed training `0/56` with terminal skipped. That training-only failure
+exposed reversed copy direction and missing ABI residue. A new frozen
+`rtl-template-v3` renderer passed compile, training `56/56` and terminal
+`56/56`; source `sha256 7c9d354c46eff48d2ef2a84d053ea9e2eeba1dc735022fb88ae567a293e207ae`.
+Only `FUN_24dd_48e1` was promoted under `routine-trace-parity`. Preserve
+`trials/matrix-representation-20261122-qwen38/comparison.json`,
+`trials/matrix-representation-20261122-pascal-no-asm-qwen38/comparison.json`,
+`trials/matrix-representation-20261122-rtl-template-15b/comparison.json`,
+`trials/matrix-representation-20261122-rtl-template-v2-15b/comparison.json`,
+`trials/rtl-template-v2-15b-eval/result.json`,
+`trials/matrix-representation-20261122-rtl-template-v3-15b/comparison.json` and
+`trials/rtl-template-v3-15b-eval/result.json`. Do not retune from terminal
+feedback or claim full-game parity from this routine-level result.
+
+### Packed-copy bridge: 2026-11-22
+
+`packed-copy-v1` froze a byte-packed-copy classification prompt for
+`FUN_24dd_4141`. qwen2.5-coder:1.5b named `CopySkipHighCountLowForward`, but the
+renderer used a stale skeleton declaration with `param_3: Longint` and failed
+compilation; the archive `trials/packed-copy-20261122-4141-15b/comparison.json`
+is preserved with no terminal run.
+
+`packed-copy-v2` froze the byte-backed `Pointer` declaration as a distinct
+method. `trials/packed-copy-20261122-4141-15b-v2/comparison.json` records prompt
+`sha256 f3303a4aef30459e50b0ac7e79edc8524bdf6b28e80f7688d670d44c6d2fd984`,
+classification `CopySkipHighCountLowForward`, compile success and source
+`sha256 da405e3b7a95421804bfaea25e717869a03aad8150ada8ea011771107cef301c`.
+`trials/packed-copy-v2-4141-15b-eval/result.json` records compile success with
+original and candidate matching 56/56 training and 56/56 terminal cases. Only
+`FUN_24dd_4141` was promoted under `routine-trace-parity`. Preserve both
+archives; do not retry v1, reuse terminal feedback or claim general
+pointer-copy/full-game parity.
+
+Next batches in dependency order:
+
+1. Preserve all measured gates and run a fresh `tools/run_bootstrap.py` archive
+   for one new routine; propagate the verified `48e1`, `4141` and `3d68` contracts only
+   through checked caller/callee or shared-data edges.
+2. Choose one unimplemented callee-free routine with no prior answer-shaped
+   knowledge; freeze a distinct method id, budgets and terminal holdout.
+3. Use Colibri only for supported architectures once `http://127.0.0.1:8000/v1`
+   actually serves; `qwen3.8:27b` remains the near-token-exhaustion fallback.
+4. Add skeleton/skin prompting and solved-neighbor contracts from the promoted
+   routines; keep training-only selection and one terminal evaluation.
+5. Fine-tune only on oracle-verified pairs; audit base/delta before LoRA merge.
+6. Only after Liero reaches 100%, transfer the Matrix to Stickman and other
+   abandonware Pascal targets using sealed binary-derived evidence packets and
+   a target-specific routine oracle. No stickman routine oracle exists yet;
+   static packets cannot promote source.
 
 ## Suggested next batches, in dependency order
+
+### Approved local capacity comparison, pending downloads (2026-11-16)
+
+The explicit user-approved seven-arm48e1 comparison is separate from the
+callback/device recovery frontier below. CUDA/Vulkan Colibri engines are built;
+the GPU backend math test passes. The new opt-in local transport retains
+existing source-trial gates and legacy defaults;66 focused tests and Ruff pass.
+
+Three installed baselines and the verified/imported22B-v2 completed their
+frozen two-request budgets with no eligible candidates and no terminal
+evaluation. The6.7B model is the older release, not v2. Three pinned arms
+remain unevaluated:33B,DeepSeekV4Flash0731,Qwen3-Coder480B.
+Model downloads are running on `/mnt/ollama`.
+Use the common freeze, method snapshots and shared12h budget under
+`/mnt/ollama/experiments/colibri-48e1-20261116`; preserve its six consumed
+requests for initial baselines plus two22B requests (eight total,
+~382seconds), failures and all existing user work.
+
+After each download verifies, bind exact local runtime identity and check
+resource/context limits before its bounded trial. Do not reuse terminal
+outcomes, retune from baseline failures, change representation/output gates,
+substitute quants or expand the panel. The full comparison is not complete.
+See the latest comparison subsection in
+`targets/liero/docs/RECONSTRUCTION.md` for evidence paths, reproduction helpers,
+disclosed specialist output limits and existing regression failures.
 
 ### Open-output cleanup and connected text errors: latest measured scope
 

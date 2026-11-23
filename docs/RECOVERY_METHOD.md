@@ -8,6 +8,27 @@ a request for another Liero clone. Preserve original routine structure,
 calling conventions, layouts and effects where supported. Historical names,
 comments and exact source text cannot generally be recovered uniquely.
 
+## Unified Matrix loop
+
+Recovery is now a single loop, not several competing orchestrators. The Matrix
+in `"engine/matrix.py"` ranks routines by direct callees that are already
+attested; unresolved callees remain blockers and compile success never counts as
+resolution. `"engine/recovery_loop.py"` is the only orchestrator. Its autonomous
+path builds a binary-derived packet with `"engine/target_packet.py"`, renders a
+routine-agnostic IR/Pascal candidate with `"engine/generic_synthesizer.py"`, and
+uses one `routine-trace-parity` verdict through `"engine/oracle_gate.py"`. The
+gate result drives source promotion, RL replay and DL eligibility together; no
+routine ID, verified source example, candidate body, decompiler output or online
+answer seed enters synthesis. Legacy draft/model oracles remain available as an
+explicit non-autonomous path.
+
+Training parity selects a candidate; terminal parity runs once and is never fed
+back into synthesis. Only `verified` promotes source; `compiled` is a candidate.
+`dat-parity`, `constructor-parity`, format selftests, discounted checks and
+guesses never promote or add verified examples. The 25% yield floor still stops
+expansion; a failed live trial is a measured result, not a reason to lower the
+gate.
+
 ## The crossword model
 
 ### Architectural ownership supports evidence, not new acceptance
@@ -760,3 +781,73 @@ measurements from suggested future batches. Resolve the active contract gap,
 measure its Pascal counterpart, then freeze the method before widening
 coverage. Keep generalizable rules here, operational guardrails in
 [agents.md](../agents.md), and exact target counts/hashes in the target docs.
+
+A pinned capacity comparison can be blocked before it tests model semantics.
+On 2026-11-22, the same frozen Matrix-leaf prompt and holdout produced an
+empty 22B response and non-JSON 1.5B text; a conservative context guard then
+refused both appended-feedback retries. Record this as
+`blocked-inference-not-semantic-yield`, preserve raw responses and replayable
+archives, and do not turn the terminal holdout into repair feedback. A changed
+representation is a new frozen method with a new comparison, not a rerun of the
+failed one.
+
+The 2026-11-22 raw-source gate froze a plain-Pascal prompt and a `raw-source`
+normalizer with one request per model, no oracle and no promotion. It converted
+an empty-output blocker into measurable format failures: the 22B response was
+not a Pascal routine and the 1.5B response was truncated at the frozen token
+budget. Record this as a representation-format blocker, not a semantic verdict.
+A further attempt must freeze another distinct representation; do not salvage,
+repair, retune or replay either failed response as a success.
+
+The 2026-11-22 RTL bridge shows why representation scope matters. Asking a
+small model to generate a full source body produced inline assembly or
+truncation; asking it only to classify a standard RTL operation let a
+deterministic renderer own syntax. A compiled renderer is not yet semantic
+acceptance: the first `Move` bridge reversed source/destination and omitted
+byte-bound register/flag/stack residue, failing all training cases while the
+terminal suite stayed untouched. The next frozen renderer used the byte-bound
+contract, matched both training and terminal cases, and promoted only that
+routine under `routine-trace-parity`. Keep model identity, classification
+prompt, renderer hash, source hash, training corpus and terminal corpus in the
+evidence chain. A finite routine oracle is function-level evidence, not proof
+of all inputs, full ABI, normal-program execution or DOSBox parity.
+
+The packed-copy bridge generalizes the same lesson: classification can be
+narrower still (`CopySkipHighCountLowForward`) when the byte-packed operand
+meaning is already grounded in the routine's frozen evidence. A correct label
+is not sufficient if the renderer's declaration is stale; `packed-copy-v1`
+failed compile on `Longint` where the byte-backed contract required `Pointer`.
+Freeze the corrected declaration as a distinct method id rather than repairing
+the failed archive. `packed-copy-v2` compiled and passed one frozen routine
+oracle, but it still proves only that routine's finite training and terminal
+cases, not arbitrary skips/counts, all far-pointer bindings or whole-program
+parity.
+
+Automatic bootstrapping is the next representation of that lesson: the system
+should search a bounded set of frozen method ids itself, select only on training
+oracles, spend one terminal evaluation per training pass and promote source,
+knowledge and RL outcomes only after exact routine parity. Verified same-target
+routines become prompt constraints for later attempts, while failed archives
+remain immutable evidence. This grows verified data as a byproduct of the
+algorithm without letting compile success, model confidence or terminal
+feedback act as verification.
+
+The first loop-produced routine was `FUN_24dd_3d68`. `bootstrap-move-forward-v1`
+classified `Move` and compiled, but changed CF/ZF and used `Move` for an
+overlapping CLD copy; training returned `14/56` and terminal was correctly
+skipped. `bootstrap-move-forward-v2` kept CF/ZF, cleared DF, used a forward byte
+loop and promoted only after `56/56` training and `56/56` terminal parity. The
+stale unverified source was preserved as `previous_source.inc`, and only an
+oracle-verified body replaced it. This is evidence that the algorithm can grow
+its own verified-data set at routine scope; it is not evidence of general
+move-copy semantics, full ABI or whole-program recovery.
+
+The contract-derived autonomous path extends that result without routine-ID
+dispatch. Checked declarations plus decomp presence register only safe leaf
+fixtures; `engine/generic_synthesizer.py` derives a `register-shift-mask` IR
+from raw ASM and uses the declaration only as non-prompt signature metadata.
+`FUN_24dd_04dc` was selected by the real recovery loop, compiled, matched
+original-byte traces on `56/56` training and `56/56` terminal cases, and was
+promoted through the shared gate. This demonstrates one more autonomous
+routine-level recovery; it does not prove arbitrary leaf synthesis, universal
+equivalence, full ABI correctness or game-wide parity.

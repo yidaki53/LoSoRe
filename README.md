@@ -2,6 +2,24 @@
 BYOD binary -> detect -> disasm -> evidence-linked same-language source recovery -> verification.
 Any program with lost source: games, applications, firmware, drivers. Compilation and source recovery are tracked separately from behavioral verification.
 
+## Current automation entrypoints
+
+```sh
+python3 tools/rl_recover.py --target liero
+python3 run_verification.py --target liero --oracle dat-parity
+make lint typecheck test
+```
+
+The unified autonomous loop uses `"engine/matrix.py"` for callee-first ordering,
+`"engine/target_packet.py"` for binary-derived evidence,
+`"engine/generic_synthesizer.py"` for routine-agnostic IR/Pascal synthesis, and
+`"engine/oracle_gate.py"` as the single bridge from a gate verdict to source
+promotion, RL replay and DL eligibility. Legacy draft/model oracles remain
+available but are not the autonomous path. Compile success and DAT format
+round-trip never promote source. `"recovery_results.json"` is generated status,
+not a hand-maintained claim. See `"RECOVERY_STATUS.md"` and the scoped
+`AGENTS.md` files before changing recovery behavior.
+
 ## Scoped recovery prototype
 
 ### Connected text execution

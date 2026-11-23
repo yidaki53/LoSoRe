@@ -1,6 +1,102 @@
 # LoSoRe recovery handoff
 
-## Latest: open cleanup and connected full text errors
+Scope correction (2026-11-22): Liero must reach 100% before any Stickman
+transfer. Packet/static-evidence work is parked; do not run Stickman inference
+or source promotion until the Liero frontier is closed.
+
+## Latest: contract-derived autonomous routine promoted (2026-11-23)
+
+- `engine/contract_oracle.py` registers safely bounded leaves from checked
+  declarations in `targets/liero/config/routine_contracts.json` plus decomp
+  presence, and compares original-byte DOSBox traces with compiled FPC candidates
+  over frozen training/terminal suites. Contract prose and decomp output do not
+  enter synthesis prompts; only the checked Pascal declaration is carried as
+  non-prompt evidence metadata.
+- `engine/generic_synthesizer.py` recognizes a routine-agnostic
+  `register-shift-mask` ASM shape. In one real `engine/recovery_loop.py`
+  iteration, `FUN_24dd_04dc` compiled and passed `56/56` training and `56/56`
+  terminal parity, then promoted through the shared oracle gate to
+  `targets/liero/src/FUN_24dd_04dc.inc` (source sha256
+  `9e9d6d45467d217f514db5ffc4ed5433f964fbd0f45c81294ba46a597f467b17`).
+- Truthful status is now 7 oracle-verified bodies, 28 reviewed, 4 partial, 256
+  unrecovered. DAT round-trip remains scoped/non-promoting. No commit.
+
+## Previous: oracle fixture guard added (2026-11-23)
+
+- The initial `routine-trace-parity` registry was the six routines in
+  `tools/liero_source_trial.py::PANEL`/`DISCOVERY_PANEL`; unfixtured routines are
+  recorded as `skipped` before target-packet synthesis or terminal evaluation.
+- The check lives in `engine/oracle_gate.py::routine_trace_supported()` as an
+  oracle-side fixture registry. It does not select synthesis shapes or routines.
+- Added a recovery-loop test proving an unfixtured routine does not reach
+  evidence building or verification, records reward `0.0`, and is not promotable.
+
+## Previous: autonomous loop and shared oracle gate integrated (2026-11-22)
+
+- `"engine/recovery_loop.py"` is the single orchestrator. Its default path is
+  binary packet → routine-agnostic IR/Pascal synthesis → `routine-trace-parity` →
+  one shared `"engine/oracle_gate.py"` verdict. No routine ID, source example,
+  candidate body, decompiler output or online-agent seed drives synthesis.
+- `"engine/oracle_gate.py"` now owns promotion, RL replay and DL eligibility.
+  `promote()` accepts the caller's in-memory state, records exactly one RL
+  outcome, writes verified examples only for oracle-verified routines, and
+  reports readiness. `dat-parity` and `constructor-parity` remain non-promoting.
+- `"engine/bootstrap.py"` delegates promotion to the shared gate.
+  `"tools/rl_recover.py"` and `"tools/run_full_pipeline.py"` default to
+  `routine-trace-parity`; `rl_recover` also accepts `--root` for disposable runs.
+- Added an integration test proving the generic path promotes source, records a
+  shared gate outcome with reward `1.0`, and exposes oracle-gated DL status
+  without calling the legacy draft path.
+- Focused gate: `44 passed`; `make lint` and `make typecheck` pass on scoped
+  active files. No commit.
+
+## Previous: Liero arithmetic and initializer routines promoted (2026-11-22)
+
+- Added frozen `bootstrap-arithmetic-v1` for `FUN_249c_0013`: a closed six-field label (`0|1|4|add|2|False`) rendered only through the local oracle-compatible lowering. Focused tests pin the closed label, oracle refusal, prompt shape and promotion gating.
+- `trials/bootstrap-arithmetic-249c-20261122-15b-v1` preserved the 1.5B response as an unsupported classification (`UNKNOWN`); no compile or terminal run followed it.
+- `trials/arithmetic-oracle-249c-20261122` records deterministic local lowering (`oracle-arithmetic-v1`, no model request, source sha256 `51cf188bece9e95935f902e740b1b401b6127931542e72e2b49f06dc73de9a1d`) with compile pass and training/terminal `56/56`; `targets/liero/src/FUN_249c_0013.inc` was promoted only after that evidence.
+- `FUN_24dd_40d6` was promoted from byte-derived local lowering: LES/STOSW stores `param_1`, `REP STOSW` clears 15 more words, and the frozen logical register finish is explicit. `trials/init-oracle-40d6-20261122` records `oracle-init-v1`, no model request, source sha256 `2a422701a70e5a22389c5517e95ab593f0ff7a2272917790dd7c3819fcd0d229`, compile pass and training/terminal `56/56`. The prior answer-shaped body was preserved as `previous_source.inc`.
+- Truthful status is now 6 oracle-verified bodies, 29 reviewed, 4 partial, 256 unrecovered. DAT round-trip remains scoped/non-promoting. All six harness-backed routine-trace leaves are now verified; no commit.
+
+## Previous: Liero normalization routine promoted (2026-11-22)
+
+- Added frozen `bootstrap-normalize-v1` (closed JSON hypothesis) and `bootstrap-normalize-v2` (closed identifier) representations for `FUN_24dd_455e`; both use byte-backed evidence and the local oracle schema, not decompiler output or source examples. Tests pin evidence closure, identifier closure and promotion gating.
+- Three model arms are preserved as failed: `trials/bootstrap-normalize-455e-20261122-15b` (JSON wrapper/evidence shape), `trials/bootstrap-normalize-455e-20261122-15b-v2` (`normalization` instead of an identifier), and `trials/bootstrap-normalize-455e-20261122-qwen38-v2` (`signed_absolute|160|1|left|positive|replace_ch`, contradicted by the oracle). No terminal run followed any failed classification.
+- The local deterministic `lower_normalize_interpretation` passed compile, training `56/56` and terminal `56/56` in `trials/normalize-oracle-455e-20261122/eval`. Provenance records `oracle-normalize-v1`, no model request and source sha256 `07740e8615071dae64a927c9060db21a7d297f2dd6ddaa2ae50613b838d17c5c`; only then was `targets/liero/src/FUN_24dd_455e.inc` promoted, with the prior draft preserved as `previous_source.inc`.
+- Truthful status is now 4 oracle-verified bodies, 29 reviewed, 4 partial, 258 unrecovered. DAT round-trip remains scoped/non-promoting. `make lint`, `make typecheck` and `tests/test_bootstrap.py` pass; no commit.
+
+## Previous: infrastructure verified and binary-derived packets (2026-11-22)
+
+- `ai-memory 3.4.7` is active as a user service at `http://127.0.0.1:49374/mcp`; OpenCode MCP is connected via `~/.config/opencode/opencode.json`, with capture-policy plugin installed. Scope is workspace `robin`, project `losore`. Metadata-only verification page `notes/losore-tooling-verification.md` was written; no BYOD bytes, dumps, traces, candidate bodies, holdout outcomes or credentials were stored. Handoff `01a1e3ef-5218-7f73-95dc-fd1ae9a097a0` was read only and left unclaimed.
+- Colibri `2.1.0` is serving qwen3 14B GGUF as model id `qwen3-14b-colibri` at `http://127.0.0.1:8000/v1`; `/v1/models` and a one-shot chat request returned OK. Setup metadata mislabels the family as `qwen36`, so bind the served model id and hashes, not that label.
+- `engine/target_packet.py` and `tools/build_target_packet.py` now build target-agnostic evidence packets from a binary subfolder. Packets bind binary/routine hashes, raw bytes, Ghidra assembly, deterministic `initialization_prefix` facts, assembly safety and Matrix state. Prompt has no source examples, candidate bodies, decompiler output, arbitrary classification labels or online-agent seeds.
+- Static evidence gate requires a file-backed, entry-consistent, count-consistent, call-free leaf with one RET, no jumps/device/memory operands, no decoded writes and a single `c3` residue. It is non-promoting: no stickman routine oracle exists, so packets cannot verify source or enter the knowledge store.
+- `FUN_42b5_00e2` was auto-selected by the earlier frontier and is a tail-jump with a misleading large decompiler body; preserve `trials/target-packet-stickman-20261122` as a superseded evidence-gate failure. The intended clean leaf is `FUN_42b5_10ea` with original bytes `33c08bd88bd0c3`, deriving AX/BX/DX zero and residue `c3`.
+- Focused gate after these edits: `61 passed`; `make lint` and `make typecheck` pass on scoped active files. No commit.
+
+## Previous: bootstrap-produced routine promotion (2026-11-22)
+
+- `bootstrap-move-forward-v2` classified `FUN_24dd_3d68` as `Move`; the deterministic forward byte loop passed compile, training `56/56` and terminal `56/56`. The routine was promoted under `routine-trace-parity`, making the algorithm itself the source of a third verified body.
+- Evidence: `trials/bootstrap-20261122-3d68-move-forward-v2/bootstrap-move-forward-v2/qwen2-5-coder-1-5b/arm.json`; prompt sha256 `a13273d986dd1cc1c92192b78943a1a676eda8d1220de356ed5dc84a1afdc862`; source sha256 `c863fc6a46be5e50d07cdeae6156afd0f8f5b3a25bcafaacc2ed8a5a18564543`; `promotion-resolution.json` records the stale unverified body's sha256 and preservation as `previous_source.inc`.
+- `bootstrap-move-forward-v1` failed training `14/56` because it changed CF/ZF and used `Move` for an overlapping CLD copy; no terminal run followed. That archive is preserved, and v2 is a distinct frozen method id.
+- Truthful status is now 3 oracle-verified bodies, 29 reviewed, 4 partial, 259 unrecovered. DAT round-trip remains scoped/non-promoting.
+- Next: choose another callee-free routine, keep one model request per frozen method, and propagate the verified `48e1`, `4141` and `3d68` contracts only through checked caller/data edges. Colibri served nothing on `http://127.0.0.1:8000/v1`; qwen3.8 remains the near-token-exhaustion fallback. No commit.
+
+## Previous: packed-copy bridge promotion (2026-11-22)
+
+- qwen2.5-coder:1.5b classified `FUN_24dd_4141` as `CopySkipHighCountLowForward`; deterministic `packed-copy-v2` renderer passed compile, training `56/56` and terminal `56/56`. The routine was promoted under `routine-trace-parity`.
+- Evidence: `trials/packed-copy-20261122-4141-15b-v2/comparison.json` and `trials/packed-copy-v2-4141-15b-eval/result.json`; source sha256 `da405e3b7a95421804bfaea25e717869a03aad8150ada8ea011771107cef301c`.
+- `packed-copy-v1` classified correctly but failed compile on a stale `Longint` declaration; that archive is preserved with no terminal run. v2 froze the byte-backed `Pointer` declaration as a distinct method id.
+- Truthful status is 2 oracle-verified bodies, 29 reviewed, 4 partial, 260 unrecovered; DAT round-trip remains scoped/non-promoting. Preserve all failed raw-source, qwen3.8, no-asm, RTL v1/v2 and packed-copy-v1 archives; do not retry them or reuse terminal feedback.
+- Built `engine/bootstrap.py` and `tools/run_bootstrap.py`: bounded frozen representation search, training-only selection, one terminal run per training pass, no feedback reuse, and automatic promotion of source/recovery/knowledge/RL state only after exact routine parity. Verified same-target routines now feed back into later classification prompts as constraints. Tests in `tests/test_bootstrap.py` pin the gates.
+- Next: run a fresh bootstrap archive on one new routine, then propagate both verified contracts only through checked caller/data edges. Colibri served nothing on `http://127.0.0.1:8000/v1`; qwen3.8 remains the near-token-exhaustion fallback. No commit.
+
+## Previous: routine-oracle RTL bridge promotion (2026-11-22)
+
+- Frozen qwen classification plus deterministic v3 renderer passed compile, training `56/56` and terminal `56/56` for `FUN_24dd_48e1`; that routine was promoted under `routine-trace-parity`.
+- Evidence: `trials/matrix-representation-20261122-rtl-template-v3-15b/comparison.json` and `trials/rtl-template-v3-15b-eval/result.json`; source sha256 `7c9d354c46eff48d2ef2a84d053ea9e2eeba1dc735022fb88ae567a293e207ae`.
+
+## Previous: open cleanup and connected full text errors
 
 Current user: "proceed with remaining limits". Completed the next callee-first
 milestone, not universal closure of all project limits.

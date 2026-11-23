@@ -3,13 +3,41 @@
 2. relocation-aware: equal modulo addresses/relocs.
 3. round-trip: .bin->src->.bin identical with original compiler (pathologic_re pattern).
 4. trace-parity: Frida draw/call traces equal (openrecet pattern).
+5. routine-trace-parity: frozen training parity selects one source, then one
+   terminal routine-parity evaluation runs. This is the default autonomous gate.
+   A routine without a registered oracle fixture is recorded as `skipped` before
+   synthesis or evaluation; it is not a verified, compiled or failed result.
 Every function record stores which oracle passed. No pass = not decompiled.
+
+Contract-derived `routine-trace-parity` fixtures may be registered for safe
+Liero leaves when `targets/liero/config/routine_contracts.json` contains a
+checked declaration and `targets/liero/decomp/<routine>.c` exists. Only the
+Pascal declaration is carried into non-prompt synthesis evidence; contract
+prose and decompiler output do not seed candidate bodies. The oracle executes
+original bytes under DOSBox and a compiled FPC candidate over frozen
+training/terminal cases, comparing registers, defined flags and guarded memory.
+`FUN_24dd_04dc` passed this path with `56/56` training and `56/56` terminal
+cases; the pass is routine-level and finite-corpus scoped.
+
+`routine-trace-parity`, byte, relocation, round-trip and trace results may
+promote only through `"engine/oracle_gate.py"`. The same verdict updates source
+state, RL replay and DL eligibility; `dat-parity`, `constructor-parity`, compile
+checks, discounted checks and format selftests are scoped and never promote.
 
 Only a passing oracle entry that maps to a real `asm/<function>.s` and
 `src/<function>.inc` pair can promote Pascal into cross-project memory. A
 format-level check such as `dat-parity` verifies the format implementation,
 not unrelated function bodies, and must not seed Pascal retrieval or training.
 The LoRA trainer additionally holds out complete targets during evaluation.
+
+`engine.verify.verify_status()` distinguishes `verified`, `failed`, `skipped`,
+`scoped` and `not_verified`; `verify.verify()` is only an exit-code wrapper for
+callers that need process status. An empty `build.sha1`, missing BYOD, missing
+build files and constructor/format checks are never reported as verified. A
+successful DAT selftest or round-trip returns `scoped` and writes nothing to
+`knowledge/knowledge.json`. Parse and
+compile checks in the unified recovery loop produce candidates; only oracle
+results promote them.
 
 ## Current evidence boundary
 

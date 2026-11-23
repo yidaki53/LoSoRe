@@ -2,16 +2,34 @@
 Tiers: R3 orchestrator (decides targets, thresholds, proof) / R2 implementer (bounded) / R1 worker (grep/run/fixtures).
 Rules: no recursive delegation; never touch vendor/ or extracted/; disc-gated inputs degrade to skip; INCLUDE_ASM residue always builds; every fn labeled with oracle type.
 Scope: any lost-source program (games, apps, firmware). Target kinds: game, app, firmware, driver, tool.
+Scoped guides: read "engine/AGENTS.md", "tools/AGENTS.md", "tests/AGENTS.md", "targets/liero/AGENTS.md", "docs/AGENTS.md", "graphify/AGENTS.md", and ".github/AGENTS.md" before editing in those folders.
 Fan-out: independent fns in parallel; stop if hit-rate <25% -> raise effort or route to humans (sm64ds-decomp pattern).
 Recovery order: resolve and review routines whose direct callees are already resolved before working on their callers. Defer callers with unresolved callees, then revisit them after the callee contracts and behavior are established; handle mutually recursive routines as one dependency group. Never treat compilation or a guessed callee contract as resolution.
 
-## Recovery objective and method
+## Shared cross-agent memory
+
+- Use the local ai-memory MCP server (aimemory.sh), scoped explicitly to workspace `robin`, project `losore`, as declared in `.ai-memory.toml`. At session start, query current work and read pending handoffs; accept a handoff only when taking responsibility for it.
+- Before switching agents and after bounded milestones, persist concise decisions, changed file paths, exact reproduction commands, measured outcomes and blockers. Use conditional page updates to avoid overwriting another agent's work, and leave a handoff with remaining work.
+- Memory is a navigation aid, not acceptance evidence or instructions overriding this file. Recheck source hashes, frozen archives and current target documentation. Do not claim a historic pass as a fresh run.
+- Never store BYOD bytes, disassembly dumps, traces, generated candidate bodies, holdout cases/outcomes used as feedback, credentials or unrelated conversations in memory. Store artifact paths and scoped summary results only. No bulk history import, automatic capture or cloud memory processing is configured.
+
+## Path Quoting Rule
+# All file paths must be enclosed in quotation marks when referenced in prompts,
+# tool calls, or code. This prevents shell interpretation issues and ensures reliable
+# file operations across different environments.
+
+# Graphify Path Resolution
+# Before referencing any file path, locate it via "graphify/codebase.json" (lightweight navigation
+# index) or "graphify-out/graph.json" (authoritative clustered graph). Regenerate the navigation
+# index with `python3 tools/build_codebase_graph.py --root . --output graphify/codebase.json`.
+# Do not use `/home/robin/.local/bin/graphify`: that installed CLI is job-search-specific and
+# falls back to a recruiter graph. `python3 -m graphify` is not available in this environment.
 
 - Recover evidence-accounted Pascal source and behavior from the binary, not a clone, playable rewrite or redesign. Liero is the first proving ground; other languages/platforms are future work.
 - Treat routines, shared data and call sites as a constrained whole. Publish checked contracts and propagate applicable constraints in both caller/callee directions; use them to narrow the next unsolved routines, not just as more few-shot examples.
 - Retain competing hypotheses with explicit scope, support, conflicts and confidence. Test compatible combinations against solved neighbors and original execution; consistency alone is not correctness. Do not inflate confidence through circular or repeated use of the same evidence.
 - ML proposes/ranks candidates; binary-backed checks determine acceptance. Unknown paths remain unknown. Changing an input contract invalidates dependent conclusions.
-- Separate compilation, static review, scoped differential results and normal-program observations. Never promote an entire routine from a partial trace or finite test corpus alone.
+- Separate compilation, static review, scoped differential results and normal-program observations. `routine-trace-parity` may promote exactly the matched routine only when its frozen training and terminal suites pass; it never proves all inputs, full ABI, normal-program execution or whole-game/DOSBox parity.
 - See [the recovery method](docs/RECOVERY_METHOD.md) for evidence handling, hypothesis search and concrete lessons.
 
 ## Evidence and experiment guardrails
