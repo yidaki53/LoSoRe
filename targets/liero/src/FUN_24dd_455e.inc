@@ -1,39 +1,24 @@
-{ liero::FUN_24dd_455e — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_455e.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_455e.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __cdecl16near FUN_24dd_455e(void)
-// 
-// {
-//   uint uVar1;
-//   uint in_AX;
-//   uint in_DX;
-//   bool bVar2;
-//   
-//   if (in_AX != 0 || in_DX != 0) {
-//     if ((int)in_DX < 0) {
-//       bVar2 = in_AX != 0;
-//       in_AX = -in_AX;
-//       in_DX = -(uint)bVar2 - in_DX;
-//     }
-//     uVar1 = in_AX;
-//     if ((in_DX == 0) && (uVar1 = 0, in_DX = in_AX, (char)(in_AX >> 8) == '\0')) {
-//       in_DX = in_AX << 8;
-//     }
-//     while (-1 < (int)in_DX) {
-//       in_DX = in_DX * 2 + (uint)CARRY2(uVar1,uVar1);
-//       uVar1 = uVar1 * 2;
-//     }
-//   }
-//   return;
-// }
-// 
-// --- end reference ---
 procedure FUN_24dd_455e;
+var magnitude: Int64; exponent, originalHigh, flagByte: Word; negative: Boolean;
 begin
-  { TODO: translate from asm/FUN_24dd_455e.s — UNMATCHED until an oracle passes }
+  originalHigh := RegisterDX;
+  magnitude := Int64(RegisterDX) * 65536 + RegisterAX;
+  if magnitude = 0 then begin
+    RegisterAX := 0; RegisterBX := 0; RegisterDX := 0; flagByte := 0;
+  end else begin
+    RegisterCX := (originalHigh and $ff00) or (RegisterCX and $ff);
+    negative := originalHigh >= $8000;
+    if negative then magnitude := Int64(4294967296) - magnitude;
+    exponent := 160;
+    while magnitude < Int64(2147483648) do begin
+      magnitude := magnitude * 2; Dec(exponent);
+    end;
+    RegisterAX := exponent; RegisterBX := magnitude and $ffff;
+    RegisterDX := (magnitude shr 16) and $ffff;
+    if negative then flagByte := originalHigh shr 8 else begin
+      RegisterDX := RegisterDX and $7fff; flagByte := RegisterDX shr 8;
+    end;
+  end;
+  RegisterCarryFlag := False; RegisterZeroFlag := flagByte = 0;
+  RegisterSP := (RegisterSP + 2) and $ffff;
 end;
-

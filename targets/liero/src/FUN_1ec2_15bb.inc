@@ -1,5 +1,5 @@
 { liero::FUN_1ec2_15bb — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_1ec2_15bb.s via skeleton; UNMATCHED until verify passes.
+  Drafted from asm/FUN_1ec2_15bb.s via skeleton(compile-gate); UNMATCHED until verify passes.
   Original assembly retained in asm/FUN_1ec2_15bb.s (INCLUDE_ASM residue).
   Reference: Ghidra decompiler C for this function is embedded below as a comment.
 }
@@ -26,19 +26,8 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_1ec2_15bb(param_1: Pointer);
-var
-  paletteData: ^Byte;
-  paletteIndex: Word;
+procedure FUN_1ec2_15bb(param_1: Longint);
 begin
-  paletteData := param_1;
-  for paletteIndex := 0 to 255 do
-  begin
-    paletteData^ := VideoPalette[paletteIndex].Blue;
-    Inc(paletteData);
-    paletteData^ := VideoPalette[paletteIndex].Green;
-    Inc(paletteData);
-    paletteData^ := VideoPalette[paletteIndex].Red;
-    Inc(paletteData);
-  end;
+  { TODO: translate from asm/FUN_1ec2_15bb.s — UNMATCHED until an oracle passes }
 end;
+

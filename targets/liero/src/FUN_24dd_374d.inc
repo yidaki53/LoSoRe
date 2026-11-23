@@ -5,7 +5,6 @@ type
   TLieroDispatchMethod = function(slotOffset, objectSegment, objectOffset: Word): Word;
 var
   LieroDispatchMethod: TLieroDispatchMethod;
-
 procedure FUN_24dd_374d;
 var
   savedSegment, savedOffset: Word;

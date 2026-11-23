@@ -1,7 +1,7 @@
 { Oracle: original-byte/Pascal reader-wrapper parity through the checked buffer.
   Host pointers replace far-pointer parameters; they do not prove TP7 ABI.
   The caller-owned four-byte object argument remains for FUN_24dd_38f0. }
-procedure FUN_24dd_3988(count: Word; destination, objectPointer: Pointer);
+procedure FUN_24dd_3988(param_1: Word; param_2: Pointer);
 type
   TObjectWords = array[0..127] of Word;
   PObjectWords = ^TObjectWords;

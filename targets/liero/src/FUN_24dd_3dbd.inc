@@ -87,7 +87,7 @@
 // }
 // 
 // --- end reference ---
-function FUN_24dd_3dbd: LongInt;
+function FUN_24dd_3dbd: Integer;
 var
   dividend: LongInt;
   divisor: LongInt;

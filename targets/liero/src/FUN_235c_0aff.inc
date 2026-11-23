@@ -17,7 +17,7 @@
 // }
 // 
 // --- end reference ---
-function FUN_235c_0aff(param_1: Longint): Longint;
+function FUN_235c_0aff(param_1: Word): Longint;
 var
   farPointer: LongWord;
   offsetValue: Word;

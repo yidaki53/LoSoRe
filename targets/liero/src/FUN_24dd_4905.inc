@@ -24,7 +24,7 @@
 procedure FUN_24dd_4905(param_1: Byte; param_2: Integer; param_3: Pointer);
 var
   destination: ^Byte;
-  remaining: Word;
+  remaining: ^Byte;
 begin
   destination := param_3;
   remaining := Word(param_2);

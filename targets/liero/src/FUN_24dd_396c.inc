@@ -8,8 +8,7 @@ var
   LieroBufferObjectSegment, LieroBufferSourceOffset,
     LieroBufferSourceSegment: Word;
   LieroBufferDosWrite: TLieroDosWrite;
-
-function LieroInvokeBufferWrite(slotOffset: Word): Word;
+procedure FUN_24dd_396c;
 begin
   { Oracle: original396c/397a to37b3 composition, explicit far-pointer bindings.
     Other DOS clobbers and native ABI are not represented by these mirrors. }

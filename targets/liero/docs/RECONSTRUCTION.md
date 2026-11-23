@@ -1,6 +1,103 @@
 # Liero source reconstruction status
 
+## Integration status: 2026-11-22
+
+The autonomous loop is wired through `"engine/matrix.py"`,
+`"engine/target_packet.py"`, `"engine/generic_synthesizer.py"`,
+`"engine/recovery_loop.py"`, `"engine/verify.py"` and
+`"engine/oracle_gate.py"`. A single `routine-trace-parity` verdict drives
+source promotion, RL replay and DL eligibility. `"targets/liero/recovery.json"`
+review states and `"RECONSTRUCTION.md"` evidence remain distinct from oracle
+verification. Current generated status is 6 verified Pascal bodies, 29 reviewed
+bodies, 4 partial and 256 unrecovered; DAT round-trip is a scoped format check
+with no source promotion. Use
+`"python3 run_verification.py --target liero --oracle dat-parity"` to refresh
+`"recovery_results.json"`.
+
 ## Current session checkpoint and next work
+
+### Local capacity comparison: 2026-11-16, incomplete
+
+The user approved a seven-arm **known-slice Pascal** comparison on unresolved
+`FUN_24dd_48e1`, not a new recovery frontier or native C decompilation benchmark.
+The installed 6.7B tag is the older `llm4decompile-6.7b-GGUF`, **not 6.7B-v2**.
+Additional arms are 22B-v2, older 33B, DeepSeek V4 Flash-0731 and Qwen3-Coder480B.
+
+After reboot, NVIDIA620.70.06 exposes the RTX4080 Laptop (12282MiB VRAM).
+Colibri commit `0a5504a1dc64f86fcd0fe7db298b0448c730e7e6`, outside this
+checkout at `/home/robin/.local/share/losore-tools/colibri`, builds CUDA/Vulkan
+`qwen36` and `deepseek_v4` engines. Its standalone CUDA q8/q4/q2/f32/e8
+correctness test passes on that GPU. This is engine validation, not a completed
+large-model generation benchmark. Qwen480's six pinned GGUF headers pass the
+import/tensor/tokenizer check; header files are **not** full model weights.
+
+The existing source-trial runner now accepts opt-in `--inference-config`
+profiles through `engine/local_trial_inference.py`. Legacy Ollama defaults
+remain unchanged. New profiles are limited to fresh direct-source48e1 with
+output enforcement. They use explicit loopback endpoints, pinned model
+identity, prompt-only JSON with strict validation, raw HTTP evidence and
+absolute subprocess-enforced deadlines, without provider fallback or hidden
+repair. Existing original-byte/full-state/selection/review gates remain.
+OpenAI profiles require local file hashes and controlled process identities,
+not only a `/v1/models` name. Offline replay never queries model services.
+
+The common experiment is frozen at
+`/mnt/ollama/experiments/colibri-48e1-20261116/comparison.json`, with method
+snapshots, checkpoint revisions/weight hashes, identical initial prompt and
+corpora, temperature0, two requests per arm, at most7200seconds/request and a
+shared43200-second generation budget. Qwen3/Colibri output ceilings are8192
+tokens with16K context; specialist arms have a disclosed1024-token ceiling
+and8K context, subject to metadata verification. V2 fine-tuning used4K context.
+A conservative UTF8-byte input bound plus output allowance/template headroom
+rejects oversize requests instead of allowing silent input truncation.
+Different ceilings and intended tasks preclude a general model-quality ranking.
+
+Measured installed-baseline results:
+
+| Arm | Requests | Outcome before candidate execution |
+| --- | --- | --- |
+| Qwen3:14B |2| First response violates the source-JSON contract; second is representation-rejected |
+| LLM4Decompile6.7B, original |2| Both completions empty |
+| LLM4Decompile9B-v2 |2| First hits the1024-token limit; second is invalid JSON |
+| LLM4Decompile22B-v2, Q4_K_M |2| Both completions empty after verified import |
+
+All four have zero eligible candidates, **no terminal evaluation**, no source
+review eligibility and no promotion. Approximately382.33seconds of the shared
+generation budget were consumed. Sealed per-arm archives retain raw responses,
+failures and training observations and replay without inference. No candidate
+bodies or terminal feedback were used to change the frozen method. These are
+failed assisted proposals, not evidence of whole-routine correctness or learned
+weight changes.
+
+Selective pinned downloads run as the `losore-model-downloads.service` user
+service, logging to `/mnt/ollama/colibri/download.log`. Only approved GGUF
+quantizations/native shards are selected; completed files are SHA256-checked.
+Downloads are sequential:22B-v2 (verified/imported/evaluated),33B (in progress),
+DeepSeek,Qwen480. The latter three arms remain unevaluated.
+The22B import uses explicit prompt-only template and canonical Ollama name
+`losore-llm4decompile-22b-v2:Q4_K_M`; native context metadata reports32768.
+Its initial lowercase-tag binding lookup failed before profile creation or
+generation; the canonical binding then consumed exactly two requests.
+A download/engine/readiness failure
+must remain distinct from a semantic failure; do not substitute another quant.
+
+Reproduction/control helpers outside the repository:
+`/home/robin/.local/share/losore-tools/download_models.py` resumes downloads;
+`poetry run python /home/robin/.local/share/losore-tools/compare_losore_models.py installed`
+replays completed installed arms and refuses incomplete archives or changed
+method hashes. It **does not** import or evaluate the three pending arms.
+Next bind verified completed weights to Ollama/one controlled Colibri instance,
+check context/RAM/VRAM, run the declared non-Liero smoke check for large models,
+then use the unchanged runner and common manifest/budget for each remaining
+arm. No new model sweeps, terminal feedback, source installation or training.
+
+Validation:66 focused transport/archive tests pass; Ruff passes on changed
+Python files. Wider selections expose five existing target-source failures:
+two installed-body compilation failures reproduce with the unchanged HEAD
+runner; three pilot tests reference missing375e/37d3 includes. These were not
+fixed or relabeled passed. An earlier unexecuted preparation snapshot is kept
+at `/mnt/ollama/experiments/colibri-48e1-20261116-prepare1-unexecuted`; no
+generation occurred before its test-fixture context correction.
 
 ### Latest: open-output cleanup and the complete text-error continuation
 
@@ -5899,6 +5996,76 @@ startup, whole-routine equivalence or justify ledger/training promotion.
 **Next:** use the measured wrapper path as a constraint for the adjacent
 input caller, retaining the existing evidence gates and avoiding any jump to
 normal startup or whole-program recovery.
+
+## Matrix RTL bridge verifies and promotes FUN_24dd_48e1 (2026-11-22)
+
+The Matrix leaf `FUN_24dd_48e1` was first used only as a frozen inference-format
+benchmark. Raw-source generation failed with 22B C/asm-like text, 1.5B
+truncation, qwen3.8 inline `asm`/`REP MOVSB`, and a qwen3.8 no-asm timeout.
+Classification-only RTL prompts then reduced the model contract to naming one
+standard operation. `rtl-template` failed compilation, and `rtl-template-v2`
+compiled but failed all 56 training cases because the renderer reversed source
+and destination and omitted the byte-bound register/flag/stack residue; its
+terminal suite was correctly skipped.
+
+A new frozen `rtl-template-v3` renderer kept the `Move` classification and
+added the byte-bound contract. Evidence:
+`trials/matrix-representation-20261122-rtl-template-v3-15b/comparison.json`
+(classification `Move`, compile passed, source sha256
+`7c9d354c46eff48d2ef2a84d053ea9e2eeba1dc735022fb88ae567a293e207ae`) and
+`trials/rtl-template-v3-15b-eval/result.json` (compile passed; original and
+candidate matched 56/56 training and 56/56 terminal cases). The source is now
+`targets/liero/src/FUN_24dd_48e1.inc`, and `knowledge/knowledge.json` records
+the first `routine-trace-parity` promotion. This is exact routine-level evidence
+for the frozen cases, not proof of every input, TP7 physical stack ABI, original
+executable parity, DOSBox visual parity or whole-program recovery.
+
+## Packed-copy bridge verifies and promotes FUN_24dd_4141 (2026-11-22)
+
+The next target was the unimplemented byte-packed-copy leaf `FUN_24dd_4141`.
+`packed-copy-v1` used the same qwen2.5-coder:1.5b classification contract; the
+model named `CopySkipHighCountLowForward`, but the renderer inherited a stale
+`param_3: Longint` skeleton and failed compilation. That archive is preserved
+with no terminal evaluation:
+`trials/packed-copy-20261122-4141-15b/comparison.json`.
+
+`packed-copy-v2` froze the byte-backed `Pointer` declaration as a distinct
+method, prompt `sha256
+f3303a4aef30459e50b0ac7e79edc8524bdf6b28e80f7688d670d44c6d2fd984`. Evidence:
+`trials/packed-copy-20261122-4141-15b-v2/comparison.json` (classification
+`CopySkipHighCountLowForward`, compile passed, source sha256
+`da405e3b7a95421804bfaea25e717869a03aad8150ada8ea011771107cef301c`) and
+`trials/packed-copy-v2-4141-15b-eval/result.json` (compile passed; original and
+candidate matched 56/56 training and 56/56 terminal cases). The source is now
+`targets/liero/src/FUN_24dd_4141.inc`, and `knowledge/knowledge.json` records
+two `routine-trace-parity` promotions. This is exact routine-level evidence for
+the frozen cases, not proof of every skip/count, arbitrary far pointers, TP7
+physical stack ABI, original executable parity, DOSBox visual parity or
+whole-program recovery.
+
+## Automatic bootstrap loop (2026-11-22)
+
+`engine/bootstrap.py` and `tools/run_bootstrap.py` now run a bounded
+representation search with one frozen model request per method, a compile gate,
+training-only selection, one terminal routine evaluation per training pass and
+no terminal-feedback reuse. After exact training and terminal parity, the loop
+writes the source include, updates recovery state, records a verified Pascal
+example and Q-learning outcome, and makes verified same-target routines
+available as prompt constraints. Compile and training passes never promote.
+
+`bootstrap-move-forward-v2` then promoted `FUN_24dd_3d68` from a model
+classification of `Move`. The archive
+`trials/bootstrap-20261122-3d68-move-forward-v2/bootstrap-move-forward-v2/qwen2-5-coder-1-5b/arm.json`
+records compile success, source `sha256
+c863fc6a46be5e50d07cdeae6156afd0f8f5b3a25bcafaacc2ed8a5a18564543` and prompt
+`sha256 a13273d986dd1cc1c92192b78943a1a676eda8d1220de356ed5dc84a1afdc862`;
+the corresponding `terminal/result.json` matches `56/56` training and `56/56`
+terminal cases. The previous unverified body is preserved as
+`previous_source.inc` in that archive. `bootstrap-move-forward-v1` failed
+training `14/56` because it changed CF/ZF and used `Move` rather than a forward
+byte loop; no terminal evaluation or promotion followed. This is exact evidence
+for `FUN_24dd_3d68` only, not general move-copy, TP7 ABI or whole-program
+parity.
 
 ## Remaining work
 

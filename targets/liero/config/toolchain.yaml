@@ -3,7 +3,7 @@ compiler: turbo-pascal-7
 compiler_confidence: high
 language: pascal
 platform: dos
-detected: 2026-10-27
+detected: 2026-11-15
 evidence:
   - LIEROENG.TXT: "Runtime error" (strong)
   - LIERO.TXT: "Runtime error" (strong)

@@ -1,7 +1,7 @@
 { Oracle: original-byte/Pascal skip-wrapper parity through the checked buffer.
   The caller passes the object whose far argument the preceding reader retained.
   Optional method execution uses the explicit method resolver in FUN_24dd_397a. }
-procedure FUN_24dd_38f0(objectPointer: Pointer);
+procedure FUN_24dd_38f0(param_1: Longint);
 type
   TObjectWords = array[0..127] of Word;
   PObjectWords = ^TObjectWords;
