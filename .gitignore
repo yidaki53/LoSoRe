@@ -26,7 +26,7 @@ pascal-games/
 pascal-games-collection/
 *.tar.gz
 *.zip
-liero
+/liero
 .ai-memory.toml
 knowledge/rl_state.json
 knowledge/semantic_graph.json
