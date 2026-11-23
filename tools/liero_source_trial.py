@@ -20,6 +20,12 @@ from collections.abc import Callable
 
 from engine.alternate_streams import _mz_relocation_locations, load_binary_evidence
 from engine.evidence_archive import read_archive, seal_archive
+from engine.local_trial_inference import (
+    InferenceFailure,
+    TrialInference,
+    decode_response,
+)
+from engine.local_trial_inference import local_base as local_endpoint_base
 from engine.routine_contract import pascal_declaration
 from tools import liero_four_routine_pilot as pilot
 from tools.liero_file_probe import assemble_probe, run_dosbox
@@ -2644,9 +2650,22 @@ def freeze(
     typed_memory_guidance: bool = False,
     supplied_bindings: bool = False,
     thinking: bool = False,
+    inference: TrialInference | None = None,
 ) -> dict:
     """Oracle: freeze binary, source disclosure, suites, methods and local model before runs."""
     selected = tuple(PANEL) if routines is None else routines
+    if inference is not None and (
+        selected != ("FUN_24dd_48e1",)
+        or not enforce_outputs
+        or any((
+            training_from, calibration_from, residual, local_base, local_adapter,
+            interpretation_first, binding_from, lowering_from,
+            typed_memory_guidance, supplied_bindings, thinking,
+        ))
+        or inference.config["model"] != model
+        or inference.config["endpoint"] != endpoint
+    ):
+        raise ValueError("inference profile requires fresh direct-source48e1 with output gates")
     if (
         thinking
         and selected not in (("FUN_249c_0013",), ("FUN_24dd_455e",))
@@ -2765,6 +2784,11 @@ def freeze(
         root / "targets/liero/src/LieroRuntime.pas",
         root / "tests/test_liero_source_trial.py",
     ]
+    if inference is not None:
+        paths += [
+            root / "engine/local_trial_inference.py",
+            root / "tests/test_local_trial_inference.py",
+        ]
     if local_base:
         if not residual:
             raise ValueError("explicit local training inference requires residual mode")
@@ -2779,7 +2803,7 @@ def freeze(
     for path in paths:
         shutil.copy2(path, output / "sources" / path.name)
     result = {
-        "model": (
+        "model": inference.identity() if inference is not None else (
             {"kind": "mechanical-lowering", "origin_model": lowering["origin_model"]}
             if lowering is not None
             else (
@@ -2864,6 +2888,18 @@ def freeze(
         if enforce_outputs
         else None,
     }
+    if inference is not None:
+        result["inference"] = {
+            "config": inference.config,
+            "config_sha256": inference.config_sha256,
+            "format_contract": "prompt-only-source-json-strict-no-salvage",
+        }
+        result["budgets"].update(
+            maximum_generated_tokens=inference.config["max_tokens"],
+            model_timeout_seconds=inference.config["timeout_seconds"],
+            context_tokens=inference.config["context_tokens"],
+        )
+        pilot.save(output / "inference-config.json", result["inference"])
     if typed_memory_guidance:
         result["strategy"] = (
             "v9: typed memory representation guidance and4096token budget; no supplied target body"
@@ -3025,6 +3061,15 @@ def freeze(
         result["strategy"] = (
             "v14: explicit Ollama thinking option,8192token cap, unchanged original-state gates"
         )
+    if inference is not None:
+        result["strategy"] = (
+            "v15: pinned local inference, prompt-only JSON, absolute generation deadline; "
+            "unchanged direct-source48e1 complete-state and review gates"
+        )
+        result["prior_knowledge"] += (
+            " Repeated known-slice capacity comparison after earlier assisted attempts; "
+            "not untouched generalization or a model-weight improvement."
+        )
     pilot.save(output / "freeze.json", result)
     return result
 
@@ -3047,6 +3092,7 @@ def run(
     typed_memory_guidance: bool = False,
     supplied_bindings: bool = False,
     thinking: bool = False,
+    inference: TrialInference | None = None,
 ) -> dict:
     """Oracle: training-only selection, one terminal evaluation, no automatic source acceptance."""
     frozen = (
@@ -3068,6 +3114,7 @@ def run(
             typed_memory_guidance,
             supplied_bindings,
             thinking,
+            **({"inference": inference} if inference is not None else {}),
         )
         if routines is not None
         or enforce_outputs
@@ -3079,6 +3126,7 @@ def run(
         or typed_memory_guidance
         or supplied_bindings
         or thinking
+        or inference is not None
         else (
             freeze(root, output, model, endpoint, training_from, calibration_from)
             if calibration_from is not None
@@ -3235,6 +3283,10 @@ def run(
                             "origin": "mechanical-lowering-not-model-output",
                         }
                     )
+                elif inference is not None:
+                    response = inference.request(
+                        text, output / routine / f"inference-{number}"
+                    )
                 elif local_base:
                     from engine.model_adapter import generate_with_adapter
 
@@ -3293,6 +3345,10 @@ def run(
                 )
             except (ValueError, KeyError, urllib.error.URLError, TimeoutError) as error:
                 attempt = {"status": "proposal-failed", "error": str(error)}
+                if isinstance(error, InferenceFailure):
+                    attempt["failure_kind"] = error.kind
+                    if error.kind in ("context", "budget", "identity"):
+                        attempt["model_request"] = False
             else:
                 source_hash = hashlib.sha256(source.encode()).hexdigest()
                 if source_hash in seen:
@@ -3336,6 +3392,10 @@ def run(
                 attempt["source_origin"] = "mechanical-lowering"
             attempts.append(attempt)
             pilot.save(output / routine / "training.json", attempts)
+            if attempt.get("failure_kind") in (
+                "timeout", "transport", "identity", "budget", "interrupted", "context"
+            ):
+                break
             if attempt["status"] == "passed":
                 selected = number
                 break
@@ -3394,6 +3454,9 @@ def run(
             for path, digest in frozen["model"]["file_hashes"].items()
         ):
             raise ValueError("local training model files changed during evaluation")
+    elif inference is not None:
+        if inference.identity() != frozen["model"]:
+            raise ValueError("local model identity changed during evaluation")
     elif (
         lowering_from is None
         and pilot.leaf_model_identity(model, endpoint) != frozen["model"]
@@ -3428,6 +3491,11 @@ def run(
         if result["binary_terminal_passes"]
         else "stopped-below-yield-floor"
     )
+    if inference is not None and any(
+        attempt.get("failure_kind") in ("context", "budget", "identity", "transport", "timeout")
+        for record in results.values() for attempt in record["attempts"]
+    ):
+        result["frontier_status"] = "blocked-inference-not-semantic-yield"
     pilot.save(output / "result.json", result)
     seal_archive(output)
     return result
@@ -3509,6 +3577,32 @@ def validate_artifacts(
         if pilot.digest(root / name) != digest:
             raise ValueError("source trial method/runtime changed: " + name)
     result = json.loads(archive["result.json"])
+    if frozen.get("inference") is not None:
+        profile = frozen["inference"]
+        if json.loads(archive["inference-config.json"]) != profile:
+            raise ValueError("frozen inference profile changed")
+        client = TrialInference(profile["config"], profile["config_sha256"])
+        for routine, record in result["routines"].items():
+            for number, attempt in enumerate(record["attempts"], 1):
+                prefix = f"{routine}/inference-{number}/"
+                metadata = json.loads(archive[prefix + "metadata.json"])
+                request = json.loads(archive[prefix + "request.json"])
+                prompt = archive[f"{routine}/prompt-{number}.txt"].decode()
+                route, payload = client.payload(prompt)
+                if (
+                    request["base"] != local_endpoint_base(client.config["endpoint"])
+                    or request["route"] != route or request["payload"] != payload
+                    or metadata["config_sha256"] != client.config_sha256
+                ):
+                    raise ValueError("inference request differs from frozen profile")
+                if metadata["status"] == "complete":
+                    normalized, _ = decode_response(
+                        archive[prefix + "response.raw"], client.config["backend"]
+                    )
+                    if normalized != archive[f"{routine}/response-{number}.json"].decode():
+                        raise ValueError("normalized response differs from raw evidence")
+                elif attempt.get("failure_kind") != metadata["status"]:
+                    raise ValueError("inference failure classification differs")
     for routine, record in result["routines"].items():
         interpretation = record.get("interpretation")
         if lowering is not None:
@@ -3874,6 +3968,10 @@ def main() -> int:
     parser.add_argument("--supplied-bindings", action="store_true")
     parser.add_argument("--thinking", action="store_true")
     parser.add_argument(
+        "--inference-config", type=pathlib.Path,
+        help="Pinned local transport profile; fresh direct-source48e1 only.",
+    )
+    parser.add_argument(
         "--prototype",
         action="store_true",
         help="Checked single-routine local-model preset; existing outputs are replayed, never rerun.",
@@ -3890,6 +3988,18 @@ def main() -> int:
         help="Include replay-checked packed caller evidence with --export.",
     )
     args = parser.parse_args()
+    inference = (
+        TrialInference.from_file(args.inference_config.resolve())
+        if args.inference_config and not (
+            args.replay or args.historical or args.export or args.validate_export
+        ) else None
+    )
+    if args.inference_config and (args.prototype or args.calibrate):
+        parser.error("--inference-config cannot mix prototype or calibration presets")
+    if inference is not None:
+        if args.model is not None and args.model != inference.config["model"]:
+            parser.error("--model disagrees with inference profile")
+        args.model = inference.config["model"]
     if args.model is None:
         args.model = "qwen3:14b" if args.prototype else "qwen2.5-coder:14b-instruct"
     if args.caller_from and not args.export:
@@ -3989,7 +4099,7 @@ def main() -> int:
                 ROOT,
                 args.output.resolve(),
                 args.model,
-                "http://localhost:11434",
+                inference.config["endpoint"] if inference else "http://localhost:11434",
                 None if args.training_from is None else args.training_from.resolve(),
                 None
                 if args.calibration_from is None
@@ -4005,6 +4115,7 @@ def main() -> int:
                 args.typed_memory_guidance,
                 args.supplied_bindings,
                 args.thinking,
+                **({"inference": inference} if inference is not None else {}),
             ),
             indent=2,
         )
