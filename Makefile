@@ -1,5 +1,5 @@
-.PHONY: init test verify new-target lint typecheck report provenance preflight ingest draft learn build pipeline improve recovery-audit binary-census train train-now train-export
-ACTIVE_FILES = engine/recovery_loop.py engine/matrix.py engine/rl_engine.py engine/verify.py engine/knowledge.py engine/model_training.py engine/local_trial_inference.py engine/rtl_template.py engine/frozen_source_eval.py engine/oracle_gate.py engine/contract_oracle.py engine/generic_synthesizer.py engine/bootstrap.py engine/target_packet.py engine/improve_loop.py tools/run_full_pipeline.py tools/rl_recover.py tools/benchmark_matrix_models.py tools/evaluate_frozen_source.py tools/run_bootstrap.py tools/build_target_packet.py run_verification.py tools/build_codebase_graph.py tests/test_recovery_integration.py tests/test_bootstrap.py tests/test_target_packet.py tests/test_generic_synthesizer.py tests/test_contract_oracle.py tests/test_local_trial_inference.py tests/test_learning.py
+.PHONY: init test verify new-target lint typecheck report provenance preflight ingest draft learn build pipeline improve recovery-audit binary-census train train-now train-export autonomous
+ACTIVE_FILES = engine/recovery_loop.py engine/matrix.py engine/rl_engine.py engine/verify.py engine/knowledge.py engine/model_training.py engine/local_trial_inference.py engine/rtl_template.py engine/frozen_source_eval.py engine/oracle_gate.py engine/contract_oracle.py engine/generic_synthesizer.py engine/capability_registry.py engine/capability_learner.py engine/capability_dsl.py engine/capability_proposer.py engine/large_routine_plan.py engine/asm_emulator.py engine/bootstrap.py engine/target_packet.py engine/improve_loop.py tools/run_full_pipeline.py tools/rl_recover.py tools/benchmark_matrix_models.py tools/evaluate_frozen_source.py tools/run_bootstrap.py tools/build_target_packet.py tools/triage_large_routines.py run_verification.py tools/build_codebase_graph.py tests/test_recovery_integration.py tests/test_bootstrap.py tests/test_target_packet.py tests/test_generic_synthesizer.py tests/test_contract_oracle.py tests/test_capability_registry.py tests/test_capability_dsl.py tests/test_local_trial_inference.py tests/test_learning.py tests/test_large_routine_plan.py tests/test_canonical_state.py tests/test_gate_hardening.py
 IMPROVE_ARGS = \
 	$(if $(MODEL),--model $(MODEL)) \
 	$(if $(LLM),--endpoint $(LLM)) \
@@ -28,6 +28,8 @@ build:
 	@echo "build handled by per-target Makefile"
 improve:
 	python3 engine/improve_loop.py --target $(TARGET) --oracle $(or $(ORACLE),dat-parity) $(IMPROVE_ARGS)
+autonomous:
+	python3 tools/rl_recover.py --target $(or $(TARGET),liero) --oracle $(or $(ORACLE),routine-trace-parity) --max-iterations $(or $(MAX_ITERATIONS),10)
 recovery-audit:
 	python3 -m engine.recovery --target $(TARGET) --init --summary-only
 binary-census:
