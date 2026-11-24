@@ -1,0 +1,1644 @@
+{
+  "capabilities": {
+    "arena-mapped-memory": {
+      "features_any": [
+        "mem:bracket"
+      ],
+      "features_none": [
+        "control:call"
+      ],
+      "outcomes": {
+        "failed": 4,
+        "skipped": 5,
+        "verified": 3
+      },
+      "provenance": [
+        {
+          "outcome": "failed",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_1ec2_0dc8",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_1ec2_0dc8",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_1ec2_0dc8",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        },
+        {
+          "features": [
+            "control:branch-internal",
+            "control:far-return",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "c94ba9347701b491ada8fb166c9938b0038fbab680085dffaa3c7534be898a4d",
+          "operations": [
+            "ADD",
+            "CMP",
+            "JG",
+            "JL",
+            "JZ",
+            "LEAVE",
+            "LES",
+            "MOV",
+            "OR",
+            "PUSH",
+            "RETF",
+            "SHL"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "control:far-return",
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADD",
+            "op:CMP",
+            "op:JG",
+            "op:JL",
+            "op:JZ",
+            "op:LEAVE",
+            "op:LES",
+            "op:MOV",
+            "op:OR",
+            "op:PUSH",
+            "op:RETF",
+            "op:SHL"
+          ]
+        },
+        {
+          "features": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "18e635be18a1a157d31652418209b36240d1c201b9f7d69ac2d84c49472de606",
+          "operations": [
+            "AND",
+            "CMP",
+            "INC",
+            "JZ",
+            "MOV",
+            "OR",
+            "POP",
+            "POPF",
+            "PUSH",
+            "PUSHF",
+            "RET",
+            "XOR"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:bracket",
+            "op:AND",
+            "op:CMP",
+            "op:INC",
+            "op:JZ",
+            "op:MOV",
+            "op:OR",
+            "op:POP",
+            "op:POPF",
+            "op:PUSH",
+            "op:PUSHF",
+            "op:RET",
+            "op:XOR"
+          ]
+        }
+      ],
+      "status": "verified"
+    },
+    "bounded-internal-branches": {
+      "features_any": [
+        "control:branch-internal"
+      ],
+      "features_none": [
+        "control:branch-external",
+        "control:call"
+      ],
+      "outcomes": {
+        "failed": 4,
+        "skipped": 4,
+        "verified": 3
+      },
+      "provenance": [
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_1ec2_0dc8",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_1ec2_0dc8",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_1ec2_0dc8",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "failed",
+          "routine": "FUN_24dd_0582",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_0582",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "signatures": [
+        {
+          "features": [
+            "control:branch-internal",
+            "control:far-return",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "c94ba9347701b491ada8fb166c9938b0038fbab680085dffaa3c7534be898a4d",
+          "operations": [
+            "ADD",
+            "CMP",
+            "JG",
+            "JL",
+            "JZ",
+            "LEAVE",
+            "LES",
+            "MOV",
+            "OR",
+            "PUSH",
+            "RETF",
+            "SHL"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "control:far-return",
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADD",
+            "op:CMP",
+            "op:JG",
+            "op:JL",
+            "op:JZ",
+            "op:LEAVE",
+            "op:LES",
+            "op:MOV",
+            "op:OR",
+            "op:PUSH",
+            "op:RETF",
+            "op:SHL"
+          ]
+        },
+        {
+          "features": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "18e635be18a1a157d31652418209b36240d1c201b9f7d69ac2d84c49472de606",
+          "operations": [
+            "AND",
+            "CMP",
+            "INC",
+            "JZ",
+            "MOV",
+            "OR",
+            "POP",
+            "POPF",
+            "PUSH",
+            "PUSHF",
+            "RET",
+            "XOR"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:bracket",
+            "op:AND",
+            "op:CMP",
+            "op:INC",
+            "op:JZ",
+            "op:MOV",
+            "op:OR",
+            "op:POP",
+            "op:POPF",
+            "op:PUSH",
+            "op:PUSHF",
+            "op:RET",
+            "op:XOR"
+          ]
+        },
+        {
+          "features": [
+            "control:branch-internal"
+          ],
+          "hash": "fda18e261886393a7b9afc28883f40796f81301d24d148e7b25c9a63b8b86d14",
+          "operations": [
+            "CLD",
+            "JMP",
+            "MOV",
+            "MOVSW.REP",
+            "POP",
+            "PUSH",
+            "RET",
+            "SUB",
+            "XCHG"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "op:CLD",
+            "op:JMP",
+            "op:MOV",
+            "op:MOVSW.REP",
+            "op:POP",
+            "op:PUSH",
+            "op:RET",
+            "op:SUB",
+            "op:XCHG"
+          ]
+        }
+      ],
+      "status": "verified"
+    },
+    "gap-198c6c8ab67e": {
+      "base_capability": "arena-mapped-memory",
+      "gap_count": 2,
+      "gap_hash": "198c6c8ab67e2e136f809134e70d4e5cd149967aefdb2976228e242c612c4e22",
+      "outcomes": {
+        "skipped": 1
+      },
+      "provenance": [
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "signatures": [
+        {
+          "features": [
+            "control:branch-internal",
+            "control:far-return",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "198c6c8ab67e2e136f809134e70d4e5cd149967aefdb2976228e242c612c4e22",
+          "operations": [
+            "CLD",
+            "CMP",
+            "CMPSB.REPE",
+            "INC",
+            "JBE",
+            "JNZ",
+            "JZ",
+            "LDS",
+            "LES",
+            "LODSB",
+            "MOV",
+            "OR",
+            "RETF",
+            "XOR"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "control:far-return",
+            "mem:absolute",
+            "mem:bracket",
+            "op:CLD",
+            "op:CMP",
+            "op:CMPSB.REPE",
+            "op:INC",
+            "op:JBE",
+            "op:JNZ",
+            "op:JZ",
+            "op:LDS",
+            "op:LES",
+            "op:LODSB",
+            "op:MOV",
+            "op:OR",
+            "op:RETF",
+            "op:XOR"
+          ]
+        }
+      ],
+      "similarity": 0.4166666666666667,
+      "source": "gap-generalization",
+      "status": "candidate"
+    },
+    "rule-code-and-memory-v1-7425d7a0f2b8": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-zero",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-zero",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>[0-9A-F]{1,8})\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_word",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-and-memory-v1-790347c18bba": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-word",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-word",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>[0-9A-F]{1,8})\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_word",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-and-memory-v1-a3475424c97c": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "address": "address",
+          "id": "memory-read-absolute-word",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-word",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>[0-9A-F]{1,8})\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_word",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-and-memory-v2-08bfe78dc2a0": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-state-6414",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\]$",
+          "slot": "state",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-zero-6412",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\]$",
+          "slot": "zero",
+          "target": "target",
+          "variable": ""
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-state-6414",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "slot": "state",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-zero-6412",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "slot": "zero",
+          "target": "target",
+          "variable": ""
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_word",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-constant-v3-b44f0fefb7b2": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "failed": 1,
+        "skipped": 1,
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "failed",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_word",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-memory-and-dos-state-1ffbe9f382b5": {
+      "features_any": [],
+      "features_none": [],
+      "outcomes": {},
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-6412",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\]$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-6414",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\]$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-6412",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-6414",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_memory",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-memory-and-dos-state-2dcd965a62a6": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "hardware-flags-word",
+          "kind": "flags_hardware_word",
+          "match": "^PUSHF$"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "18e635be18a1a157d31652418209b36240d1c201b9f7d69ac2d84c49472de606",
+          "operations": [
+            "AND",
+            "CMP",
+            "INC",
+            "JZ",
+            "MOV",
+            "OR",
+            "POP",
+            "POPF",
+            "PUSH",
+            "PUSHF",
+            "RET",
+            "XOR"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:bracket",
+            "op:AND",
+            "op:CMP",
+            "op:INC",
+            "op:JZ",
+            "op:MOV",
+            "op:OR",
+            "op:POP",
+            "op:POPF",
+            "op:PUSH",
+            "op:PUSHF",
+            "op:RET",
+            "op:XOR"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-memory-and-dos-state-46a7fead0d6c": {
+      "features_any": [],
+      "features_none": [],
+      "outcomes": {},
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "arithmetic:decimal-adjust",
+            "control:branch-external",
+            "control:call",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "87c18486ef10b3853d45c50cafb9b58648a5c0ecb7a37542c1ca95f968445ca4",
+          "operations": [
+            "AAD",
+            "ADC",
+            "ADD",
+            "AND",
+            "CALL",
+            "DEC",
+            "JMP",
+            "JNS",
+            "JNZ",
+            "JS",
+            "JZ",
+            "LEA",
+            "MOV",
+            "MUL",
+            "OR",
+            "POP",
+            "PUSH",
+            "RCL",
+            "RET",
+            "ROL",
+            "SHL",
+            "SHR",
+            "SUB",
+            "XCHG"
+          ],
+          "tokens": [
+            "arithmetic:decimal-adjust",
+            "control:branch-external",
+            "control:call",
+            "mem:absolute",
+            "mem:bracket",
+            "op:AAD",
+            "op:ADC",
+            "op:ADD",
+            "op:AND",
+            "op:CALL",
+            "op:DEC",
+            "op:JMP",
+            "op:JNS",
+            "op:JNZ",
+            "op:JS",
+            "op:JZ",
+            "op:LEA",
+            "op:MOV",
+            "op:MUL",
+            "op:OR",
+            "op:POP",
+            "op:PUSH",
+            "op:RCL",
+            "op:RET",
+            "op:ROL",
+            "op:SHL",
+            "op:SHR",
+            "op:SUB",
+            "op:XCHG"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-memory-and-dos-state-4a25a5595e23": {
+      "features_any": [],
+      "features_none": [],
+      "outcomes": {},
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-7B3C",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>7B3C)\\]$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-63EE",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>63EE)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-63F0",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>63F0)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState2"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-7B3C",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>7B3C)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "control:branch-external",
+            "control:call",
+            "mem:absolute",
+            "mem:bracket"
+          ],
+          "hash": "e662e640e1e8a23e099e9004883957c2886603276cb2dae9a89faaf9a5d4a2da",
+          "operations": [
+            "ADC",
+            "ADD",
+            "AND",
+            "CALL",
+            "CALLF",
+            "CLC",
+            "CMP",
+            "CWD",
+            "JA",
+            "JC",
+            "JMP",
+            "JZ",
+            "LES",
+            "MOV",
+            "OR",
+            "POP",
+            "PUSH",
+            "RCR",
+            "RET",
+            "SBB",
+            "SHR",
+            "SUB",
+            "XOR"
+          ],
+          "tokens": [
+            "control:branch-external",
+            "control:call",
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:AND",
+            "op:CALL",
+            "op:CALLF",
+            "op:CLC",
+            "op:CMP",
+            "op:CWD",
+            "op:JA",
+            "op:JC",
+            "op:JMP",
+            "op:JZ",
+            "op:LES",
+            "op:MOV",
+            "op:OR",
+            "op:POP",
+            "op:PUSH",
+            "op:RCR",
+            "op:RET",
+            "op:SBB",
+            "op:SHR",
+            "op:SUB",
+            "op:XOR"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-memory-and-dos-state-f57ef8d20de3": {
+      "features_any": [],
+      "features_none": [],
+      "outcomes": {},
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-D8",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>D8)\\]$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:absolute-bp-load",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "c5bddb660aad14c6cb89df002a78032f13f1c5b0cfbfe50a7ea70615b8ce89ac",
+          "operations": [
+            "ADC",
+            "ADD",
+            "DEC",
+            "JZ",
+            "MOV",
+            "MUL",
+            "OR",
+            "POP",
+            "PUSH",
+            "RET",
+            "SUB",
+            "TEST",
+            "XCHG"
+          ],
+          "tokens": [
+            "control:branch-internal",
+            "mem:absolute",
+            "mem:absolute-bp-load",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:DEC",
+            "op:JZ",
+            "op:MOV",
+            "op:MUL",
+            "op:OR",
+            "op:POP",
+            "op:PUSH",
+            "op:RET",
+            "op:SUB",
+            "op:TEST",
+            "op:XCHG",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-memory-and-state-1ffbe9f382b5": {
+      "features_any": [],
+      "features_none": [],
+      "outcomes": {},
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-6412",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\]$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-6414",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\]$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-6412",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-6414",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_memory",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "rule-code-zero-and-memory-state-1ffbe9f382b5": {
+      "features_any": [],
+      "features_none": [],
+      "generalized": false,
+      "outcomes": {
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "rules": [
+        {
+          "id": "flags-adc-zero",
+          "kind": "flags_adc_zero",
+          "match": "^ADC\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*0X0$",
+          "target": "target"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-6412",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\]$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-read-absolute-6414",
+          "kind": "memory_read",
+          "match": "^MOV\\s+(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP)),\\s*(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\]$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-6412",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6412)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState0"
+        },
+        {
+          "address": "address",
+          "id": "memory-write-absolute-6414",
+          "kind": "memory_write",
+          "match": "^MOV\\s+(?:WORD PTR\\s+)?\\[0X(?P<address>6414)\\],\\s*(?P<target>(?:AX|BX|CX|DX|SI|DI|BP|SP))$",
+          "target": "target",
+          "variable": "emuAbsState1"
+        },
+        {
+          "address": "address",
+          "id": "rewrite-unary-word",
+          "kind": "rewrite",
+          "match": "^(?P<op>MUL|DIV|IMUL)\\s+WORD PTR\\s+(?P<segment>CS|[0-9A-F]{1,4}):\\[0X(?P<address>[0-9A-F]{1,8})\\]$",
+          "segment": "segment",
+          "source": "code_zero",
+          "template": "{op} WORD PTR {value}"
+        }
+      ],
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "source": "rule-proposal",
+      "status": "candidate"
+    },
+    "wide-unsigned-multiply": {
+      "features_any": [
+        "op:MUL",
+        "width:16"
+      ],
+      "features_none": [
+        "control:call"
+      ],
+      "outcomes": {
+        "failed": 1,
+        "skipped": 1,
+        "verified": 1
+      },
+      "provenance": [
+        {
+          "outcome": "failed",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "skipped",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        },
+        {
+          "outcome": "verified",
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "renderer": "asm-emulation-v1",
+      "signatures": [
+        {
+          "features": [
+            "mem:absolute",
+            "mem:bracket",
+            "width:16"
+          ],
+          "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+          "operations": [
+            "ADC",
+            "ADD",
+            "MOV",
+            "MUL",
+            "RET",
+            "SHL"
+          ],
+          "tokens": [
+            "mem:absolute",
+            "mem:bracket",
+            "op:ADC",
+            "op:ADD",
+            "op:MOV",
+            "op:MUL",
+            "op:RET",
+            "op:SHL",
+            "width:16"
+          ]
+        }
+      ],
+      "status": "verified"
+    }
+  },
+  "gaps": {
+    "18e635be18a1a157d31652418209b36240d1c201b9f7d69ac2d84c49472de606": {
+      "count": 1,
+      "examples": [
+        {
+          "routine": "FUN_24dd_00b1",
+          "target": "liero"
+        }
+      ],
+      "signature": {
+        "features": [
+          "control:branch-internal",
+          "mem:absolute",
+          "mem:bracket"
+        ],
+        "hash": "18e635be18a1a157d31652418209b36240d1c201b9f7d69ac2d84c49472de606",
+        "operations": [
+          "AND",
+          "CMP",
+          "INC",
+          "JZ",
+          "MOV",
+          "OR",
+          "POP",
+          "POPF",
+          "PUSH",
+          "PUSHF",
+          "RET",
+          "XOR"
+        ],
+        "tokens": [
+          "control:branch-internal",
+          "mem:absolute",
+          "mem:bracket",
+          "op:AND",
+          "op:CMP",
+          "op:INC",
+          "op:JZ",
+          "op:MOV",
+          "op:OR",
+          "op:POP",
+          "op:POPF",
+          "op:PUSH",
+          "op:PUSHF",
+          "op:RET",
+          "op:XOR"
+        ]
+      }
+    },
+    "198c6c8ab67e2e136f809134e70d4e5cd149967aefdb2976228e242c612c4e22": {
+      "count": 3,
+      "examples": [
+        {
+          "routine": "FUN_24dd_3f86",
+          "target": "liero"
+        }
+      ],
+      "signature": {
+        "features": [
+          "control:branch-internal",
+          "control:far-return",
+          "mem:absolute",
+          "mem:bracket"
+        ],
+        "hash": "198c6c8ab67e2e136f809134e70d4e5cd149967aefdb2976228e242c612c4e22",
+        "operations": [
+          "CLD",
+          "CMP",
+          "CMPSB.REPE",
+          "INC",
+          "JBE",
+          "JNZ",
+          "JZ",
+          "LDS",
+          "LES",
+          "LODSB",
+          "MOV",
+          "OR",
+          "RETF",
+          "XOR"
+        ],
+        "tokens": [
+          "control:branch-internal",
+          "control:far-return",
+          "mem:absolute",
+          "mem:bracket",
+          "op:CLD",
+          "op:CMP",
+          "op:CMPSB.REPE",
+          "op:INC",
+          "op:JBE",
+          "op:JNZ",
+          "op:JZ",
+          "op:LDS",
+          "op:LES",
+          "op:LODSB",
+          "op:MOV",
+          "op:OR",
+          "op:RETF",
+          "op:XOR"
+        ]
+      }
+    },
+    "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c": {
+      "count": 1,
+      "examples": [
+        {
+          "routine": "FUN_24dd_46b1",
+          "target": "liero"
+        }
+      ],
+      "signature": {
+        "features": [
+          "mem:absolute",
+          "mem:bracket",
+          "width:16"
+        ],
+        "hash": "33a8231eb46a1c9405508e0217dc7f4c3294adc2049091e7ac78b30cdfac678c",
+        "operations": [
+          "ADC",
+          "ADD",
+          "MOV",
+          "MUL",
+          "RET",
+          "SHL"
+        ],
+        "tokens": [
+          "mem:absolute",
+          "mem:bracket",
+          "op:ADC",
+          "op:ADD",
+          "op:MOV",
+          "op:MUL",
+          "op:RET",
+          "op:SHL",
+          "width:16"
+        ]
+      }
+    }
+  },
+  "schema_version": 1
+}

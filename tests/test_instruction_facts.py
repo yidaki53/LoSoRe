@@ -418,3 +418,17 @@ end.
             indent=2,
         )
     )
+
+
+def test_prefix_decodes_register_segment_moves_and_rep_movsw():
+    raw = bytes.fromhex("b834121e8cc98ed996fcb90600f3a583ef0c961fc3")
+    facts = initialization_prefix(raw)
+    assert facts["residue"]["bytes_hex"] == "c3"
+    assert [item["bytes_hex"] for item in facts["instructions"]] == [
+        "b83412", "1e", "8cc9", "8ed9", "96", "fc", "b90600", "f3a5",
+        "83ef0c", "96", "1f",
+    ]
+    assert facts["registers"]["cx"]["amount"] == 6
+    assert facts["registers"]["ax"]["amount"] == 0x1234
+    assert facts["registers"]["di"]["kind"] == "unknown"
+    assert facts["writes"] == []

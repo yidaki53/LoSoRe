@@ -6,7 +6,7 @@ import hashlib
 import json
 import re
 
-from engine import rtl_template
+from engine import asm_emulator, capability_registry, rtl_template
 
 SCHEMA_VERSION = 1
 METHOD = "generic-ir-v1"
@@ -88,6 +88,7 @@ def build_ir(evidence: dict) -> dict:
         "target": evidence.get("target", ""),
         "shape": "unsupported",
         "operations": operations,
+        "capabilities": capability_registry.detect(evidence),
         "operands": {"frame_words": _frame_words(instructions)},
     }
 
@@ -475,7 +476,27 @@ def render(ir: dict) -> str:
 
 def synthesize(evidence: dict) -> dict:
     ir = build_ir(evidence)
-    source = render(ir) if ir["shape"] != "unsupported" else ""
+    if evidence.get("composed"):
+        source = asm_emulator.translate(evidence)
+        ir.update({
+            "shape": asm_emulator.METHOD,
+            "operands": {
+                "declaration": (evidence.get("oracle_contract") or {}).get("declaration", ""),
+            },
+        })
+    else:
+        source = render(ir) if ir["shape"] != "unsupported" else ""
+    if not source and not evidence.get("composed"):
+        try:
+            source = asm_emulator.translate(evidence)
+            contract = evidence.get("oracle_contract")
+            declaration = contract.get("declaration", "") if isinstance(contract, dict) else ""
+            ir.update({
+                "shape": asm_emulator.METHOD,
+                "operands": {"declaration": declaration},
+            })
+        except asm_emulator.Unsupported:
+            source = ""
     ir_json = json.dumps(ir, sort_keys=True, separators=(",", ":"))
     source_policy = evidence.get("source_policy", {})
     result = {

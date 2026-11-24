@@ -590,6 +590,92 @@
         "end": "RegisterCarryFlag := (srcLen < destLen);"
       },
       "prompt": "The checked Pascal declaration is authoritative. Both Longint arguments encode a real-mode far pointer with the segment in the high word and offset in the low word. Access bytes through RealModeMemory using ((segment << 4) + offset) & $FFFFF; do not cast either argument to a host Pointer or dereference it as host memory. The runtime represents ZF with RegisterZeroFlag and CF with RegisterCarryFlag; set both globals according to the assembly's compare outcomes on every return path, because Pascal comparisons do not update these modeled CPU flags. The scoped comparator observes ZF, CF, stack balance, and tested-memory non-mutation only. Preserve that scope and do not claim universal routine equivalence from these fixtures."
+    },
+    "FUN_24dd_3e95": {
+      "declaration": "procedure FUN_24dd_3e95(param_1, param_2: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "bounded far-pointer length-prefixed copy in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "Far pointer arguments resolve to offsets inside the owned arena; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers, flags and stack guards are observed.",
+      "instruction_semantics": "CLD; LES DI and LDS SI from SS stack slots; LODSB; STOSB; CL=AL; CH=0; REP MOVSB; DS restored; RETF 4. The source length byte is copied first, then count bytes are copied from the incremented source pointer.",
+      "prompt": "Recover the checked declaration's two far-pointer parameters from binary-derived instruction semantics. Keep the arena projection and the exact far-return cleanup; no decompiler prose is evidence."
+    },
+    "FUN_24dd_23c0": {
+      "declaration": "function FUN_24dd_23c0(sourcePointer: Pointer): Longint;",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "register-only BCD word projection with a bounded ES source word",
+      "flag_mask": "0x0",
+      "register_inputs": {"SI": 0},
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "A fixture-only Pointer argument resolves ES:SI to one word inside the owned arena; all other effects are registers and flags. DS, ES and SS use the fixture segment 0x191.",
+      "instruction_semantics": "PUSH BX/CX/DX; CL=4; CH=10; BX=ES:[SI]; high nibble times ten plus low nibble; high byte nibble times ten plus low nibble shifted right four; multiply by ten and add low nibble; POP DX/CX/BX; RET. The 32-bit result is returned in DX:AX.",
+      "prompt": "Recover the checked Longint result from binary-derived instruction semantics. The Pointer argument is a fixture binding for ES:SI, not a native argument. Keep the ES source word, register restoration, and DX:AX result projection; no decompiler prose is evidence."
+    },
+    "FUN_24dd_3fb1": {
+      "declaration": "procedure FUN_24dd_3fb1(param_1: Byte; param_2: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "two-byte tagged write in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "The Pointer argument resolves inside the owned arena; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers and stack guards are observed.",
+      "instruction_semantics": "CLD; LES DI from SS:[BX+6]; store constant 1; store the Byte argument from SS:[BX+4]; RETF 2.",
+      "prompt": "Recover the checked declaration from binary-derived instruction semantics. Keep the arena projection and far-return cleanup; no decompiler prose is evidence."
+    },
+    "FUN_24dd_4905": {
+      "declaration": "procedure FUN_24dd_4905(param_1: Byte; param_2: Word; param_3: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "bounded repeated byte fill in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "argument_masks": {"1": "0x3f"},
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "The Pointer argument resolves inside the owned arena and the Word count is bounded by a fixture mask; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers and stack guards are observed.",
+      "instruction_semantics": "LES DI from SS:[BX+8]; CX from SS:[BX+6]; AL from SS:[BX+4]; CLD; REP STOSB; RETF 8.",
+      "prompt": "Recover the checked declaration from binary-derived instruction semantics. Keep the bounded fill and far-return cleanup; no decompiler prose is evidence."
+    },
+    "FUN_24dd_3fc3": {
+      "declaration": "procedure FUN_24dd_3fc3(param_1: Word; param_2, param_3: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "bounded length-prefixed copy in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "argument_masks": {"0": "0xff"},
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "Both Pointer arguments resolve inside the owned arena and the Word count is bounded by a fixture mask; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers and stack guards are observed.",
+      "instruction_semantics": "CLD; save DS; LES DI from SS:[BX+10]; LDS SI from SS:[BX+6]; AX from SS:[BX+4]; STOSB for the length byte; CX=AX; REP MOVSB; restore DS; RETF 6.",
+      "prompt": "Recover the checked declaration from binary-derived instruction semantics. Keep the arena projection and far-return cleanup; no decompiler prose is evidence."
+    },
+    "FUN_24dd_40ac": {
+      "declaration": "procedure FUN_24dd_40ac(param_1: Word; param_2, param_3: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "bounded padded copy in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "argument_masks": {"0": "0x1f1f"},
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "Both Pointer arguments resolve inside the owned arena and the Word pad/count argument is bounded by a fixture mask; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers and stack guards are observed.",
+      "instruction_semantics": "CLD; save DS; LES DI from SS:[BX+10]; LDS SI from SS:[BX+6]; BX from SS:[BX+4]; CL=BH; zero-fill CL bytes; CL=BL; copy CL bytes; CL=32-BL-BH; space-fill CL bytes; restore DS; RETF 6.",
+      "prompt": "Recover the checked declaration from binary-derived instruction semantics. Keep the bounded padded copy and far-return cleanup; no decompiler prose is evidence."
+    },
+    "FUN_1ec2_0000": {
+      "declaration": "procedure FUN_1ec2_0000(param_1: Word; param_2, param_3: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "bounded dword copy in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "argument_masks": {"0": "0x3f"},
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "Both Pointer arguments resolve inside the owned arena and the Word dword count is bounded by a fixture mask; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers and stack guards are observed.",
+      "instruction_semantics": "PUSH BP; MOV BP,SP; PUSH DS; LDS SI from SS:[BP+12]; LES DI from SS:[BP+8]; CX from SS:[BP+6] then SHR 2; REP MOVSD; POP DS; LEAVE; RETF 10.",
+      "prompt": "Recover the checked declaration from binary-derived instruction semantics. Keep the bounded dword copy and far-return cleanup; no decompiler prose is evidence."
+    },
+    "FUN_24dd_05fd": {
+      "declaration": "procedure FUN_24dd_05fd(destPointer: Pointer);",
+      "oracle": "binary-derived-instruction-emulation-projection",
+      "scope": "bounded zero and register word fill in the owned 0x8000..0x9000 arena",
+      "flag_mask": "0x0",
+      "register_inputs": {"DI": 0},
+      "binary_sha256": "e45653ab0f915238f7394b2846b70288d0cc35a2595debc2a49502078398c7d1",
+      "memory_model": "The fixture-only Pointer argument resolves ES:DI inside the owned arena; DS, ES and SS use the fixture segment 0x191. Only arena bytes and modeled registers and stack guards are observed.",
+      "instruction_semantics": "PUSH DI/AX; zero AX; CLD; five STOSW zeros; POP AX; STOSW with the captured AX; STOSW with CL as the low byte and zero high byte; POP DI; RET.",
+      "prompt": "Recover the checked declaration from binary-derived instruction semantics. The Pointer argument is a fixture binding for ES:DI, not a native argument. Keep the bounded word fill and near return; no decompiler prose is evidence."
     }
   }
 }

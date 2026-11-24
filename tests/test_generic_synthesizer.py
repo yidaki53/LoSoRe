@@ -76,6 +76,58 @@ SHIFT_MASK = [
     "RET",
 ]
 
+EMULATED = [
+    "CLD",
+    "MOV BX,SP",
+    "MOV DX,DS",
+    "LES DI,SS:[BX + 0x8]",
+    "LDS SI,SS:[BX + 0x4]",
+    "LODSB SI",
+    "STOSB ES:DI",
+    "MOV CL,AL",
+    "XOR CH,CH",
+    "MOVSB.REP ES:DI,SI",
+    "MOV DX,DS",
+    "RETF 0x4",
+]
+
+
+STOS_SEQUENCE = [
+    "MOV AX,0x5dc",
+    "MOV CX,CS",
+    "STOSB ES:DI",
+    "RET",
+]
+
+BYTE_FLAGS = [
+    "MOV AL,0xff",
+    "ADD AL,0x2",
+    "RET",
+]
+
+LINEAR_ALU = [
+    "ENTER 0x4,0x0",
+    "CWD",
+    "TEST AX,0x1",
+    "NEG BX",
+    "NOT CX",
+    "CLC",
+    "RET",
+]
+
+SIGNED_MULTIPLY = [
+    "IMUL AX,0x2",
+    "RCL DX,0x1",
+    "CBW",
+    "RET",
+]
+
+DECIMAL_ADJUST = [
+    "AAM 0xa",
+    "AAD 0xa",
+    "RET",
+]
+
 
 def test_generic_synthesizer_builds_ir_from_instruction_shape():
     result = generic_synthesizer.synthesize(_evidence("FN_A", COPY))
@@ -117,6 +169,151 @@ def test_generic_synthesizer_recognizes_register_shift_mask_without_identifier()
     assert "highWord := adjustedAX shr 4;" in result["source"]
     assert "RegisterAX := adjustedAX and $8;" in result["source"]
     assert "RegisterZeroFlag := False;" in result["source"]
+
+
+def test_generic_synthesizer_renders_bounded_internal_branches():
+    instructions = [
+        "CMP AX,0x0",
+        "JGE 0x1000:0008",
+        "MOV AX,0x1",
+        "RET",
+    ]
+    evidence = _evidence("ANY", instructions)
+    evidence["static_evidence"]["assembly"].update({
+        "addresses": [0x10000, 0x10003, 0x10005, 0x10008],
+        "segments": [0x1000, 0x1000, 0x1000, 0x1000],
+    })
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert result["ir"]["shape"] == "asm-emulation-v1"
+    assert "label emuL3;" in result["source"]
+    assert "if RegisterSignFlag = RegisterOverflowFlag then goto emuL3;" in result["source"]
+    assert "RegisterSignFlag :=" in result["source"]
+    assert "RegisterOverflowFlag :=" in result["source"]
+
+
+def test_generic_synthesizer_rejects_external_branches():
+    evidence = _evidence("ANY", ["JMP 0x2000:9000"])
+    evidence["static_evidence"]["assembly"].update({
+        "addresses": [0x10000],
+        "segments": [0x1000],
+    })
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "unsupported"
+
+
+def test_generic_synthesizer_emulates_binary_derived_instructions():
+    evidence = _evidence("ANY", EMULATED)
+    evidence["oracle_contract"] = {
+        "declaration": "procedure ANY(param_1, param_2: Pointer);"
+    }
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert result["ir"]["shape"] == "asm-emulation-v1"
+    assert "LEmuMemW(RegisterSS, (((RegisterBX) + ($8)) and $ffff))" in result["source"]
+    assert "MOVS" not in result["source"]
+    assert "ANY" not in result["source"].replace("procedure ANY", "procedure FN")
+
+
+def test_generic_synthesizer_emulation_has_no_routine_identity_dispatch():
+    def source_for(name):
+        evidence = _evidence(name, EMULATED)
+        evidence["oracle_contract"] = {
+            "declaration": f"procedure {name}(param_1, param_2: Pointer);"
+        }
+        return generic_synthesizer.synthesize(evidence)["source"]
+
+    assert source_for("FN_A").replace("FN_A", "FN") == source_for("FN_B").replace("FN_B", "FN")
+
+
+def test_generic_synthesizer_emulates_store_without_source_pointer():
+    evidence = _evidence("ANY", STOS_SEQUENCE)
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert result["ir"]["shape"] == "asm-emulation-v1"
+    assert "RegisterCX := $191;" in result["source"]
+    assert "RegisterCS" not in result["source"]
+    assert "RegisterSI" not in result["source"]
+    assert "LEmuSetB(RegisterES, RegisterDI, (RegisterAX and $ff));" in result["source"]
+
+
+def test_generic_synthesizer_emulates_mapped_absolute_memory():
+    evidence = _evidence("ANY", ["MOV BYTE PTR [0X65EE],0X0", "RET"])
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert "LEmuSetB(RegisterDS, (((($65ee)) and $ffff) and $ffff), $0);" in result["source"]
+
+
+def test_generic_synthesizer_emulates_high_absolute_memory_xchg():
+    evidence = _evidence("ANY", ["XCHG word ptr [0X6410],AX", "RET"])
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert "LEmuMemW(RegisterDS, (((($6410)) and $ffff) and $ffff))" in result["source"]
+    assert "LEmuSetW(RegisterDS, (((($6410)) and $ffff) and $ffff), RegisterAX)" in result["source"]
+
+
+def test_generic_synthesizer_composed_evidence_uses_inlined_call_emulation():
+    evidence = _evidence(
+        "ANY", ["CALL 0X2000:1000", "RET", "RET"]
+    )
+    evidence["static_evidence"]["assembly"]["addresses"] = [0x20000, 0x20003, 0x21000]
+    evidence["static_evidence"]["assembly"]["segments"] = [0x2000, 0x2000, 0x2000]
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    evidence["composed"] = {"callees": ["CALLEE"]}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert result["ir"]["shape"] == "asm-emulation-v1"
+    assert "RegisterSP := (RegisterSP - 2) and $ffff;" in result["source"]
+    assert "RegisterSP := (RegisterSP + 2) and $ffff;" in result["source"]
+
+
+def test_generic_synthesizer_emulates_byte_width_flags():
+    evidence = _evidence("ANY", BYTE_FLAGS)
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert "emuTemp1 := ((RegisterAX and $ff)) and $ff;" in result["source"]
+    assert "emuTemp2 := LongInt(emuTemp1) + LongInt((($2) and $ff)) > $ff;" in result["source"]
+    assert "emuTemp1 := (LongInt(emuTemp1) + LongInt((($2) and $ff))) and $ff;" in result["source"]
+
+
+def test_generic_synthesizer_emulates_linear_alu_classes():
+    evidence = _evidence("ANY", LINEAR_ALU)
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert "RegisterSP := (RegisterSP - 4) and $ffff;" in result["source"]
+    assert "RegisterDX := $ffff;" in result["source"]
+    assert "RegisterCarryFlag := False;" in result["source"]
+    assert "RegisterCarryFlag := emuTemp" in result["source"]
+    assert "LongInt(not emuTemp" in result["source"]
+
+
+def test_generic_synthesizer_emulates_signed_multiply_and_rotate():
+    evidence = _evidence("ANY", SIGNED_MULTIPLY)
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert "LEmuSigned16(Word((RegisterAX) and $ffff))" in result["source"]
+    assert "RegisterCarryFlag := (emuTemp" in result["source"]
+    assert "while emuTemp" in result["source"]
+    assert "if (RegisterAX and $80) <> 0 then RegisterAX := RegisterAX or $ff00;" in result["source"]
+
+
+def test_generic_synthesizer_emulates_decimal_adjust():
+    evidence = _evidence("ANY", DECIMAL_ADJUST)
+    evidence["oracle_contract"] = {"declaration": "procedure ANY;"}
+    result = generic_synthesizer.synthesize(evidence)
+    assert result["status"] == "synthesized"
+    assert "div 10;" in result["source"]
+    assert "mod 10;" in result["source"]
+    assert "((RegisterAX shr 8) and $ff) * 10" in result["source"]
+    assert "RegisterZeroFlag := (RegisterAX and $ff) = 0;" in result["source"]
 
 
 def test_generic_synthesizer_rejects_unknown_shape():

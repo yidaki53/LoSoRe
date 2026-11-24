@@ -12,6 +12,126 @@ class RoutineContractError(ValueError):
     """A checked routine contract is missing or internally inconsistent."""
 
 
+_DERIVED_RETURN = re.compile(
+    r"^(RETF?)(?:\s+(?:0X)?([0-9A-F]+))?$", re.I
+)
+_DERIVED_ABSOLUTE = re.compile(
+    r"(?:CS|SS|FS|GS)\s*:\s*\[\s*(?:0X)?[0-9A-F]{1,4}\s*\]",
+    re.I,
+)
+_DERIVED_LITERAL_OFFSET = re.compile(
+    r"(?:(?:DS|ES)\s*:\s*)?\[\s*(?:0X)?([0-9A-F]{1,4})\s*\]", re.I
+)
+_DERIVED_SEGMENT_WRITE = re.compile(
+    r"^(?:MOV\s+(?:DS|ES)\s*,|MOV\s+\w+\s*,\s*(?:CS|DS|ES|SS)\b)", re.I
+)
+_DERIVED_POINTER_LOAD = re.compile(r"^L(?:DS|ES)\s+\w+\s*,\s*(.+)$", re.I)
+_DERIVED_SEGMENT_REGISTER_MOVE = re.compile(
+    r"^(?:"
+    r"MOV\s+(DS|ES)\s*,\s*(AX|BX|CX|DX|SI|DI|BP|SP)"
+    r"|MOV\s+(AX|BX|CX|DX|SI|DI|BP|SP)\s*,\s*(CS|DS|ES|SS)"
+    r")$",
+    re.I,
+)
+_DERIVED_SEGMENT_PUSH = re.compile(r"^PUSH\s+(DS|ES)\b", re.I)
+_DERIVED_SEGMENT_POP = re.compile(r"^POP\s+(DS|ES)\b", re.I)
+_DERIVED_DEVICE = re.compile(r"^(INT|INTO|IN|OUT|IRET)\b", re.I)
+_DERIVED_REP_COUNT = re.compile(r"^MOV\s+CX,\s*(?:0X)?([0-9A-F]+)$", re.I)
+_DERIVED_STRING_OPERATION = re.compile(
+    r"^(?:MOVS|STOS|LODS|CMPS|SCAS)\w*", re.I
+)
+_DERIVED_IMMEDIATE_LOAD = re.compile(
+    r"^MOV\s+(?:WORD PTR\s+)?(?:SI|DI),\s*(?:0X)?[0-9A-F]+$", re.I
+)
+_DERIVED_BRACKET = re.compile(r"\[([^\]]+)\]")
+_DERIVED_HEX_NUMBER = re.compile(r"(?:0X)?([0-9A-F]+)", re.I)
+DERIVED_REP_LIMIT = 4096
+
+
+def _safe_high_absolute_xchg(instruction: str) -> bool:
+    upper = instruction.strip().upper()
+    return upper.startswith("XCHG") and "WORD PTR" in upper
+
+
+def unsafe_absolute_memory(
+    instructions: Any, allow_data_segment: bool = False
+) -> bool:
+    if isinstance(instructions, str):
+        lines = instructions.splitlines()
+    else:
+        lines = [str(item) for item in instructions]
+    pending_segments: list[str] = []
+    for line in lines:
+        instruction = line.strip()
+        push = _DERIVED_SEGMENT_PUSH.match(instruction)
+        if push is not None:
+            pending_segments.append(push.group(1).upper())
+            continue
+        pop = _DERIVED_SEGMENT_POP.match(instruction)
+        if pop is not None:
+            if not pending_segments or pending_segments[-1] != pop.group(1).upper():
+                return True
+            pending_segments.pop()
+            continue
+        if _DERIVED_ABSOLUTE.search(instruction):
+            return True
+        pointer_load = _DERIVED_POINTER_LOAD.fullmatch(instruction)
+        if pointer_load is not None:
+            operand = pointer_load.group(1)
+            for match in _DERIVED_LITERAL_OFFSET.finditer(operand):
+                if int(match.group(1), 16) > 0x0FFF and not allow_data_segment:
+                    return True
+            for bracket in _DERIVED_BRACKET.findall(operand):
+                for token in _DERIVED_HEX_NUMBER.findall(bracket):
+                    if int(token, 16) > 0x0FFF and not allow_data_segment:
+                        return True
+            continue
+        if _DERIVED_SEGMENT_WRITE.match(instruction):
+            move = _DERIVED_SEGMENT_REGISTER_MOVE.fullmatch(instruction)
+            if move is None:
+                return True
+            destination = (move.group(1) or "").upper()
+            if destination in {"DS", "ES"} and destination not in pending_segments:
+                return True
+            continue
+        allow_high_literal = allow_data_segment and _safe_high_absolute_xchg(
+            instruction
+        )
+        for match in _DERIVED_LITERAL_OFFSET.finditer(instruction):
+            if int(match.group(1), 16) > 0x0FFF and not allow_high_literal:
+                return True
+        for bracket in _DERIVED_BRACKET.findall(instruction):
+            for token in _DERIVED_HEX_NUMBER.findall(bracket):
+                if int(token, 16) > 0x0FFF and not allow_high_literal:
+                    return True
+    return bool(pending_segments)
+
+
+def string_destination_mode(instructions: Any) -> bool:
+    if isinstance(instructions, str):
+        lines = instructions.splitlines()
+    else:
+        lines = [str(item) for item in instructions]
+    return any(
+        _DERIVED_STRING_OPERATION.match(
+            re.sub(r"^(?:L[DE]S|REP)\s+", "", line.strip(), flags=re.I)
+        )
+        for line in lines
+    )
+
+
+def absolute_memory_mode(instructions: Any) -> bool:
+    if isinstance(instructions, str):
+        lines = instructions.splitlines()
+    else:
+        lines = [str(item) for item in instructions]
+    if any(_DERIVED_LITERAL_OFFSET.search(line.strip()) for line in lines):
+        return True
+    return any(_DERIVED_STRING_OPERATION.match(line.strip()) for line in lines) and any(
+        _DERIVED_IMMEDIATE_LOAD.match(line.strip()) for line in lines
+    )
+
+
 def load_contracts(path: pathlib.Path) -> dict[str, dict[str, Any]]:
     if not path.is_file():
         return {}
@@ -129,6 +249,113 @@ def load_contract(
 ) -> dict[str, Any] | None:
     contracts_path = target_root / "config" / "routine_contracts.json"
     return load_contracts(contracts_path).get(function_name)
+
+
+def _signed_frame_params(instructions: list[str]) -> set[int]:
+    result: set[int] = set()
+    signed_branch = re.compile(r"^J(?:GE|LE|JL|JG)\b", re.I)
+    cmp_instruction = re.compile(r"^CMP\b", re.I)
+    frame_slot = re.compile(r"\bBP\s*\+\s*0X([0-9A-F]+)\b", re.I)
+    for index, instruction in enumerate(instructions):
+        if signed_branch.match(instruction.strip()) is None:
+            continue
+        for previous in reversed(instructions[:index]):
+            if cmp_instruction.match(previous.strip()) is None:
+                continue
+            for expression in re.findall(r"\[([^\]]+)\]", previous.upper()):
+                match = frame_slot.search(expression)
+                if match is None:
+                    continue
+                offset = int(match.group(1), 16)
+                if offset >= 4 and (offset - 4) % 2 == 0:
+                    result.add((offset - 4) // 2 + 1)
+            break
+    return result
+
+
+def _returns_ax_value(instructions: list[str]) -> bool:
+    returns = [
+        index
+        for index, instruction in enumerate(instructions)
+        if re.match(r"^RET(?:F)?\b", instruction.strip(), re.I)
+    ]
+    if len(returns) != 1:
+        return False
+    tail = instructions[max(0, returns[0] - 8):returns[0]]
+    local_load = re.compile(
+        r"^MOV\s+AX\s*,\s*(?:WORD PTR\s+)?\[\s*BP\s*"
+        r"(?:[+-]\s*)?(?:[+-]\s*)?0X[0-9A-F]+\s*\]$",
+        re.I,
+    )
+    memory_exchange = re.compile(
+        r"^XCHG\s+(?:AX\s*,\s*(?:WORD PTR\s+)?\[[^\]]+\]"
+        r"|(?:WORD PTR\s+)?\[[^\]]+\]\s*,\s*AX)$",
+        re.I,
+    )
+    return any(
+        local_load.match(instruction.strip())
+        or memory_exchange.match(instruction.strip())
+        for instruction in tail
+    )
+
+
+def derived_declaration(
+    target_root: pathlib.Path, function_name: str
+) -> str | None:
+    from tools import asmcfg
+
+    asm_path = target_root / "asm" / f"{function_name}.s"
+    if not asm_path.is_file():
+        return None
+    parsed = asmcfg.parse_ghidra_asm(asm_path.read_text(errors="replace"))
+    instructions = parsed["insts"]
+    if not instructions:
+        return None
+    if not asmcfg.bounded_branch_paths(parsed):
+        return None
+    if any(
+        asmcfg.is_call(inst) or _DERIVED_DEVICE.match(inst)
+        for inst in instructions
+    ) or unsafe_absolute_memory(
+        instructions, allow_data_segment=absolute_memory_mode(instructions)
+    ):
+        return None
+    for instruction in instructions:
+        match = _DERIVED_REP_COUNT.fullmatch(instruction.strip())
+        if match is not None and int(match.group(1), 16) > DERIVED_REP_LIMIT:
+            return None
+    returns = []
+    for instruction in instructions:
+        match = _DERIVED_RETURN.fullmatch(instruction)
+        if match is not None:
+            returns.append(match)
+    if len(returns) != 1:
+        return None
+    cleanup_text = returns[0].group(2)
+    cleanup = int(cleanup_text, 16) if cleanup_text else 0
+    if cleanup % 2 or cleanup > 16:
+        return None
+    signed = _signed_frame_params(instructions)
+    params = "; ".join(
+        f"param_{index}: {'Integer' if index in signed else 'Word'}"
+        for index in range(1, cleanup // 2 + 1)
+    )
+    signature = f"procedure {function_name}({params});" if params else (
+        f"procedure {function_name};"
+    )
+    if _returns_ax_value(instructions):
+        signature = signature.replace("procedure ", "function ", 1)
+        signature = signature.rstrip(";") + ": Word;"
+    return signature
+
+
+def oracle_declaration(
+    target_root: pathlib.Path, function_name: str
+) -> str | None:
+    contract = load_contract(target_root, function_name)
+    if contract is not None:
+        return contract["declaration"]
+    return derived_declaration(target_root, function_name)
 
 
 def pascal_declaration(source: str, function_name: str) -> str | None:

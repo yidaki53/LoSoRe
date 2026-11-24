@@ -211,6 +211,47 @@ def build_blocks(
     }
 
 
+def bounded_branch_paths(parsed: dict, limit: int = 512) -> list[list[str]]:
+    insts = parsed.get("insts", [])
+    addrs = parsed.get("addrs", [])
+    segments = parsed.get("segments", [None] * len(insts))
+    index = {address: offset for offset, address in enumerate(addrs)}
+    targets: dict[int, int] = {}
+    for offset, instruction in enumerate(insts):
+        if not is_branch(instruction):
+            continue
+        if re.match(r"^JMPF\b", instruction, re.I):
+            return []
+        target = resolve_branch_target(
+            instruction, segments[offset] if offset < len(segments) else None
+        )
+        if target not in index:
+            return []
+        destination = index[target]
+        if destination <= offset:
+            return []
+        targets[offset] = destination
+    paths: list[list[str]] = []
+
+    def walk(offset: int, path: list[str]) -> None:
+        if len(paths) >= limit or offset >= len(insts):
+            return
+        instruction = insts[offset]
+        if is_ret(instruction):
+            paths.append(path + [instruction])
+            return
+        if offset in targets:
+            walk(targets[offset], path)
+            if is_cond_branch(instruction):
+                walk(offset + 1, path)
+            return
+        walk(offset + 1, path + [instruction])
+
+    if insts:
+        walk(0, [])
+    return paths if paths else []
+
+
 def cfg_stats(blocks: dict) -> dict:
     """Summary numbers used by the scoring harness."""
     edges = sum(len(s) for s in blocks["succ"])

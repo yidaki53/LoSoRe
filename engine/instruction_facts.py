@@ -17,6 +17,26 @@ def _value_record(value: _Value) -> dict:
     return {"kind": value.kind, "amount": value.amount, "support": list(value.support)}
 
 
+def segment_move(raw: bytes) -> dict:
+    """Oracle: register-form 8C/8E segment move derived from original bytes."""
+    if len(raw) < 2 or raw[0] not in (0x8C, 0x8E):
+        raise ValueError("not a register-form segment move")
+    modrm = raw[1]
+    if modrm & 0xC0 != 0xC0:
+        raise ValueError("not a register-form segment move")
+    segment = ("ES", "CS", "SS", "DS")[(modrm >> 3) & 3]
+    register = ("AX", "CX", "DX", "BX", "SP", "BP", "SI", "DI")[modrm & 7]
+    destination, source = (
+        (register, segment) if raw[0] == 0x8C else (segment, register)
+    )
+    return {
+        "bytes_hex": raw[:2].hex(),
+        "destination": destination,
+        "source": source,
+        "instruction": f"MOV {destination},{source}",
+    }
+
+
 def allocator_empty_list_contract(raw: bytes, helper: bytes, callback: bytes) -> dict:
     """Oracle: exact 0353 composition under supplied empty-list/default-callback premises.
 
@@ -332,9 +352,34 @@ def initialization_prefix(
                     amount=(value.amount + displacement) & 65535,
                     support=(*value.support, start),
                 )
-        elif raw[start : start + 2] == b"\x8c\xc0" and segment is not None:
-            size = 2
-            registers["ax"] = replace(segment, support=(*segment.support, start))
+        elif opcode in (0x8C, 0x8E) and start + 2 <= len(raw):
+            modrm = raw[start + 1]
+            if modrm & 0xC0 != 0xC0:
+                reason = "unsupported memory segment move"
+            else:
+                segment_names = ("es", "cs", "ss", "ds")
+                register_names = (
+                    "ax", "cx", "dx", "bx", "sp", "bp", "si", "di"
+                )
+                segment_name = segment_names[(modrm >> 3) & 3]
+                register_name = register_names[modrm & 7]
+                if opcode == 0x8C:
+                    registers[register_name] = replace(
+                        segments[segment_name],
+                        support=(*segments[segment_name].support, start),
+                    )
+                else:
+                    value = registers.get(register_name)
+                    if value is None:
+                        reason = "segment move from unset register"
+                    else:
+                        segments[segment_name] = replace(
+                            value, support=(*value.support, start)
+                        )
+                        if segment_name == "es":
+                            segment = segments[segment_name]
+                if reason == "unsupported opcode":
+                    size = 2
         elif raw[start : start + 4] in (b"\x36\xc4\x7f\x08", b"\x36\xc5\x77\x04"):
             value = registers.get("bx")
             if (
@@ -393,10 +438,35 @@ def initialization_prefix(
                 # A changed SS invalidates the tracked entry stack address.
                 registers["sp"] = _Value("unknown_stack", 0, (start,))
                 stack.clear()
+        elif 0x90 <= opcode <= 0x97:
+            name = names[opcode - 0x90]
+            ax = registers.get("ax") or _Value("unknown", 0, ())
+            other = registers.get(name) or _Value("unknown", 0, ())
+            size = 1
+            registers["ax"] = replace(other, support=(*other.support, start))
+            registers[name] = replace(ax, support=(*ax.support, start))
+        elif opcode == 0x83 and start + 3 <= len(raw) and raw[start + 1] & 0xF8 == 0xE8:
+            name = names[raw[start + 1] & 7]
+            value = registers.get(name) or _Value("unknown", 0, ())
+            size = 3
+            immediate = int.from_bytes(
+                raw[start + 2 : start + 3], "little", signed=True
+            )
+            if value.kind == "constant":
+                registers[name] = _Value(
+                    "constant",
+                    (value.amount - immediate) & 65535,
+                    (*value.support, start),
+                )
+            else:
+                registers[name] = replace(value, support=(*value.support, start))
         elif opcode == 0xFC:
             size = 1
             direction_clear = True
             direction_support = (start,)
+        elif raw[start : start + 2] == b"\xf3\xa5":
+            if direction_clear and registers.get("cx") is not None:
+                size = 2
         elif opcode == 0xAB or raw[start : start + 2] == b"\xf3\xab":
             value, destination = registers.get("ax"), registers.get("di")
             count = registers.get("cx") if opcode == 0xF3 else _Value("constant", 1, ())

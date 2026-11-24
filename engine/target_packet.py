@@ -106,17 +106,25 @@ def _static_facts(raw: bytes) -> dict:
 
 def _assembly_facts(asm_text: str) -> dict:
     parsed = asmcfg.parse_ghidra_asm(asm_text)
+    bounded_paths = asmcfg.bounded_branch_paths(parsed)
     operations = []
     unsafe = []
     for instruction in parsed["insts"]:
         mnemonic = instruction.split(maxsplit=1)[0].upper() if instruction.strip() else ""
         operations.append(mnemonic)
-        if mnemonic in _NON_LEAF_MNEMONICS or "[" in instruction:
+        branch = asmcfg.is_branch(instruction)
+        if (
+            mnemonic in _NON_LEAF_MNEMONICS and not branch
+        ) or "[" in instruction or (branch and not bounded_paths):
             unsafe.append(instruction)
     return {
         "instructions": list(parsed["insts"]),
+        "addresses": list(parsed["addrs"]),
+        "segments": list(parsed["segments"]),
         "operations": operations,
         "unsafe": unsafe,
+        "bounded_branches": bool(bounded_paths),
+        "bounded_paths": len(bounded_paths),
     }
 
 
@@ -133,8 +141,10 @@ def _evidence_gate(record: dict, assembly: dict, facts: dict) -> dict:
     if record.get("absolute_memory_operands"):
         reasons.append("routine has absolute memory operands")
     cfg = record.get("cfg", {})
-    if cfg.get("call") or cfg.get("cond") or cfg.get("ret") != 1:
-        reasons.append("routine is not a single-return straight-line leaf")
+    if cfg.get("call") or cfg.get("ret") != 1:
+        reasons.append("routine is not a single-return leaf")
+    if not assembly["bounded_branches"]:
+        reasons.append("routine has unsupported control flow")
     if assembly["unsafe"]:
         reasons.append("assembly has control flow, device or memory operands")
     if facts["writes"]:
@@ -158,7 +168,7 @@ def _packet_evidence(root: pathlib.Path, target: str, routine: str) -> tuple[dic
     rows = {row["name"]: row for row in matrix.build(target, None, root)}
     asm_text = _text(target_root / "asm" / f"{routine}.s")
     decomp_path = target_root / "decomp" / f"{routine}.c"
-    checked_contract = routine_contract.load_contract(target_root, routine)
+    declaration = routine_contract.oracle_declaration(target_root, routine)
     bytes_info = _routine_bytes(census, binary, routine)
     facts = _static_facts(bytes.fromhex(bytes_info["hex"]))
     assembly = _assembly_facts(asm_text)
@@ -178,12 +188,12 @@ def _packet_evidence(root: pathlib.Path, target: str, routine: str) -> tuple[dic
             "assembly": assembly,
             "gate": gate,
             "raw_byte_facts": facts,
+            "record": record,
         },
         "assembly_sha256": _sha256_bytes(asm_text.encode()),
         "decompiler_sha256": _sha256_bytes(_text(decomp_path).encode()),
         "oracle_contract": (
-            {"declaration": checked_contract["declaration"]}
-            if checked_contract is not None else None
+            {"declaration": declaration} if declaration is not None else None
         ),
         "matrix": rows.get(routine, {}),
         "source_policy": {
@@ -208,9 +218,83 @@ def evidence_for_routine(
     root: pathlib.Path,
     target: str,
     routine: str,
+    compose: bool = True,
 ) -> dict:
     """Return binary-derived evidence for one routine without writing a packet."""
-    return _packet_evidence(pathlib.Path(root), target, routine)[0]
+    evidence, _ = _packet_evidence(pathlib.Path(root), target, routine)
+    if compose and target == "liero":
+        from engine import composed_trace
+
+        try:
+            composed = composed_trace.compose(pathlib.Path(root), target, routine)
+        except (OSError, ValueError, KeyError):
+            composed = None
+        if composed is not None:
+            raw_hex = composed["raw_hex"]
+            instruction_offsets = composed["instruction_offsets"]
+            raw = bytes.fromhex(raw_hex)
+            composed_assembly = {
+                **_assembly_facts(composed["assembly_text"]),
+                "instructions": composed["instructions"],
+                "addresses": composed["addresses"],
+                "segments": composed["segments"],
+            }
+            composed_facts = {
+                **_static_facts(raw),
+                "method": "composed_instruction_prefix",
+                "instructions": [
+                    {
+                        "offset": offset,
+                        "bytes_hex": raw[
+                            offset : (
+                                instruction_offsets[index + 1]
+                                if index + 1 < len(instruction_offsets)
+                                else len(raw)
+                            )
+                        ].hex(),
+                        "relocation_offset": None,
+                    }
+                    for index, offset in enumerate(instruction_offsets)
+                ],
+                "writes": [],
+            }
+            original_record = evidence["static_evidence"]["record"]
+            composed_record = {
+                **original_record,
+                "direct_calls": [],
+                "absolute_memory_operands": [],
+                "cfg": {**original_record.get("cfg", {}), "call": 0, "ret": 1},
+            }
+            composed_gate = _evidence_gate(
+                composed_record, composed_assembly, composed_facts
+            )
+            evidence = {
+                **evidence,
+                "static_evidence": {
+                    **evidence["static_evidence"],
+                    "assembly": composed_assembly,
+                    "raw_byte_facts": composed_facts,
+                    "gate": composed_gate,
+                },
+                "bytes": {
+                    **evidence["bytes"],
+                    "hex": raw_hex,
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                    "composed_asm": composed["raw_asm"],
+                },
+                "oracle_contract": {
+                    **(evidence.get("oracle_contract") or {}),
+                    "declaration": composed["declaration"],
+                },
+                "composed": {
+                    key: composed[key]
+                    for key in (
+                        "assembly_text", "raw_asm", "declaration", "near",
+                        "cleanup", "return_index", "callees",
+                    )
+                },
+            }
+    return evidence
 
 
 def build_packet(
