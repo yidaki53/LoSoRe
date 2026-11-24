@@ -754,6 +754,19 @@ def audit_target(target_root: pathlib.Path) -> dict:
     }
 
 
+def prune_stale_ledger_records(target_root: pathlib.Path) -> list[str]:
+    names, _, _ = _function_names(target_root)
+    ledger_path = target_root / "recovery.json"
+    ledger = json.loads(ledger_path.read_text(errors="replace"))
+    functions = ledger.setdefault("functions", {})
+    removed = sorted(set(functions) - set(names))
+    for name in removed:
+        del functions[name]
+    if removed:
+        ledger_path.write_text(json.dumps(ledger, indent=2, sort_keys=True) + "\n")
+    return removed
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--target", required=True, help="target slug, e.g. liero")

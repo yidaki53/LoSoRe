@@ -6067,6 +6067,16 @@ byte loop; no terminal evaluation or promotion followed. This is exact evidence
 for `FUN_24dd_3d68` only, not general move-copy, TP7 ABI or whole-program
 parity.
 
+## Composed-oracle blocker (2026-11-24)
+
+`FUN_24dd_4654` is now accepted by the contract-oracle support check as a
+composed trace, but autonomous synthesis failed training parity `0/56`. The
+derived fixture has no `memory_words` seeding for `0x6412`/`0x6414`; the
+original trace reads nonzero values from that DOS memory while the deterministic
+Pascal emulator reads zero. It is recorded as `failed`, not promoted. Expanding
+this routine needs binary-derived evidence that defines those memory locations,
+not a routine-specific source patch.
+
 ## Remaining work
 
 The function inventory contains 295 Liero routines. Only a small subset has

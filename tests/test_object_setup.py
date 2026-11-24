@@ -378,6 +378,6 @@ def test_liero_setup_streams_and_audit_when_byod_available():
     report = recovery.audit_target(root)
     assert report["object_setup_protocols"] == [protocol]
     assert report["summary"]["unresolved_control_transfers"] == 13
-    assert report["summary"]["source_recovered"] == 26
-    assert report["summary"]["behavior_verified"] == 10
-    assert report["summary"]["original_binary_verified"] == 0
+    assert report["summary"]["source_recovered"] == 29
+    assert report["summary"]["behavior_verified"] == 11
+    assert report["summary"]["original_binary_verified"] == 1

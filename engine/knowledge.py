@@ -254,6 +254,28 @@ def promote_verified_pascal_example(
     return example_id
 
 
+def prune_stale_verified_examples(
+    data: dict,
+    target: str,
+    store: pathlib.Path = STORE,
+) -> list[str]:
+    verified: set[str] = set()
+    for names in data.get("targets", {}).get(target, {}).get("verified", {}).values():
+        verified.update(names)
+    removed: list[str] = []
+    for key, examples in data.get("verified_pascal_examples", {}).items():
+        kept = []
+        for example in examples:
+            if example.get("target") == target and example.get("fn") not in verified:
+                removed.append(f"{key}:{example.get('fn')}")
+                continue
+            kept.append(example)
+        data["verified_pascal_examples"][key] = kept
+    if removed:
+        save(data, store)
+    return removed
+
+
 def verified_pascal_examples_for(
     data: dict,
     compiler: str,
