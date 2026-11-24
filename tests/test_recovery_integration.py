@@ -34,6 +34,19 @@ def test_matrix_frontier_prefers_callee_first(tmp_path, monkeypatch):
     assert matrix.select_frontier("sample", {}, limit=1)[0]["name"] == "LEAF"
 
 
+def test_frontier_uses_capability_priority_without_routine_specific_generators(monkeypatch):
+    rows = [
+        {"name": "LEAF", "status": "unreviewed", "attempts": 0,
+         "unverified_callees": [], "size": 4, "instructions": 1},
+        {"name": "TOP", "status": "unreviewed", "attempts": 0,
+         "unverified_callees": [], "size": 4, "instructions": 1},
+    ]
+    monkeypatch.setattr(matrix, "build", lambda *args, **kwargs: rows)
+    selected = matrix.select_frontier(
+        "sample", {}, limit=1, priority={"TOP": 3.0})
+    assert selected[0]["name"] == "TOP"
+
+
 def test_q_update_is_real():
     data = {"current_target": "sample"}
     state = "s0"
@@ -201,6 +214,10 @@ def test_recovery_skips_routines_without_oracle_fixture(tmp_path, monkeypatch):
     result = recovery_loop.run_recovery("sample", max_iterations=1, root=tmp_path)
 
     assert result["outcomes"] == {"skipped": 1}
+    assert result["stopped_reason"] is None
+    assert result["blockers"]["NO_FIXTURE"] == (
+        "no routine-trace fixture for target routine"
+    )
     replay = json.loads(
         (tmp_path / "knowledge" / "knowledge.json").read_text()
     )["experience_buffer"]["pascal|turbo-pascal-7"]

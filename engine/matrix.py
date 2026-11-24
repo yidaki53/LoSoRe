@@ -111,7 +111,8 @@ def build(
 
 def select_frontier(target: str, data: dict, limit: int = 5,
                     only: set[str] | None = None,
-                    root: pathlib.Path | None = None) -> list[dict]:
+                    root: pathlib.Path | None = None,
+                    priority: dict[str, float] | None = None) -> list[dict]:
     rows = build(target, data, root)
     eligible = [
         row for row in rows
@@ -119,8 +120,10 @@ def select_frontier(target: str, data: dict, limit: int = 5,
         and row["attempts"] < 3
         and (only is None or row["name"] in only)
     ]
+    priority = priority or {}
     eligible.sort(key=lambda row: (
         len(row["unverified_callees"]),
+        -priority.get(row["name"], 0.0),
         row["size"],
         row["name"],
     ))

@@ -299,11 +299,15 @@ def example_quality_for_toolchain(data: dict, lang_key: str) -> dict:
     return {"epsilon": 0.15, "example_count": 0}
 
 
-def encode_state(lang_key: str, coverage: float, recent_success_rate: float, instruction_count: int = 0, callee_resolved: bool = True, blocker: str | None = None, verified_examples: int = 0, example_quality: dict | None = None) -> str:
+def encode_state(lang_key: str, coverage: float, recent_success_rate: float, instruction_count: int = 0, callee_resolved: bool = True, blocker: str | None = None, verified_examples: int = 0, example_quality: dict | None = None, capabilities: list[str] | None = None, gap_priority: float = 0.0) -> str:
     """Encode the current state for the RL agent."""
     parts = [f"lang={lang_key}", f"coverage={coverage:.2f}", f"recent_sr={recent_success_rate:.2f}", f"inst={instruction_count}", f"callee={callee_resolved}", f"blocker={blocker}", f"ver={verified_examples}"]
     if example_quality is not None:
         parts.append(f"exq={example_quality}")
+    if capabilities:
+        parts.append(f"caps={','.join(sorted(capabilities))}")
+    if gap_priority:
+        parts.append(f"gap={gap_priority:.2f}")
     return "|".join(parts)
 
 

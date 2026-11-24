@@ -39,6 +39,19 @@ def routine_trace_supported(
     return contract_oracle.supported(root_path, target, routine)
 
 
+def routine_trace_blocker(
+    target: str, routine: str, root: pathlib.Path | str | None = None
+) -> str | None:
+    root_path = pathlib.Path(root) if root is not None else pathlib.Path(__file__).resolve().parent.parent
+    if routine_trace_supported(target, routine, root_path):
+        return None
+    try:
+        contract_oracle.fixture(root_path, target, routine)
+    except Exception as exc:
+        return f"{type(exc).__name__}: {exc}"
+    return None
+
+
 def _yaml_value(path: pathlib.Path, key: str, default: str = "unknown") -> str:
     if not path.is_file():
         return default
@@ -230,6 +243,7 @@ def promote(
     data: dict | None = None,
     state: str | None = None,
     next_state: str | None = None,
+    allow_supersede: bool = False,
 ) -> dict:
     if oracle not in PROMOTING_ORACLES:
         return {
@@ -239,22 +253,21 @@ def promote(
             "method": method,
         }
     if gate is None:
-        verdict = {
-            "oracle": oracle,
-            "status": "verified",
-            "promotion_eligible": True,
-            "reason": "caller supplied no gate decision",
+        return {
+            "status": "refused",
+            "reason": "promotion requires an explicit oracle gate decision",
+            "routine": routine,
+            "method": method,
         }
-    else:
-        verdict = decide(oracle, gate)
-        if verdict["status"] != "verified":
-            return {
-                "status": "refused",
-                "reason": verdict["reason"],
-                "routine": routine,
-                "method": method,
-                "decision": verdict,
-            }
+    verdict = decide(oracle, gate)
+    if verdict["status"] != "verified":
+        return {
+            "status": "refused",
+            "reason": verdict["reason"],
+            "routine": routine,
+            "method": method,
+            "decision": verdict,
+        }
     root = pathlib.Path(root)
     source_path = pathlib.Path(source_path)
     source = source_path.read_text()
@@ -272,7 +285,7 @@ def promote(
         hashlib.sha256(previous_source.encode()).hexdigest()
         if previous_source is not None else ""
     )
-    if routine in verified and previous_source != source:
+    if routine in verified and previous_source != source and not allow_supersede:
         return {
             "status": "promotion-conflict",
             "reason": "target already oracle-verified with a different source",
@@ -292,6 +305,7 @@ def promote(
     asm_path = root / "targets" / target / "asm" / f"{routine}.s"
     assembly_sha256 = pilot.digest(asm_path) if asm_path.is_file() else ""
     rel_source = str(src_path.relative_to(root))
+    ledger_source = f"src/{routine}.inc"
     rel_result = str(eval_dir.relative_to(root))
     recovery_path = root / "targets" / target / "recovery.json"
     recovery = json.loads(recovery_path.read_text())
@@ -311,7 +325,7 @@ def promote(
     )
     entry.update({
         "status": "source_recovered",
-        "source_file": rel_source,
+        "source_file": ledger_source,
         "source_sha256": source_sha256,
         "assembly_sha256": assembly_sha256,
         "reviewer": method,

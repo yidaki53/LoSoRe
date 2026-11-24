@@ -51,6 +51,35 @@ def _recent_success_rate(data: dict, lang_key: str) -> float:
     return data.get("total_verified", 0) / attempts
 
 
+def _merge_priorities(
+    capability_priority: dict[str, float], triage_priority: dict[str, float]
+) -> dict[str, float]:
+    merged = dict(capability_priority)
+    for routine, score in triage_priority.items():
+        merged[routine] = merged.get(routine, 0.0) + float(score)
+    return merged
+
+
+def _supported_frontier(
+    candidates: list[dict],
+    target: str,
+    repo_root: pathlib.Path,
+    gate_module: Any,
+    limit: int,
+    oracle: str,
+) -> list[dict]:
+    if oracle != "routine-trace-parity":
+        return candidates[:limit]
+    supported: list[dict] = []
+    for row in candidates:
+        routine = row["name"]
+        if gate_module.routine_trace_supported(target, routine, root=repo_root):
+            supported.append(row)
+            if len(supported) >= limit:
+                break
+    return supported or candidates[:limit]
+
+
 def _validate_candidate(root: pathlib.Path, fn: str, run_compile_gate: bool,
                         draft_module: Any) -> dict:
     src = root / "src" / f"{fn}.inc"
@@ -111,9 +140,14 @@ def run_recovery(
     root: pathlib.Path | None = None,
 ) -> dict:
     from engine import (
+        capability_learner,
+        capability_proposer,
+        capability_registry,
+        contract_oracle,
         draft,
         generic_synthesizer,
         knowledge,
+        large_routine_plan,
         matrix,
         oracle_gate,
         rl_engine,
@@ -144,14 +178,27 @@ def run_recovery(
     byod_path = pathlib.Path(byod) if byod else repo_root / "extracted" / target
     build_path = pathlib.Path(build) if build else target_root / "build"
 
-    frontier = matrix.select_frontier(
-        target, data, limit=max_iterations, only=only_functions, root=repo_root)
+    capability_proposals = capability_learner.propose(repo_root)
+    capability_priority = capability_learner.frontier_priority(repo_root, target)
+    triage = large_routine_plan.analyze(repo_root, target, data)
+    triage_priority = large_routine_plan.focus_priority(triage)
+    selection_priority = _merge_priorities(capability_priority, triage_priority)
+    candidate_limit = max(
+        max_iterations * 20, int(triage.get("total_routines", 0) or 0)
+    )
+    candidates = matrix.select_frontier(
+        target, data, limit=candidate_limit, only=only_functions, root=repo_root,
+        priority=selection_priority)
+    frontier = _supported_frontier(
+        candidates, target, repo_root, oracle_gate, max_iterations, oracle)
     outcomes: dict[str, int] = {}
     iterations = 0
+    stopped_reason = None
 
     for row in frontier:
         fn = row["name"]
         iterations += 1
+        gap_priority = capability_priority.get(fn, 0.0)
         data["current_function"] = fn
         coverage_before = _coverage(data, target)
         verified_examples = len(
@@ -166,6 +213,7 @@ def run_recovery(
             blocker="callees" if row["unverified_callees"] else None,
             verified_examples=verified_examples,
             example_quality=knowledge.recipe_for(data, "turbo-pascal-7", "dos"),
+            gap_priority=gap_priority,
         )
         action = rl_engine.select_recovery_action(
             data, lang_key, instruction_count=row["instructions"],
@@ -176,6 +224,8 @@ def run_recovery(
 
         outcome = "failed"
         detail: dict[str, Any] = {}
+        capability_ids: list[str] = []
+        capability_signature: dict[str, Any] | None = None
         rl_recorded = False
         next_state = rl_engine.encode_state(
             lang_key,
@@ -184,6 +234,7 @@ def run_recovery(
             instruction_count=row["instructions"],
             callee_resolved=True,
             verified_examples=verified_examples,
+            gap_priority=gap_priority,
         )
 
         if oracle == oracle_gate.DEFAULT_ORACLE:
@@ -193,11 +244,16 @@ def run_recovery(
             trial_dir.mkdir(parents=True, exist_ok=False)
             method = generic_synthesizer.METHOD
             if not oracle_gate.routine_trace_supported(target, fn, root=repo_root):
+                blocker = (
+                    oracle_gate.routine_trace_blocker(target, fn, root=repo_root)
+                    if target == "liero" else None
+                ) or "no routine-trace fixture for target routine"
+                target_data.setdefault("blockers", {})[fn] = blocker
                 fixture_gate = {
                     "oracle": oracle,
                     "status": "skipped",
                     "promotion_eligible": False,
-                    "reason": "no routine-trace fixture for target routine",
+                    "reason": blocker,
                 }
                 result = oracle_gate.record_gate_outcome(
                     data, lang_key, fn, fixture_gate, action["action"],
@@ -220,6 +276,25 @@ def run_recovery(
             else:
                 try:
                     evidence = target_packet.evidence_for_routine(repo_root, target, fn)
+                    fixture_data = (
+                        contract_oracle.fixture(repo_root, target, fn)
+                        if target == "liero" else {}
+                    )
+                    evidence["absolute_memory"] = bool(fixture_data.get("absolute_memory"))
+                    evidence["code_memory_windows"] = fixture_data.get("code_memory_windows", [])
+                    evidence["register_inputs"] = fixture_data.get("register_inputs", {})
+                    capability_ids = capability_registry.select(repo_root, evidence)
+                    capability_signature = capability_registry.signature(evidence)
+                    proposed_rules = capability_proposer.propose_for_evidence(
+                        repo_root, evidence
+                    )
+                    if proposed_rules:
+                        evidence["capability_rules"] = [
+                            rule for _, rule in proposed_rules
+                        ]
+                        capability_ids = sorted(set(capability_ids) | {
+                            capability_id for capability_id, _ in proposed_rules
+                        })
                     synthesis = generic_synthesizer.synthesize(evidence)
                     evidence_summary = {
                         "binary_sha256": evidence.get("binary", {}).get("sha256", ""),
@@ -237,6 +312,8 @@ def run_recovery(
                         "pipeline": "target-packet/generic-ir/routine-trace-parity",
                         "evidence": evidence_summary,
                         "synthesis": synthesis_summary,
+                        "capabilities": capability_ids,
+                        "capability_signature": capability_signature["hash"],
                     }
                     (trial_dir / "evidence.json").write_text(
                         json.dumps(evidence_summary, indent=2, sort_keys=True) + "\n"
@@ -245,6 +322,9 @@ def run_recovery(
                         json.dumps(synthesis_summary, indent=2, sort_keys=True) + "\n"
                     )
                     if synthesis["status"] != "synthesized":
+                        detail["capability_gap"] = capability_registry.observe_unsupported(
+                            repo_root, target, fn, evidence
+                        )
                         gate: dict[str, Any] = {
                             "oracle": oracle,
                             "status": "skipped",
@@ -335,6 +415,11 @@ def run_recovery(
                         detail["gate"] = record
                         outcome = record["outcome"]
                         rl_recorded = True
+            if capability_ids:
+                detail["capability_outcome"] = capability_registry.record_outcome(
+                    repo_root, target, fn, capability_ids, outcome,
+                    evidence=evidence if capability_signature is not None else None,
+                )
             (trial_dir / "result.json").write_text(json.dumps({
                 "status": outcome,
                 "target": target,
@@ -430,8 +515,10 @@ def run_recovery(
 
         attempts = data.get("total_attempts", 0)
         if attempts >= 12 and data.get("total_verified", 0) / attempts < 0.25:
-            print(f"[recovery:{target}] STOP yield floor: "
-                  f"{data.get('total_verified', 0)}/{attempts} verified")
+            stopped_reason = (
+                f"yield floor: {data.get('total_verified', 0)}/{attempts} verified"
+            )
+            print(f"[recovery:{target}] STOP {stopped_reason}")
             break
 
     summary = {
@@ -439,10 +526,23 @@ def run_recovery(
         "iterations": iterations,
         "oracle": oracle,
         "outcomes": outcomes,
+        "stopped_reason": stopped_reason,
+        "blockers": target_data.get("blockers", {}),
         "coverage": _coverage(data, target),
         "total_attempts": data.get("total_attempts", 0),
         "total_verified": data.get("total_verified", 0),
         "cumulative_reward": data.get("cumulative_reward", 0.0),
+        "capability_proposals": capability_proposals,
+        "triage_focus": triage.get("next_capability"),
+        "triage_eligible": triage.get("eligible_routines", 0),
+        "triage_groups": [
+            {
+                "capability": group.get("capability"),
+                "routine_count": group.get("routine_count", 0),
+                "leverage": group.get("leverage", 0.0),
+            }
+            for group in triage.get("groups", [])[:10]
+        ],
         "epsilon": data.get("epsilon", 0.15),
         "dl_status": oracle_gate.dl_status(repo_root, target, data, store=store),
         "frontier": matrix.summary(target, data, root=repo_root),
