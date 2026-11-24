@@ -149,7 +149,7 @@ def test_original_bytes_vs_developer_pascal_projection(tmp_path):
     target_source = root / "targets/liero/src"
     target_dir = output / "target-source"
     target_dir.mkdir()
-    target_files = ("FUN_1ec2_0000.inc", "LieroRuntime.pas")
+    target_files = ("FUN_1ec2_0000.inc", "LieroRuntime.pas", "_lemu_helpers.inc")
     target_hashes = {}
     for name in target_files:
         contents = (target_source / name).read_bytes()

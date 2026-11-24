@@ -1,6 +1,6 @@
 ; FUN_24dd_0000  entry=24dd:0000 size=177
 24dd:0000  MOV DX,0x2971
-24dd:0003  MOV DX,DS
+24dd:0003  MOV DS,DX
 24dd:0005  MOV word ptr [0x640c],ES
 24dd:0009  XOR BP,BP
 24dd:000b  CALL 0x2000:96fc

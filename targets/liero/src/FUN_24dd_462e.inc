@@ -1,19 +1,162 @@
-{ liero::FUN_24dd_462e — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_462e.s via asm->pascal+llm(qwen2.5-coder:14b-instruct-q4_K_M,Ghidra); UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_462e.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __cdecl16far FUN_24dd_462e(void)
-// 
-// {
-//   FUN_24dd_455e();
-//   return;
-// }
-// 
-// --- end reference ---
+{$IFNDEF LEMU_GENERATED_FORWARDS}
+procedure FUN_24dd_462e; forward;
+{$ENDIF}
 procedure FUN_24dd_462e;
+label emuL11, emuL21, emuL23, emuL27, emuL30;
+var emuStep: LongInt;
+    emuTemp1: LongInt;
+    emuTemp2: Boolean;
+    emuTemp3: LongInt;
+    emuTemp4: Boolean;
+    emuTemp5: LongInt;
+    emuTemp6: LongInt;
+    emuTemp7: LongInt;
+    emuTemp8: LongInt;
+    emuTemp9: LongInt;
+    emuTemp10: Boolean;
+    emuTemp11: LongInt;
+    emuTemp12: Boolean;
+    emuTemp13: LongInt;
+    emuTemp14: LongInt;
+    emuTemp15: Boolean;
+    emuTemp16: LongInt;
+    emuTemp17: LongInt;
+    emuTemp18: Boolean;
+    emuTemp19: LongInt;
+    emuTemp20: LongInt;
+    emuTemp21: Boolean;
+    emuTemp22: LongInt;
+    emuTemp23: Boolean;
+    emuTemp24: LongInt;
+    emuTemp25: Boolean;
+    emuTemp26: LongInt;
+    emuTemp27: Boolean;
 begin
-  FUN_24dd_455e;
+  RegisterSP := (RegisterSP - 2) and $ffff;
+  RegisterBX := RegisterAX;
+  emuTemp1 := (RegisterBX) and $ffff;
+  emuTemp2 := False;
+  emuTemp1 := (LongInt(emuTemp1) or LongInt(((RegisterDX) and $ffff))) and $ffff;
+  RegisterCarryFlag := emuTemp2;
+  RegisterZeroFlag := (emuTemp1) = 0;
+  RegisterSignFlag := ((emuTemp1) and $8000) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterBX := emuTemp1;
+  if RegisterZeroFlag then goto emuL30;
+  RegisterCX := (RegisterCX and $ff) or (((RegisterDX shr 8) and $ff and $ff) shl 8);
+  emuTemp3 := (RegisterDX) and $ffff;
+  emuTemp4 := False;
+  emuTemp3 := (LongInt(emuTemp3) or LongInt(((RegisterDX) and $ffff))) and $ffff;
+  RegisterCarryFlag := emuTemp4;
+  RegisterZeroFlag := (emuTemp3) = 0;
+  RegisterSignFlag := ((emuTemp3) and $8000) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterDX := emuTemp3;
+  if not RegisterSignFlag then goto emuL11;
+  emuTemp5 := (RegisterDX) and $ffff;
+  RegisterOverflowFlag := False;
+  emuTemp6 := (0 - LongInt(emuTemp5)) and $ffff;
+  RegisterCarryFlag := emuTemp5 <> 0;
+  RegisterZeroFlag := (emuTemp6) = 0;
+  RegisterSignFlag := ((emuTemp6) and $8000) <> 0;
+  RegisterOverflowFlag := (emuTemp5) = $8000;
+  RegisterDX := emuTemp6;
+  emuTemp7 := (RegisterAX) and $ffff;
+  RegisterOverflowFlag := False;
+  emuTemp8 := (0 - LongInt(emuTemp7)) and $ffff;
+  RegisterCarryFlag := emuTemp7 <> 0;
+  RegisterZeroFlag := (emuTemp8) = 0;
+  RegisterSignFlag := ((emuTemp8) and $8000) <> 0;
+  RegisterOverflowFlag := (emuTemp7) = $8000;
+  RegisterAX := emuTemp8;
+  emuTemp9 := (RegisterDX) and $ffff;
+  emuTemp10 := LongInt(emuTemp9) < LongInt((($0) and $ffff)) + LongInt(RegisterCarryFlag);
+  emuTemp9 := (LongInt(emuTemp9) - LongInt((($0) and $ffff)) - LongInt(RegisterCarryFlag)) and $ffff;
+  RegisterCarryFlag := emuTemp10;
+  RegisterZeroFlag := (emuTemp9) = 0;
+  RegisterSignFlag := ((emuTemp9) and $8000) <> 0;
+  RegisterOverflowFlag := (LongInt((RegisterDX) xor ($0)) and LongInt((RegisterDX) xor (emuTemp9)) and $8000) <> 0;
+  RegisterDX := emuTemp9;
+  emuL11:
+  RegisterBX := RegisterAX;
+  RegisterAX := $a0;
+  emuTemp11 := (RegisterDX) and $ffff;
+  emuTemp12 := False;
+  emuTemp11 := (LongInt(emuTemp11) or LongInt(((RegisterDX) and $ffff))) and $ffff;
+  RegisterCarryFlag := emuTemp12;
+  RegisterZeroFlag := (emuTemp11) = 0;
+  RegisterSignFlag := ((emuTemp11) and $8000) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterDX := emuTemp11;
+  if not RegisterZeroFlag then goto emuL21;
+  emuTemp13 := RegisterBX;
+  RegisterBX := RegisterDX;
+  RegisterDX := emuTemp13;
+  RegisterAX := (RegisterAX and $ff00) or ($90 and $ff);
+  emuTemp14 := ((RegisterDX shr 8) and $ff) and $ff;
+  emuTemp15 := False;
+  emuTemp14 := (LongInt(emuTemp14) or LongInt((((RegisterDX shr 8) and $ff) and $ff))) and $ff;
+  RegisterCarryFlag := emuTemp15;
+  RegisterZeroFlag := (emuTemp14) = 0;
+  RegisterSignFlag := ((emuTemp14) and $80) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterDX := (RegisterDX and $ff) or ((emuTemp14 and $ff) shl 8);
+  if not RegisterZeroFlag then goto emuL21;
+  emuTemp16 := (RegisterDX and $ff);
+  RegisterDX := (RegisterDX and $ff00) or ((RegisterDX shr 8) and $ff and $ff);
+  RegisterDX := (RegisterDX and $ff) or ((emuTemp16 and $ff) shl 8);
+  RegisterAX := (RegisterAX and $ff00) or ($88 and $ff);
+  emuL21:
+  emuTemp17 := (RegisterDX) and $ffff;
+  emuTemp18 := False;
+  emuTemp17 := (LongInt(emuTemp17) or LongInt(((RegisterDX) and $ffff))) and $ffff;
+  RegisterCarryFlag := emuTemp18;
+  RegisterZeroFlag := (emuTemp17) = 0;
+  RegisterSignFlag := ((emuTemp17) and $8000) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterDX := emuTemp17;
+  if RegisterSignFlag then goto emuL27;
+  emuL23:
+  emuTemp19 := (LongInt((RegisterAX and $ff)) + -1) and $ff;
+  RegisterZeroFlag := (emuTemp19) = 0;
+  RegisterSignFlag := ((emuTemp19) and $80) <> 0;
+  RegisterOverflowFlag := ((RegisterAX and $ff)) = $80;
+  RegisterAX := (RegisterAX and $ff00) or (emuTemp19 and $ff);
+  emuTemp20 := (RegisterBX) and $ffff;
+  emuTemp21 := LongInt(emuTemp20) + LongInt(((RegisterBX) and $ffff)) > $ffff;
+  emuTemp20 := (LongInt(emuTemp20) + LongInt(((RegisterBX) and $ffff))) and $ffff;
+  RegisterCarryFlag := emuTemp21;
+  RegisterZeroFlag := (emuTemp20) = 0;
+  RegisterSignFlag := ((emuTemp20) and $8000) <> 0;
+  RegisterOverflowFlag := (LongInt((RegisterBX) xor (emuTemp20)) and LongInt((RegisterBX) xor (emuTemp20)) and $8000) <> 0;
+  RegisterBX := emuTemp20;
+  emuTemp22 := (RegisterDX) and $ffff;
+  emuTemp23 := LongInt(emuTemp22) + LongInt(((RegisterDX) and $ffff)) + LongInt(RegisterCarryFlag) > $ffff;
+  emuTemp22 := (LongInt(emuTemp22) + LongInt(((RegisterDX) and $ffff)) + LongInt(RegisterCarryFlag)) and $ffff;
+  RegisterCarryFlag := emuTemp23;
+  RegisterZeroFlag := (emuTemp22) = 0;
+  RegisterSignFlag := ((emuTemp22) and $8000) <> 0;
+  RegisterOverflowFlag := (LongInt((RegisterDX) xor (emuTemp22)) and LongInt((RegisterDX) xor (emuTemp22)) and $8000) <> 0;
+  RegisterDX := emuTemp22;
+  if not RegisterSignFlag then goto emuL23;
+  emuL27:
+  emuTemp24 := ((RegisterCX shr 8) and $ff) and $ff;
+  emuTemp25 := False;
+  emuTemp24 := (LongInt(emuTemp24) or LongInt((((RegisterCX shr 8) and $ff) and $ff))) and $ff;
+  RegisterCarryFlag := emuTemp25;
+  RegisterZeroFlag := (emuTemp24) = 0;
+  RegisterSignFlag := ((emuTemp24) and $80) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterCX := (RegisterCX and $ff) or ((emuTemp24 and $ff) shl 8);
+  if RegisterSignFlag then goto emuL30;
+  emuTemp26 := ((RegisterDX shr 8) and $ff) and $ff;
+  emuTemp27 := False;
+  emuTemp26 := (LongInt(emuTemp26) and LongInt((($7f) and $ff))) and $ff;
+  RegisterCarryFlag := emuTemp27;
+  RegisterZeroFlag := (emuTemp26) = 0;
+  RegisterSignFlag := ((emuTemp26) and $80) <> 0;
+  RegisterOverflowFlag := False;
+  RegisterDX := (RegisterDX and $ff) or ((emuTemp26 and $ff) shl 8);
+  emuL30:
+  RegisterSP := (RegisterSP + 2) and $ffff;
 end;

@@ -591,10 +591,13 @@ Fix procedure/function arity - truncate surplus args and remove args from zero-p
     for fwd in fwd_paths:
         if fwd.exists():
             for line in fwd.read_text(errors="replace").splitlines():
-                m = re.match(r"function\s+(FUN_\w+)\(([^)]*)\);", line)
+                m = re.match(
+                    r"(?:function|procedure)\s+(FUN_\w+)\s*(?:\(([^)]*)\))?[^;]*;",
+                    line,
+                )
                 if m:
                     fname = m.group(1)
-                    params_str = m.group(2)
+                    params_str = m.group(2) or ""
                     nparams = len([p for p in params_str.split(",") if p.strip()])
                     funcs[fname] = nparams
             break  # Use first found _forward.inc

@@ -289,6 +289,7 @@ def test_actual_signed_word_leaf_all_inputs(tmp_path, entry):
     source_files = (
         target / "src" / f"{routine}.inc",
         target / "src/LieroRuntime.pas",
+        target / "src/_lemu_helpers.inc",
         root / "tools/liero_file_probe.py",
         root / "engine/alternate_streams.py",
         pathlib.Path(__file__),

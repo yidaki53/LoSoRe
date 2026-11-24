@@ -1,46 +1,101 @@
-{ liero::FUN_24dd_23c0 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_23c0.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_23c0.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// undefined4 __cdecl16near FUN_24dd_23c0(void)
-// 
-// {
-//   uint uVar1;
-//   undefined2 in_DX;
-//   byte bVar2;
-//   uint *unaff_SI;
-//   undefined2 unaff_ES;
-//   
-//   uVar1 = *unaff_SI;
-//   bVar2 = (byte)(uVar1 >> 8);
-//   return CONCAT22(in_DX,((uint)(byte)((bVar2 >> 4) * '\n' + (bVar2 & 0xf)) * 10 + (uVar1 >> 4 & 0xf)
-//                         ) * 10 + (uVar1 & 0xf));
-// }
-// 
-// --- end reference ---
-function FUN_24dd_23c0: Longint;
-var
-  packedValue: Word;
-  highByte: Byte;
-  lowByte: Byte;
-  decimalValue: Word;
-  returnedBits: LongWord;
+{$IFNDEF LEMU_GENERATED_FORWARDS}
+function FUN_24dd_23c0(sourcePointer: Pointer): Longint; forward;
+{$ENDIF}
+function FUN_24dd_23c0(sourcePointer: Pointer): Longint;
+var emuStep: LongInt;
+    emuTemp1: LongInt;
+    emuTemp2: Boolean;
+    emuTemp3: LongInt;
+    emuTemp4: LongInt;
+    emuTemp5: Boolean;
+    emuTemp6: LongInt;
+    emuTemp7: Boolean;
+    emuTemp8: LongInt;
+    emuTemp9: LongInt;
+    emuTemp10: Boolean;
+    emuTemp11: LongInt;
+    emuTemp12: Boolean;
+    emuTemp13: LongInt;
+    emuTemp14: Boolean;
+    emuTemp15: LongInt;
+    emuTemp16: LongInt;
+    emuTemp17: Boolean;
+    emuTemp18: LongInt;
+    emuTemp19: Boolean;
 begin
-  packedValue := Word(RealModeMemory[
-    ((Longint(RegisterES) shl 4) + RegisterSI) and $FFFFF]) or
-    (Word(RealModeMemory[
-      ((Longint(RegisterES) shl 4) + Word(RegisterSI + 1)) and $FFFFF]) shl 8);
-  highByte := Byte(packedValue shr 8);
-  lowByte := Byte(packedValue);
-  decimalValue := Word(((highByte shr 4) * 10 + (highByte and $0F)) * 10 +
-    ((lowByte shr 4) and $0F));
-  decimalValue := Word(decimalValue * 10 + (lowByte and $0F));
-  RegisterAX := decimalValue;
+  LEmuPush(RegisterBX);
+  LEmuPush(RegisterCX);
+  LEmuPush(RegisterDX);
+  RegisterCX := (RegisterCX and $ff00) or ($4 and $ff);
+  RegisterCX := (RegisterCX and $ff) or (($a and $ff) shl 8);
+  RegisterBX := LEmuMemW(RegisterES, (((RegisterSI)) and $ffff));
+  RegisterAX := (RegisterAX and $ff00) or ((RegisterBX shr 8) and $ff and $ff);
+  emuTemp1 := ((RegisterAX and $ff)) and $ffff;
+  emuTemp2 := (emuTemp1 shr (((RegisterCX and $ff)) - 1)) and 1 <> 0;
+  emuTemp1 := (emuTemp1 shr ((RegisterCX and $ff))) and $ffff;
+  RegisterCarryFlag := emuTemp2;
+  RegisterZeroFlag := (emuTemp1) = 0;
+  RegisterAX := (RegisterAX and $ff00) or (emuTemp1 and $ff);
+  emuTemp3 := LongInt(RegisterAX and $ff) * LongInt((RegisterCX shr 8) and $ff);
+  RegisterAX := emuTemp3 and $ffff;
+  RegisterCarryFlag := emuTemp3 > $ff;
+  RegisterZeroFlag := (RegisterAX and $ff) = 0;
+  RegisterDX := (RegisterDX and $ff00) or ($f and $ff);
+  emuTemp4 := ((RegisterDX and $ff)) and $ffff;
+  emuTemp5 := False;
+  emuTemp4 := (LongInt(emuTemp4) and LongInt((RegisterBX shr 8) and $ff)) and $ffff;
+  RegisterCarryFlag := emuTemp5;
+  RegisterZeroFlag := (emuTemp4) = 0;
+  RegisterDX := (RegisterDX and $ff00) or (emuTemp4 and $ff);
+  emuTemp6 := ((RegisterAX and $ff)) and $ffff;
+  emuTemp7 := LongInt(emuTemp6) + LongInt((RegisterDX and $ff)) > $ffff;
+  emuTemp6 := (LongInt(emuTemp6) + LongInt((RegisterDX and $ff))) and $ffff;
+  RegisterCarryFlag := emuTemp7;
+  RegisterZeroFlag := (emuTemp6) = 0;
+  RegisterAX := (RegisterAX and $ff00) or (emuTemp6 and $ff);
+  emuTemp8 := LongInt(RegisterAX and $ff) * LongInt((RegisterCX shr 8) and $ff);
+  RegisterAX := emuTemp8 and $ffff;
+  RegisterCarryFlag := emuTemp8 > $ff;
+  RegisterZeroFlag := (RegisterAX and $ff) = 0;
+  RegisterDX := $f0;
+  emuTemp9 := ((RegisterDX and $ff)) and $ffff;
+  emuTemp10 := False;
+  emuTemp9 := (LongInt(emuTemp9) and LongInt((RegisterBX and $ff))) and $ffff;
+  RegisterCarryFlag := emuTemp10;
+  RegisterZeroFlag := (emuTemp9) = 0;
+  RegisterDX := (RegisterDX and $ff00) or (emuTemp9 and $ff);
+  emuTemp11 := (RegisterDX) and $ffff;
+  emuTemp12 := (emuTemp11 shr (((RegisterCX and $ff)) - 1)) and 1 <> 0;
+  emuTemp11 := (emuTemp11 shr ((RegisterCX and $ff))) and $ffff;
+  RegisterCarryFlag := emuTemp12;
+  RegisterZeroFlag := (emuTemp11) = 0;
+  RegisterDX := emuTemp11;
+  emuTemp13 := (RegisterAX) and $ffff;
+  emuTemp14 := LongInt(emuTemp13) + LongInt(RegisterDX) > $ffff;
+  emuTemp13 := (LongInt(emuTemp13) + LongInt(RegisterDX)) and $ffff;
+  RegisterCarryFlag := emuTemp14;
+  RegisterZeroFlag := (emuTemp13) = 0;
+  RegisterAX := emuTemp13;
+  RegisterCX := $a;
+  emuTemp15 := LongInt(RegisterAX) * LongInt(RegisterCX);
+  RegisterAX := emuTemp15 and $ffff;
+  RegisterDX := (emuTemp15 shr 16) and $ffff;
+  RegisterCarryFlag := RegisterDX <> 0;
   RegisterZeroFlag := RegisterAX = 0;
-  RegisterCarryFlag := False;
-  returnedBits := (LongWord(RegisterDX) shl 16) or RegisterAX;
-  FUN_24dd_23c0 := Longint(returnedBits);
+  emuTemp16 := (RegisterBX) and $ffff;
+  emuTemp17 := False;
+  emuTemp16 := (LongInt(emuTemp16) and LongInt($f)) and $ffff;
+  RegisterCarryFlag := emuTemp17;
+  RegisterZeroFlag := (emuTemp16) = 0;
+  RegisterBX := emuTemp16;
+  emuTemp18 := (RegisterAX) and $ffff;
+  emuTemp19 := LongInt(emuTemp18) + LongInt(RegisterBX) > $ffff;
+  emuTemp18 := (LongInt(emuTemp18) + LongInt(RegisterBX)) and $ffff;
+  RegisterCarryFlag := emuTemp19;
+  RegisterZeroFlag := (emuTemp18) = 0;
+  RegisterAX := emuTemp18;
+  RegisterDX := LEmuPop();
+  RegisterCX := LEmuPop();
+  RegisterBX := LEmuPop();
+  FUN_24dd_23c0 := (LongInt(RegisterDX) shl 16) + RegisterAX;
 end;

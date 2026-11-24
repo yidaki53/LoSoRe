@@ -38,6 +38,7 @@ SOURCES = (
     "targets/liero/src/FUN_24dd_396c.inc",
     "targets/liero/src/FUN_24dd_397a.inc",
     "targets/liero/src/LieroRuntime.pas",
+    "targets/liero/src/_lemu_helpers.inc",
     "targets/liero/tests/probe_liero_write_handler.pas",
 )
 
@@ -379,6 +380,7 @@ def replay(root: pathlib.Path, output: pathlib.Path) -> dict:
             "targets/liero/src/FUN_24dd_396c.inc",
             "targets/liero/src/FUN_24dd_397a.inc",
             "targets/liero/src/LieroRuntime.pas",
+        "targets/liero/src/_lemu_helpers.inc",
         }
     if set(frozen["methods"]) != expected_sources:
         raise ValueError("write method snapshot missing")

@@ -1,21 +1,80 @@
-{ liero::FUN_24dd_00b1 — game Pascal draft (oracle: none).
-  Drafted from asm/FUN_24dd_00b1.s via skeleton; UNMATCHED until verify passes.
-  Original assembly retained in asm/FUN_24dd_00b1.s (INCLUDE_ASM residue).
-  Reference: Ghidra decompiler C for this function is embedded below as a comment.
-}
-// --- reference: Ghidra decompiler C (unmatched) ---
-// 
-// void __cdecl16near FUN_24dd_00b1(void)
-// 
-// {
-//   undefined2 unaff_DS;
-//   
-//   *(undefined1 *)0x6420 = 2;
-//   return;
-// }
-// 
-// --- end reference ---
+{$IFNDEF LEMU_GENERATED_FORWARDS}
+procedure FUN_24dd_00b1; forward;
+{$ENDIF}
 procedure FUN_24dd_00b1;
+label emuL20;
+var emuStep: LongInt;
+    emuHardwareFlags: LongInt;
+    emuTemp1: LongInt;
+    emuTemp2: Boolean;
+    emuTemp3: LongInt;
+    emuTemp4: Boolean;
+    emuTemp5: LongInt;
+    emuTemp6: LongInt;
+    emuTemp7: Boolean;
+    emuTemp8: LongInt;
+    emuTemp9: Boolean;
+    emuTemp10: LongInt;
+    emuTemp11: LongInt;
+    emuTemp12: Boolean;
+    emuTemp13: LongInt;
+    emuTemp14: LongInt;
+    emuTemp15: Boolean;
+    emuTemp16: LongInt;
 begin
-  DosMemory[$6420] := 2;
+  emuTemp1 := (RegisterAX) and $ffff;
+  emuTemp2 := False;
+  emuTemp1 := (LongInt(emuTemp1) xor LongInt(((RegisterAX) and $ffff))) and $ffff;
+  LEmuSetResultFlags(emuTemp1, emuTemp2, False);
+  RegisterAX := emuTemp1;
+  LEmuPush(RegisterFlagsWord);
+  RegisterBX := LEmuPop();
+  emuTemp3 := ((RegisterBX shr 8) and $ff) and $ff;
+  emuTemp4 := False;
+  emuTemp3 := (LongInt(emuTemp3) and LongInt((($f) and $ff))) and $ff;
+  LEmuSetResultFlags(emuTemp3, emuTemp4, False);
+  RegisterBX := (RegisterBX and $ff) or ((emuTemp3 and $ff) shl 8);
+  LEmuPush(RegisterBX);
+  emuTemp5 := LEmuPop();
+  LEmuSetFlagsWord(Word(emuTemp5));
+  LEmuPush(RegisterFlagsWord);
+  RegisterCX := LEmuPop();
+  emuTemp6 := ((RegisterCX shr 8) and $ff) and $ff;
+  emuTemp7 := False;
+  emuTemp6 := (LongInt(emuTemp6) and LongInt((($f0) and $ff))) and $ff;
+  LEmuSetResultFlags(emuTemp6, emuTemp7, False);
+  RegisterCX := (RegisterCX and $ff) or ((emuTemp6 and $ff) shl 8);
+  emuTemp8 := ((RegisterCX shr 8) and $ff) and $ff;
+  emuTemp9 := LongInt(emuTemp8) < LongInt((($f0) and $ff));
+  emuTemp8 := (LongInt(emuTemp8) - LongInt((($f0) and $ff))) and $ff;
+  LEmuSetResultFlags(emuTemp8, emuTemp9, (LongInt(((RegisterCX shr 8) and $ff) xor ($f0)) and LongInt(((RegisterCX shr 8) and $ff) xor (emuTemp8)) and $80) <> 0);
+  if RegisterZeroFlag then goto emuL20;
+  emuTemp10 := (LongInt(RegisterAX) + 1) and $ffff;
+  LEmuSetZeroFlag((emuTemp10) = 0);
+  LEmuSetSignFlag(((emuTemp10) and $8000) <> 0);
+  LEmuSetOverflowFlag((RegisterAX) = $7fff);
+  RegisterAX := emuTemp10;
+  emuTemp11 := ((RegisterBX shr 8) and $ff) and $ff;
+  emuTemp12 := False;
+  emuTemp11 := (LongInt(emuTemp11) or LongInt((($f0) and $ff))) and $ff;
+  LEmuSetResultFlags(emuTemp11, emuTemp12, False);
+  RegisterBX := (RegisterBX and $ff) or ((emuTemp11 and $ff) shl 8);
+  LEmuPush(RegisterBX);
+  emuTemp13 := LEmuPop();
+  LEmuSetFlagsWord(Word(emuTemp13));
+  LEmuPush(RegisterFlagsWord);
+  RegisterCX := LEmuPop();
+  emuTemp14 := ((RegisterCX shr 8) and $ff) and $ff;
+  emuTemp15 := False;
+  emuTemp14 := (LongInt(emuTemp14) and LongInt((($f0) and $ff))) and $ff;
+  LEmuSetResultFlags(emuTemp14, emuTemp15, False);
+  RegisterCX := (RegisterCX and $ff) or ((emuTemp14 and $ff) shl 8);
+  if RegisterZeroFlag then goto emuL20;
+  emuTemp16 := (LongInt(RegisterAX) + 1) and $ffff;
+  LEmuSetZeroFlag((emuTemp16) = 0);
+  LEmuSetSignFlag(((emuTemp16) and $8000) <> 0);
+  LEmuSetOverflowFlag((RegisterAX) = $7fff);
+  RegisterAX := emuTemp16;
+  emuL20:
+  LEmuSetW(RegisterDS, (((($6420)) and $ffff) and $0fff), (RegisterAX and $ff));
 end;

@@ -38,7 +38,7 @@ METHODS = (
     "tools/liero_source_trial.py",
     "tools/liero_file_probe.py",
     "targets/liero/src/FUN_249c_0013.inc",
-    "targets/liero/src/LieroRuntime.pas",
+    "targets/liero/src/LieroRuntime.pas","targets/liero/src/_lemu_helpers.inc",
 )
 
 
@@ -272,6 +272,9 @@ def run_cursor(root: pathlib.Path, output: pathlib.Path) -> dict:
     )
     shutil.copy2(
         root / "targets/liero/src/LieroRuntime.pas", candidate / "LieroRuntime.pas"
+    )
+    shutil.copy2(
+        root / "targets/liero/src/_lemu_helpers.inc", candidate / "_lemu_helpers.inc"
     )
     frozen = json.loads((output / "freeze.json").read_text())
     if (

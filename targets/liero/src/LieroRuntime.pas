@@ -6,6 +6,10 @@ interface
 
 type
   TDosMemory = array[0..$FFFF] of Byte;
+  TLieroDosRead = function(handle, count: Word; destination: Pointer;
+                          var bytesRead: Word): Word;
+  TLieroDosWrite = function(handle, count: Word; source: Pointer;
+                           var bytesWritten: Word): Word;
   TRealModeMemory = array[0..$FFFFF] of Byte;
   TPaletteEntry = record
     Red: Byte;
@@ -41,7 +45,11 @@ var
   RegisterWordESDIPlus2: Word;
   RegisterZeroFlag: Boolean;
   RegisterCarryFlag: Boolean;
+  RegisterParityFlag: Boolean;
   RegisterDirectionFlag: Boolean;
+  RegisterSignFlag: Boolean;
+  RegisterOverflowFlag: Boolean;
+  RegisterFlagsWord: Word;
   RegisterAX: Word;
   RegisterBX: Word;
   RegisterCX: Word;
@@ -62,9 +70,15 @@ var
   VideoStatusSequenceLength: Word;
   VideoStatusSequenceIndex: Word;
   LieroErrorDataSegment, LieroErrorCodeSegment: Word;
-  LieroTextCodeSegment: Word;
+  LieroTextDataSegment, LieroTextCodeSegment: Word;
   LieroRestoreVector: TLieroRestoreVector;
   LieroTerminate: TLieroTerminate;
+  LieroDispatchMethod: function(slotOffset, objectSegment, objectOffset: Word): Word;
+  LieroBufferObject, LieroBufferSource, LieroBufferDestination: Pointer;
+  LieroBufferDosRead: TLieroDosRead;
+  LieroBufferDosWrite: TLieroDosWrite;
+  LieroBufferCodeSegment, LieroBufferObjectOffset: Word;
+  LieroBufferObjectSegment, LieroBufferSourceOffset, LieroBufferSourceSegment: Word;
 
 procedure CopyDWordsForward(source, destination: Pointer; dwordCount: Word);
 procedure CopyBytesForward(source, destination: Pointer; byteCount: Word);
@@ -75,12 +89,31 @@ function ReadVideoStatusPort: Byte;
 function ReadStackByte(offset: Word): Byte;
 procedure WriteConsoleCRLFByte(value: Byte);
 procedure WriteWordLE(destination: Pointer; byteOffset: Word; value: Word);
+function LEmuMemB(segmentWord, offsetWord: Word): Byte;
+function LEmuMemW(segmentWord, offsetWord: Word): Word;
+procedure LEmuSetB(segmentWord, offsetWord: Word; value: Byte);
+procedure LEmuSetW(segmentWord, offsetWord: Word; value: Word);
+procedure LEmuPush(value: Word);
+function LEmuPop: Word;
+function LEmuSigned16(valueWord: Word): LongInt;
+procedure LEmuSetFlagBit(maskValue: LongInt; flagValue: Boolean);
+procedure LEmuSetCarryFlag(flagValue: Boolean);
+procedure LEmuSetParityFlag(flagValue: Boolean);
+procedure LEmuSetZeroFlag(flagValue: Boolean);
+procedure LEmuSetSignFlag(flagValue: Boolean);
+procedure LEmuSetDirectionFlag(flagValue: Boolean);
+procedure LEmuSetOverflowFlag(flagValue: Boolean);
+procedure LEmuSetResultFlags(valueWord: LongInt; carryValue, overflowValue: Boolean);
+procedure LEmuSetFlagsWord(valueWord: Word);
 
 implementation
+
+{$INCLUDE _lemu_helpers.inc}
 
 procedure WriteConsoleCRLFByte(value: Byte);
 var
   cell: Word;
+  blank: Byte;
 begin
   { Oracle: mode3/page0 DOS console CR/LF, bounded original screen observation.
     Printable bytes, other modes/pages and invalid cursor state are unsupported. }
@@ -89,13 +122,14 @@ begin
   case value of
     13: BIOSCursorColumn := 0;
     10: if BIOSCursorRow < 24 then Inc(BIOSCursorRow)
-        else begin
-          Move(RealModeMemory[$B80A0], RealModeMemory[$B8000], 3840);
-          for cell := 0 to 79 do begin
-            RealModeMemory[$B8F00 + LongInt(cell) * 2] := 32;
-            RealModeMemory[$B8F01 + LongInt(cell) * 2] := 7;
-          end;
-        end;
+         else begin
+           blank := RealModeMemory[$B8F01];
+           Move(RealModeMemory[$B80A0], RealModeMemory[$B8000], 3840);
+           for cell := 0 to 79 do begin
+             RealModeMemory[$B8F00 + LongInt(cell) * 2] := 32;
+             RealModeMemory[$B8F01 + LongInt(cell) * 2] := blank;
+           end;
+         end;
   else RunError(211);
   end;
 end;

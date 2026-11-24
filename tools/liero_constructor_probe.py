@@ -239,6 +239,7 @@ def source_paths(root: pathlib.Path) -> list[pathlib.Path]:
         ),
         root / "targets/liero/src" / f"{FUNCTION}.inc",
         root / "targets/liero/src/LieroRuntime.pas",
+        root / "targets/liero/src/_lemu_helpers.inc",
         root / "targets/liero/tests/probe_liero_constructor.pas",
     ]
 
@@ -269,7 +270,7 @@ def run_probe(
     output.mkdir(parents=True, exist_ok=False)
     candidate_dir = output / "candidate"
     candidate_dir.mkdir()
-    for source in sources[-3:]:
+    for source in sources[-4:]:
         (candidate_dir / source.name).write_bytes(contents[source])
     assembly = output / "harness.S"
     assembly.write_bytes(contents[sources[0]])
@@ -327,6 +328,9 @@ def run_probe(
                 "candidate/LieroRuntime.pas": fingerprints[
                     "targets/liero/src/LieroRuntime.pas"
                 ],
+                "candidate/_lemu_helpers.inc": fingerprints[
+                    "targets/liero/src/_lemu_helpers.inc"
+                ],
                 "candidate/probe_liero_constructor.pas": fingerprints[
                     "targets/liero/tests/probe_liero_constructor.pas"
                 ],
@@ -380,6 +384,7 @@ def validate_saved_report(
         "candidate/probe_liero_constructor",
         "candidate/FUN_24dd_3639.inc",
         "candidate/LieroRuntime.pas",
+        "candidate/_lemu_helpers.inc",
         "candidate/probe_liero_constructor.pas",
         "harness.S",
         "probe.conf",

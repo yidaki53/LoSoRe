@@ -42,6 +42,7 @@ SOURCES = (
         f"targets/liero/src/{name}"
         for name in (
             "LieroRuntime.pas",
+            "_lemu_helpers.inc",
             "FUN_24dd_374d.inc",
             "FUN_24dd_375e.inc",
             "FUN_24dd_37b3.inc",
@@ -356,7 +357,7 @@ def expected(data: bytes, entry: str, service: str, segment: int, handle: int) -
             cursor = min(row + 1, 24) * 256
             if row == 24:
                 video[:3840] = video[160:4000]
-                video[3840:] = b"\x20\x07" * 80
+                video[3840:] = bytes((32, video[3841])) * 80
     struct.pack_into("<H", obj, 8, used)
     if len(service_counts) > 256:
         raise ValueError("text service count log exceeds owned fixture")

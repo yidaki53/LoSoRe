@@ -6,6 +6,7 @@ import subprocess
 
 import pytest
 
+from engine.instruction_facts import segment_move
 from tools import liero_allocator_entry_probe as probe
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -372,9 +373,13 @@ def test_error_prefix_preserves_caller_origin_and_correct_source_ds(inputs):
     assert facts["failure_path_executed"] is False
     assert facts["routine_recovered"] is False
     assembly = (ROOT / "targets/liero/asm/FUN_24dd_0116.s").read_text()
-    assert binary[begin + 0x21 : begin + 0x23] == bytes.fromhex("8ec0")
-    assert "24dd:011d  MOV DS,DX" in assembly
-    assert "24dd:0130  MOV ES,AX" in assembly
+    for offset in range(0x40):
+        try:
+            fact = segment_move(binary[begin + offset : begin + offset + 2])
+        except ValueError:
+            continue
+        address = 0x10F + offset
+        assert f"24dd:{address:04x}  {fact['instruction']}" in assembly
     for offset in range(len(raw)):
         mutant = bytearray(raw)
         mutant[offset] ^= 1

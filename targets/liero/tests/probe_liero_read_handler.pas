@@ -2,6 +2,7 @@ program ProbeLieroReadHandler;
 
 {$MODE TP}
 
+uses LieroRuntime;
 {$I FUN_24dd_375e.inc}
 
 type

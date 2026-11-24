@@ -94,6 +94,7 @@ def test_typed_draw_compiles_and_matches_projection(tmp_path, guard_style):
     pilot.validate_draw_candidate(source, proposal, RAW)
     (tmp_path / "FUN_1ec2_0dc8.inc").write_text(source)
     shutil.copy2(root / "targets/liero/src/LieroRuntime.pas", tmp_path)
+    shutil.copy2(root / "targets/liero/src/_lemu_helpers.inc", tmp_path)
     (tmp_path / "actual_draw.pas").write_text(PASCAL)
     inputs = draw_cases()
     (tmp_path / "CASES.BIN").write_bytes(
@@ -390,6 +391,7 @@ def test_actual_draw_source_and_original_offset_wrap(tmp_path):
     source_files = [
         target / "src/FUN_1ec2_0dc8.inc",
         target / "src/LieroRuntime.pas",
+        target / "src/_lemu_helpers.inc",
         target / "config/routine_contracts.json",
         pathlib.Path(__file__),
         root / "tools/liero_file_probe.py",

@@ -236,6 +236,7 @@ def test_actual_random_source_and_scaled_returns(tmp_path):
         target / "src/FUN_24dd_46b1.inc",
         target / "src/FUN_24dd_4654.inc",
         target / "src/LieroRuntime.pas",
+        target / "src/_lemu_helpers.inc",
         target / "config/routine_contracts.json",
         target / "asm/FUN_24dd_4654.s",
         target / "asm/FUN_24dd_46b1.s",

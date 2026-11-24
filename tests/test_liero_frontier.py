@@ -56,7 +56,7 @@ def test_whole_census_triage_original_bytes_and_replay(tmp_path):
     assert sum(result["categories"].values()) == 295
     records = result["routines"]
     assert records["FUN_24dd_3117"]["category"] == "blocked-control-or-external"
-    assert records["FUN_24dd_4141"]["category"] == "unresolved-leaf-ready-for-oracle"
+    assert records["FUN_24dd_4141"]["category"] == "manual-body-needs-review"
     assert records["FUN_2971_65df"]["bytes_sha256"] is None
     assert records["FUN_1000_05eb"]["unresolved_dependencies"]
     assert all(row["execution_eligible"] is False for row in records.values())

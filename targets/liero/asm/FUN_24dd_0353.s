@@ -5,7 +5,7 @@
 24dd:035a  CALL 0x2000:52ac
 24dd:035d  MOV DI,0x63f6
 24dd:0360  MOV CX,DS
-24dd:0362  MOV CX,ES
+24dd:0362  MOV ES,CX
 24dd:0364  MOV CX,DI
 24dd:0366  MOV BX,ES
 24dd:0368  LES DI,ES:[DI]
@@ -37,7 +37,7 @@
 24dd:03a5  ADC DX,0x0
 24dd:03a8  AND AL,0xf
 24dd:03aa  MOV DI,AX
-24dd:03ac  MOV DX,ES
+24dd:03ac  MOV ES,DX
 24dd:03ae  POP word ptr ES:[DI]
 24dd:03b1  POP word ptr ES:[DI + 0x2]
 24dd:03b5  MOV word ptr ES:[DI + 0x4],CX
@@ -68,7 +68,7 @@
 24dd:03eb  PUSH ES
 24dd:03ec  PUSH DI
 24dd:03ed  MOV DI,CX
-24dd:03ef  MOV BX,ES
+24dd:03ef  MOV ES,BX
 24dd:03f1  MOV [0x63ee],AX
 24dd:03f4  MOV word ptr [0x63f0],DX
 24dd:03f8  MOV word ptr ES:[DI],AX

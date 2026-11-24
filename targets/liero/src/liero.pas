@@ -8,6 +8,7 @@
 program liero;
 uses LieroDat, LieroRuntime;
 {$INCLUDE _forward.inc}
+{$INCLUDE _lemu_helpers.inc}
 {$INCLUDE FUN_1000_01a1.inc}
 {$INCLUDE FUN_1000_05a4.inc}
 {$INCLUDE FUN_1000_05eb.inc}
@@ -238,13 +239,18 @@ uses LieroDat, LieroRuntime;
 {$INCLUDE FUN_24dd_36c4.inc}
 {$INCLUDE FUN_24dd_3711.inc}
 {$INCLUDE FUN_24dd_374d.inc}
+{$INCLUDE FUN_24dd_375e.inc}
+{$INCLUDE FUN_24dd_37b3.inc}
+{$INCLUDE FUN_24dd_396c.inc}
+{$INCLUDE FUN_24dd_39ab.inc}
+{$INCLUDE FUN_24dd_390e.inc}
+{$INCLUDE FUN_24dd_3923.inc}
 {$INCLUDE FUN_24dd_37ec.inc}
 {$INCLUDE FUN_24dd_384a.inc}
 {$INCLUDE FUN_24dd_3899.inc}
 {$INCLUDE FUN_24dd_38f0.inc}
 {$INCLUDE FUN_24dd_3930.inc}
 {$INCLUDE FUN_24dd_3951.inc}
-{$INCLUDE FUN_24dd_396c.inc}
 {$INCLUDE FUN_24dd_397a.inc}
 {$INCLUDE FUN_24dd_3988.inc}
 {$INCLUDE FUN_24dd_39c3.inc}

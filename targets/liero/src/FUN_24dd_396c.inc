@@ -1,14 +1,7 @@
 { Oracle: scoped original-byte/Pascal buffer refill composition.
   Resolved host buffers and service adapter are explicit bindings, not TP7 ABI.
   INCLUDE_ASM residue remains. Checked methods: input375e and output37b3. }
-var
-  LieroBufferObject, LieroBufferSource, LieroBufferDestination: Pointer;
-  LieroBufferDosRead: TLieroDosRead;
-  LieroBufferCodeSegment, LieroBufferObjectOffset: Word;
-  LieroBufferObjectSegment, LieroBufferSourceOffset,
-    LieroBufferSourceSegment: Word;
-  LieroBufferDosWrite: TLieroDosWrite;
-procedure FUN_24dd_396c;
+function LieroInvokeBufferWrite(slotOffset: Word): Word;
 begin
   { Oracle: original396c/397a to37b3 composition, explicit far-pointer bindings.
     Other DOS clobbers and native ABI are not represented by these mirrors. }

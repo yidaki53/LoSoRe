@@ -199,15 +199,16 @@ def _candidate_program(
     entry_values = ", ".join(f"${ENTRY_OFFSETS[name]:04X}" for name, _ in cases)
     destinations = ", ".join(f"${offset:04X}" for _, offset in cases)
     initialize_code = "\n".join(
-        f"  CodeMemory[${offset + index:04X}] := ${value:02X};"
+        f"  CodeMemory[${offset + index:04X}] := ${value:02X};\n"
+        f"  RealModeMemory[(LongInt($191) shl 4) + ${offset + index:04X}] := ${value:02X};"
         for offset, data in source_bytes.items()
         for index, value in enumerate(data)
     )
     return f"""program LieroCopyCandidate;
 {{$MODE TP}}
 uses LieroRuntime;
-{{$I {ROUTINES[0]}.inc}}
-{{$I {ROUTINES[1]}.inc}}
+{{$I {ROUTINES[0]}.dedup.inc}}
+{{$I {ROUTINES[1]}.dedup.inc}}
 
 type
   TOracleRecord = packed record
@@ -455,7 +456,9 @@ def run_probe(
             else (root / "targets/liero/src" / f"{routine}.inc").read_text()
         )
         source_bytes_file = source_text.encode("utf-8")
+        candidate_text = source_text
         (candidate_dir / f"{routine}.inc").write_bytes(source_bytes_file)
+        (candidate_dir / f"{routine}.dedup.inc").write_bytes(candidate_text.encode("utf-8"))
         source_hashes[routine] = _sha256(source_bytes_file)
     runtime = root / "targets/liero/src/LieroRuntime.pas"
     runtime_content = (
@@ -465,6 +468,9 @@ def run_probe(
     )
     runtime_bytes = runtime_content.encode("utf-8")
     (candidate_dir / runtime.name).write_bytes(runtime_bytes)
+    (candidate_dir / "_lemu_helpers.inc").write_bytes(
+        (root / "targets/liero/src/_lemu_helpers.inc").read_bytes()
+    )
     source_bytes = {
         offset: binary[
             manifest["image_mapping"]["header_bytes"] + 0x24DD0 + offset - 0x10000 :

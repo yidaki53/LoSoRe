@@ -42,7 +42,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3b22(param_1, param_2: Pointer);
+procedure FUN_24dd_3b22(param_1, param_2: Longint);
 var
   sourceOffset: Word;
   sourceSegment: Word;

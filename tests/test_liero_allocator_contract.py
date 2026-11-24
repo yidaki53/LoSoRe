@@ -9,6 +9,7 @@ import pytest
 
 from engine import draft
 from engine.alternate_streams import _mz_relocation_locations, load_binary_evidence
+from engine.instruction_facts import segment_move
 from engine.routine_contract import load_contract
 from tools.liero_file_probe import assemble_probe, run_dosbox
 from tools.liero_startup_clear_contract import startup_cpu_contract
@@ -43,8 +44,9 @@ def test_original_heap_initialization_is_conditional_not_capacity_proof(
     )
     startup = startup_cpu_contract(binary, load_segment=load_segment)
     start = startup["startup"]["file_offset"]
-    assert binary[start + 3 : start + 5] == b"\x8e\xda"
-    assert "24dd:0003  MOV DS,DX" in (target / "asm/FUN_24dd_0000.s").read_text()
+    assert segment_move(binary[start + 3 : start + 5])["instruction"] in (
+        target / "asm/FUN_24dd_0000.s"
+    ).read_text()
     relocations = _mz_relocation_locations(binary, header)
     assert binary[start + 0x11 : start + 0x49] == HEAP_STARTUP
     assert not any(start + 0x10 <= r < start + 0x49 for r in relocations)
@@ -272,13 +274,13 @@ def test_original_allocator_dependency_and_segment_direction(tmp_path):
     )
     assert 0x035A + 3 + int.from_bytes(ALLOCATOR[8:10], "little", signed=True) == 0x04DC
     listing = (target / "asm/FUN_24dd_0353.s").read_text()
-    for address, raw, text in (
-        (0x0362, b"\x8e\xc1", "MOV ES,CX"),
-        (0x03AC, b"\x8e\xc2", "MOV ES,DX"),
-        (0x03EF, b"\x8e\xc3", "MOV ES,BX"),
-    ):
-        assert ALLOCATOR[address - 0x353 : address - 0x353 + 2] == raw
-        assert f"24dd:{address:04x}  {text}" in listing
+    for instruction_offset in range(len(ALLOCATOR) - 1):
+        try:
+            fact = segment_move(ALLOCATOR[instruction_offset : instruction_offset + 2])
+        except ValueError:
+            continue
+        address = 0x353 + instruction_offset
+        assert f"24dd:{address:04x}  {fact['instruction']}" in listing
     assert ALLOCATOR[4:7] == b"\xa3\x3c\x7b"
     assert ALLOCATOR[10:24] == bytes.fromhex("bff6638cd98ec18bcf8cc326c43d")
     assert 0x0357 + ALLOCATOR[3] == 0x03CE
@@ -370,6 +372,7 @@ def test_actual_size_helper_all_unsigned_inputs(tmp_path):
     paths = (
         target / "src/FUN_24dd_04dc.inc",
         target / "src/LieroRuntime.pas",
+        target / "src/_lemu_helpers.inc",
         target / "asm/FUN_24dd_04dc.s",
         target / "config/routine_contracts.json",
         ROOT / "tools/liero_file_probe.py",

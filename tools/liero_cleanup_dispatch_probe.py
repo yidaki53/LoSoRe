@@ -481,6 +481,7 @@ EXIT_SOURCES = tuple(
     "targets/liero/src/" + name
     for name in (
         "LieroRuntime.pas",
+        "_lemu_helpers.inc",
         "FUN_24dd_010f.inc",
         "FUN_24dd_04f4.inc",
         "FUN_24dd_3711.inc",

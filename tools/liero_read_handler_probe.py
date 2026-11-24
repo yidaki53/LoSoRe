@@ -956,6 +956,8 @@ def candidate_sources(root: pathlib.Path, handler: str) -> list[pathlib.Path]:
             root / "targets/liero/src" / name
             for name in (
                 "LieroRuntime.pas",
+                "_lemu_helpers.inc",
+                "_lemu_helpers.inc",
                 "FUN_24dd_374d.inc",
                 "FUN_24dd_375e.inc",
                 "FUN_24dd_37b3.inc",
@@ -974,6 +976,7 @@ def candidate_sources(root: pathlib.Path, handler: str) -> list[pathlib.Path]:
             root / "targets/liero/src" / name
             for name in (
                 "LieroRuntime.pas",
+                "_lemu_helpers.inc",
                 "FUN_24dd_375e.inc",
                 "FUN_24dd_37b3.inc",
                 "FUN_24dd_39ab.inc",
@@ -984,11 +987,17 @@ def candidate_sources(root: pathlib.Path, handler: str) -> list[pathlib.Path]:
         )
     if handler == "callbacks":
         sources.append(root / "targets/liero/src/FUN_24dd_390e.inc")
+    if handler == "read":
+        sources.extend(
+            root / "targets/liero/src" / name
+            for name in ("LieroRuntime.pas", "_lemu_helpers.inc")
+        )
     if handler in ("dispatch", "open"):
         sources.extend(
             root / path
             for path in (
                 "targets/liero/src/LieroRuntime.pas",
+                "targets/liero/src/_lemu_helpers.inc",
                 "targets/liero/src/FUN_24dd_37d3.inc",
             )
         )

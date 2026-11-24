@@ -495,6 +495,7 @@ def candidate_source_paths(root: Path) -> list[Path]:
     return [
         root / "targets/liero/src/FUN_24dd_3f86.inc",
         root / "targets/liero/src/LieroRuntime.pas",
+        root / "targets/liero/src/_lemu_helpers.inc",
         root / "tools/liero_compare_candidate.pas",
         root / "targets/liero/config/routine_contracts.json",
     ]
@@ -560,6 +561,7 @@ def _source_paths(root: Path) -> list[Path]:
         root / "targets/liero/asm/FUN_24dd_3f86.s",
         root / "targets/liero/src/FUN_24dd_3f86.inc",
         root / "targets/liero/src/LieroRuntime.pas",
+        root / "targets/liero/src/_lemu_helpers.inc",
         root / "targets/liero/config/routine_contracts.json",
         root / "tools/liero_compare_candidate.pas",
         root / "engine/alternate_streams.py",

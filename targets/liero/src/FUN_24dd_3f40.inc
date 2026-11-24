@@ -62,7 +62,7 @@
 // }
 // 
 // --- end reference ---
-procedure FUN_24dd_3f40(param_1, param_2: Pointer);
+function FUN_24dd_3f40(param_1, param_2: Longint): Word;
 var
   haystackOffset: Word;
   haystackSegment: Word;
